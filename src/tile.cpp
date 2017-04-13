@@ -15,6 +15,7 @@ FloorTile::FloorTile(int x, int z) {
 	mesh.shader = ShaderManager::get_default();
 	Material mat;
 	mat.diffuse = mat.ambient = color::indian_red;
+	mesh.material = mat;
 }
 
 WallTile::WallTile(int x, int z) {
@@ -30,4 +31,5 @@ WallTile::WallTile(int x, int z) {
 	mesh.shader = ShaderManager::get_default();
 	Material mat;
 	mat.diffuse = mat.ambient = color::indian_red;
+	mesh.material = mat;
 }

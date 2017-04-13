@@ -14,6 +14,7 @@
 #include "colors.h"
 #include "global.h"
 #include "config.h"
+#include "btBulletDynamicsCommon.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -91,6 +92,7 @@ void Aldente::setup_scenes()
     scene->root->add_child(cube_model);
 
 	//Setting up scene graph for Grid
+	btBoxShape* box = new btBoxShape(btVector3(1, 1, 1));
 	Grid* grid = new Grid(10,10);
 	vector<vector<Tile*>> toAdd = grid->getGrid();
 	for (int i = 0; i < toAdd.size(); i++) {
