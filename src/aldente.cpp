@@ -90,6 +90,21 @@ void Aldente::setup_scenes()
     cube_model->add_mesh(cube_mesh);
     scene->root->add_child(cube_model);
 
+	//Setting up scene graph for Grid
+	Grid* grid = new Grid(10,10);
+	vector<vector<Tile*>> toAdd = grid->getGrid();
+	for (int i = 0; i < toAdd.size(); i++) {
+		vector<Tile*> currRow = toAdd[i];
+		for (int j = 0; j < currRow.size(); j++) {
+			SceneModel *currTile = new SceneModel(scene);
+			currTile->add_mesh(currRow[j]->getMesh());
+			SceneTransform *tileTranslate = new SceneTransform(scene, 
+				glm::translate(glm::mat4(1.f), glm::vec3(currRow[j]->getX(), -0.5f * PLAYER_HEIGHT, currRow[j]->getZ())));
+			tileTranslate->add_child(currTile);
+			scene->root->add_child(tileTranslate);
+		}
+	}
+	/*
     // Plane
     Geometry *plane_geo = GeometryGenerator::generate_plane(1.f, 0);
     Material plane_mat;
@@ -102,6 +117,7 @@ void Aldente::setup_scenes()
         plane_scale->add_child(plane_model);
         plane_translate->add_child(plane_scale);
         scene->root->add_child(plane_translate);
+	*/
 }
 
 void Aldente::go()

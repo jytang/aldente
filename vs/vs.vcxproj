@@ -137,6 +137,7 @@
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\geometry.cpp" />
     <ClCompile Include="..\src\geometry_generator.cpp" />
+    <ClCompile Include="..\src\grid.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\scene.cpp" />
     <ClCompile Include="..\src\scene_animation.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="..\src\shaders\shadow_shader.cpp" />
     <ClCompile Include="..\src\shaders\skybox_shader.cpp" />
     <ClCompile Include="..\src\shader_manager.cpp" />
+    <ClCompile Include="..\src\tile.cpp" />
     <ClCompile Include="..\src\util.cpp" />
     <ClCompile Include="..\src\window.cpp" />
   </ItemGroup>
@@ -162,6 +164,7 @@
     <ClInclude Include="..\inc\geometry.h" />
     <ClInclude Include="..\inc\geometry_generator.h" />
     <ClInclude Include="..\inc\global.h" />
+    <ClInclude Include="..\inc\grid.h" />
     <ClInclude Include="..\inc\material.h" />
     <ClInclude Include="..\inc\mesh.h" />
     <ClInclude Include="..\inc\plane.h" />
@@ -177,6 +180,7 @@
     <ClInclude Include="..\inc\shader_manager.h" />
     <ClInclude Include="..\inc\shadow_shader.h" />
     <ClInclude Include="..\inc\skybox_shader.h" />
+    <ClInclude Include="..\inc\tile.h" />
     <ClInclude Include="..\inc\util.h" />
     <ClInclude Include="..\inc\window.h" />
   </ItemGroup>
