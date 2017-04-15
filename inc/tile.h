@@ -14,13 +14,15 @@
 #include "geometry_generator.h"
 #include "shader_manager.h"
 #include "colors.h"
+#include "btBulletDynamicsCommon.h"
 
 class Tile
 {
 protected:
 	int width, height, x, z;
 	bool traversable;
-	Mesh mesh;
+	Mesh* mesh;
+	btRigidBody* rigidBody;
 
 private:
 
@@ -28,9 +30,11 @@ public:
 	Tile();
 	~Tile();
 
-	Mesh getMesh() { return mesh; };
+	Mesh* getMesh() { return mesh; };
 	int getX() { return x; };
 	int getZ() { return z; };
+	virtual void update() {};
+	btRigidBody* getRigid() { return rigidBody; };
 };
 
 class FloorTile : public Tile
@@ -39,6 +43,8 @@ class FloorTile : public Tile
 public:
 	FloorTile(int x, int z);
 	~FloorTile();
+
+	
 };
 
 class WallTile : public Tile
@@ -47,4 +53,6 @@ class WallTile : public Tile
 public:
 	WallTile(int x, int z);
 	~WallTile();
+
+	void update();
 };

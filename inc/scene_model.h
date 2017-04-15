@@ -11,12 +11,12 @@ class SceneModel :
 	public SceneNode
 {
 public:
-	std::vector<Mesh> meshes;
+	std::vector<Mesh*> meshes;
 	glm::mat4 model_mat;
 
 	SceneModel(Scene *);
 	~SceneModel();
-	void add_mesh(Mesh m);
+	void add_mesh(Mesh* m);
 	void draw(glm::mat4);
 	void update();
 	void combine_meshes();

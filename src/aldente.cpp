@@ -43,6 +43,16 @@ const GLfloat   BASE_CAM_SPEED = PLAYER_HEIGHT / 10.f;
 const GLfloat   EDGE_PAN_THRESH = 5.f;
 const GLfloat   EDGE_PAN_SPEED = 0.5f;
 
+//Bullet varaibles
+btBroadphaseInterface* broadphase;
+btDefaultCollisionConfiguration* collisionConfiguration;
+btCollisionDispatcher* dispatcher;
+btSequentialImpulseConstraintSolver* solver;
+btDiscreteDynamicsWorld* dynamicsWorld;
+vector<btRigidBody*> rigidBodies;
+
+Grid* grid;
+
 Aldente::Aldente() {}
 
 Aldente::~Aldente() {}
@@ -77,7 +87,7 @@ void Aldente::setup_scenes()
 
     // Skybox
     Material default_material;
-    Mesh skybox_mesh = { nullptr, default_material, ShaderManager::get_shader_program("skybox"), glm::mat4(1.f) };
+    Mesh* skybox_mesh = new Mesh{ nullptr, default_material, ShaderManager::get_shader_program("skybox"), glm::mat4(1.f) };
     SceneModel *skybox_model = new SceneModel(scene);
     skybox_model->add_mesh(skybox_mesh);
     scene->root->add_child(skybox_model);
@@ -86,14 +96,14 @@ void Aldente::setup_scenes()
     Geometry *cube_geo = GeometryGenerator::generate_cube(1.f, true);
     Material cube_mat;
     cube_mat.diffuse = cube_mat.ambient = color::ocean_blue;
-    Mesh cube_mesh = { cube_geo, cube_mat, ShaderManager::get_default(), glm::mat4(1.f) };
+    Mesh* cube_mesh = new Mesh{ cube_geo, cube_mat, ShaderManager::get_default(), glm::mat4(1.f) };
     SceneModel *cube_model = new SceneModel(scene);
     cube_model->add_mesh(cube_mesh);
     scene->root->add_child(cube_model);
 
 	//Setting up scene graph for Grid
-	btBoxShape* box = new btBoxShape(btVector3(1, 1, 1));
-	Grid* grid = new Grid(10,10);
+	
+	grid = new Grid(10,10);
 	vector<vector<Tile*>> toAdd = grid->getGrid();
 	for (int i = 0; i < toAdd.size(); i++) {
 		vector<Tile*> currRow = toAdd[i];
@@ -104,8 +114,15 @@ void Aldente::setup_scenes()
 				glm::translate(glm::mat4(1.f), glm::vec3(currRow[j]->getX(), -0.5f * PLAYER_HEIGHT, currRow[j]->getZ())));
 			tileTranslate->add_child(currTile);
 			scene->root->add_child(tileTranslate);
+
+			if (currRow[j]->getRigid() != NULL) {
+				dynamicsWorld->addRigidBody(currRow[j]->getRigid());
+				rigidBodies.push_back(currRow[j]->getRigid());
+			}
+			
 		}
 	}
+	
 	/*
     // Plane
     Geometry *plane_geo = GeometryGenerator::generate_plane(1.f, 0);
@@ -137,7 +154,25 @@ void Aldente::go()
     setup_opengl();
 
     setup_shaders();
-    // Seed PRNG.
+
+	// Initialize Bullet. This strictly follows http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World, 
+	// even though we won't use most of this stuff.
+
+	// Build the broadphase
+	broadphase = new btDbvtBroadphase();
+
+	// Set up the collision configuration and dispatcher
+	collisionConfiguration = new btDefaultCollisionConfiguration();
+	dispatcher = new btCollisionDispatcher(collisionConfiguration);
+
+	// The actual physics solver
+	solver = new btSequentialImpulseConstraintSolver;
+
+	// The world.
+	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+	dynamicsWorld->setGravity(btVector3(0, -9.81f, 0));
+
+	// Seed PRNG.
     Util::seed(0);
     setup_scenes();
 
@@ -148,7 +183,7 @@ void Aldente::go()
     GLuint frame = 0;
     double prev_ticks = glfwGetTime();
     double move_prev_ticks = prev_ticks;
-
+	
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -166,6 +201,17 @@ void Aldente::go()
             handle_movement();
             move_prev_ticks = curr_time;
         }
+
+		//Step in simulation
+		dynamicsWorld->stepSimulation(1.f / 60.f, 10);
+
+		vector<vector<Tile*>> toAdd = grid->getGrid();
+		for (int i = 0; i < toAdd.size(); i++) {
+			vector<Tile*> currRow = toAdd[i];
+			for (int j = 0; j < currRow.size(); j++) {
+				currRow[j]->update();
+			}
+		}
 
         glfwGetFramebufferSize(window, &width, &height);
         scene->update_frustum_planes();
