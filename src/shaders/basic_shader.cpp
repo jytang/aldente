@@ -1,7 +1,7 @@
 #include "basic_shader.h"
 #include "shader_manager.h"
 #include "shadow_shader.h"
-#include "util.h"
+#include "../util/util.h"
 
 #include <iostream>
 

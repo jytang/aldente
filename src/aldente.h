@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <iostream>
 
-#include "shader_manager.h"
-#include "scene.h"
+#include "shaders/shader_manager.h"
+#include "scene/scene.h"
 #include "grid.h"
 
 class Aldente

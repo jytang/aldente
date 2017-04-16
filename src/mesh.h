@@ -1,8 +1,8 @@
 #pragma once
 #include <GL/glew.h>
-#include "geometry.h"
+#include "geometry/geometry.h"
 #include "material.h"
-#include "shader.h"
+#include "shaders/shader.h"
 #include <glm/glm.hpp>
 
 struct Mesh

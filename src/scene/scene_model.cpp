@@ -1,6 +1,6 @@
 #include "scene_model.h"
 
-#include "util.h"
+#include "../util/util.h"
 
 SceneModel::SceneModel(Scene *scene)
 {
@@ -19,7 +19,6 @@ void SceneModel::draw(glm::mat4 m)
     // Loop over meshes and their respective shader programs.
     for (Mesh* mesh : meshes)
     {
-		//fprintf(stderr, "%f\n", mesh.to_world[3].y);
         mesh->shader->use();
         mesh->shader->set_VP(scene->camera->V, scene->P);
         mesh->shader->send_cam_pos(scene->camera->cam_pos);

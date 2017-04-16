@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <glm/glm.hpp>
-#include "scene_transform.h"
+#include "scene/scene_transform.h"
 
 #define GRAB 0
 #define GENERATE_VILLAGE 1

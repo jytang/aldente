@@ -11,9 +11,9 @@
 #pragma once
 
 #include "mesh.h"
-#include "geometry_generator.h"
-#include "shader_manager.h"
-#include "colors.h"
+#include "geometry/geometry_generator.h"
+#include "shaders/shader_manager.h"
+#include "util/colors.h"
 #include "btBulletDynamicsCommon.h"
 
 class Tile
@@ -23,6 +23,8 @@ protected:
 	bool traversable;
 	Mesh* mesh;
 	btRigidBody* rigidBody;
+	btBoxShape* box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+	btBoxShape* ground = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
 
 private:
 
@@ -33,7 +35,7 @@ public:
 	Mesh* getMesh() { return mesh; };
 	int getX() { return x; };
 	int getZ() { return z; };
-	virtual void update() {};
+	virtual void update(Tile* hover) {};
 	btRigidBody* getRigid() { return rigidBody; };
 };
 
@@ -44,7 +46,7 @@ public:
 	FloorTile(int x, int z);
 	~FloorTile();
 
-	
+	void update(Tile* hover);
 };
 
 class WallTile : public Tile
@@ -54,5 +56,5 @@ public:
 	WallTile(int x, int z);
 	~WallTile();
 
-	void update();
+	void update(Tile* hover);
 };

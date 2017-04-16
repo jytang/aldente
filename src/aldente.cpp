@@ -1,19 +1,19 @@
 #include "aldente.h"
 #include "window.h"
-#include "skybox_shader.h"
-#include "shadow_shader.h"
-#include "geometry_generator.h"
-#include "scene_model.h"
-#include "scene_transform.h"
-#include "scene_animation.h"
+#include "shaders/skybox_shader.h"
+#include "shaders/shadow_shader.h"
+#include "geometry/geometry_generator.h"
+#include "scene/scene_model.h"
+#include "scene/scene_transform.h"
+#include "scene/scene_animation.h"
 #include "bounding_sphere.h"
 #include <cfloat>
 #include <string>
 
-#include "util.h"
-#include "colors.h"
+#include "util/util.h"
+#include "util/colors.h"
 #include "global.h"
-#include "config.h"
+#include "util/config.h"
 #include "btBulletDynamicsCommon.h"
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -52,6 +52,7 @@ btDiscreteDynamicsWorld* dynamicsWorld;
 vector<btRigidBody*> rigidBodies;
 
 Grid* grid;
+Tile* hover;
 
 Aldente::Aldente() {}
 
@@ -110,10 +111,15 @@ void Aldente::setup_scenes()
 		for (int j = 0; j < currRow.size(); j++) {
 			SceneModel *currTile = new SceneModel(scene);
 			currTile->add_mesh(currRow[j]->getMesh());
-			SceneTransform *tileTranslate = new SceneTransform(scene, 
-				glm::translate(glm::mat4(1.f), glm::vec3(currRow[j]->getX(), -0.5f * PLAYER_HEIGHT, currRow[j]->getZ())));
-			tileTranslate->add_child(currTile);
-			scene->root->add_child(tileTranslate);
+			/*if (currRow[j]->getRigid() == NULL) {
+				SceneTransform *tileTranslate = new SceneTransform(scene, 
+				  glm::translate(glm::mat4(1.f), glm::vec3(currRow[j]->getX(), 0, currRow[j]->getZ())));
+				tileTranslate->add_child(currTile);
+				scene->root->add_child(tileTranslate);
+			}
+			else {*/
+				scene->root->add_child(currTile);
+			//}
 
 			if (currRow[j]->getRigid() != NULL) {
 				dynamicsWorld->addRigidBody(currRow[j]->getRigid());
@@ -209,7 +215,7 @@ void Aldente::go()
 		for (int i = 0; i < toAdd.size(); i++) {
 			vector<Tile*> currRow = toAdd[i];
 			for (int j = 0; j < currRow.size(); j++) {
-				currRow[j]->update();
+				currRow[j]->update(hover);
 			}
 		}
 
@@ -420,7 +426,55 @@ void Aldente::cursor_position_callback(GLFWwindow* window, double x_pos, double 
         camera->cam_front = glm::normalize(front);
         camera->recalculate();
     }
+	
+	// Constructing the ray for picking
+	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
+	float ypos = height - y_pos;
+	glm::vec4 lRayStart_NDC(
+		((float)x_pos / (float)width - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
+		((float)ypos / (float)height - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
+		1.0f
+	);
+	glm::vec4 lRayEnd_NDC(
+		((float)x_pos / (float)width - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
+		((float)ypos / (float)height - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+		0.0,
+		1.0f
+	);
 
+	glm::mat4 M = glm::inverse(scene->P * scene->camera->V);
+	glm::vec4 lRayStart_world = M * lRayStart_NDC; 
+	lRayStart_world/=lRayStart_world.w;
+	glm::vec4 lRayEnd_world   = M * lRayEnd_NDC  ; 
+	lRayEnd_world  /=lRayEnd_world.w;
+
+	glm::vec3 lRayDir_world(lRayEnd_world - lRayStart_world);
+	lRayDir_world = glm::normalize(lRayDir_world);
+
+	glm::vec3 out_end = glm::vec3(lRayStart_world) + lRayDir_world*1000.0f;
+
+	btCollisionWorld::ClosestRayResultCallback RayCallback(
+		btVector3(lRayStart_world.x, lRayStart_world.y, lRayStart_world.z),
+		btVector3(out_end.x, out_end.y, out_end.z)
+	);
+	dynamicsWorld->rayTest(
+		btVector3(lRayStart_world.x, lRayStart_world.y, lRayStart_world.z),
+		btVector3(out_end.x, out_end.y, out_end.z),
+		RayCallback
+	);
+
+	if (RayCallback.hasHit()) {
+		hover = (Tile*)RayCallback.m_collisionObject->getUserPointer();
+	}
+	else {
+		hover = NULL;
+	}
+
+	//fprintf(stderr, "CAM:%f,%f,%f\n", scene->camera->cam_pos.x, scene->camera->cam_pos.y, scene->camera->cam_pos.z);
+	//fprintf(stderr, "RAY:%f,%f,%f\n", scene->camera->cam_pos.x, scene->camera->cam_pos.y, scene->camera->cam_pos.z);
+	//btCollisionShapegrid->getGrid()[0];
+	//fprintf(stderr, "POS:%f,%f,%f\n", scene->camera->cam_pos.x, scene->camera->cam_pos.y, scene->camera->cam_pos.z);
     last_cursor_pos = current_cursor_pos;
 }
 
@@ -437,6 +491,16 @@ void Aldente::mouse_button_callback(GLFWwindow* window, int button, int action, 
             }
             else if (action == GLFW_RELEASE) {
                 lmb_down = false;
+				/*if (hover != NULL) {
+					int x = hover->getX();
+					int z = hover->getZ();
+					if (dynamic_cast<FloorTile*>(hover) == NULL) {
+						hover = new FloorTile(x, z);
+					}
+					else {
+						hover = new WallTile(x, z);
+					}
+				}*/
             }
             break;
         case GLFW_MOUSE_BUTTON_RIGHT:
