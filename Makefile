@@ -27,7 +27,6 @@ endif
 all: $(BIN_DIR)/aldente $(BIN_DIR)/test
 
 $(BIN_DIR)/%: $(MAIN_DIR)/%.cpp $(OBJECTS)
-	@echo $(SOURCES)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCS) $^ -o $@ $(LDFLAGS) $(LIBS)
 
