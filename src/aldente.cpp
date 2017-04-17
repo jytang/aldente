@@ -191,7 +191,9 @@ void Aldente::go()
     double move_prev_ticks = prev_ticks;
 	
 	AssetLoader* test = new AssetLoader();
-
+	SceneModel* tmodel = test->getModel(std::string("untitled.fbx"));
+	tmodel->setScene(scene);
+	scene->root->add_child(tmodel);
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();

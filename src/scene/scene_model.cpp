@@ -83,3 +83,7 @@ void SceneModel::combine_meshes()
     meshes.clear();
     add_mesh(mega_mesh);
 }
+
+void SceneModel::setScene(Scene* scene) {
+	this->scene = scene;
+}
