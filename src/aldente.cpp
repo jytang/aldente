@@ -190,6 +190,8 @@ void Aldente::go()
     double prev_ticks = glfwGetTime();
     double move_prev_ticks = prev_ticks;
 	
+	AssetLoader* test = new AssetLoader();
+
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();

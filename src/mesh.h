@@ -1,4 +1,6 @@
 #pragma once
+using namespace std;
+
 #include <GL/glew.h>
 #include "geometry/geometry.h"
 #include "material.h"
