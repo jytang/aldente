@@ -1,17 +1,22 @@
-MAIN_TARGET     := aldente
-
 SRC_DIR         := src
-INC_DIR         := src
+MAIN_DIR        := $(SRC_DIR)/mains
+BIN_DIR         := bin
 BUILD_DIR       := .build
 
 CC              := clang++
 CFLAGS          := -std=c++1y -O0 -g
-INCS            := -I$(INC_DIR)
-LDFLAGS         :=
+INCS            := -I$(SRC_DIR)
 LIBS            := -lGLEW -lglfw -lSOIL
-HEADERS         := $(shell find $(INC_DIR) -name '*.h' -type 'f' | sort)
-MAIN_SOURCES    := $(shell find $(SRC_DIR) -name '*.cpp' -type 'f' | sort)
-MAIN_OBJECTS    := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
+
+define find_in_src
+	$(shell \
+		find $(SRC_DIR) \( -path $(MAIN_DIR) -prune -o -name '$(1)' \) -type 'f' \
+		| sort)
+endef
+
+SOURCES         := $(call find_in_src,'*.cpp')
+HEADERS         := $(call find_in_src,'*.h')
+OBJECTS         := $(SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 ifeq ($(shell uname),Darwin)
 	LIBS += -framework OpenGL -framework GLUT
@@ -19,14 +24,16 @@ else
 	LIBS += -lGL -lGLU
 endif
 
-all : $(MAIN_TARGET)
+all: $(BIN_DIR)/aldente $(BIN_DIR)/test
 
-$(MAIN_TARGET): $(MAIN_OBJECTS)
-	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS) $(LIBS)
+$(BIN_DIR)/%: $(MAIN_DIR)/%.cpp $(OBJECTS)
+	@echo $(SOURCES)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INCS) $^ -o $@ $(LDFLAGS) $(LIBS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
 clean:
-	rm -rf $(BUILD_DIR) $(MAIN_TARGET)
+	rm -rf $(BUILD_DIR) $(MAIN_TARGET) $(TEST_TARGET)
