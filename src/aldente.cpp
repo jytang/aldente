@@ -14,6 +14,8 @@
 #include "util/colors.h"
 #include "global.h"
 #include "util/config.h"
+#include "net/NetworkClient.h"
+#include "net/NetworkServer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -131,9 +133,13 @@ void Aldente::go()
     double prev_ticks = glfwGetTime();
     double move_prev_ticks = prev_ticks;
 
+	TcpServer server(9000);
+	NetworkClient client("localhost");
+
     while (!glfwWindowShouldClose(window))
     {
-        glfwPollEvents();
+		std::cerr << "Messages? " << client.has_messages() << "\n";
+		glfwPollEvents();
 
         frame++;
         double curr_time = glfwGetTime();

@@ -90,11 +90,16 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ALL_DYN_LINK;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;soil.lib;packages\Assimp.3.0.0\build\native\lib\x64\assimp.lib</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /F /Y "$(SolutionDir)\packages\boost_thread-vc140.1.63.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_thread-vc140-mt-gd-1_63.dll" "$(OutDir)"
+xcopy /F /Y "$(SolutionDir)\packages\boost_system-vc140.1.63.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_system-vc140-mt-gd-1_63.dll" "$(OutDir)"
+xcopy /F /Y "$(SolutionDir)\packages\boost_chrono-vc140.1.63.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_chrono-vc140-mt-gd-1_63.dll" "$(OutDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -137,6 +142,8 @@
     <ClCompile Include="..\src\geometry\geometry.cpp" />
     <ClCompile Include="..\src\geometry\geometry_generator.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\net\NetworkClient.cpp" />
+    <ClCompile Include="..\src\net\NetworkServer.cpp" />
     <ClCompile Include="..\src\scene\scene.cpp" />
     <ClCompile Include="..\src\scene\scene_animation.cpp" />
     <ClCompile Include="..\src\scene\scene_camera.cpp" />
@@ -162,6 +169,7 @@
     <ClInclude Include="..\src\global.h" />
     <ClInclude Include="..\src\material.h" />
     <ClInclude Include="..\src\mesh.h" />
+    <ClInclude Include="..\src\net\threadsafe_queue.h" />
     <ClInclude Include="..\src\scene\scene.h" />
     <ClInclude Include="..\src\scene\scene_animation.h" />
     <ClInclude Include="..\src\scene\scene_camera.h" />
@@ -187,6 +195,11 @@
     <Import Project="packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets" Condition="Exists('packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" />
     <Import Project="packages\Assimp.3.0.0\build\native\Assimp.targets" Condition="Exists('packages\Assimp.3.0.0\build\native\Assimp.targets')" />
     <Import Project="packages\boost.1.63.0.0\build\native\boost.targets" Condition="Exists('packages\boost.1.63.0.0\build\native\boost.targets')" />
+    <Import Project="packages\boost_thread-vc140.1.63.0.0\build\native\boost_thread-vc140.targets" Condition="Exists('packages\boost_thread-vc140.1.63.0.0\build\native\boost_thread-vc140.targets')" />
+    <Import Project="packages\boost_date_time-vc140.1.63.0.0\build\native\boost_date_time-vc140.targets" Condition="Exists('packages\boost_date_time-vc140.1.63.0.0\build\native\boost_date_time-vc140.targets')" />
+    <Import Project="packages\boost_system-vc140.1.63.0.0\build\native\boost_system-vc140.targets" Condition="Exists('packages\boost_system-vc140.1.63.0.0\build\native\boost_system-vc140.targets')" />
+    <Import Project="packages\boost_regex-vc140.1.63.0.0\build\native\boost_regex-vc140.targets" Condition="Exists('packages\boost_regex-vc140.1.63.0.0\build\native\boost_regex-vc140.targets')" />
+    <Import Project="packages\boost_chrono-vc140.1.63.0.0\build\native\boost_chrono-vc140.targets" Condition="Exists('packages\boost_chrono-vc140.1.63.0.0\build\native\boost_chrono-vc140.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -199,5 +212,10 @@
     <Error Condition="!Exists('packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Assimp.redist.3.0.0\build\native\Assimp.redist.targets'))" />
     <Error Condition="!Exists('packages\Assimp.3.0.0\build\native\Assimp.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Assimp.3.0.0\build\native\Assimp.targets'))" />
     <Error Condition="!Exists('packages\boost.1.63.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost.1.63.0.0\build\native\boost.targets'))" />
+    <Error Condition="!Exists('packages\boost_thread-vc140.1.63.0.0\build\native\boost_thread-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_thread-vc140.1.63.0.0\build\native\boost_thread-vc140.targets'))" />
+    <Error Condition="!Exists('packages\boost_date_time-vc140.1.63.0.0\build\native\boost_date_time-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_date_time-vc140.1.63.0.0\build\native\boost_date_time-vc140.targets'))" />
+    <Error Condition="!Exists('packages\boost_system-vc140.1.63.0.0\build\native\boost_system-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_system-vc140.1.63.0.0\build\native\boost_system-vc140.targets'))" />
+    <Error Condition="!Exists('packages\boost_regex-vc140.1.63.0.0\build\native\boost_regex-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_regex-vc140.1.63.0.0\build\native\boost_regex-vc140.targets'))" />
+    <Error Condition="!Exists('packages\boost_chrono-vc140.1.63.0.0\build\native\boost_chrono-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_chrono-vc140.1.63.0.0\build\native\boost_chrono-vc140.targets'))" />
   </Target>
 </Project>
