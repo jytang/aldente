@@ -17,6 +17,8 @@
 #include "global.h"
 #include "util/config.h"
 #include "btBulletDynamicsCommon.h"
+#include "net/NetworkClient.h"
+#include "net/NetworkServer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -199,8 +201,13 @@ void Aldente::go()
 	SceneModel* tmodel = test->getModel(std::string("textured.fbx"));
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
+
+    TcpServer server(9000);
+    NetworkClient client("localhost");
+
     while (!glfwWindowShouldClose(window))
     {
+        std::cerr << "Messages? " << client.has_messages() << "\n";
         glfwPollEvents();
         input::process();
 
