@@ -15,9 +15,12 @@
 #include "global.h"
 #include "util/config.h"
 #include "btBulletDynamicsCommon.h"
+#include "net/NetworkClient.h"
+#include "net/NetworkServer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 
 /* global vars */
 Scene* scene;
@@ -194,9 +197,28 @@ void Aldente::go()
 	SceneModel* tmodel = test->getModel(std::string("textured.fbx"));
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
+
+	bool is_server = true; // toggle this
+
+	NetworkClient* client;
+
+	if (is_server) {
+		TcpServer server(9000);
+		client = new NetworkClient("localhost");
+	}
+	else {
+		client = new NetworkClient("localhost"); // todo change to ip of server
+	}
+
+	std::string expected = "[1.2 2.3 3.4 4.5 5.6 6.7 7.8 8.9 9.1 10.11 11.12 12.13 13.14 14.15 15.16 16.17]";
+	glm::mat4 mat = tw_deserialize(expected);
+	std::cerr << "After deserializing: " << glm::to_string(mat) << "\n";
+	std::string actual = tw_serialize(mat);
+
     while (!glfwWindowShouldClose(window))
     {
-        glfwPollEvents();
+		std::cerr << "Messages? " << client->has_messages() << "\n";
+		glfwPollEvents();
 
         frame++;
         double curr_time = glfwGetTime();
@@ -248,6 +270,40 @@ void Aldente::go()
         glfwSwapBuffers(window);
     }
     destroy();
+}
+
+std::string Aldente::tw_serialize(glm::mat4 mat) {
+	std::string s = "[";
+	for (int i = 0; i < 4; i++) {
+		s += std::to_string(mat[i].x) + " " +
+			 std::to_string(mat[i].y) + " " +
+			 std::to_string(mat[i].z) + " " +
+			 std::to_string(mat[i].w);
+		if (i != 3)
+			s += " ";
+	}
+	return s + "]";
+}
+
+glm::mat4 Aldente::tw_deserialize(std::string msg) {
+	glm::mat4 mat(1.0);
+	if (msg[0] == '[' && msg[msg.length() - 1] == ']') {
+		msg = msg.substr(1);
+		char * n;
+		for (int i = 0; i < 4; i++) {
+			if (i == 0)
+				mat[i].x = strtof(msg.c_str(), &n);
+			else
+				mat[i].x = strtof(n, &n);
+			mat[i].y = strtof(n, &n);
+			mat[i].z = strtof(n, &n);
+			mat[i].w = strtof(n, &n);
+		}
+		return mat;
+	}
+
+	// Should never happen...
+	return mat;
 }
 
 void Aldente::shadow_pass()

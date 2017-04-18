@@ -14,10 +14,16 @@ GLFWwindow* Window::create_window(int width, int height, const char *window_titl
     // 4x antialiasing
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-#ifdef __linux
+#if defined(__linux) || defined(__APPLE__)
     // Ensure minimum OpenGL version is 3.3
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+
+#ifdef __linux
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+#else // Apple is dumb
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+#endif
+
     // Enable forward compatibility and allow a modern OpenGL context
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
