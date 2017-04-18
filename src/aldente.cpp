@@ -198,6 +198,17 @@ void Aldente::go()
     {
         glfwPollEvents();
 
+        int btn_c;
+        const unsigned char* btns =
+            glfwGetJoystickButtons(GLFW_JOYSTICK_1, &btn_c);
+        if (btns) {
+            for (int i = 0; i < btn_c; ++i) {
+                if (btns[i] == GLFW_PRESS) {
+                    std::cerr << "PRESSING " << i << std::endl;
+                }
+            }
+        }
+
         frame++;
         double curr_time = glfwGetTime();
         if (curr_time - prev_ticks > 1.f)
