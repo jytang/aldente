@@ -125,11 +125,19 @@ void TcpServer::handle_accept(TcpConnection::pointer new_connection,
     client_list[++next_id] = new_connection;
     new_connection->start();
   }
+  else {
+	  std::cerr << "Accept error: " << error << "," << error.message() << "\n";
+  }
 
   // Accept the next client.
   start_accept();
 }
 
 void TcpServer::run(boost::asio::io_service& io_service) {
-  io_service.run();
+	try {
+		io_service.run();
+	}
+	catch(...) {
+		std::cerr << "io_service error\n";
+	} // temporary ignore
 }
