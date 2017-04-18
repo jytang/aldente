@@ -191,12 +191,18 @@ void Aldente::go()
     double move_prev_ticks = prev_ticks;
 	
 	AssetLoader* test = new AssetLoader();
-	SceneModel* tmodel = test->getModel(std::string("textured.fbx"));
-	tmodel->setScene(scene);
-	scene->root->add_child(tmodel);
+	SceneModel* kavin = test->getModel(std::string("textured.fbx"));
+	SceneModel* richard = test->getModel(std::string("doggo.fbx"));
+	kavin->setScene(scene);
+	scene->root->add_child(kavin);
+	richard->setScene(scene);
+	scene->root->add_child(richard);
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+
+		//richard->meshes[0]->to_world[3] = richard's matrix[3] if kavin's com
+		//kavin->meshes[0]->to_world[3] = kavin's matrix[3] if richard's com
 
         frame++;
         double curr_time = glfwGetTime();
@@ -223,6 +229,8 @@ void Aldente::go()
 			}
 		}
 
+		//Test for networking
+		
         glfwGetFramebufferSize(window, &width, &height);
         scene->update_frustum_planes();
         scene->update_frustum_corners(width, height, FAR_PLANE);
@@ -244,6 +252,8 @@ void Aldente::go()
             glBindTexture(GL_TEXTURE_2D, ((ShadowShader *)ShaderManager::get_shader_program("shadow"))->shadow_map_tex);
             Util::render_quad();
         }
+
+		//send other person glm::translate(glm::mat4(1.0f),cam_pos)
 
         glfwSwapBuffers(window);
     }

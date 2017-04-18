@@ -138,19 +138,19 @@ Mesh* AssetLoader::processMesh(aiMesh* mesh, const aiScene* scene)
 			aiString str;
 			assimpMat->GetTexture(aiTextureType_DIFFUSE, i, &str);
 			//fprintf(stderr, str.C_Str());
-			/*std::string temp(str.C_Str());
+			std::string temp(str.C_Str());
 			std::size_t found = temp.find_last_of("/\\");
 			std::string fileName = temp.substr(found + 1);
-			std::string toPass("../assets/textures/");
-			toPass += fileName;*/
-			std::string path(str.C_Str());
+			std::string toPass("assets/textures/");
+			toPass += fileName;
+
 			//Texture not loaded yet
-			if (textures.count(path) == 0) {
-				geo->attachNewTexture(path.c_str());
-				textures[path] = geo->getTextureGL();
+			if (textures.count(toPass) == 0) {
+				geo->attachNewTexture(toPass.c_str());
+				textures[toPass] = geo->getTextureGL();
 			}
 			else {
-				geo->attachExistingTexture(textures[path]);
+				geo->attachExistingTexture(textures[toPass]);
 			}
 		}
 	}
