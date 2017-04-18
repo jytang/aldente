@@ -191,7 +191,7 @@ void Aldente::go()
     double move_prev_ticks = prev_ticks;
 	
 	AssetLoader* test = new AssetLoader();
-	SceneModel* tmodel = test->getModel(std::string("untitled.fbx"));
+	SceneModel* tmodel = test->getModel(std::string("textured.fbx"));
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
     while (!glfwWindowShouldClose(window))
@@ -433,7 +433,7 @@ void Aldente::cursor_position_callback(GLFWwindow* window, double x_pos, double 
 	
 	// Constructing the ray for picking
 	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
-	float ypos = height - y_pos;
+	float ypos = height - (float)y_pos;
 	glm::vec4 lRayStart_NDC(
 		((float)x_pos / (float)width - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
 		((float)ypos / (float)height - 0.5f) * 2.0f, // [0, 768] -> [-1,1]

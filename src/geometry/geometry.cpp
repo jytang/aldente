@@ -46,7 +46,7 @@ void Geometry::populate_buffers()
     glBindVertexArray(0);
 }
 
-void Geometry::attach_texture(const char *texture_loc)
+void Geometry::attachNewTexture(const char *texture_loc)
 {
     has_texture = true;
 
@@ -64,6 +64,14 @@ void Geometry::attach_texture(const char *texture_loc)
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Geometry::attachExistingTexture(GLuint toAttach) {
+	this->texture = toAttach;
+}
+
+GLuint Geometry::getTextureGL() {
+	return this->texture;
 }
 
 void Geometry::draw()

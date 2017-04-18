@@ -6,6 +6,7 @@
 #include "util/colors.h"
 #include "shaders/shader_manager.h"
 
+
 #include <boost/range.hpp>
 #include <filesystem>
 #include <boost/filesystem.hpp>
@@ -18,6 +19,7 @@
 class AssetLoader {
 private:
 	map<string, SceneModel*> assets;
+	map<string, GLuint> textures;
 	SceneModel* model;
 public:
 	AssetLoader();

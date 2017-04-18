@@ -21,7 +21,9 @@ public:
 	Geometry();
 	~Geometry();
 	void populate_buffers();
-	void attach_texture(const char *texture_loc);
+	void attachNewTexture(const char *texture_loc);
+	void attachExistingTexture(GLuint toAttach);
+	GLuint getTextureGL();
 	void draw();
 	void bind();
 private:
