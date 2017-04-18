@@ -75,34 +75,37 @@ TcpServer::TcpServer(unsigned int port) :
 }
 
 void TcpServer::send_to_all(std::string message) {
-  auto clients = get_client_list();
 
   // No clients connected.
-  if (clients.size() == 0) {
+  if (client_list.size() == 0) {
+	std::cerr << "[server] no clients to write to.\n";
     return;
   }
   
-  std::cerr << "[" << clients.size() << "]\n";
-  for (auto const &c : clients) {
-    std::cerr << "s (" << c.first << ") " << message;
-    bool success = c.second->send(message);
+  std::cerr << "[server] writing to clients, connected: " << client_list.size() << "\n";
+  std::cerr << "[" << client_list.size() << "]\n";
+  for (auto c = client_list.begin(); c != client_list.end(); /* intentionally empty */) {
+    //std::cerr << "s (" << c->first << ") " << message;
+    bool success = c->second->send(message);
     if (!success) {
       std::cerr << "Write failed!\n";
-	  clients.erase(c.first);
-    }
+	  c = client_list.erase(c);
+	}
+	else {
+		c++;
+	}
   }
 }
 
 std::vector<std::string> TcpServer::read_all_messages() {
   std::vector<std::string> messages;
-  auto clients = get_client_list();
   
   // No clients connected.
-  if (clients.size() == 0) {
+  if (client_list.size() == 0) {
     return messages;
   }
   
-  for (auto const &c : clients) {
+  for (auto const &c : client_list) {
     while (c.second->has_messages()) {
       auto message = c.second->pop_message();
       messages.push_back(message);
@@ -125,7 +128,7 @@ void TcpServer::handle_accept(TcpConnection::pointer new_connection,
     const boost::system::error_code& error) {
   if (!error) {
     std::cerr << "Accepted new connection." << std::endl;
-    get_client_list()[++next_id] = new_connection;
+    client_list[++next_id] = new_connection;
     new_connection->start();
   }
   else {
@@ -145,6 +148,9 @@ std::map<int, TcpConnection::pointer> TcpServer::get_client_list() {
 void TcpServer::run(boost::asio::io_service& io_service) {
 	try {
 		io_service.run();
+	} 
+	catch (std::exception const&  ex) {
+		std::cerr << "io_service caught: " << ex.what() << "\n";
 	}
 	catch(...) {
 		std::cerr << "io_service error\n";

@@ -158,7 +158,7 @@ void Aldente::go()
     Config::config->get_value(Config::str_game_name, game_name);
 
     window = Window::create_window(width, height, game_name.c_str());
-    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); // Don't show cursor
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); // Don't show cursor
     setup_callbacks();
     setup_opengl();
 
@@ -203,14 +203,16 @@ void Aldente::go()
 	scene->root->add_child(richard);
 
 	bool is_server = true; // toggle this
-
+	
+	TcpServer* server;
 	NetworkClient* client;
 
 	if (is_server) {
-		TcpServer server(9000);
+		server = new TcpServer(9000);
 		client = new NetworkClient("localhost");
 	}
 	else {
+		server = nullptr;
 		client = new NetworkClient("localhost"); // todo change to ip of server
 	}
 
@@ -221,9 +223,26 @@ void Aldente::go()
 
     while (!glfwWindowShouldClose(window))
     {
-		std::cerr << "Messages? " << client->has_messages() << "\n";
+		std::vector<std::string> msgs = server->read_all_messages();
+
+		for (int i = 0; i < msgs.size(); i++) {
+			std::string msg = msgs[i];
+			std::size_t begin = msg.find_first_of('[');
+			if (begin == std::string::npos)
+				continue;
+			msg = msg.substr(begin);
+			std::size_t end = msg.find_first_of(']');
+			if (end == std::string::npos)
+				continue;
+			msg = msg.substr(0, end + 1);
+
+			std::cerr << "FOUND: <" << msg << ">\n";
+			kavin->meshes[0]->to_world = tw_deserialize(msg);
+		}
+		
 		glfwPollEvents();
 
+		richard->meshes[0]->to_world = glm::translate(glm::mat4(1.0f), scene->camera->cam_pos);
 		//richard->meshes[0]->to_world[3] = richard's matrix[3] if kavin's com
 		//kavin->meshes[0]->to_world[3] = kavin's matrix[3] if richard's com
 
@@ -277,7 +296,8 @@ void Aldente::go()
         }
 
 		//send other person glm::translate(glm::mat4(1.0f),cam_pos)
-
+		glm::mat4 toSend = glm::translate(glm::mat4(1.0f), scene->camera->cam_pos);
+		server->send_to_all(tw_serialize(toSend));
         glfwSwapBuffers(window);
     }
     destroy();

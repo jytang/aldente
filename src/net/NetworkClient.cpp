@@ -39,6 +39,9 @@ void NetworkClient::handle_receive(const boost::system::error_code& error, std::
 		std::string message(recv_buffer.data(), recv_buffer.data() + bytes_transferred);
 		message_queue.push(message);
 	}
+	else {
+		std::cerr << "[client] recv failed: " << error.message() << "\n";
+	}
 
 	start_receive();
 }
