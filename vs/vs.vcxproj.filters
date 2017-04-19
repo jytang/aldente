@@ -1,18 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="..\src\aldente.cpp" />
+    <ClCompile Include="..\src\assetLoader.cpp" />
+    <ClCompile Include="..\src\bounding_sphere.cpp" />
+    <ClCompile Include="..\src\geometry\geometry.cpp" />
+    <ClCompile Include="..\src\geometry\geometry_generator.cpp" />
+    <ClCompile Include="..\src\grid.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\net\NetworkClient.cpp" />
+    <ClCompile Include="..\src\net\NetworkServer.cpp" />
+    <ClCompile Include="..\src\scene\scene.cpp" />
+    <ClCompile Include="..\src\scene\scene_animation.cpp" />
+    <ClCompile Include="..\src\scene\scene_camera.cpp" />
+    <ClCompile Include="..\src\scene\scene_group.cpp" />
+    <ClCompile Include="..\src\scene\scene_model.cpp" />
+    <ClCompile Include="..\src\scene\scene_transform.cpp" />
+    <ClCompile Include="..\src\scene\scene_trans_anim.cpp" />
+    <ClCompile Include="..\src\shaders\basic_shader.cpp" />
+    <ClCompile Include="..\src\shaders\shader.cpp" />
+    <ClCompile Include="..\src\shaders\shader_manager.cpp" />
+    <ClCompile Include="..\src\shaders\shadow_shader.cpp" />
+    <ClCompile Include="..\src\shaders\skybox_shader.cpp" />
+    <ClCompile Include="..\src\tile.cpp" />
+    <ClCompile Include="..\src\util\config.cpp" />
+    <ClCompile Include="..\src\util\util.cpp" />
+    <ClCompile Include="..\src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
