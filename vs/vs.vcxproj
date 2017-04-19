@@ -133,7 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\**\*.h" />
+    <ClInclude Include="..\src\**\*.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\**\*.cpp" />
