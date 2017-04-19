@@ -198,17 +198,6 @@ void Aldente::go()
     {
         glfwPollEvents();
 
-        int btn_c;
-        const unsigned char* btns =
-            glfwGetJoystickButtons(GLFW_JOYSTICK_1, &btn_c);
-        if (btns) {
-            for (int i = 0; i < btn_c; ++i) {
-                if (btns[i] == GLFW_PRESS) {
-                    std::cerr << "PRESSING " << i << std::endl;
-                }
-            }
-        }
-
         frame++;
         double curr_time = glfwGetTime();
         if (curr_time - prev_ticks > 1.f)
@@ -287,13 +276,25 @@ void Aldente::handle_movement()
 {
     GLfloat cam_step = keys[GLFW_KEY_LEFT_SHIFT] ? 3*BASE_CAM_SPEED : BASE_CAM_SPEED;
     glm::vec3 displacement(0.f);
-    if (keys[GLFW_KEY_W])
+
+    int btn_c;
+    const unsigned char* btns =
+        glfwGetJoystickButtons(GLFW_JOYSTICK_1, &btn_c);
+    if (btns) {
+        for (int i = 0; i < btn_c; ++i) {
+            if (btns[i] == GLFW_PRESS) {
+                std::cerr << "PRESSING " << i << std::endl;
+            }
+        }
+    }
+
+    if (keys[GLFW_KEY_W] || btns && btns[13])
         displacement += cam_step * camera->cam_front;
-    if (keys[GLFW_KEY_S])
+    if (keys[GLFW_KEY_S] || btns && btns[15])
         displacement -= cam_step * camera->cam_front;
-    if (keys[GLFW_KEY_A])
+    if (keys[GLFW_KEY_A] || btns && btns[16])
         displacement -= glm::normalize(glm::cross(camera->cam_front, camera->cam_up)) * cam_step;
-    if (keys[GLFW_KEY_D])
+    if (keys[GLFW_KEY_D] || btns && btns[14])
         displacement += glm::normalize(glm::cross(camera->cam_front, camera->cam_up)) * cam_step;
     if (keys[GLFW_KEY_SPACE])
         displacement += cam_step * camera->cam_up;
