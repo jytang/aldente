@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../shaders/shader.h"
+#include "shaders/shader.h"
 
 class Scene;
 

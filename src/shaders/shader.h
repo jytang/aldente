@@ -3,8 +3,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
-#include "../material.h"
-#include "../geometry/geometry.h"
+#include "material.h"
+#include "geometry/geometry.h"
 
 class Shader
 {

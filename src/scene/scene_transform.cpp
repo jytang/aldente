@@ -1,5 +1,5 @@
 #include "scene_transform.h"
-#include "../shaders/shader.h"
+#include "shaders/shader.h"
 
 SceneTransform::SceneTransform(Scene *scene, glm::mat4 m)
 {

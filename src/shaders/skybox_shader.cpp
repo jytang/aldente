@@ -1,5 +1,5 @@
 #include "skybox_shader.h"
-#include "../util/util.h"
+#include "util/util.h"
 
 #include <vector>
 

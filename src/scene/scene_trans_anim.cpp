@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include "../util/util.h"
+#include "util/util.h"
 
 SceneTransAnim::SceneTransAnim(Scene * scene, glm::vec3 start, glm::vec3 dir, bool play) :
     start(start), dir(dir), play(play)

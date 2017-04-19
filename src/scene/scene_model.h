@@ -1,11 +1,11 @@
 #pragma once
 #include "scene_node.h"
-#include "../mesh.h"
+#include "mesh.h"
 
 #include <vector>
 
 #include "scene.h"
-#include "../shaders/shader.h"
+#include "shaders/shader.h"
 
 class SceneModel :
 	public SceneNode

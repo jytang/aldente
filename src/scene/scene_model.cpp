@@ -1,6 +1,6 @@
 #include "scene_model.h"
 
-#include "../util/util.h"
+#include "util/util.h"
 
 SceneModel::SceneModel(Scene *scene)
 {

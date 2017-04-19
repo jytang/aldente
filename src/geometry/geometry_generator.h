@@ -6,7 +6,7 @@
 #include <vector>
 #include <time.h>
 
-#include "../util/util.h"
+#include "util/util.h"
 
 #define NONE 0
 #define GRASS 1

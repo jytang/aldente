@@ -4,7 +4,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include "../util/util.h"
+#include "util/util.h"
 
 SceneAnimation::SceneAnimation(Scene * scene, GLfloat min, GLfloat max, GLfloat start, GLfloat step, glm::vec3 axis, glm::vec3 pivot) :
     min(min), max(max), curr(start), step(step), axis(axis), pivot(pivot)

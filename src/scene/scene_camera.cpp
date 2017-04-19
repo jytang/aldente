@@ -1,5 +1,5 @@
 #include "scene_camera.h"
-#include "../shaders/shader.h"
+#include "shaders/shader.h"
 
 SceneCamera::SceneCamera(Scene *scene)
 {
