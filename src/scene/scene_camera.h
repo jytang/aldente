@@ -3,7 +3,7 @@
 #include "scene_node.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "shaders/shader.h"
+#include "../shaders/shader.h"
 
 class SceneCamera :
 	public SceneNode

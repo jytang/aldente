@@ -14,9 +14,13 @@
 #include "util/colors.h"
 #include "global.h"
 #include "util/config.h"
+#include "btBulletDynamicsCommon.h"
+#include "net/NetworkClient.h"
+#include "net/NetworkServer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 
 /* global vars */
 Scene* scene;
@@ -41,6 +45,17 @@ const GLfloat FOV = 45.f;
 const GLfloat   BASE_CAM_SPEED = PLAYER_HEIGHT / 10.f;
 const GLfloat   EDGE_PAN_THRESH = 5.f;
 const GLfloat   EDGE_PAN_SPEED = 0.5f;
+
+//Bullet varaibles
+btBroadphaseInterface* broadphase;
+btDefaultCollisionConfiguration* collisionConfiguration;
+btCollisionDispatcher* dispatcher;
+btSequentialImpulseConstraintSolver* solver;
+btDiscreteDynamicsWorld* dynamicsWorld;
+vector<btRigidBody*> rigidBodies;
+
+Grid* grid;
+Tile* hover;
 
 Aldente::Aldente() {}
 
@@ -76,7 +91,7 @@ void Aldente::setup_scenes()
 
     // Skybox
     Material default_material;
-    Mesh skybox_mesh = { nullptr, default_material, ShaderManager::get_shader_program("skybox"), glm::mat4(1.f) };
+    Mesh* skybox_mesh = new Mesh{ nullptr, default_material, ShaderManager::get_shader_program("skybox"), glm::mat4(1.f) };
     SceneModel *skybox_model = new SceneModel(scene);
     skybox_model->add_mesh(skybox_mesh);
     scene->root->add_child(skybox_model);
@@ -85,11 +100,39 @@ void Aldente::setup_scenes()
     Geometry *cube_geo = GeometryGenerator::generate_cube(1.f, true);
     Material cube_mat;
     cube_mat.diffuse = cube_mat.ambient = color::ocean_blue;
-    Mesh cube_mesh = { cube_geo, cube_mat, ShaderManager::get_default(), glm::mat4(1.f) };
+    Mesh* cube_mesh = new Mesh{ cube_geo, cube_mat, ShaderManager::get_default(), glm::mat4(1.f) };
     SceneModel *cube_model = new SceneModel(scene);
     cube_model->add_mesh(cube_mesh);
     scene->root->add_child(cube_model);
 
+	//Setting up scene graph for Grid
+	
+	grid = new Grid(10,10);
+	vector<vector<Tile*>> toAdd = grid->getGrid();
+	for (int i = 0; i < toAdd.size(); i++) {
+		vector<Tile*> currRow = toAdd[i];
+		for (int j = 0; j < currRow.size(); j++) {
+			SceneModel *currTile = new SceneModel(scene);
+			currTile->add_mesh(currRow[j]->getMesh());
+			/*if (currRow[j]->getRigid() == NULL) {
+				SceneTransform *tileTranslate = new SceneTransform(scene, 
+				  glm::translate(glm::mat4(1.f), glm::vec3(currRow[j]->getX(), 0, currRow[j]->getZ())));
+				tileTranslate->add_child(currTile);
+				scene->root->add_child(tileTranslate);
+			}
+			else {*/
+				scene->root->add_child(currTile);
+			//}
+
+			if (currRow[j]->getRigid() != NULL) {
+				dynamicsWorld->addRigidBody(currRow[j]->getRigid());
+				rigidBodies.push_back(currRow[j]->getRigid());
+			}
+			
+		}
+	}
+	
+	/*
     // Plane
     Geometry *plane_geo = GeometryGenerator::generate_plane(1.f, 0);
     Material plane_mat;
@@ -102,6 +145,7 @@ void Aldente::setup_scenes()
         plane_scale->add_child(plane_model);
         plane_translate->add_child(plane_scale);
         scene->root->add_child(plane_translate);
+	*/
 }
 
 void Aldente::go()
@@ -114,12 +158,30 @@ void Aldente::go()
     Config::config->get_value(Config::str_game_name, game_name);
 
     window = Window::create_window(width, height, game_name.c_str());
-    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); // Don't show cursor
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN); // Don't show cursor
     setup_callbacks();
     setup_opengl();
 
     setup_shaders();
-    // Seed PRNG.
+
+	// Initialize Bullet. This strictly follows http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World, 
+	// even though we won't use most of this stuff.
+
+	// Build the broadphase
+	broadphase = new btDbvtBroadphase();
+
+	// Set up the collision configuration and dispatcher
+	collisionConfiguration = new btDefaultCollisionConfiguration();
+	dispatcher = new btCollisionDispatcher(collisionConfiguration);
+
+	// The actual physics solver
+	solver = new btSequentialImpulseConstraintSolver;
+
+	// The world.
+	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+	dynamicsWorld->setGravity(btVector3(0, -9.81f, 0));
+
+	// Seed PRNG.
     Util::seed(0);
     setup_scenes();
 
@@ -130,10 +192,59 @@ void Aldente::go()
     GLuint frame = 0;
     double prev_ticks = glfwGetTime();
     double move_prev_ticks = prev_ticks;
+	
+	AssetLoader* test = new AssetLoader();
+
+	SceneModel* kavin = test->getModel(std::string("textured.fbx"));
+	SceneModel* richard = test->getModel(std::string("doggo.fbx"));
+	kavin->setScene(scene);
+	scene->root->add_child(kavin);
+	richard->setScene(scene);
+	scene->root->add_child(richard);
+
+	bool is_server = true; // toggle this
+	
+	TcpServer* server;
+	NetworkClient* client;
+
+	if (is_server) {
+		server = new TcpServer(9000);
+		client = new NetworkClient("localhost");
+	}
+	else {
+		server = nullptr;
+		client = new NetworkClient("localhost"); // todo change to ip of server
+	}
+
+	std::string expected = "[1.2 2.3 3.4 4.5 5.6 6.7 7.8 8.9 9.1 10.11 11.12 12.13 13.14 14.15 15.16 16.17]";
+	glm::mat4 mat = tw_deserialize(expected);
+	std::cerr << "After deserializing: " << glm::to_string(mat) << "\n";
+	std::string actual = tw_serialize(mat);
 
     while (!glfwWindowShouldClose(window))
     {
-        glfwPollEvents();
+		std::vector<std::string> msgs = server->read_all_messages();
+
+		for (int i = 0; i < msgs.size(); i++) {
+			std::string msg = msgs[i];
+			std::size_t begin = msg.find_first_of('[');
+			if (begin == std::string::npos)
+				continue;
+			msg = msg.substr(begin);
+			std::size_t end = msg.find_first_of(']');
+			if (end == std::string::npos)
+				continue;
+			msg = msg.substr(0, end + 1);
+
+			std::cerr << "FOUND: <" << msg << ">\n";
+			kavin->meshes[0]->to_world = tw_deserialize(msg);
+		}
+		
+		glfwPollEvents();
+
+		richard->meshes[0]->to_world = glm::translate(glm::mat4(1.0f), scene->camera->cam_pos);
+		//richard->meshes[0]->to_world[3] = richard's matrix[3] if kavin's com
+		//kavin->meshes[0]->to_world[3] = kavin's matrix[3] if richard's com
 
         frame++;
         double curr_time = glfwGetTime();
@@ -149,6 +260,19 @@ void Aldente::go()
             move_prev_ticks = curr_time;
         }
 
+		//Step in simulation
+		dynamicsWorld->stepSimulation(1.f / 60.f, 10);
+
+		vector<vector<Tile*>> toAdd = grid->getGrid();
+		for (int i = 0; i < toAdd.size(); i++) {
+			vector<Tile*> currRow = toAdd[i];
+			for (int j = 0; j < currRow.size(); j++) {
+				currRow[j]->update(hover);
+			}
+		}
+
+		//Test for networking
+		
         glfwGetFramebufferSize(window, &width, &height);
         scene->update_frustum_planes();
         scene->update_frustum_corners(width, height, FAR_PLANE);
@@ -171,9 +295,46 @@ void Aldente::go()
             Util::render_quad();
         }
 
+		//send other person glm::translate(glm::mat4(1.0f),cam_pos)
+		glm::mat4 toSend = glm::translate(glm::mat4(1.0f), scene->camera->cam_pos);
+		server->send_to_all(tw_serialize(toSend));
         glfwSwapBuffers(window);
     }
     destroy();
+}
+
+std::string Aldente::tw_serialize(glm::mat4 mat) {
+	std::string s = "[";
+	for (int i = 0; i < 4; i++) {
+		s += std::to_string(mat[i].x) + " " +
+			 std::to_string(mat[i].y) + " " +
+			 std::to_string(mat[i].z) + " " +
+			 std::to_string(mat[i].w);
+		if (i != 3)
+			s += " ";
+	}
+	return s + "]";
+}
+
+glm::mat4 Aldente::tw_deserialize(std::string msg) {
+	glm::mat4 mat(1.0);
+	if (msg[0] == '[' && msg[msg.length() - 1] == ']') {
+		msg = msg.substr(1);
+		char * n;
+		for (int i = 0; i < 4; i++) {
+			if (i == 0)
+				mat[i].x = strtof(msg.c_str(), &n);
+			else
+				mat[i].x = strtof(n, &n);
+			mat[i].y = strtof(n, &n);
+			mat[i].z = strtof(n, &n);
+			mat[i].w = strtof(n, &n);
+		}
+		return mat;
+	}
+
+	// Should never happen...
+	return mat;
 }
 
 void Aldente::shadow_pass()
@@ -356,7 +517,55 @@ void Aldente::cursor_position_callback(GLFWwindow* window, double x_pos, double 
         camera->cam_front = glm::normalize(front);
         camera->recalculate();
     }
+	
+	// Constructing the ray for picking
+	// The ray Start and End positions, in Normalized Device Coordinates (Have you read Tutorial 4 ?)
+	float ypos = height - (float)y_pos;
+	glm::vec4 lRayStart_NDC(
+		((float)x_pos / (float)width - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
+		((float)ypos / (float)height - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+		-1.0, // The near plane maps to Z=-1 in Normalized Device Coordinates
+		1.0f
+	);
+	glm::vec4 lRayEnd_NDC(
+		((float)x_pos / (float)width - 0.5f) * 2.0f, // [0,1024] -> [-1,1]
+		((float)ypos / (float)height - 0.5f) * 2.0f, // [0, 768] -> [-1,1]
+		0.0,
+		1.0f
+	);
 
+	glm::mat4 M = glm::inverse(scene->P * scene->camera->V);
+	glm::vec4 lRayStart_world = M * lRayStart_NDC; 
+	lRayStart_world/=lRayStart_world.w;
+	glm::vec4 lRayEnd_world   = M * lRayEnd_NDC  ; 
+	lRayEnd_world  /=lRayEnd_world.w;
+
+	glm::vec3 lRayDir_world(lRayEnd_world - lRayStart_world);
+	lRayDir_world = glm::normalize(lRayDir_world);
+
+	glm::vec3 out_end = glm::vec3(lRayStart_world) + lRayDir_world*1000.0f;
+
+	btCollisionWorld::ClosestRayResultCallback RayCallback(
+		btVector3(lRayStart_world.x, lRayStart_world.y, lRayStart_world.z),
+		btVector3(out_end.x, out_end.y, out_end.z)
+	);
+	dynamicsWorld->rayTest(
+		btVector3(lRayStart_world.x, lRayStart_world.y, lRayStart_world.z),
+		btVector3(out_end.x, out_end.y, out_end.z),
+		RayCallback
+	);
+
+	if (RayCallback.hasHit()) {
+		hover = (Tile*)RayCallback.m_collisionObject->getUserPointer();
+	}
+	else {
+		hover = NULL;
+	}
+
+	//fprintf(stderr, "CAM:%f,%f,%f\n", scene->camera->cam_pos.x, scene->camera->cam_pos.y, scene->camera->cam_pos.z);
+	//fprintf(stderr, "RAY:%f,%f,%f\n", scene->camera->cam_pos.x, scene->camera->cam_pos.y, scene->camera->cam_pos.z);
+	//btCollisionShapegrid->getGrid()[0];
+	//fprintf(stderr, "POS:%f,%f,%f\n", scene->camera->cam_pos.x, scene->camera->cam_pos.y, scene->camera->cam_pos.z);
     last_cursor_pos = current_cursor_pos;
 }
 
@@ -373,6 +582,16 @@ void Aldente::mouse_button_callback(GLFWwindow* window, int button, int action, 
             }
             else if (action == GLFW_RELEASE) {
                 lmb_down = false;
+				/*if (hover != NULL) {
+					int x = hover->getX();
+					int z = hover->getZ();
+					if (dynamic_cast<FloorTile*>(hover) == NULL) {
+						hover = new FloorTile(x, z);
+					}
+					else {
+						hover = new WallTile(x, z);
+					}
+				}*/
             }
             break;
         case GLFW_MOUSE_BUTTON_RIGHT:

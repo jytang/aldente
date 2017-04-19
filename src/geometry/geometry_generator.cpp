@@ -290,7 +290,7 @@ Geometry * GeometryGenerator::generate_plane(GLfloat scale, int texture_type)
             }
         }
 
-        plane->attach_texture("assets/textures/WaterWW.png");
+        plane->attachNewTexture("assets/textures/WaterWW.png");
         plane->add_texture_noise = true;
     }
     else
@@ -380,9 +380,9 @@ Geometry * GeometryGenerator::generate_bezier_plane(GLfloat radius, GLuint num_c
     }
 
     if (texture_type == SAND)
-        bez_plane->attach_texture("assets/textures/SandWW2.dds");
+        bez_plane->attachNewTexture("assets/textures/SandWW2.dds");
     else if (texture_type == OBSIDIAN)
-        bez_plane->attach_texture("assets/textures/Obsidian.png");
+        bez_plane->attachNewTexture("assets/textures/Obsidian.png");
 
     bez_plane->populate_buffers();
     geometries.push_back(bez_plane);

@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 
 #include "scene_group.h"
-#include "shaders/shader.h"
+#include "../shaders/shader.h"
 
 class SceneTransform :
 	public SceneGroup

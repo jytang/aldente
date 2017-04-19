@@ -5,10 +5,10 @@
 
 #include "scene_camera.h"
 #include "scene_group.h"
-#include "shaders/shader.h"
-#include "geometry/plane.h"
+#include "../shaders/shader.h"
+#include "../geometry/plane.h"
 #include "scene_trans_anim.h"
-#include "bounding_sphere.h"
+#include "../bounding_sphere.h"
 
 class Scene
 {

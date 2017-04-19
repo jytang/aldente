@@ -1,5 +1,5 @@
 #include "scene_group.h"
-#include "shaders/shader.h"
+#include "../shaders/shader.h"
 
 SceneGroup::SceneGroup() {}
 

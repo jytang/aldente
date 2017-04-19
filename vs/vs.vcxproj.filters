@@ -1,159 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
+    <ClCompile Include="..\src\aldente.cpp" />
+    <ClCompile Include="..\src\assetLoader.cpp" />
+    <ClCompile Include="..\src\bounding_sphere.cpp" />
+    <ClCompile Include="..\src\geometry\geometry.cpp" />
+    <ClCompile Include="..\src\geometry\geometry_generator.cpp" />
+    <ClCompile Include="..\src\grid.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\net\NetworkClient.cpp" />
+    <ClCompile Include="..\src\net\NetworkServer.cpp" />
+    <ClCompile Include="..\src\scene\scene.cpp" />
+    <ClCompile Include="..\src\scene\scene_animation.cpp" />
+    <ClCompile Include="..\src\scene\scene_camera.cpp" />
+    <ClCompile Include="..\src\scene\scene_group.cpp" />
+    <ClCompile Include="..\src\scene\scene_model.cpp" />
+    <ClCompile Include="..\src\scene\scene_transform.cpp" />
+    <ClCompile Include="..\src\scene\scene_trans_anim.cpp" />
+    <ClCompile Include="..\src\shaders\basic_shader.cpp" />
+    <ClCompile Include="..\src\shaders\shader.cpp" />
+    <ClCompile Include="..\src\shaders\shader_manager.cpp" />
+    <ClCompile Include="..\src\shaders\shadow_shader.cpp" />
+    <ClCompile Include="..\src\shaders\skybox_shader.cpp" />
+    <ClCompile Include="..\src\tile.cpp" />
+    <ClCompile Include="..\src\util\config.cpp" />
+    <ClCompile Include="..\src\util\util.cpp" />
+    <ClCompile Include="..\src\window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\aldente.h" />
+    <ClInclude Include="..\src\assetLoader.h" />
+    <ClInclude Include="..\src\bounding_sphere.h" />
+    <ClInclude Include="..\src\geometry\geometry.h" />
+    <ClInclude Include="..\src\geometry\geometry_generator.h" />
+    <ClInclude Include="..\src\geometry\plane.h" />
+    <ClInclude Include="..\src\global.h" />
+    <ClInclude Include="..\src\grid.h" />
+    <ClInclude Include="..\src\material.h" />
+    <ClInclude Include="..\src\mesh.h" />
+    <ClInclude Include="..\src\net\threadsafe_queue.h" />
+    <ClInclude Include="..\src\scene\scene.h" />
+    <ClInclude Include="..\src\scene\scene_animation.h" />
+    <ClInclude Include="..\src\scene\scene_camera.h" />
+    <ClInclude Include="..\src\scene\scene_group.h" />
+    <ClInclude Include="..\src\scene\scene_model.h" />
+    <ClInclude Include="..\src\scene\scene_node.h" />
+    <ClInclude Include="..\src\scene\scene_transform.h" />
+    <ClInclude Include="..\src\scene\scene_trans_anim.h" />
+    <ClInclude Include="..\src\shaders\basic_shader.h" />
+    <ClInclude Include="..\src\shaders\shader.h" />
+    <ClInclude Include="..\src\shaders\shader_manager.h" />
+    <ClInclude Include="..\src\shaders\shadow_shader.h" />
+    <ClInclude Include="..\src\shaders\skybox_shader.h" />
+    <ClInclude Include="..\src\tile.h" />
+    <ClInclude Include="..\src\util\colors.h" />
+    <ClInclude Include="..\src\util\config.h" />
+    <ClInclude Include="..\src\util\util.h" />
+    <ClInclude Include="..\src\window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\aldente.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\bounding_sphere.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\geometry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\geometry\geometry_generator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene_animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene_camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene_group.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene_model.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene_trans_anim.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\scene\scene_transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\shaders\basic_shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\shaders\shadow_shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\shaders\skybox_shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\util\config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\util\util.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\shaders\shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\shaders\shader_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\aldente.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\bounding_sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\geometry_generator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\geometry\plane.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_trans_anim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\scene\scene_transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\shaders\basic_shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\shaders\shadow_shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\shaders\skybox_shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\colors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\util\util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\shaders\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\shaders\shader_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
