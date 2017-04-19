@@ -174,8 +174,8 @@ SceneModel* AssetLoader::getModel(std::string name) {
 		error += name;
 		error += " was not loaded. Check for fbx file and double check filename.\n";
 		fprintf(stderr, error.c_str());
-		SceneModel* default = new SceneModel();
-		return default;
+		SceneModel* dflt = new SceneModel();
+		return dflt;
 	}
 	return assets[name];
 }

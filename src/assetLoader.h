@@ -8,7 +8,6 @@
 
 
 #include <boost/range.hpp>
-#include <filesystem>
 #include <boost/filesystem.hpp>
 
 #include <assimp/Importer.hpp>
