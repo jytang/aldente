@@ -211,9 +211,6 @@ void Aldente::go()
 
     while (!glfwWindowShouldClose(window))
     {
-		if (is_server)
-			server->send_to_all("asdf\n");
-
 		glfwPollEvents();
         input::process();
 
