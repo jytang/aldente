@@ -7,7 +7,7 @@ class SkyboxShader :
 	public Shader
 {
 public:
-	GLuint current_texture_id;
+	GLuint current_texture_id = 0;
 	std::vector<GLuint> texture_ids;
 	GLuint VAO, VBO;
 
