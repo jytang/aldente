@@ -267,20 +267,20 @@ void Aldente::go()
 }
 
 void Aldente::connect_to_server() {
-	bool first_attempt = true;
+    bool first_attempt = true;
 
-	// Try connecting to the host every 5 seconds.
-	while (!connected_to_server) {
-		if (first_attempt || glfwGetTime() - time_last_connect_attempt > 5.f) {
-			first_attempt = false;
-			std::cerr << "Attempting to connect to " << server_host << "...\n";
-			connected_to_server = client->init();
-			time_last_connect_attempt = glfwGetTime();
-			if (connected_to_server) {
-				std::cerr << "Established connection.\n";
-			}
-		}
-	}
+    // Try connecting to the host every 5 seconds.
+    while (!connected_to_server) {
+        if (first_attempt || glfwGetTime() - time_last_connect_attempt > 5.f) {
+            first_attempt = false;
+            std::cerr << "Attempting to connect to " << server_host << "...\n";
+            connected_to_server = client->init();
+            time_last_connect_attempt = glfwGetTime();
+            if (connected_to_server) {
+                std::cerr << "Established connection.\n";
+            }
+        }
+    }
 }
 
 
