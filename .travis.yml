@@ -1,0 +1,5 @@
+language: cpp
+solution: vs/aldente.sln
+install:
+  - nuget restore vs/aldente.sln
+  - make
