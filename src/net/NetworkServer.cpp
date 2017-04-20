@@ -80,7 +80,6 @@ void TcpServer::send_to_all(std::string message) {
     return;
   }
   
-  std::cerr << "[server] writing to clients, connected: " << client_list.size() << "\n";
   for (auto c = client_list.begin(); c != client_list.end(); /* empty */) {
 	  bool success = c->second->send(message);
 	  if (!success) {

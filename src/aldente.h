@@ -10,11 +10,21 @@
 #include "scene/scene.h"
 #include "grid.h"
 #include "assetLoader.h"
+#include "net/NetworkClient.h"
+#include "net/NetworkServer.h"
 
 class Aldente
 {
 private:
 	GLFWwindow *window;
+	
+	// Networking
+	TcpServer* server;
+	NetworkClient* client;
+	bool is_server;
+	std::string server_host;
+	bool connected_to_server = false;
+	double time_last_connect_attempt;
 
 	void handle_movement();
 	void setup_scenes();
@@ -22,6 +32,7 @@ private:
 	void setup_opengl();
 	void setup_shaders();
 	void destroy();
+	void connect_to_server();
 	/* static callbacks */
 	static void error_callback(int error, const char* description);
 	static void resize_callback(GLFWwindow* window, int width, int height);

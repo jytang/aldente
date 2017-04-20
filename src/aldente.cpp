@@ -17,8 +17,6 @@
 #include "global.h"
 #include "util/config.h"
 #include "btBulletDynamicsCommon.h"
-#include "net/NetworkClient.h"
-#include "net/NetworkServer.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -202,48 +200,19 @@ void Aldente::go()
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
 
-	bool is_server;
-	std::string server_host;
 	Config::config->get_value(Config::str_is_server, is_server);
 	Config::config->get_value(Config::str_server_ip, server_host);
 
-	TcpServer* server;
-	NetworkClient* client;
-	bool connected_to_server = true;
-	double last_connect_attempt;
+	server = is_server ? new TcpServer(9000) : nullptr;
+	client = new NetworkClient(server_host);
 
-	if (is_server) {
-		server = new TcpServer(9000);
-		client = new NetworkClient("localhost");
-		connected_to_server = client->init();
-		std::cerr << "Connected to server.\n";
-	}
-	else {
-		server = nullptr;
-		client = new NetworkClient(server_host);
-		connected_to_server = client->init();
-		last_connect_attempt = glfwGetTime();
-	}
+	// Repeatedly try establishing connection in separate thread.
+	std::thread(&Aldente::connect_to_server, this).detach();
 
     while (!glfwWindowShouldClose(window))
     {
 		if (is_server)
 			server->send_to_all("asdf\n");
-
-		if (client->is_initialized()) {
-			std::cerr << "Messages? " << client->has_messages() << "\n";
-		}
-		else {
-			// Attempts to connect to server every 5 sec.
-			// TODO: do this in a separate thread to prevent frame loss
-			if (glfwGetTime() - last_connect_attempt > 5.f) {
-				connected_to_server = client->init();
-				last_connect_attempt = glfwGetTime();
-				if (connected_to_server) {
-					std::cerr << "Connected to server.\n";
-				}
-			}
-		}
 
 		glfwPollEvents();
         input::process();
@@ -299,6 +268,24 @@ void Aldente::go()
     }
     destroy();
 }
+
+void Aldente::connect_to_server() {
+	bool first_attempt = true;
+
+	// Try connecting to the host every 5 seconds.
+	while (!connected_to_server) {
+		if (first_attempt || glfwGetTime() - time_last_connect_attempt > 5.f) {
+			first_attempt = false;
+			std::cerr << "Attempting to connect to " << server_host << "...\n";
+			connected_to_server = client->init();
+			time_last_connect_attempt = glfwGetTime();
+			if (connected_to_server) {
+				std::cerr << "Established connection.\n";
+			}
+		}
+	}
+}
+
 
 void Aldente::shadow_pass()
 {
