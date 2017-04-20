@@ -211,7 +211,7 @@ void Aldente::go()
 
     while (!glfwWindowShouldClose(window))
     {
-		glfwPollEvents();
+        glfwPollEvents();
         input::process();
 
         frame++;
