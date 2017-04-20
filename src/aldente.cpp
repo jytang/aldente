@@ -302,16 +302,6 @@ void Aldente::handle_movement()
     camera->recalculate();
 }
 
-void print_input_event(events::InputData d) {
-    fprintf(stderr,
-            "InputEvent:\n"
-            "  joystick: %d\n"
-            "  is_button: %d\n"
-            "  which: %d\n"
-            "  level: %d\n",
-            d.joystick, d.is_button, d.which, d.level);
-}
-
 void Aldente::setup_callbacks()
 {
     glfwSetErrorCallback(error_callback);
@@ -321,7 +311,15 @@ void Aldente::setup_callbacks()
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetFramebufferSizeCallback(window, resize_callback);
 
-    events::InputEvent::subscribe(&print_input_event);
+    events::InputEvent::subscribe([](events::InputData d) {
+        fprintf(stderr,
+                "InputEvent:\n"
+                "  joystick: %d\n"
+                "  is_button: %d\n"
+                "  which: %d\n"
+                "  level: %d\n",
+                d.joystick, d.is_button, d.which, d.level);
+    });
 }
 
 void Aldente::setup_opengl()
