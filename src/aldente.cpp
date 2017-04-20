@@ -207,6 +207,7 @@ void Aldente::go()
 
     while (!glfwWindowShouldClose(window))
     {
+        server.send_to_all("asdf\n");
         std::cerr << "Messages? " << client.has_messages() << "\n";
         glfwPollEvents();
         input::process();

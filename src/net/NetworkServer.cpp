@@ -80,14 +80,16 @@ void TcpServer::send_to_all(std::string message) {
     return;
   }
   
-  std::cerr << "[" << client_list.size() << "]\n";
-  for (auto const &c : client_list) {
-    std::cerr << "s (" << c.first << ") " << message;
-    bool success = c.second->send(message);
-    if (!success) {
-      std::cerr << "Write failed!\n";
-      client_list.erase(c.first);
-    }
+  std::cerr << "[server] writing to clients, connected: " << client_list.size() << "\n";
+  for (auto c = client_list.begin(); c != client_list.end(); /* empty */) {
+	  bool success = c->second->send(message);
+	  if (!success) {
+		  std::cerr << "Write failed!\n";
+		  c = client_list.erase(c);
+	  }
+	  else {
+		  c++;
+	  }
   }
 }
 
@@ -125,11 +127,24 @@ void TcpServer::handle_accept(TcpConnection::pointer new_connection,
     client_list[++next_id] = new_connection;
     new_connection->start();
   }
+  else {
+	  std::cerr << "accept() error: " << error << "," << error.message() << "\n";
+  }
 
   // Accept the next client.
   start_accept();
 }
 
 void TcpServer::run(boost::asio::io_service& io_service) {
-  io_service.run();
+	while (!io_service.stopped()) {
+		try {
+			io_service.run();
+		}
+		catch (std::exception const&  ex) {
+			std::cerr << "io_service except: " << ex.what() << "\n";
+		}
+		catch (...) {
+			std::cerr << "io_service error\n";
+		} // temporary ignore
+	}
 }
