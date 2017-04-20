@@ -12,7 +12,8 @@ MAIN_SOURCES    := $(shell find $(SRC_DIR) -name '*.cpp' -type 'f' | sort)
 MAIN_OBJECTS    := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 
 LIBS            := -lGLEW -lglfw -lassimp -lSOIL
-LIBS            += -lboost_system -lboost_filesystem
+LIBS            += -lboost_system -lboost_filesystem -lboost_thread
+LIBS            += -pthread
 LIBS            += -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
 INCS            += $(shell pkg-config bullet --cflags)
 ifeq ($(shell uname),Darwin)
