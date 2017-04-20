@@ -1,3 +1,5 @@
+#include "input/process.h"
+
 #include <GLFW/glfw3.h>
 #include <vector>
 #include "events/input.h"
