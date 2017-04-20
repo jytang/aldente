@@ -3,6 +3,7 @@
 
 aldente
 .build/
+.dep/
 
 # User-specific files
 *.suo
