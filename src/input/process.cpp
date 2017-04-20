@@ -19,12 +19,12 @@ void process() {
       const bool same = p_btns[i] == btns[i];
       p_btns[i] = btns[i];
       if (!same) {
-        events::InputData d;
-        d.joystick = 1;
+        events::JoystickData d;
+        d.id = 1;
         d.is_button = true;
-        d.which = i;
-        d.level = btns[i] == GLFW_PRESS;
-        events::InputEvent::dispatch(d);
+        d.input = i;
+        d.state = btns[i] == GLFW_PRESS;
+        events::JoystickEvent::dispatch(d);
       }
     }
   }
@@ -39,12 +39,12 @@ void process() {
       const bool same = p_axes[i] == level;
       p_axes[i] = level;
       if (!same) {
-        events::InputData d;
-        d.joystick = 1;
+        events::JoystickData d;
+        d.id = 1;
         d.is_button = false;
-        d.which = i;
-        d.level = level;
-        events::InputEvent::dispatch(d);
+        d.input = i;
+        d.state = level;
+        events::JoystickEvent::dispatch(d);
       }
     }
   }

@@ -311,14 +311,14 @@ void Aldente::setup_callbacks()
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetFramebufferSizeCallback(window, resize_callback);
 
-    events::InputEvent::subscribe([](events::InputData d) {
+    events::JoystickEvent::subscribe([](events::JoystickData d) {
         fprintf(stderr,
-                "InputEvent:\n"
-                "  joystick: %d\n"
+                "JoystickEvent:\n"
+                "  id: %d\n"
                 "  is_button: %d\n"
-                "  which: %d\n"
-                "  level: %d\n",
-                d.joystick, d.is_button, d.which, d.level);
+                "  input: %d\n"
+                "  state: %d\n",
+                d.id, d.is_button, d.input, d.state);
     });
 }
 
