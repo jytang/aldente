@@ -10,6 +10,8 @@
 #include <cfloat>
 #include <string>
 
+#include "events/input.h"
+#include "input/process.h"
 #include "util/util.h"
 #include "util/colors.h"
 #include "global.h"
@@ -18,6 +20,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+namespace input = kuuhaku::input;
+namespace events = kuuhaku::events;
 
 /* global vars */
 Scene* scene;
@@ -197,12 +202,13 @@ void Aldente::go()
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+        input::process();
 
         frame++;
         double curr_time = glfwGetTime();
         if (curr_time - prev_ticks > 1.f)
         {
-            std::cerr << "FPS: " << frame << std::endl;
+            /* std::cerr << "FPS: " << frame << std::endl; */
             frame = 0;
             prev_ticks = curr_time;
         }
@@ -280,13 +286,6 @@ void Aldente::handle_movement()
     int btn_c;
     const unsigned char* btns =
         glfwGetJoystickButtons(GLFW_JOYSTICK_1, &btn_c);
-    if (btns) {
-        for (int i = 0; i < btn_c; ++i) {
-            if (btns[i] == GLFW_PRESS) {
-                std::cerr << "PRESSING " << i << std::endl;
-            }
-        }
-    }
 
     if (keys[GLFW_KEY_W] || btns && btns[13])
         displacement += cam_step * camera->cam_front;
@@ -303,6 +302,16 @@ void Aldente::handle_movement()
     camera->recalculate();
 }
 
+void print_input_event(events::InputData d) {
+    fprintf(stderr,
+            "InputEvent:\n"
+            "  joystick: %d\n"
+            "  is_button: %d\n"
+            "  which: %d\n"
+            "  level: %d\n",
+            d.joystick, d.is_button, d.which, d.level);
+}
+
 void Aldente::setup_callbacks()
 {
     glfwSetErrorCallback(error_callback);
@@ -311,6 +320,8 @@ void Aldente::setup_callbacks()
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetFramebufferSizeCallback(window, resize_callback);
+
+    events::InputEvent.subscribe(&print_input_event);
 }
 
 void Aldente::setup_opengl()
