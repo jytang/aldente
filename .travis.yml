@@ -1,5 +1,6 @@
-language: cpp
+language: csharp
 solution: vs/aldente.sln
 install:
   - nuget restore vs/aldente.sln
+script:
   - make
