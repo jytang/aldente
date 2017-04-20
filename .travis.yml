@@ -1,6 +1,6 @@
-language: csharp
-solution: vs/aldente.sln
+language: cpp
 install:
+  - sudo apt-get install nuget
   - nuget restore vs/aldente.sln
 script:
   - make
