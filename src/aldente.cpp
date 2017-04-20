@@ -202,21 +202,57 @@ void Aldente::go()
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
 
-    TcpServer server(9000);
-    NetworkClient client("localhost");
+	bool is_server;
+	std::string server_host;
+	Config::config->get_value(Config::str_is_server, is_server);
+	Config::config->get_value(Config::str_server_ip, server_host);
+
+	TcpServer* server;
+	NetworkClient* client;
+	bool connected_to_server = true;
+	double last_connect_attempt;
+
+	if (is_server) {
+		server = new TcpServer(9000);
+		client = new NetworkClient("localhost");
+		connected_to_server = client->init();
+		std::cerr << "Connected to server.\n";
+	}
+	else {
+		server = nullptr;
+		client = new NetworkClient(server_host);
+		connected_to_server = client->init();
+		last_connect_attempt = glfwGetTime();
+	}
 
     while (!glfwWindowShouldClose(window))
     {
-        server.send_to_all("asdf\n");
-        std::cerr << "Messages? " << client.has_messages() << "\n";
-        glfwPollEvents();
+		if (is_server)
+			server->send_to_all("asdf\n");
+
+		if (client->is_initialized()) {
+			std::cerr << "Messages? " << client->has_messages() << "\n";
+		}
+		else {
+			// Attempts to connect to server every 5 sec.
+			// TODO: do this in a separate thread to prevent frame loss
+			if (glfwGetTime() - last_connect_attempt > 5.f) {
+				connected_to_server = client->init();
+				last_connect_attempt = glfwGetTime();
+				if (connected_to_server) {
+					std::cerr << "Connected to server.\n";
+				}
+			}
+		}
+
+		glfwPollEvents();
         input::process();
 
         frame++;
         double curr_time = glfwGetTime();
         if (curr_time - prev_ticks > 1.f)
         {
-            /* std::cerr << "FPS: " << frame << std::endl; */
+            std::cerr << "FPS: " << frame << std::endl;
             frame = 0;
             prev_ticks = curr_time;
         }

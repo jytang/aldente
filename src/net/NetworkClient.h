@@ -25,6 +25,12 @@ public:
   // Destructor.
   ~NetworkClient();
 
+  // Synchronously tries to connect to host. Returns true if successful.
+  bool init();
+
+  // Returns true if client was successfully initialized.
+  bool is_initialized() const;
+
   // Synchronously sends a message to the server. 
   void send(std::string message);
 
@@ -49,4 +55,6 @@ private:
   boost::array<char, BUFSIZ> recv_buffer;
   boost::thread service_thread;
   ThreadSafeQueue<std::string> message_queue;
+  std::string host;
+  bool initialized;
 };

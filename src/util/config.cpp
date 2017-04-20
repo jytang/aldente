@@ -6,6 +6,8 @@ string Config::str_screen_width = "ScreenWidth";
 string Config::str_screen_height = "ScreenHeight";
 string Config::str_full_screen = "FullScreen";
 string Config::str_game_name = "GameName";
+string Config::str_is_server = "IsServer";
+string Config::str_server_ip = "ServerIp";
 
 typedef pair<string, string> StringPair;
 Config* Config::config = new Config();

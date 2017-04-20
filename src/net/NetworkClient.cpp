@@ -1,17 +1,31 @@
 #include "NetworkClient.h"
 
 NetworkClient::NetworkClient(std::string host) :
-	socket(io_service),
-	service_thread(boost::bind(&NetworkClient::run_service, this)) {
-	tcp::resolver resolver(io_service);
-	tcp::resolver::query query(tcp::v4(), host, PORT);
-	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
-	boost::asio::connect(socket, endpoint_iterator);
+	socket(io_service), host(host) {
 }
 
 NetworkClient::~NetworkClient() {
 	io_service.stop();
 	service_thread.join();
+}
+
+bool NetworkClient::init() {
+	tcp::resolver resolver(io_service);
+	tcp::resolver::query query(tcp::v4(), host, PORT);
+	tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+	try {
+		boost::asio::connect(socket, endpoint_iterator);
+	}
+	catch (...) {
+		return false;
+	}
+	service_thread = boost::thread(boost::bind(&NetworkClient::run_service, this));
+	initialized = true;
+	return true;
+}
+
+bool NetworkClient::is_initialized() const {
+	return initialized;
 }
 
 void NetworkClient::send(std::string message) {

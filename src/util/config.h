@@ -20,6 +20,8 @@ public:
 	static std::string str_screen_height;
 	static std::string str_full_screen;
 	static std::string str_game_name;
+	static std::string str_is_server;
+	static std::string str_server_ip;
 
 public:
 	static Config* config; // Use this static reference instead of your own call to the constructor
