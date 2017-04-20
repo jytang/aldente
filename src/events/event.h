@@ -18,6 +18,7 @@ private:
 
 public:
   // Subscribes `cb` to this event.
+  // It's possible to use a stateless lambda here.
   static void subscribe(cb_t cb) {
     callbacks.insert(cb);
   }
