@@ -19,7 +19,7 @@ void process() {
       const bool same = p_btns[i] == btns[i];
       p_btns[i] = btns[i];
       if (!same) {
-        events::InputEvent.dispatch({
+        events::InputEvent::dispatch({
           .joystick = 1,
           .is_button = true,
           .which = i,
@@ -39,7 +39,7 @@ void process() {
       const bool same = p_axes[i] == level;
       p_axes[i] = level;
       if (!same) {
-        events::InputEvent.dispatch({
+        events::InputEvent::dispatch({
           .joystick = 1,
           .is_button = false,
           .which = i,

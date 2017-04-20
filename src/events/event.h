@@ -14,25 +14,29 @@ private:
   typedef void (*cb_t)(T);
 
   // The internal vector of event callbacks.
-  std::unordered_set<cb_t> callbacks;
+  static std::unordered_set<cb_t> callbacks;
 
 public:
   // Subscribes `cb` to this event.
-  void subscribe(cb_t cb) {
+  static void subscribe(cb_t cb) {
     callbacks.insert(cb);
   }
 
   // Unsubscribes `cb` to this event.
-  void unsubscribe(cb_t cb) {
+  static void unsubscribe(cb_t cb) {
     callbacks.erase(cb);
   }
 
   // Dispatches an event with payload `data`.
-  void dispatch(T data) {
+  static void dispatch(T data) {
     for (cb_t cb : callbacks)
       (*cb)(data);
   }
 };
+
+template<class T>
+std::unordered_set<void (*)(T)> Event<T>::callbacks =
+  std::unordered_set<void (*)(T)>();
 
 }
 }

@@ -12,7 +12,8 @@ struct InputData {
   int level; // If button, zero is not pressed, nonzero is pressed.
              // Otherwise, is axis analog level.
 };
-extern Event<InputData> InputEvent;
+// A joystick input.
+class InputEvent : public Event<InputData> {};
 
 }
 }

@@ -287,13 +287,13 @@ void Aldente::handle_movement()
     const unsigned char* btns =
         glfwGetJoystickButtons(GLFW_JOYSTICK_1, &btn_c);
 
-    if (keys[GLFW_KEY_W] || btns && btns[13])
+    if (keys[GLFW_KEY_W] || (btns && btns[13]))
         displacement += cam_step * camera->cam_front;
-    if (keys[GLFW_KEY_S] || btns && btns[15])
+    if (keys[GLFW_KEY_S] || (btns && btns[15]))
         displacement -= cam_step * camera->cam_front;
-    if (keys[GLFW_KEY_A] || btns && btns[16])
+    if (keys[GLFW_KEY_A] || (btns && btns[16]))
         displacement -= glm::normalize(glm::cross(camera->cam_front, camera->cam_up)) * cam_step;
-    if (keys[GLFW_KEY_D] || btns && btns[14])
+    if (keys[GLFW_KEY_D] || (btns && btns[14]))
         displacement += glm::normalize(glm::cross(camera->cam_front, camera->cam_up)) * cam_step;
     if (keys[GLFW_KEY_SPACE])
         displacement += cam_step * camera->cam_up;
@@ -321,7 +321,7 @@ void Aldente::setup_callbacks()
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetFramebufferSizeCallback(window, resize_callback);
 
-    events::InputEvent.subscribe(&print_input_event);
+    events::InputEvent::subscribe(&print_input_event);
 }
 
 void Aldente::setup_opengl()
