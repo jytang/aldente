@@ -34,9 +34,6 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(DEP_DIR)/%.dep
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
 
-clean:
-	rm -rf $(BUILD_DIR) $(DEP_DIR) $(MAIN_TARGET)
-
 # Rule for creating dependency files.
 $(DEP_DIR)/%.dep: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
@@ -44,3 +41,5 @@ $(DEP_DIR)/%.dep: $(SRC_DIR)/%.cpp
 
 include $(DEPFILES)
 
+clean:
+	rm -rf $(BUILD_DIR) $(DEP_DIR) $(MAIN_TARGET)
