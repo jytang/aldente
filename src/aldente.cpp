@@ -199,7 +199,6 @@ void Aldente::go()
 	SceneModel* tmodel = test->getModel(std::string("textured.fbx"));
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
-
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -209,7 +208,7 @@ void Aldente::go()
         double curr_time = glfwGetTime();
         if (curr_time - prev_ticks > 1.f)
         {
-            /*std::cerr << "FPS: " << frame << std::endl;*/
+            /* std::cerr << "FPS: " << frame << std::endl; */
             frame = 0;
             prev_ticks = curr_time;
         }
