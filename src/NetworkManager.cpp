@@ -8,7 +8,7 @@ NetworkManager::NetworkManager() {
     Config::config->get_value(Config::str_server_ip, server_host);
     Config::config->get_value(Config::str_port, port);
 
-    server = is_server ? new TcpServer(port) : nullptr;
+    server = is_server ? new NetworkServer(port) : nullptr;
     client = new NetworkClient(&io_service);
 
     //std::thread(&NetworkManager::run_service, this).detach();

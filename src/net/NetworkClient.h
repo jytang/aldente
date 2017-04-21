@@ -29,8 +29,8 @@ public:
   // Returns true if client was successfully connected.
   bool is_connected() const;
 
-  // Synchronously sends a message to the server. 
-  void send(std::string& message);
+  // Synchronously sends a message to the server. Returns true if successful.
+  bool send(std::string& message);
 
   // Removes and returns a message from the FIFO queue.
   bool read_message(std::string& message);

@@ -8,7 +8,7 @@ public:
     NetworkManager();
     void connect();
 
-    inline TcpServer* get_server() const { return server; };
+    inline NetworkServer* get_server() const { return server; };
     inline NetworkClient* get_client() const { return client; };
 
 private:
@@ -19,7 +19,7 @@ private:
     bool is_server;
     int port;
     bool is_connected = false;
-    TcpServer* server;
+    NetworkServer* server;
     NetworkClient* client;
     boost::asio::io_service io_service;
 };

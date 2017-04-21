@@ -8,38 +8,34 @@
 #include <chrono>
 #include <thread>
 #include <ctime>
+#include <mutex>
+#include <map>
 
 using boost::asio::ip::tcp;
 
 /**
  * Represents one TCP connection to a client.
  */
-class TcpConnection : public boost::enable_shared_from_this<TcpConnection> {
+class Connection : public boost::enable_shared_from_this<Connection> {
 public:
-  typedef boost::shared_ptr<TcpConnection> pointer;
+  typedef boost::shared_ptr<Connection> pointer;
 
-  // Create a shared pointer to this TCP connection.
-  static pointer create(boost::asio::io_service& io_service);
+  // Initializes the socket.
+  Connection(boost::asio::io_service& io_service);
 
   // Returns this connection's socket.
   tcp::socket& get_socket();
 
   // When connection starts, begin reading.
-  void start();
+  void read_loop();
   
   // Sends a message to this client. Returns true if write was successful.
   bool send(std::string message);
   
-  // Returns true if there are messages in the queue.
-  bool has_messages();
-  
   // Removes a message and returns it.
-  std::string pop_message();
+  bool Connection::read_message(std::string& message);
 
 private:
-  // Initializes the socket.
-  TcpConnection(boost::asio::io_service& io_service);
-  
   // Callback for when an asynchronous  read completes. 
   void handle_read(const boost::system::error_code& error, size_t bytes_transferred);
 
@@ -51,30 +47,32 @@ private:
 /**
  * Represents the single TCP server, managing many client connections.
  */
-class TcpServer {
+class NetworkServer {
 public:
   // Initializes this server with the given port.
-  TcpServer(unsigned int port);
+  NetworkServer(unsigned int port);
   
   // Sends a message to all clients.
   void send_to_all(std::string message);
   
   // Read all messages from all clients.
-  std::vector<std::string> read_all_messages();
+  // Returns a mapping of client id to list of messages.
+  std::map<int, std::vector<std::string>> read_all_messages();
 
 private:
   // Begin accepting new clients.
   void start_accept();
 
   // Callback for when a client is connected.
-  void handle_accept(TcpConnection::pointer new_connection,
+  void handle_accept(Connection::pointer new_connection,
       const boost::system::error_code& error);
 
   // Run the io_service. Is run on a separate thread to avoid blocking.
   static void run(boost::asio::io_service& io_service);
   
   boost::asio::io_service io_service;
-  tcp::acceptor acceptor_;
-  std::map<int, TcpConnection::pointer> client_list;
+  tcp::acceptor acceptor;
+  std::map<int, Connection::pointer> client_list;
+  mutex client_list_mutex;
   int next_id;
 };

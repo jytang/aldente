@@ -27,8 +27,11 @@ bool NetworkClient::is_connected() const {
     return connected;
 }
 
-void NetworkClient::send(std::string& message) {
+bool NetworkClient::send(std::string& message) {
+    if (!connected)
+        return false;
     boost::asio::write(socket, boost::asio::buffer(message));
+    return true;
 }
 
 bool NetworkClient::read_message(std::string& message) {

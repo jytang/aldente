@@ -1,21 +1,20 @@
 #include "NetworkServer.h"
 
-TcpConnection::pointer TcpConnection::create(boost::asio::io_service& io_service) {
-  return pointer(new TcpConnection(io_service));
-}
+Connection::Connection(boost::asio::io_service& io_service)
+    : socket(io_service) {}
 
-tcp::socket& TcpConnection::get_socket() {
+tcp::socket& Connection::get_socket() {
   return socket;
 }
 
-void TcpConnection::start() {
+void Connection::read_loop() {
   socket.async_read_some(boost::asio::buffer(rcvbuf),
-      boost::bind(&TcpConnection::handle_read, shared_from_this(),
+      boost::bind(&Connection::handle_read, shared_from_this(),
         boost::asio::placeholders::error,
         boost::asio::placeholders::bytes_transferred));
 }
 
-bool TcpConnection::send(std::string message) {
+bool Connection::send(std::string message) {
   if (!socket.is_open()) {
     return false;
   }
@@ -37,22 +36,17 @@ bool TcpConnection::send(std::string message) {
   return true;
 }
 
-bool TcpConnection::has_messages() {
-  return !message_queue.empty();
+bool Connection::read_message(std::string& message) {
+    if (message_queue.empty())
+        return false;
+    message = message_queue.pop();
+    return true;
 }
 
-std::string TcpConnection::pop_message() {
-  if (!has_messages()) 
-    throw std::logic_error("No messages"); 
-  return message_queue.pop(); 
-}
-
-TcpConnection::TcpConnection(boost::asio::io_service& io_service)
-  : socket(io_service) {}
-
-void TcpConnection::handle_read(const boost::system::error_code& error, size_t bytes_transferred) {    
+void Connection::handle_read(const boost::system::error_code& error, size_t bytes_transferred) {    
   if (!error) {
     message_queue.push(rcvbuf);
+    std::cerr << "[s] recv: " << std::string(rcvbuf);
   }
   else if (error != boost::asio::error::eof) {
     std::cerr << "FATAL handle_read error: " << error << "\n";
@@ -60,71 +54,75 @@ void TcpConnection::handle_read(const boost::system::error_code& error, size_t b
   }
 
   // Wait for and read the next message.
-  socket.async_read_some(boost::asio::buffer(rcvbuf),
-      boost::bind(&TcpConnection::handle_read, shared_from_this(),
-        boost::asio::placeholders::error,
-        boost::asio::placeholders::bytes_transferred));
+  read_loop();
 }
 
-TcpServer::TcpServer(unsigned int port) :
-  acceptor_(io_service, tcp::endpoint(tcp::v4(), port)), next_id(0) {
+NetworkServer::NetworkServer(unsigned int port) :
+  acceptor(io_service, tcp::endpoint(tcp::v4(), port)), next_id(0) {
   start_accept();
   
   // Run the io_service in a separate thread so it's non-blocking.
-  std::thread(TcpServer::run, std::ref(io_service)).detach();
+  std::thread(NetworkServer::run, std::ref(io_service)).detach();
 }
 
-void TcpServer::send_to_all(std::string message) {
+void NetworkServer::send_to_all(std::string message) {
+  unique_lock<mutex> lock(client_list_mutex);
+
   // No clients connected.
-  if (client_list.size() == 0) {
+  if (client_list.empty()) {
     return;
   }
   
   for (auto c = client_list.begin(); c != client_list.end(); /* empty */) {
-      bool success = c->second->send(message);
-      if (!success) {
-          std::cerr << "Write failed!\n";
-          c = client_list.erase(c);
-      }
-      else {
-          c++;
-      }
+    bool success = c->second->send(message);
+    if (!success) {
+      std::cerr << "Write failed!\n";
+      // If write failed, it's likely because of disconnect. Remove from clients.
+      c = client_list.erase(c);
+    }
+    else {
+      c++;
+    }
   }
 }
 
-std::vector<std::string> TcpServer::read_all_messages() {
-  std::vector<std::string> messages;
+std::map<int, std::vector<std::string>> NetworkServer::read_all_messages() {
+  std::map<int, std::vector<std::string>> messages;
+  unique_lock<mutex> lock(client_list_mutex);
   
   // No clients connected.
-  if (client_list.size() == 0) {
+  if (client_list.empty()) {
     return messages;
   }
   
   for (auto const &c : client_list) {
-    while (c.second->has_messages()) {
-      auto message = c.second->pop_message();
-      messages.push_back(message);
+    messages[c.first] = std::vector<std::string>();
+    std::string message;
+    while (c.second->read_message(message)) {
+        messages[c.first].push_back(message);
     }
   }
   
   return messages;
 }
 
-void TcpServer::start_accept() {
-  TcpConnection::pointer new_connection =
-    TcpConnection::create(acceptor_.get_io_service());
+void NetworkServer::start_accept() {
+  Connection::pointer new_connection =
+    Connection::pointer(new Connection(acceptor.get_io_service()));
 
-  acceptor_.async_accept(new_connection->get_socket(),
-      boost::bind(&TcpServer::handle_accept, this, new_connection,
+  acceptor.async_accept(new_connection->get_socket(),
+      boost::bind(&NetworkServer::handle_accept, this, new_connection,
         boost::asio::placeholders::error));
 }
 
-void TcpServer::handle_accept(TcpConnection::pointer new_connection,
+void NetworkServer::handle_accept(Connection::pointer new_connection,
     const boost::system::error_code& error) {
   if (!error) {
     std::cerr << "Accepted new connection." << std::endl;
+    unique_lock<mutex> lock(client_list_mutex);
     client_list[++next_id] = new_connection;
-    new_connection->start();
+    lock.unlock();
+    new_connection->read_loop();
   }
   else {
       std::cerr << "accept() error: " << error << "," << error.message() << "\n";
@@ -134,7 +132,7 @@ void TcpServer::handle_accept(TcpConnection::pointer new_connection,
   start_accept();
 }
 
-void TcpServer::run(boost::asio::io_service& io_service) {
+void NetworkServer::run(boost::asio::io_service& io_service) {
     while (!io_service.stopped()) {
         try {
             io_service.run();
