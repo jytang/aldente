@@ -22,6 +22,7 @@ public:
 	static std::string str_game_name;
 	static std::string str_is_server;
 	static std::string str_server_ip;
+    static std::string str_port;
 
 public:
 	static Config* config; // Use this static reference instead of your own call to the constructor

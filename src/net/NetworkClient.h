@@ -11,8 +11,6 @@
 #include <thread>
 #include <array>
 
-#define PORT "9000"
-
 using boost::asio::ip::tcp;
 
 /**
@@ -20,25 +18,22 @@ using boost::asio::ip::tcp;
 */
 class NetworkClient {
 public:
-  NetworkClient(std::string host);
+  NetworkClient::NetworkClient(boost::asio::io_service* ios);
 
   // Destructor.
   ~NetworkClient();
 
   // Synchronously tries to connect to host. Returns true if successful.
-  bool init();
+  bool connect(std::string& host, unsigned int port);
 
-  // Returns true if client was successfully initialized.
-  bool is_initialized() const;
+  // Returns true if client was successfully connected.
+  bool is_connected() const;
 
   // Synchronously sends a message to the server. 
-  void send(std::string message);
-
-  // Returns true if there are message(s) in the queue.
-  bool has_messages();
+  void send(std::string& message);
 
   // Removes and returns a message from the FIFO queue.
-  std::string pop_message();
+  bool read_message(std::string& message);
 
 private:
   // Begin receiving messages by adding an async receive task.
@@ -50,11 +45,10 @@ private:
   // Service thread for receiving messages.
   void run_service();
 
-  boost::asio::io_service io_service;
+  boost::asio::io_service* io_service;
   tcp::socket socket;
   boost::array<char, BUFSIZ> recv_buffer;
   boost::thread service_thread;
   ThreadSafeQueue<std::string> message_queue;
-  std::string host;
-  bool initialized;
+  bool connected;
 };

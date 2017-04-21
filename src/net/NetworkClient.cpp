@@ -1,45 +1,41 @@
 #include "NetworkClient.h"
 
-NetworkClient::NetworkClient(std::string host) :
-    socket(io_service), host(host) {
+NetworkClient::NetworkClient(boost::asio::io_service* ios) :
+   io_service(ios), socket(*ios), connected(false) {
 }
 
 NetworkClient::~NetworkClient() {
-    io_service.stop();
+    io_service->stop();
     service_thread.join();
 }
 
-bool NetworkClient::init() {
-    tcp::resolver resolver(io_service);
-    tcp::resolver::query query(tcp::v4(), host, PORT);
+bool NetworkClient::connect(std::string& host, unsigned int port) {
+    tcp::resolver resolver(*io_service);
+    tcp::resolver::query query(tcp::v4(), host, std::to_string(port));
     tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
     try {
         boost::asio::connect(socket, endpoint_iterator);
-    }
-    catch (...) {
+    } catch (...) {
         return false;
     }
     service_thread = boost::thread(boost::bind(&NetworkClient::run_service, this));
-    initialized = true;
+    connected = true;
     return true;
 }
 
-bool NetworkClient::is_initialized() const {
-    return initialized;
+bool NetworkClient::is_connected() const {
+    return connected;
 }
 
-void NetworkClient::send(std::string message) {
+void NetworkClient::send(std::string& message) {
     boost::asio::write(socket, boost::asio::buffer(message));
 }
 
-bool NetworkClient::has_messages() {
-    return !message_queue.empty();
-}
-
-std::string NetworkClient::pop_message() {
-    if (!has_messages())
-        throw std::logic_error("No messages");
-    return message_queue.pop();
+bool NetworkClient::read_message(std::string& message) {
+    if (message_queue.empty())
+        return false;
+    message = message_queue.pop();
+    return true;
 }
 
 void NetworkClient::start_receive() {
@@ -52,6 +48,7 @@ void NetworkClient::handle_receive(const boost::system::error_code& error, std::
     if (!error) {
         std::string message(recv_buffer.data(), recv_buffer.data() + bytes_transferred);
         message_queue.push(message);
+        std::cerr << "[c] recv: " << message;
     }
 
     start_receive();
@@ -59,9 +56,9 @@ void NetworkClient::handle_receive(const boost::system::error_code& error, std::
 
 void NetworkClient::run_service() {
     start_receive();
-    while (!io_service.stopped()) {
+    while (!io_service->stopped()) {
         try {
-            io_service.run();
+            io_service->run();
         }
         catch (const std::exception& e) {
             std::cerr << "Client network exception" << e.what();

@@ -6,9 +6,12 @@
 NetworkManager::NetworkManager() {
     Config::config->get_value(Config::str_is_server, is_server);
     Config::config->get_value(Config::str_server_ip, server_host);
+    Config::config->get_value(Config::str_port, port);
 
-    server = is_server ? new TcpServer(9000) : nullptr;
-    client = new NetworkClient(server_host);
+    server = is_server ? new TcpServer(port) : nullptr;
+    client = new NetworkClient(&io_service);
+
+    //std::thread(&NetworkManager::run_service, this).detach();
 }
 
 void NetworkManager::connect() {
@@ -25,11 +28,21 @@ void NetworkManager::attempt_connection() {
         if (first_attempt || glfwGetTime() - time_last_connect_attempt > 5.f) {
             first_attempt = false;
             std::cerr << "Attempting to connect to " << server_host << "...\n";
-            is_connected = client->init();
+            is_connected = client->connect(server_host, port);
             time_last_connect_attempt = glfwGetTime();
             if (is_connected) {
                 std::cerr << "Established connection.\n";
             }
+        }
+    }
+}
+
+void NetworkManager::run_service() {
+    while (!io_service.stopped()) {
+        try {
+            io_service.run();
+        } catch (...) {
+            std::cerr << "io_service error\n";
         }
     }
 }
