@@ -18,37 +18,30 @@ using boost::asio::ip::tcp;
 */
 class NetworkClient {
 public:
-  NetworkClient::NetworkClient(boost::asio::io_service* ios);
+    NetworkClient::NetworkClient(boost::asio::io_service* ios);
 
-  // Destructor.
-  ~NetworkClient();
+    // Synchronously tries to connect to host. Returns true if successful.
+    bool connect(std::string& host, unsigned int port);
 
-  // Synchronously tries to connect to host. Returns true if successful.
-  bool connect(std::string& host, unsigned int port);
+    // Returns true if client was successfully connected.
+    bool is_connected() const;
 
-  // Returns true if client was successfully connected.
-  bool is_connected() const;
+    // Synchronously sends a message to the server. Returns true if successful.
+    bool send(std::string& message);
 
-  // Synchronously sends a message to the server. Returns true if successful.
-  bool send(std::string& message);
-
-  // Removes and returns a message from the FIFO queue.
-  bool read_message(std::string& message);
+    // Removes and returns a message from the FIFO queue.
+    bool read_message(std::string& message);
 
 private:
-  // Begin receiving messages by adding an async receive task.
-  void start_receive();
+    // Begin receiving messages by adding an async receive task.
+    void start_receive();
 
-  // Callback for when receive is completed. Adds to message queue, continue reading.
-  void handle_receive(const boost::system::error_code& error, std::size_t bytes_transferred);
+    // Callback for when receive is completed. Adds to message queue, continue reading.
+    void handle_receive(const boost::system::error_code& error, std::size_t bytes_transferred);
 
-  // Service thread for receiving messages.
-  void run_service();
-
-  boost::asio::io_service* io_service;
-  tcp::socket socket;
-  boost::array<char, BUFSIZ> recv_buffer;
-  boost::thread service_thread;
-  ThreadSafeQueue<std::string> message_queue;
-  bool connected;
+    boost::asio::io_service* io_service;
+    tcp::socket socket;
+    boost::array<char, BUFSIZ> recv_buffer;
+    ThreadSafeQueue<std::string> message_queue;
+    bool connected;
 };

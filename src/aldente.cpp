@@ -17,6 +17,7 @@
 #include "global.h"
 #include "util/config.h"
 #include "btBulletDynamicsCommon.h"
+#include "NetworkManager.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -199,10 +200,19 @@ void Aldente::go()
 	SceneModel* tmodel = test->getModel(std::string("textured.fbx"));
 	tmodel->setScene(scene);
 	scene->root->add_child(tmodel);
+
+    NetworkManager net;
+    net.connect();
+
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
         input::process();
+        std::string msg = "hello world\n";
+        if (net.get_server())
+            net.get_server()->send_to_all("kavin smells\n");
+        if (net.get_client()->is_connected())
+            net.get_client()->send(msg);
 
         frame++;
         double curr_time = glfwGetTime();

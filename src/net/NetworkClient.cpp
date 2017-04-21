@@ -1,12 +1,7 @@
 #include "NetworkClient.h"
 
 NetworkClient::NetworkClient(boost::asio::io_service* ios) :
-   io_service(ios), socket(*ios), connected(false) {
-}
-
-NetworkClient::~NetworkClient() {
-    io_service->stop();
-    service_thread.join();
+    io_service(ios), socket(*ios), connected(false) {
 }
 
 bool NetworkClient::connect(std::string& host, unsigned int port) {
@@ -18,8 +13,9 @@ bool NetworkClient::connect(std::string& host, unsigned int port) {
     } catch (...) {
         return false;
     }
-    service_thread = boost::thread(boost::bind(&NetworkClient::run_service, this));
+
     connected = true;
+    start_receive();
     return true;
 }
 
@@ -55,19 +51,4 @@ void NetworkClient::handle_receive(const boost::system::error_code& error, std::
     }
 
     start_receive();
-}
-
-void NetworkClient::run_service() {
-    start_receive();
-    while (!io_service->stopped()) {
-        try {
-            io_service->run();
-        }
-        catch (const std::exception& e) {
-            std::cerr << "Client network exception" << e.what();
-        }
-        catch (...) {
-            std::cerr << "Unknown exception in client network";
-        }
-    }
 }
