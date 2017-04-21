@@ -24,7 +24,7 @@ void process() {
         d.is_button = true;
         d.input = i;
         d.state = btns[i] == GLFW_PRESS;
-        events::JoystickEvent::dispatch(d);
+        events::joystick_event(d);
       }
     }
   }
@@ -44,7 +44,7 @@ void process() {
         d.is_button = false;
         d.input = i;
         d.state = level;
-        events::JoystickEvent::dispatch(d);
+        events::joystick_event(d);
       }
     }
   }

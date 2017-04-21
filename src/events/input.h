@@ -1,8 +1,10 @@
 #pragma once
-#include "events/event.h"
+#include <boost/signals2.hpp>
 
 namespace kuuhaku {
 namespace events {
+
+using boost::signals2::signal;
 
 const int INPUT_ANALOG_LEVELS = 5;
 struct JoystickData {
@@ -13,7 +15,7 @@ struct JoystickData {
              // Otherwise, is axis analog level.
 };
 // A joystick input.
-class JoystickEvent : public Event<JoystickData> {};
+extern signal<void (JoystickData &)> joystick_event;
 
 }
 }

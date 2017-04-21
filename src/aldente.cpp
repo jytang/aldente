@@ -311,7 +311,7 @@ void Aldente::setup_callbacks()
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetFramebufferSizeCallback(window, resize_callback);
 
-    events::JoystickEvent::subscribe([](events::JoystickData d) {
+    events::joystick_event.connect([](events::JoystickData &d) {
         fprintf(stderr,
                 "JoystickEvent:\n"
                 "  id: %d\n"
