@@ -24,6 +24,7 @@ bool Connection::send(const string& message) {
         return false;
     }
 
+    // TODO (nice to have): do asynchronous write instead.
     boost::system::error_code error;
     boost::asio::write(socket, boost::asio::buffer(message), error);
 
