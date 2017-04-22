@@ -1,4 +1,4 @@
-#include "NetworkManager.h"
+#include "network_manager.h"
 #include "util/config.h"
 
 #include <GLFW/glfw3.h>

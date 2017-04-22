@@ -1,7 +1,7 @@
 #pragma once
 
-#include "net/NetworkClient.h"
-#include "net/NetworkServer.h"
+#include "network_client.h"
+#include "network_server.h"
 #include <boost/thread.hpp>
 
 #define CONN_RETRY_SEC 5.0f

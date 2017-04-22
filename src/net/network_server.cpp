@@ -1,4 +1,4 @@
-#include "NetworkServer.h"
+#include "network_server.h"
 
 NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
     acceptor(ios, tcp::endpoint(tcp::v4(), port)), next_id(0) {

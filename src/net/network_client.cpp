@@ -1,4 +1,4 @@
-#include "NetworkClient.h"
+#include "network_client.h"
 
 NetworkClient::NetworkClient(boost::asio::io_service& ios) :
     connection(ios), resolver(ios), connected(false) {

@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "Connection.h"
+#include "connection.h"
 
 using boost::asio::ip::tcp;
 

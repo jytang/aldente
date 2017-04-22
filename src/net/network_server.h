@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Connection.h"
+#include "connection.h"
 #include <boost/bind.hpp>
 #include <unordered_map>
 #include <chrono>
