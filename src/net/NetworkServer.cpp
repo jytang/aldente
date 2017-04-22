@@ -11,7 +11,7 @@ void Connection::read_loop() {
             boost::asio::placeholders::bytes_transferred));
 }
 
-bool Connection::send(std::string message) {
+bool Connection::send(string message) {
     if (!socket.is_open()) {
         return false;
     }
@@ -33,7 +33,7 @@ bool Connection::send(std::string message) {
     return true;
 }
 
-bool Connection::read_message(std::string& message) {
+bool Connection::read_message(string& message) {
     if (message_queue.empty())
         return false;
     message = message_queue.pop();
@@ -43,7 +43,7 @@ bool Connection::read_message(std::string& message) {
 void Connection::handle_read(const boost::system::error_code& error, size_t bytes_transferred) {
     if (!error) {
         message_queue.push(rcvbuf);
-        std::cerr << "[s] recv: " << std::string(rcvbuf);
+        std::cerr << "[s] recv: " << string(rcvbuf);
     } else if (error != boost::asio::error::eof) {
         std::cerr << "FATAL handle_read error: " << error << "\n";
         return;
@@ -58,7 +58,7 @@ NetworkServer::NetworkServer(boost::asio::io_service* ios, unsigned int port) :
     start_accept();
 }
 
-void NetworkServer::send_to_all(std::string message) {
+void NetworkServer::send_to_all(string message) {
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -78,8 +78,8 @@ void NetworkServer::send_to_all(std::string message) {
     }
 }
 
-std::map<int, std::vector<std::string>> NetworkServer::read_all_messages() {
-    std::map<int, std::vector<std::string>> messages;
+std::map<int, std::vector<string>> NetworkServer::read_all_messages() {
+    std::map<int, std::vector<string>> messages;
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -88,8 +88,8 @@ std::map<int, std::vector<std::string>> NetworkServer::read_all_messages() {
     }
 
     for (auto const &c : client_list) {
-        messages[c.first] = std::vector<std::string>();
-        std::string message;
+        messages[c.first] = std::vector<string>();
+        string message;
         while (c.second->read_message(message)) {
             messages[c.first].push_back(message);
         }

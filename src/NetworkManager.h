@@ -26,7 +26,7 @@ private:
     // Runs the io_service.
     void run_service();
 
-    std::string server_host;
+    string server_host;
     boost::thread* service_thread;
     bool is_server;
     int port;

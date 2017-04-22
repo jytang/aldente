@@ -21,16 +21,16 @@ public:
     NetworkClient(boost::asio::io_service* ios);
 
     // Synchronously tries to connect to host. Returns true if successful.
-    bool connect(std::string& host, unsigned int port);
+    bool connect(string& host, unsigned int port);
 
     // Returns true if client was successfully connected.
     bool is_connected() const;
 
     // Synchronously sends a message to the server. Returns true if successful.
-    bool send(std::string& message);
+    bool send(string& message);
 
     // Removes and returns a message from the FIFO queue.
-    bool read_message(std::string& message);
+    bool read_message(string& message);
 
 private:
     // Begin receiving messages by adding an async receive task.
@@ -42,6 +42,6 @@ private:
     boost::asio::io_service* io_service;
     tcp::socket socket;
     boost::array<char, BUFSIZ> recv_buffer;
-    ThreadSafeQueue<std::string> message_queue;
+    ThreadSafeQueue<string> message_queue;
     bool connected;
 };

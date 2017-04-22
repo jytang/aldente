@@ -30,10 +30,10 @@ public:
     void read_loop();
 
     // Sends a message to this client. Returns true if write was successful.
-    bool send(std::string message);
+    bool send(string message);
 
     // Removes a message and returns it.
-    bool read_message(std::string& message);
+    bool read_message(string& message);
 
 private:
     // Callback for when an asynchronous  read completes.
@@ -41,7 +41,7 @@ private:
 
     tcp::socket socket;
     char rcvbuf[BUFSIZ];
-    ThreadSafeQueue<std::string> message_queue;
+    ThreadSafeQueue<string> message_queue;
 };
 
 /**
@@ -53,11 +53,11 @@ public:
     NetworkServer(boost::asio::io_service* ios, unsigned int port);
 
     // Sends a message to all clients.
-    void send_to_all(std::string message);
+    void send_to_all(string message);
 
     // Read all messages from all clients.
     // Returns a mapping of client id to list of messages.
-    std::map<int, std::vector<std::string>> read_all_messages();
+    std::map<int, std::vector<string>> read_all_messages();
 
 private:
     // Begin accepting new clients.
