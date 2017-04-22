@@ -1,11 +1,10 @@
 #include "NetworkClient.h"
 
-NetworkClient::NetworkClient(boost::asio::io_service* ios) :
-    io_service(ios), socket(*ios), connected(false) {
+NetworkClient::NetworkClient(boost::asio::io_service& ios) :
+    resolver(ios), socket(ios), connected(false) {
 }
 
-bool NetworkClient::connect(string& host, unsigned int port) {
-    tcp::resolver resolver(*io_service);
+bool NetworkClient::connect(const string& host, unsigned int port) {
     tcp::resolver::query query(tcp::v4(), host, std::to_string(port));
     tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
     try {
@@ -23,17 +22,17 @@ bool NetworkClient::is_connected() const {
     return connected;
 }
 
-bool NetworkClient::send(string& message) {
+bool NetworkClient::send(const string& message) {
     if (!connected)
         return false;
     boost::asio::write(socket, boost::asio::buffer(message));
     return true;
 }
 
-bool NetworkClient::read_message(string& message) {
+bool NetworkClient::read_message(string* message) {
     if (message_queue.empty())
         return false;
-    message = message_queue.pop();
+    *message = message_queue.pop();
     return true;
 }
 

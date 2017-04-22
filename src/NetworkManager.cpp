@@ -8,8 +8,8 @@ NetworkManager::NetworkManager() {
     Config::config->get_value(Config::str_server_ip, server_host);
     Config::config->get_value(Config::str_port, port);
 
-    server = is_server ? new NetworkServer(&io_service, port) : nullptr;
-    client = new NetworkClient(&io_service);
+    server = is_server ? new NetworkServer(io_service, port) : nullptr;
+    client = new NetworkClient(io_service);
 }
 
 NetworkManager::~NetworkManager() {
@@ -57,7 +57,7 @@ void NetworkManager::run_service() {
             io_service.poll();
         } catch (...) {
             // Silently ignore errors rather than crash. Shouldn't happen.
-            std::cerr << "io_service error\n";
+            std::cerr << "run_service: io_service error\n";
         }
     }
 }

@@ -4,14 +4,24 @@ tcp::socket& Connection::get_socket() {
     return socket;
 }
 
-void Connection::read_loop() {
+void Connection::start_async_read_loop() {
     socket.async_read_some(boost::asio::buffer(rcvbuf),
-        boost::bind(&Connection::handle_read, shared_from_this(),
-            boost::asio::placeholders::error,
-            boost::asio::placeholders::bytes_transferred));
+        [&](const boost::system::error_code& error, size_t n_bytes) {
+            if (!error) {
+                message_queue.push(rcvbuf);
+                std::cerr << "[s] recv: " << string(rcvbuf);
+            }
+            else if (error != boost::asio::error::eof) {
+                std::cerr << "FATAL handle_read error: " << error << "\n";
+                return;
+            }
+
+            // Wait for and read the next message.
+            start_async_read_loop();
+        });
 }
 
-bool Connection::send(string message) {
+bool Connection::send(const string& message) {
     if (!socket.is_open()) {
         return false;
     }
@@ -33,28 +43,15 @@ bool Connection::send(string message) {
     return true;
 }
 
-bool Connection::read_message(string& message) {
+bool Connection::read_message(string* message) {
     if (message_queue.empty())
         return false;
-    message = message_queue.pop();
+    *message = message_queue.pop();
     return true;
 }
 
-void Connection::handle_read(const boost::system::error_code& error, size_t bytes_transferred) {
-    if (!error) {
-        message_queue.push(rcvbuf);
-        std::cerr << "[s] recv: " << string(rcvbuf);
-    } else if (error != boost::asio::error::eof) {
-        std::cerr << "FATAL handle_read error: " << error << "\n";
-        return;
-    }
-
-    // Wait for and read the next message.
-    read_loop();
-}
-
-NetworkServer::NetworkServer(boost::asio::io_service* ios, unsigned int port) :
-    io_service(ios), acceptor(*ios, tcp::endpoint(tcp::v4(), port)), next_id(0) {
+NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
+    acceptor(ios, tcp::endpoint(tcp::v4(), port)), next_id(0) {
     start_accept();
 }
 
@@ -78,8 +75,8 @@ void NetworkServer::send_to_all(string message) {
     }
 }
 
-std::map<int, std::vector<string>> NetworkServer::read_all_messages() {
-    std::map<int, std::vector<string>> messages;
+std::unordered_map<int, std::vector<string>> NetworkServer::read_all_messages() {
+    std::unordered_map<int, std::vector<string>> messages;
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -90,7 +87,7 @@ std::map<int, std::vector<string>> NetworkServer::read_all_messages() {
     for (auto const &c : client_list) {
         messages[c.first] = std::vector<string>();
         string message;
-        while (c.second->read_message(message)) {
+        while (c.second->read_message(&message)) {
             messages[c.first].push_back(message);
         }
     }
@@ -99,26 +96,22 @@ std::map<int, std::vector<string>> NetworkServer::read_all_messages() {
 }
 
 void NetworkServer::start_accept() {
-    Connection::pointer new_connection =
-        Connection::pointer(new Connection(acceptor.get_io_service()));
+    auto new_connection = boost::shared_ptr<Connection>(
+        new Connection(acceptor.get_io_service()));
 
     acceptor.async_accept(new_connection->get_socket(),
-        boost::bind(&NetworkServer::handle_accept, this, new_connection,
-            boost::asio::placeholders::error));
-}
+        [&, new_connection](const boost::system::error_code& error) {
+            if (!error) {
+                std::cerr << "Accepted new connection." << std::endl;
+                unique_lock<mutex> lock(client_list_mutex);
+                client_list[++next_id] = new_connection;
+                new_connection->start_async_read_loop();
+            }
+            else {
+                std::cerr << "accept() error: " << error << "," << error.message() << "\n";
+            }
 
-void NetworkServer::handle_accept(Connection::pointer new_connection,
-    const boost::system::error_code& error) {
-    if (!error) {
-        std::cerr << "Accepted new connection." << std::endl;
-        unique_lock<mutex> lock(client_list_mutex);
-        client_list[++next_id] = new_connection;
-        lock.unlock();
-        new_connection->read_loop();
-    } else {
-        std::cerr << "accept() error: " << error << "," << error.message() << "\n";
-    }
-
-    // Accept the next client.
-    start_accept();
+            // Accept the next client.
+            start_accept();
+    });
 }

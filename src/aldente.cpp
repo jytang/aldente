@@ -209,10 +209,20 @@ void Aldente::go()
         glfwPollEvents();
         input::process();
         std::string msg = "hello world\n";
-        if (net.get_server())
+        if (net.get_server()) {
             net.get_server()->send_to_all("kavin smells\n");
-        if (net.get_client()->is_connected())
+            for (auto& a : net.get_server()->read_all_messages()) {
+                std::cerr << "[s] msgs from client " << a.first << ":\n";
+                for (auto& s : a.second)
+                    std::cerr << "  -> " << s;
+            }
+        }
+        if (net.get_client()->is_connected()) {
             net.get_client()->send(msg);
+            std::string inc;
+            net.get_client()->read_message(&inc);
+            std::cerr << "[c] read_message " << inc;
+        }
 
         frame++;
         double curr_time = glfwGetTime();

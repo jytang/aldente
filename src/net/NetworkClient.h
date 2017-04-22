@@ -18,28 +18,25 @@ using boost::asio::ip::tcp;
 */
 class NetworkClient {
 public:
-    NetworkClient(boost::asio::io_service* ios);
+    NetworkClient(boost::asio::io_service& ios);
 
     // Synchronously tries to connect to host. Returns true if successful.
-    bool connect(string& host, unsigned int port);
+    bool connect(const string& host, unsigned int port);
 
     // Returns true if client was successfully connected.
     bool is_connected() const;
 
     // Synchronously sends a message to the server. Returns true if successful.
-    bool send(string& message);
+    bool send(const string& message);
 
     // Removes and returns a message from the FIFO queue.
-    bool read_message(string& message);
+    bool read_message(string* message);
 
 private:
     // Begin receiving messages by adding an async receive task.
     void start_receive();
 
-    // Callback for when receive is completed. Adds to message queue, continue reading.
-    void handle_receive(const boost::system::error_code& error, std::size_t bytes_transferred);
-
-    boost::asio::io_service* io_service;
+    tcp::resolver resolver;
     tcp::socket socket;
     boost::array<char, BUFSIZ> recv_buffer;
     ThreadSafeQueue<string> message_queue;
