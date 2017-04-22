@@ -38,17 +38,17 @@ bool NetworkClient::read_message(std::string& message) {
 }
 
 void NetworkClient::start_receive() {
-    socket.async_receive(boost::asio::buffer(recv_buffer),
-        boost::bind(&NetworkClient::handle_receive, this,
-            boost::asio::placeholders::error, boost::asio::placeholders::bytes_transferred));
-}
+    socket.async_receive(
+        boost::asio::buffer(recv_buffer),
+        [&](const boost::system::error_code &error, size_t n_bytes) {
+            if (!error) {
+                string message(recv_buffer.data(),
+                               recv_buffer.data() + n_bytes);
+                message_queue.push(message);
 
-void NetworkClient::handle_receive(const boost::system::error_code& error, std::size_t bytes_transferred) {
-    if (!error) {
-        std::string message(recv_buffer.data(), recv_buffer.data() + bytes_transferred);
-        message_queue.push(message);
-        std::cerr << "[c] recv: " << message;
-    }
-
-    start_receive();
+                // TODO logging framework
+                std::cerr << "[c] recv: " << message;
+            }
+            start_receive();
+        });
 }
