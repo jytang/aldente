@@ -3,13 +3,9 @@
 * License: MIT
 */
 
-#include "threadsafe_queue.h"
-#include <boost/thread.hpp>
-#include <boost/array.hpp>
-#include <boost/asio.hpp>
-#include <memory>
-#include <thread>
-#include <array>
+#pragma once
+
+#include "Connection.h"
 
 using boost::asio::ip::tcp;
 
@@ -33,12 +29,7 @@ public:
     bool read_message(string* message);
 
 private:
-    // Begin receiving messages by adding an async receive task.
-    void start_receive();
-
+    Connection connection;
     tcp::resolver resolver;
-    tcp::socket socket;
-    boost::array<char, BUFSIZ> recv_buffer;
-    ThreadSafeQueue<string> message_queue;
     bool connected;
 };

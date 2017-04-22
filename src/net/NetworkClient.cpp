@@ -1,20 +1,20 @@
 #include "NetworkClient.h"
 
 NetworkClient::NetworkClient(boost::asio::io_service& ios) :
-    resolver(ios), socket(ios), connected(false) {
+    connection(ios), resolver(ios), connected(false) {
 }
 
 bool NetworkClient::connect(const string& host, unsigned int port) {
     tcp::resolver::query query(tcp::v4(), host, std::to_string(port));
     tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
     try {
-        boost::asio::connect(socket, endpoint_iterator);
+        boost::asio::connect(connection.get_socket(), endpoint_iterator);
     } catch (...) {
         return false;
     }
 
     connected = true;
-    start_receive();
+    connection.start_async_read_loop();
     return true;
 }
 
@@ -23,31 +23,9 @@ bool NetworkClient::is_connected() const {
 }
 
 bool NetworkClient::send(const string& message) {
-    if (!connected)
-        return false;
-    boost::asio::write(socket, boost::asio::buffer(message));
-    return true;
+    return connection.send(message);
 }
 
 bool NetworkClient::read_message(string* message) {
-    if (message_queue.empty())
-        return false;
-    *message = message_queue.pop();
-    return true;
-}
-
-void NetworkClient::start_receive() {
-    socket.async_receive(
-        boost::asio::buffer(recv_buffer),
-        [&](const boost::system::error_code &error, size_t n_bytes) {
-            if (!error) {
-                string message(recv_buffer.data(),
-                               recv_buffer.data() + n_bytes);
-                message_queue.push(message);
-
-                // TODO logging framework
-                std::cerr << "[c] recv: " << message;
-            }
-            start_receive();
-        });
+    return connection.read_message(message);
 }

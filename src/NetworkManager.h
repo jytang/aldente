@@ -1,7 +1,8 @@
 #pragma once
+
 #include "net/NetworkClient.h"
 #include "net/NetworkServer.h"
-#include <boost/asio.hpp>
+#include <boost/thread.hpp>
 
 #define CONN_RETRY_SEC 5.0f
 
@@ -26,10 +27,10 @@ private:
     // Runs the io_service.
     void run_service();
 
-    string server_host;
-    boost::thread* service_thread;
     bool is_server;
+    string server_host;
     int port;
+    boost::thread* service_thread;
     bool is_connected = false;
     NetworkServer* server;
     NetworkClient* client;
