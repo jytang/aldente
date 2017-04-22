@@ -33,10 +33,10 @@ public:
     bool send(std::string message);
 
     // Removes a message and returns it.
-    bool Connection::read_message(std::string& message);
+    bool read_message(std::string& message);
 
 private:
-    // Callback for when an asynchronous  read completes. 
+    // Callback for when an asynchronous  read completes.
     void handle_read(const boost::system::error_code& error, size_t bytes_transferred);
 
     tcp::socket socket;

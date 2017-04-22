@@ -18,7 +18,7 @@ using boost::asio::ip::tcp;
 */
 class NetworkClient {
 public:
-    NetworkClient::NetworkClient(boost::asio::io_service* ios);
+    NetworkClient(boost::asio::io_service* ios);
 
     // Synchronously tries to connect to host. Returns true if successful.
     bool connect(std::string& host, unsigned int port);

@@ -24,7 +24,7 @@ private:
     void attempt_connection();
 
     // Runs the io_service.
-    void NetworkManager::run_service();
+    void run_service();
 
     std::string server_host;
     boost::thread* service_thread;
