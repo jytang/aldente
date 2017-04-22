@@ -6,16 +6,15 @@ DEP_DIR         := .dep
 BUILD_DIR       := .build
 
 CC              := clang++
-CFLAGS          := -std=c++1y -O0 -g
+CFLAGS          := -std=c++14 -O0 -g -pthread
 INCS            := -I$(INC_DIR)
 HEADERS         := $(shell find $(INC_DIR) -name '*.h' -type 'f' | sort)
 MAIN_SOURCES    := $(shell find $(SRC_DIR) -name '*.cpp' -type 'f' | sort)
 MAIN_OBJECTS    := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 DEPFILES        := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(DEP_DIR)/%.dep)
 
-LIBS            := -lGLEW -lglfw -lassimp -lSOIL
+LIBS            := -lGLEW -lglfw -lassimp -lSOIL -lfreetype
 LIBS            += -lboost_system -lboost_filesystem -lboost_thread
-LIBS            += -pthread
 LIBS            += -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
 INCS            += $(shell pkg-config bullet --cflags)
 ifeq ($(shell uname),Darwin)
