@@ -55,7 +55,7 @@ void NetworkServer::start_accept() {
                 std::cerr << "Accepted new connection." << std::endl;
                 unique_lock<mutex> lock(client_list_mutex);
                 client_list[++next_id] = new_connection;
-                new_connection->start_async_read_loop();
+                new_connection->start_async_read_header();
             }
             else {
                 std::cerr << "accept() error: " << error << "," << error.message() << "\n";

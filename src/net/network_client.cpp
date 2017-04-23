@@ -14,7 +14,7 @@ bool NetworkClient::connect(const string& host, unsigned int port) {
     }
 
     connected = true;
-    connection.start_async_read_loop();
+    connection.start_async_read_header();
     return true;
 }
 
