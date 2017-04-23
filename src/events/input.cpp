@@ -1,11 +1,10 @@
 #include "events/input.h"
-#include <boost/signals2.hpp>
 
 namespace kuuhaku {
-namespace events {
+    namespace events {
 
-using boost::signals2::signal;
-signal<void (JoystickData &)> joystick_event;
+        using boost::signals2::signal;
+        signal<void(JoystickData &)> joystick_event;
 
-}
+    }
 }

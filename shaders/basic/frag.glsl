@@ -26,7 +26,6 @@ uniform Material material;
 uniform DirLight dir_light;
 uniform bool shadows_enabled;
 uniform bool texture_enabled;
-uniform bool texture_noise;
 uniform vec2 noise;
 
 vec3 colorify(vec3 normal, vec3 view_dir, vec3 light_dir, vec3 light_intensity, float ambient_coeff);
@@ -40,12 +39,9 @@ void main()
 	vec3 light_dir = normalize(-dir_light.direction);
     vec3 light_intensity = dir_light.color;
 	vec3 result;
-	if (texture_enabled){		
+	if (texture_enabled){
 		vec3 tex_color;
-		if(texture_noise)
-			tex_color = vec3(texture(texture_map, frag_tex_coord + noise));
-		else
-			tex_color = vec3(texture(texture_map, frag_tex_coord));
+        tex_color = vec3(texture(texture_map, frag_tex_coord));
 		result = colorify_tex(normal, view_dir, light_dir, light_intensity, dir_light.ambient_coeff, tex_color);
 	}
 	else
@@ -65,7 +61,7 @@ float calc_shadows(vec4 pos_from_light, vec3 light_dir)
 		return 0.0;
 	}
 
-	float bias = max(0.005 * (1.0 - dot(normalize(frag_normal), light_dir)), 0.003);  
+	float bias = max(0.005 * (1.0 - dot(normalize(frag_normal), light_dir)), 0.003);
 	float shadow = 0.0;
 
 	vec2 texelSize = 1.0 / textureSize(shadow_map, 0);
@@ -73,9 +69,9 @@ float calc_shadows(vec4 pos_from_light, vec3 light_dir)
 	{
 		for(int y = -1; y <= 1; ++y)
 		{
-			float pcfDepth = texture(shadow_map, clip_coords.xy + vec2(x, y) * texelSize).r; 
-			shadow += current_depth - bias > pcfDepth ? 1.0 : 0.0;       
-		}    
+			float pcfDepth = texture(shadow_map, clip_coords.xy + vec2(x, y) * texelSize).r;
+			shadow += current_depth - bias > pcfDepth ? 1.0 : 0.0;
+		}
 	}
 	shadow /= 9.0;
 

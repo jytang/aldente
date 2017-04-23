@@ -1,9 +1,9 @@
 #pragma once
 
 namespace kuuhaku {
-namespace input {
+    namespace input {
 
-void process();
+        void process();
 
-}
+    }
 }

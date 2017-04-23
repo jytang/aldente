@@ -3,29 +3,20 @@
 #include "shadow_shader.h"
 #include "util/util.h"
 
-#include <iostream>
-
 BasicShader::BasicShader(GLuint shader_id) : Shader(shader_id) {}
 
-//Adds Noise to Water Texture
-float noise0 = 0.f;
-float noise1 = 0.f;
-
-void BasicShader::set_material(Material m)
-{
-    glUniform3f(glGetUniformLocation(shader_id, "material.diffuse"), m.diffuse.x, m.diffuse.y, m.diffuse.z);
-    glUniform3f(glGetUniformLocation(shader_id, "material.specular"), m.specular.x, m.specular.y, m.specular.z);
-    glUniform3f(glGetUniformLocation(shader_id, "material.ambient"), m.ambient.x, m.ambient.y, m.ambient.z);
-    glUniform1f(glGetUniformLocation(shader_id, "material.shininess"), m.shininess);
-    glUniform1i(glGetUniformLocation(shader_id, "shadows_enabled"), m.shadows);
+void BasicShader::set_material(Material *m) {
+    glUniform3f(glGetUniformLocation(shader_id, "material.diffuse"), m->diffuse.x, m->diffuse.y, m->diffuse.z);
+    glUniform3f(glGetUniformLocation(shader_id, "material.specular"), m->specular.x, m->specular.y, m->specular.z);
+    glUniform3f(glGetUniformLocation(shader_id, "material.ambient"), m->ambient.x, m->ambient.y, m->ambient.z);
+    glUniform1f(glGetUniformLocation(shader_id, "material.shininess"), m->shininess);
+    glUniform1i(glGetUniformLocation(shader_id, "shadows_enabled"), m->shadows);
 }
 
-void BasicShader::draw(Geometry *g, glm::mat4 to_world)
-{
+void BasicShader::draw(Geometry *g, glm::mat4 to_world) {
     // Bind depth texture from shadow shader, if it exists.
-    ShadowShader * ss = (ShadowShader *) ShaderManager::get_shader_program("shadow");
-    if (ss)
-    {
+    ShadowShader *ss = (ShadowShader *) ShaderManager::get_shader_program("shadow");
+    if (ss) {
         glUniformMatrix4fv(glGetUniformLocation(shader_id, "light_matrix"), 1, GL_FALSE, &ss->light_matrix[0][0]);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, ss->shadow_map_tex);
@@ -48,20 +39,11 @@ void BasicShader::draw(Geometry *g, glm::mat4 to_world)
     glUniformMatrix4fv(glGetUniformLocation(shader_id, "mesh_model"), 1, GL_FALSE, &mesh_model[0][0]);
 
     glUniform1i(glGetUniformLocation(shader_id, "texture_enabled"), g->has_texture);
-    glUniform1i(glGetUniformLocation(shader_id, "texture_noise"), g->add_texture_noise);
     //Bind Texture
-    if (g->has_texture)
-    {
+    if (g->has_texture) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, g->texture);
         glUniform1i(glGetUniformLocation(shader_id, "texture_map"), 1);
-
-        if (g->add_texture_noise)
-        {
-            noise0 += Util::random(0, 0.001f);
-            noise1 += Util::random(0, 0.001f);
-            glUniform2f(glGetUniformLocation(shader_id, "noise"), noise0, noise1);
-        }
     }
 
     // Bind geometry and draw

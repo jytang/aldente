@@ -2,8 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-ShadowShader::ShadowShader(GLuint shader_id) : Shader(shader_id)
-{
+ShadowShader::ShadowShader(GLuint shader_id) : Shader(shader_id) {
     glGenFramebuffers(1, &FBO);
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
 
@@ -16,7 +15,7 @@ ShadowShader::ShadowShader(GLuint shader_id) : Shader(shader_id)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    GLfloat borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat borderColor[] = {1.0, 1.0, 1.0, 1.0};
     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, shadow_map_tex, 0);
@@ -26,12 +25,10 @@ ShadowShader::ShadowShader(GLuint shader_id) : Shader(shader_id)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ShadowShader::set_material(Material m)
-{
+void ShadowShader::set_material(Material *m) {
 }
 
-void ShadowShader::draw(Geometry *g, glm::mat4 to_world)
-{
+void ShadowShader::draw(Geometry *g, glm::mat4 to_world) {
     // Recalculate light matrix based on current light position and light projection matrix
     glm::mat4 light_view = glm::lookAt(light_pos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     light_matrix = light_proj * light_view;

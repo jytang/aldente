@@ -6,20 +6,22 @@
 *   can be more than a single coordinate big). 
 */
 
-
 #pragma once
-using namespace std;
 
 #include <vector>
 #include "tile.h"
 
 class Grid {
 private:
-	vector<vector<Tile*>> grid;
-	int width, height;
-public:
-	Grid(int w, int h);
-	~Grid();
+    std::vector<std::vector<Tile *>> grid;
+    int width, height;
 
-	vector<vector<Tile*>> getGrid() { return grid; };
+    Tile *hover;
+
+public:
+    Grid(int w, int h);
+
+    ~Grid();
+
+    std::vector<std::vector<Tile *>> getGrid() { return grid; };
 };

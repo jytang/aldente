@@ -1,6 +1,7 @@
 #pragma once
 
 #define GLFW_INCLUDE_GLEXT
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
@@ -14,16 +15,19 @@
 
 #include "shader.h"
 
-class ShaderManager
-{
+class ShaderManager {
 private:
-	static std::map<const char*, Shader*> shaders;
-	static Shader *default_shader;
+    static std::map<const char *, Shader *> shaders;
+    static Shader *default_shader;
 public:
-	static void destroy();
-	static void create_shader_program(const char *type);
-	static Shader* get_shader_program(const char *type);
-	static void set_default(const char *type);
-	static Shader* get_default();
+    static void destroy();
+
+    static void create_shader_program(const char *type);
+
+    static Shader *get_shader_program(const char *type);
+
+    static void set_default(const char *type);
+
+    static Shader *get_default();
 };
 

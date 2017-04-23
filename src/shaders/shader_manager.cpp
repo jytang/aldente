@@ -3,17 +3,15 @@
 #include "basic_shader.h"
 #include "shadow_shader.h"
 
-std::map<const char*, Shader*> ShaderManager::shaders;
-Shader * ShaderManager::default_shader;
+std::map<const char *, Shader *> ShaderManager::shaders;
+Shader *ShaderManager::default_shader;
 
-void ShaderManager::destroy()
-{
+void ShaderManager::destroy() {
     for (auto it = shaders.begin(); it != shaders.end(); ++it)
-        delete(it->second);
+        delete (it->second);
 }
 
-void ShaderManager::create_shader_program(const char *type)
-{
+void ShaderManager::create_shader_program(const char *type) {
     GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
     GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -27,9 +25,9 @@ void ShaderManager::create_shader_program(const char *type)
         while (getline(VertexShaderStream, Line))
             VertexShaderCode += "\n" + Line;
         VertexShaderStream.close();
-    }
-    else {
-        printf("Impossible to open %s. Check to make sure the file exists and you passed in the right filepath!\n", type);
+    } else {
+        printf("Impossible to open %s. Check to make sure the file exists and you passed in the right filepath!\n",
+               type);
     }
 
     // Read the Fragment Shader code from the file
@@ -47,7 +45,7 @@ void ShaderManager::create_shader_program(const char *type)
 
     // Compile Vertex Shader
     printf("Compiling vertex shader: %s/vert.glsl\n", type);
-    char const * VertexSourcePointer = VertexShaderCode.c_str();
+    char const *VertexSourcePointer = VertexShaderCode.c_str();
     glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
     glCompileShader(VertexShaderID);
 
@@ -62,7 +60,7 @@ void ShaderManager::create_shader_program(const char *type)
 
     // Compile Fragment Shader
     printf("Compiling fragment shader: %s/frag.glsl\n", type);
-    char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+    char const *FragmentSourcePointer = FragmentShaderCode.c_str();
     glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
     glCompileShader(FragmentShaderID);
 
@@ -115,22 +113,18 @@ void ShaderManager::create_shader_program(const char *type)
     shaders[type] = s;
 }
 
-Shader* ShaderManager::get_shader_program(const char *type)
-{
-    if (shaders.find(type) == shaders.end())
-    {
+Shader *ShaderManager::get_shader_program(const char *type) {
+    if (shaders.find(type) == shaders.end()) {
         fprintf(stderr, "could not get shader program: %s!", type);
         return 0;
     }
     return shaders[type];
 }
 
-void ShaderManager::set_default(const char *type)
-{
+void ShaderManager::set_default(const char *type) {
     default_shader = get_shader_program(type);
 }
 
-Shader* ShaderManager::get_default()
-{
+Shader *ShaderManager::get_default() {
     return default_shader;
 }

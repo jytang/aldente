@@ -1,35 +1,146 @@
 #include "scene_camera.h"
-#include "shaders/shader.h"
+#include "scene/scene.h"
 
-SceneCamera::SceneCamera(Scene *scene)
-{
+SceneCamera::SceneCamera(Scene *scene) {
     this->scene = scene;
     reset();
 }
 
 SceneCamera::~SceneCamera() {}
 
-void SceneCamera::draw(glm::mat4 m)
-{
+void SceneCamera::draw() {
 }
 
-void SceneCamera::update()
-{
+void SceneCamera::update() {
 }
 
-void SceneCamera::recalculate()
-{
+void SceneCamera::pass(Shader *s) {
+}
+
+void SceneCamera::recalculate() {
     V = glm::lookAt(cam_pos, cam_pos + cam_front, cam_up);
 }
 
-void SceneCamera::reset()
-{
+void SceneCamera::reset() {
     cam_pos = DEFAULT_CAM_POS;
     cam_front = DEFAULT_CAM_FRONT;
     cam_up = DEFAULT_CAM_UP;
     recalculate();
 }
 
-void SceneCamera::pass(glm::mat4 m, Shader *s)
-{
+void SceneCamera::displace_cam(glm::vec3 displacement) {
+    glm::vec3 new_pos = cam_pos + displacement;
+    new_pos = cam_pos + displacement;
+
+    cam_pos = new_pos;
+    recalculate();
 }
+
+// Frustum stuff is for shadow mapping
+
+void SceneCamera::update_frustum_corners(int width, int height, GLfloat far) {
+    GLfloat aspect_ratio = (float) width / (float) height;
+    glm::vec3 cam_right = glm::cross(cam_pos - (cam_pos + cam_front), cam_up);
+
+    // Hnear = 2 * tan(fov / 2) * nDis
+    GLfloat near_height = 2 * glm::tan(glm::radians(45.f / 2)) * 0.1f;
+    GLfloat near_width = near_height * aspect_ratio;
+
+    GLfloat far_height = 2 * glm::tan(glm::radians(45.f / 2)) * far;
+    GLfloat far_width = far_height * aspect_ratio;
+
+    glm::vec3 near_center = cam_pos + cam_front * 0.1f;
+    glm::vec3 far_center = cam_pos + cam_front * far;
+
+    frustum_corners[0] = near_center + (cam_up * (near_height / 2)) - (cam_right * (near_width / 2));
+    frustum_corners[1] = near_center + (cam_up * (near_height / 2)) + (cam_right * (near_width / 2));
+    frustum_corners[2] = near_center - (cam_up * (near_height / 2)) - (cam_right * (near_width / 2));
+    frustum_corners[3] = near_center - (cam_up * (near_height / 2)) + (cam_right * (near_width / 2));
+    frustum_corners[4] = far_center + (cam_up * (far_height / 2)) - (cam_right * (far_width / 2));
+    frustum_corners[5] = far_center + (cam_up * (far_height / 2)) + (cam_right * (far_width / 2));
+    frustum_corners[6] = far_center - (cam_up * (far_height / 2)) - (cam_right * (far_width / 2));
+    frustum_corners[7] = far_center - (cam_up * (far_height / 2)) + (cam_right * (far_width / 2));
+}
+
+/* ADAPTED FROM http://ruh.li/CameraViewFrustum.html */
+void SceneCamera::update_frustum_planes() {
+    glm::mat4 m = P * V;
+    frustum_planes[0].normal.x = m[0][3] + m[0][0];
+    frustum_planes[0].normal.y = m[1][3] + m[1][0];
+    frustum_planes[0].normal.z = m[2][3] + m[2][0];
+    frustum_planes[0].d = m[3][3] + m[3][0];
+
+    // right
+    frustum_planes[1].normal.x = m[0][3] - m[0][0];
+    frustum_planes[1].normal.y = m[1][3] - m[1][0];
+    frustum_planes[1].normal.z = m[2][3] - m[2][0];
+    frustum_planes[1].d = m[3][3] - m[3][0];
+
+    // bottom
+    frustum_planes[2].normal.x = m[0][3] + m[0][1];
+    frustum_planes[2].normal.y = m[1][3] + m[1][1];
+    frustum_planes[2].normal.z = m[2][3] + m[2][1];
+    frustum_planes[2].d = m[3][3] + m[3][1];
+
+    // top
+    frustum_planes[3].normal.x = m[0][3] - m[0][1];
+    frustum_planes[3].normal.y = m[1][3] - m[1][1];
+    frustum_planes[3].normal.z = m[2][3] - m[2][1];
+    frustum_planes[3].d = m[3][3] - m[3][1];
+
+    // near
+    frustum_planes[4].normal.x = m[0][3] + m[0][2];
+    frustum_planes[4].normal.y = m[1][3] + m[1][2];
+    frustum_planes[4].normal.z = m[2][3] + m[2][2];
+    frustum_planes[4].d = m[3][3] + m[3][2];
+
+    // far
+    frustum_planes[5].normal.x = m[0][3] - m[0][2];
+    frustum_planes[5].normal.y = m[1][3] - m[1][2];
+    frustum_planes[5].normal.z = m[2][3] - m[2][2];
+    frustum_planes[5].d = m[3][3] - m[3][2];
+
+    // normalize
+    for (int i = 0; i < 6; i++) {
+        float length = glm::length(frustum_planes[i].normal);
+        // THE FIX WAS TO NEGATE NORMALS SO THEY POINT OUTSIDE OF FRUSTUM
+        frustum_planes[i].normal = -frustum_planes[i].normal / length;
+        frustum_planes[i].d = frustum_planes[i].d / length;
+    }
+}
+
+glm::mat4 SceneCamera::frustum_ortho() {
+    // May need to do redo values below
+    const float FRINGE_X = 5.f * 1.7f;
+    const float FRINGE_Y = 5.f * 1.7f;
+    const float FRINGE_Z = 5.f * 1.7f;
+
+    static bool once = false;
+    glm::mat4 light_view = glm::lookAt(scene->light_pos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    glm::vec3 corners_lightspace[8];
+
+    for (int i = 0; i < 8; ++i) {
+        corners_lightspace[i] = glm::vec3(light_view * glm::vec4(frustum_corners[i], 1.f));
+    }
+
+    glm::vec3 min = corners_lightspace[0];
+    glm::vec3 max = corners_lightspace[0];
+    for (int i = 0; i < 8; i++) {
+        if (corners_lightspace[i].x > max.x)
+            max.x = corners_lightspace[i].x;
+        else if (corners_lightspace[i].x < min.x)
+            min.x = corners_lightspace[i].x;
+        if (corners_lightspace[i].y > max.y)
+            max.y = corners_lightspace[i].y;
+        else if (corners_lightspace[i].y < min.y)
+            min.y = corners_lightspace[i].y;
+        if (corners_lightspace[i].z > max.z)
+            max.z = corners_lightspace[i].z;
+        else if (corners_lightspace[i].z < min.z)
+            min.z = corners_lightspace[i].z;
+    }
+
+    return glm::ortho(min.x - FRINGE_X, max.x + FRINGE_X, min.y - FRINGE_Y, max.y + FRINGE_Y, -max.z - FRINGE_Z,
+                      -min.z + FRINGE_Z);
+}
+

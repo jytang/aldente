@@ -1,57 +1,54 @@
 #include "skybox_shader.h"
 #include "util/util.h"
 
-#include <vector>
-
 const GLfloat skybox_vertices[] = {
-    // Positions
-    -1.0f,  1.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
+        // Positions
+        -1.0f, 1.0f, -1.0f,
+        -1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, 1.0f, -1.0f,
+        -1.0f, 1.0f, -1.0f,
 
-    -1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, 1.0f,
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, 1.0f, -1.0f,
+        -1.0f, 1.0f, -1.0f,
+        -1.0f, 1.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f,
 
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
 
-    -1.0f, -1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
+        -1.0f, -1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, -1.0f, 1.0f,
+        -1.0f, -1.0f, 1.0f,
 
-    -1.0f,  1.0f, -1.0f,
-    1.0f,  1.0f, -1.0f,
-    1.0f,  1.0f,  1.0f,
-    1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f, -1.0f,
+        -1.0f, 1.0f, -1.0f,
+        1.0f, 1.0f, -1.0f,
+        1.0f, 1.0f, 1.0f,
+        1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, 1.0f,
+        -1.0f, 1.0f, -1.0f,
 
-    -1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-    1.0f, -1.0f, -1.0f,
-    1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-    1.0f, -1.0f,  1.0f
+        -1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f, 1.0f,
+        1.0f, -1.0f, -1.0f,
+        1.0f, -1.0f, -1.0f,
+        -1.0f, -1.0f, 1.0f,
+        1.0f, -1.0f, 1.0f
 };
 
 const int NUM_SKYBOXES = 1;
 
-SkyboxShader::SkyboxShader(GLuint shader_id) : Shader(shader_id)
-{
+SkyboxShader::SkyboxShader(GLuint shader_id) : Shader(shader_id) {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glBindVertexArray(VAO);
@@ -59,12 +56,11 @@ SkyboxShader::SkyboxShader(GLuint shader_id) : Shader(shader_id)
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(skybox_vertices), &skybox_vertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *) 0);
 
     glBindVertexArray(0);
 
-    for (int i = 0; i < NUM_SKYBOXES; ++i)
-    {
+    for (int i = 0; i < NUM_SKYBOXES; ++i) {
         GLuint texture_id;
         glGenTextures(1, &texture_id);
         texture_ids.push_back(texture_id);
@@ -72,9 +68,8 @@ SkyboxShader::SkyboxShader(GLuint shader_id) : Shader(shader_id)
     load_cubemap();
 }
 
-void SkyboxShader::load_cubemap()
-{
-    std::vector<const char*> faces;
+void SkyboxShader::load_cubemap() {
+    std::vector<const char *> faces;
     faces.push_back("/right.ppm");
     faces.push_back("/left.ppm");
     faces.push_back("/top.ppm");
@@ -90,13 +85,13 @@ void SkyboxShader::load_cubemap()
     std::vector<std::string> skybox_names;
     skybox_names.push_back("space");
 
-    for (int i = 0; i < NUM_SKYBOXES; ++i)
-    {
+    for (int i = 0; i < NUM_SKYBOXES; ++i) {
         glBindTexture(GL_TEXTURE_CUBE_MAP, texture_ids[i]);
         for (GLuint j = 0; j < faces.size(); ++j) {
             std::string path = prefix + skybox_names[i] + std::string(faces[j]);
             image = Util::loadPPM(path.c_str(), width, height);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                         image);
             delete image;
         }
 
@@ -110,13 +105,11 @@ void SkyboxShader::load_cubemap()
     }
 }
 
-void SkyboxShader::set_material(Material m)
-{
+void SkyboxShader::set_material(Material *m) {
 
 }
 
-void SkyboxShader::draw(Geometry *g, glm::mat4 to_world)
-{
+void SkyboxShader::draw(Geometry *g, glm::mat4 to_world) {
     glDepthMask(GL_FALSE);
     // Strip translation from view matrix.
     glm::mat4 view = glm::mat4(glm::mat3(V));

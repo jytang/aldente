@@ -1,45 +1,37 @@
 #include "scene_group.h"
-#include "shaders/shader.h"
 
 SceneGroup::SceneGroup() {}
 
-SceneGroup::SceneGroup(Scene *scene)
-{
+SceneGroup::SceneGroup(Scene *scene) {
     this->scene = scene;
 }
 
-SceneGroup::~SceneGroup()
-{
+SceneGroup::~SceneGroup() {
     for (auto it = children.begin(); it != children.end(); ++it)
-        delete(*it);
+        delete (*it);
 }
 
-void SceneGroup::add_child(SceneNode *node)
-{
+void SceneGroup::add_child(SceneNode *node) {
     children.push_back(node);
 }
 
-void SceneGroup::remove_all()
-{
+void SceneGroup::remove_all() {
     for (auto it = children.begin(); it != children.end(); ++it)
-        delete(*it);
+        delete (*it);
     children.clear();
 }
 
-void SceneGroup::draw(glm::mat4 m)
-{
+void SceneGroup::draw() {
     for (auto it = children.begin(); it != children.end(); ++it)
-        (*it)->draw(m);
+        (*it)->draw();
 }
 
-void SceneGroup::update()
-{
+void SceneGroup::update() {
     for (auto it = children.begin(); it != children.end(); ++it)
         (*it)->update();
 }
 
-void SceneGroup::pass(glm::mat4 m, Shader *s)
-{
+void SceneGroup::pass(Shader *s) {
     for (auto it = children.begin(); it != children.end(); ++it)
-        (*it)->pass(m, s);
+        (*it)->pass(s);
 }

@@ -5,6 +5,10 @@ aldente
 .build/
 .dep/
 
+# CLion
+CMakeLists.txt
+cmake-build-debug/
+
 # User-specific files
 *.suo
 *.userosscache

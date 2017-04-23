@@ -1,11 +1,9 @@
 #include "geometry.h"
 #include "SOIL.h"
 
-Geometry::Geometry()
-{
+Geometry::Geometry() {
     has_texture = false;
     has_normals = true;
-    add_texture_noise = false;
 
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -16,8 +14,7 @@ Geometry::Geometry()
 
 Geometry::~Geometry() {}
 
-void Geometry::populate_buffers()
-{
+void Geometry::populate_buffers() {
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -46,8 +43,7 @@ void Geometry::populate_buffers()
     glBindVertexArray(0);
 }
 
-void Geometry::attachNewTexture(const char *texture_loc)
-{
+void Geometry::attachNewTexture(const char *texture_loc) {
     has_texture = true;
 
     glGenTextures(1, &texture);
@@ -59,7 +55,7 @@ void Geometry::attachNewTexture(const char *texture_loc)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter_type);
 
     int width, height, channels;
-    unsigned char * image = SOIL_load_image(texture_loc, &width, &height, &channels, SOIL_LOAD_RGB);
+    unsigned char *image = SOIL_load_image(texture_loc, &width, &height, &channels, SOIL_LOAD_RGB);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
@@ -67,19 +63,17 @@ void Geometry::attachNewTexture(const char *texture_loc)
 }
 
 void Geometry::attachExistingTexture(GLuint toAttach) {
-	this->texture = toAttach;
+    this->texture = toAttach;
 }
 
 GLuint Geometry::getTextureGL() {
-	return this->texture;
+    return this->texture;
 }
 
-void Geometry::draw()
-{
+void Geometry::draw() {
     glDrawElements(draw_type, (GLsizei) indices.size(), GL_UNSIGNED_INT, 0);
 }
 
-void Geometry::bind()
-{
+void Geometry::bind() {
     glBindVertexArray(VAO);
 }
