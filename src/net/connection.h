@@ -1,11 +1,15 @@
 #pragma once
 
-#include "message.h"
 #include "threadsafe_queue.h"
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio.hpp>
+#include <assert.h>
 #include <iostream>
+#include <vector>
+#include <string>
+
+#define HEADER_SIZE 4
 
 using boost::asio::ip::tcp;
 
@@ -35,6 +39,12 @@ public:
     string read_message();
 
 private:
+    // Encodes the 32-bit size and writes to the buffer as 4 bytes.
+    static void encode_header(std::vector<uint8_t>& buf, uint32_t size);
+
+    // Decodes the header and returns the length of the message body as 32-bit int.
+    static uint32_t decode_header(const std::vector<uint8_t>& buf);
+
     tcp::socket socket;
     std::vector<uint8_t> rcvbuf;
     ThreadSafeQueue<string> message_queue;
