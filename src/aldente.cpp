@@ -10,6 +10,7 @@
 #include "poll/glfw_poller.h"
 #include "poll/input_poller.h"
 #include "util/config.h"
+#include "net/network_manager.h"
 #include "events.h"
 #include "render.h"
 
@@ -67,10 +68,27 @@ void Aldente::start_game_loop() {
 	scene_manager.set_current_scene(&testScene);
     DebugInput debug_input(window, scene_manager, physics);
 
+    NetworkManager network;
+    network.connect();
+
     while (!window.should_close()) {
         // Do polling
         for (auto &poller : pollers) {
             poller->poll();
+        }
+
+        if (network.get_server()) {
+            kuuhaku::proto::GameObject msg;
+            msg.set_type(kuuhaku::proto::GameObject_Type::GameObject_Type_TILE);
+            auto location = new kuuhaku::proto::GameObject_Location();
+            location->add_x(420);
+            msg.set_allocated_location(location);
+            std::cerr << "[aldente] sending msg: " << msg.DebugString();
+            network.get_server()->send_to_all(msg);
+
+            kuuhaku::proto::GameObject rcv_msg;
+            while (network.get_client()->read_message(&rcv_msg))
+                std::cerr << "[aldente] parsed msg: " << rcv_msg.DebugString();
         }
 
         debug_input.handle_movement();

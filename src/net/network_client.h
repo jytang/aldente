@@ -6,6 +6,7 @@
 #pragma once
 
 #include "connection.h"
+#include "proto/net.pb.h"
 
 using boost::asio::ip::tcp;
 
@@ -23,10 +24,10 @@ public:
     bool is_connected() const;
 
     // Synchronously sends a message to the server. Returns true if successful.
-    bool send(const string& message);
+    bool send(const google::protobuf::Message& message);
 
     // Removes and returns a message from the FIFO queue.
-    bool read_message(string* message);
+    bool read_message(google::protobuf::Message* message);
 
 private:
     Connection connection;

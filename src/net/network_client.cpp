@@ -22,10 +22,15 @@ bool NetworkClient::is_connected() const {
     return connected;
 }
 
-bool NetworkClient::send(const string& message) {
-    return connection.send(message);
+bool NetworkClient::send(const google::protobuf::Message& message) {
+    string serialized;
+    message.SerializeToString(&serialized);
+    return connection.send(serialized);
 }
 
-bool NetworkClient::read_message(string* message) {
-    return connection.read_message(message);
+bool NetworkClient::read_message(google::protobuf::Message* message) {
+    string serialized = connection.read_message();
+    if (serialized.length() == 0)
+        return false;
+    return message->ParseFromString(serialized);
 }

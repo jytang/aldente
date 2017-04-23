@@ -16,6 +16,7 @@ DEPFILES        := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(DEP_DIR)/%.dep)
 LIBS            := -lGLEW -lglfw -lassimp -lSOIL -lfreetype
 LIBS            += -lboost_system -lboost_filesystem -lboost_thread
 LIBS            += -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
+LIBS            += -lprotobuf
 INCS            += $(shell pkg-config bullet --cflags)
 ifeq ($(shell uname),Darwin)
 	LIBS += -framework OpenGL -framework GLUT

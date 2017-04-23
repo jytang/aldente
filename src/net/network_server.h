@@ -1,6 +1,8 @@
 #pragma once
 
 #include "connection.h"
+#include "proto/net.pb.h"
+
 #include <boost/bind.hpp>
 #include <unordered_map>
 #include <chrono>
@@ -19,7 +21,7 @@ public:
     NetworkServer(boost::asio::io_service& ios, unsigned int port);
 
     // Sends a message to all clients.
-    void send_to_all(string message);
+    void send_to_all(google::protobuf::Message& message);
 
     // Read all messages from all clients.
     // Returns a mapping of client id to list of messages.

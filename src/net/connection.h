@@ -31,8 +31,8 @@ public:
     // Sends a message to this client. Returns true if write was successful.
     bool send(const string& message);
 
-    // Removes a message and returns it.
-    bool read_message(string* message);
+    // Removes a message and returns it. Empty string means there are no messages.
+    string read_message();
 
 private:
     tcp::socket socket;

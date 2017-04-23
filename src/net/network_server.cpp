@@ -4,8 +4,7 @@ NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
     acceptor(ios, tcp::endpoint(tcp::v4(), port)), next_id(0) {
     start_accept();
 }
-
-void NetworkServer::send_to_all(string message) {
+void NetworkServer::send_to_all(google::protobuf::Message& message) {
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -13,8 +12,10 @@ void NetworkServer::send_to_all(string message) {
         return;
     }
 
+    string serialized;
     for (auto c = client_list.begin(); c != client_list.end(); /* empty */) {
-        bool success = c->second->send(message);
+        message.SerializeToString(&serialized);
+        bool success = c->second->send(serialized);
         if (!success) {
             std::cerr << "Write failed!\n";
             // If write failed, it's likely because of disconnect. Remove from clients.
@@ -37,7 +38,7 @@ std::unordered_map<int, std::vector<string>> NetworkServer::read_all_messages() 
     for (auto const &c : client_list) {
         messages[c.first] = std::vector<string>();
         string message;
-        while (c.second->read_message(&message)) {
+        while ((message = c.second->read_message()).length() > 0) {
             messages[c.first].push_back(message);
         }
     }

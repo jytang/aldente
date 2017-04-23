@@ -143,6 +143,10 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_filesystem-vc140.1.64.0.0\lib\native\
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\**\*.cpp" />
+    <ClCompile Include="..\src\proto\net.pb.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -162,6 +166,8 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_filesystem-vc140.1.64.0.0\lib\native\
     <Import Project="packages\boost_regex-vc140.1.64.0.0\build\native\boost_regex-vc140.targets" Condition="Exists('packages\boost_regex-vc140.1.64.0.0\build\native\boost_regex-vc140.targets')" />
     <Import Project="packages\boost_system-vc140.1.64.0.0\build\native\boost_system-vc140.targets" Condition="Exists('packages\boost_system-vc140.1.64.0.0\build\native\boost_system-vc140.targets')" />
     <Import Project="packages\boost_thread-vc140.1.64.0.0\build\native\boost_thread-vc140.targets" Condition="Exists('packages\boost_thread-vc140.1.64.0.0\build\native\boost_thread-vc140.targets')" />
+    <Import Project="packages\protobuf.2.6.1.1\build\native\protobuf.targets" Condition="Exists('packages\protobuf.2.6.1.1\build\native\protobuf.targets')" />
+    <Import Project="packages\protobuf-vc140.2.6.1.1\build\native\protobuf-vc140.targets" Condition="Exists('packages\protobuf-vc140.2.6.1.1\build\native\protobuf-vc140.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -182,5 +188,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_filesystem-vc140.1.64.0.0\lib\native\
     <Error Condition="!Exists('packages\boost_regex-vc140.1.64.0.0\build\native\boost_regex-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_regex-vc140.1.64.0.0\build\native\boost_regex-vc140.targets'))" />
     <Error Condition="!Exists('packages\boost_system-vc140.1.64.0.0\build\native\boost_system-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_system-vc140.1.64.0.0\build\native\boost_system-vc140.targets'))" />
     <Error Condition="!Exists('packages\boost_thread-vc140.1.64.0.0\build\native\boost_thread-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_thread-vc140.1.64.0.0\build\native\boost_thread-vc140.targets'))" />
+    <Error Condition="!Exists('packages\protobuf.2.6.1.1\build\native\protobuf.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\protobuf.2.6.1.1\build\native\protobuf.targets'))" />
+    <Error Condition="!Exists('packages\protobuf-vc140.2.6.1.1\build\native\protobuf-vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\protobuf-vc140.2.6.1.1\build\native\protobuf-vc140.targets'))" />
   </Target>
 </Project>

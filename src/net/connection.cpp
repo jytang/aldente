@@ -21,14 +21,15 @@ void Connection::start_async_read_header() {
 
 void Connection::start_async_read_body(uint32_t length) {
     rcvbuf.resize(HEADER_SIZE + length);
+
     socket.async_read_some(boost::asio::buffer(&rcvbuf[HEADER_SIZE], length),
         [&, length](const boost::system::error_code& error, size_t n_bytes) {
         if (!error) {
             if (length != n_bytes) {
                 std::cerr << "ERROR: received unexpected num of bytes; dropping message\n";
             } else {
+                // Message body is the string offset by header size.
                 std::string body(rcvbuf.begin() + HEADER_SIZE, rcvbuf.end());
-                cerr << "[con] got message: " << body;
                 message_queue.push(body);
             }
         } else if (error != boost::asio::error::eof) {
@@ -46,8 +47,8 @@ bool Connection::send(const string& message) {
         return false;
     }
 
-    uint8_t msg_size = message.length();
-
+    // Create a write buffer with the header (message length) followed by body.
+    size_t msg_size = message.length();
     std::vector<uint8_t> sndbuf;
     sndbuf.resize(HEADER_SIZE + msg_size);
     Message::encode_header(sndbuf, msg_size);
@@ -73,9 +74,8 @@ bool Connection::send(const string& message) {
     return true;
 }
 
-bool Connection::read_message(string* message) {
+string Connection::read_message() {
     if (message_queue.empty())
-        return false;
-    *message = message_queue.pop();
-    return true;
+        return string();
+    return message_queue.pop();
 }
