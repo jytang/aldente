@@ -60,6 +60,7 @@ Window::Window(const std::string &name, bool show_cursor,
     // Ensure own width and height is accurate to glfw
     glfwGetFramebufferSize(gl_window, &width, &height);
     events::window_buffer_resize_event.connect([&](events::WindowSizeData d) {
+        if (this != d.window) return;
         width = d.width;
         height = d.height;
     });
