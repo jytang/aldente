@@ -14,22 +14,21 @@ void Connection::start_async_read_header() {
         }
 
         // Read the message body.
-        uint32_t length = decode_header(rcvbuf);
+        uint32_t length = decode_header(&rcvbuf);
         start_async_read_body(length);
     });
 }
 
 void Connection::start_async_read_body(uint32_t length) {
-    rcvbuf.resize(HEADER_SIZE + length);
-
-    socket.async_read_some(boost::asio::buffer(&rcvbuf[HEADER_SIZE], length),
+    rcvbuf.resize(length);
+    socket.async_read_some(boost::asio::buffer(rcvbuf.data(), length),
         [&, length](const boost::system::error_code& error, size_t n_bytes) {
         if (!error) {
             if (length != n_bytes) {
                 std::cerr << "ERROR: received unexpected num of bytes; dropping message\n";
             } else {
                 // Message body is the string offset by header size.
-                std::string body(rcvbuf.begin() + HEADER_SIZE, rcvbuf.end());
+                std::string body(rcvbuf.begin(), rcvbuf.end());
                 message_queue.push(body);
             }
         } else if (error != boost::asio::error::eof) {
@@ -52,9 +51,7 @@ bool Connection::send(const string& message) {
     std::vector<uint8_t> sndbuf;
     sndbuf.resize(HEADER_SIZE + msg_size);
     encode_header(sndbuf, msg_size);
-    for (int i = 0; i < msg_size; i++) {
-        sndbuf[HEADER_SIZE + i] = message[i];
-    }
+    std::copy(message.c_str(), message.c_str() + msg_size, sndbuf.begin() + HEADER_SIZE);
 
     // TODO (nice to have): do asynchronous write instead.
     boost::system::error_code error;
@@ -80,12 +77,12 @@ string Connection::read_message() {
     return message_queue.pop();
 }
 
-uint32_t Connection::decode_header(const std::vector<uint8_t>& buf) {
-    if (buf.size() < HEADER_SIZE)
+uint32_t Connection::decode_header(const std::vector<uint8_t>* buf) {
+    if (buf->size() < HEADER_SIZE)
         return 0;
     uint32_t msg_size = 0;
     for (uint32_t i = 0; i < HEADER_SIZE; ++i)
-        msg_size = msg_size * 256 + (static_cast<unsigned int>(buf[i]) & 0xFF);
+        msg_size = msg_size * 256 + (static_cast<unsigned int>((*buf)[i]) & 0xFF);
     return msg_size;
 }
 

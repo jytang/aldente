@@ -4,6 +4,7 @@ NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
     acceptor(ios, tcp::endpoint(tcp::v4(), port)), next_id(0) {
     start_accept();
 }
+
 void NetworkServer::send_to_all(google::protobuf::Message& message) {
     unique_lock<mutex> lock(client_list_mutex);
 

@@ -4,7 +4,6 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/asio.hpp>
-#include <assert.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -43,7 +42,7 @@ private:
     static void encode_header(std::vector<uint8_t>& buf, uint32_t size);
 
     // Decodes the header and returns the length of the message body as 32-bit int.
-    static uint32_t decode_header(const std::vector<uint8_t>& buf);
+    static uint32_t decode_header(const std::vector<uint8_t>* buf);
 
     tcp::socket socket;
     std::vector<uint8_t> rcvbuf;
