@@ -87,7 +87,7 @@ void Aldente::start_game_loop() {
             network.get_server()->send_to_all(msg);
 
             kuuhaku::proto::GameObject rcv_msg;
-            while (network.get_client()->read_message(&rcv_msg))
+            while (network.get_client()->template read_message<kuuhaku::proto::GameObject>(&rcv_msg))
                 std::cerr << "[aldente] parsed msg: " << rcv_msg.DebugString();
         }
 

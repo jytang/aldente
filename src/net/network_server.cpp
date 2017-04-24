@@ -21,30 +21,11 @@ void NetworkServer::send_to_all(google::protobuf::Message& message) {
             std::cerr << "Write failed!\n";
             // If write failed, it's likely because of disconnect. Remove from clients.
             c = client_list.erase(c);
-        } else {
+        }
+        else {
             c++;
         }
     }
-}
-
-std::unordered_map<int, std::vector<string>> NetworkServer::read_all_messages() {
-    std::unordered_map<int, std::vector<string>> messages;
-    unique_lock<mutex> lock(client_list_mutex);
-
-    // No clients connected.
-    if (client_list.empty()) {
-        return messages;
-    }
-
-    for (auto const &c : client_list) {
-        messages[c.first] = std::vector<string>();
-        string message;
-        while ((message = c.second->read_message()).length() > 0) {
-            messages[c.first].push_back(message);
-        }
-    }
-
-    return messages;
 }
 
 void NetworkServer::start_accept() {

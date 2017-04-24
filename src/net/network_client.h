@@ -27,7 +27,13 @@ public:
     bool send(const google::protobuf::Message& message);
 
     // Removes and returns a message from the FIFO queue.
-    bool read_message(google::protobuf::Message* message);
+    template <typename T>
+    bool read_message(T* message) {
+        string serialized = connection.read_message();
+        if (serialized.length() == 0)
+            return false;
+        return message->ParseFromString(serialized);
+    }
 
 private:
     Connection connection;

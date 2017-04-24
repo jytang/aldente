@@ -27,10 +27,3 @@ bool NetworkClient::send(const google::protobuf::Message& message) {
     message.SerializeToString(&serialized);
     return connection.send(serialized);
 }
-
-bool NetworkClient::read_message(google::protobuf::Message* message) {
-    string serialized = connection.read_message();
-    if (serialized.length() == 0)
-        return false;
-    return message->ParseFromString(serialized);
-}
