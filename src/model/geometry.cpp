@@ -1,7 +1,10 @@
 #include "geometry.h"
 #include "SOIL.h"
 
-Geometry::Geometry() {
+Geometry::Geometry(GLenum draw, GLint wrap, GLint filter) :
+        draw_type(draw), 
+        wrap_type(wrap), 
+        filter_type(filter){
     has_texture = false;
     has_normals = true;
 
@@ -42,7 +45,7 @@ void Geometry::populate_buffers() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-
+/*
 void Geometry::attachNewTexture(const char *texture_loc) {
     has_texture = true;
 
@@ -60,14 +63,14 @@ void Geometry::attachNewTexture(const char *texture_loc) {
     glGenerateMipmap(GL_TEXTURE_2D);
     SOIL_free_image_data(image);
     glBindTexture(GL_TEXTURE_2D, 0);
-}
+}*/
 
-void Geometry::attachExistingTexture(GLuint toAttach) {
-    this->texture = toAttach;
+void Geometry::attachTexture(GLuint toAttach) {
+    texture = toAttach;
 }
 
 GLuint Geometry::getTextureGL() {
-    return this->texture;
+    return texture;
 }
 
 void Geometry::draw() {

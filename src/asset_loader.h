@@ -2,6 +2,7 @@
 
 #include "scene/scene.h"
 #include "model/model.h"
+#include "soil.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -21,6 +22,8 @@ private:
     void process_node(aiNode *node, const aiScene *scene, bool isModel);
 
     Mesh *process_mesh(aiMesh *mesh, const aiScene *scene);
+
+    void load_texture(std::string path);
 
     std::map<std::string, Model *> assets;
     std::map<std::string, GLuint> textures;

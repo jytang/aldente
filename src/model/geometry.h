@@ -18,15 +18,15 @@ public:
     GLint wrap_type = GL_REPEAT;
     GLint filter_type = GL_NEAREST_MIPMAP_LINEAR;
 
-    Geometry();
+    Geometry(GLenum draw = GL_TRIANGLES,
+	GLint wrap = GL_REPEAT,
+	GLint filter = GL_NEAREST_MIPMAP_LINEAR);
 
     ~Geometry();
 
     void populate_buffers();
 
-    void attachNewTexture(const char *texture_loc);
-
-    void attachExistingTexture(GLuint toAttach);
+    void attachTexture(GLuint texture);
 
     GLuint getTextureGL();
 

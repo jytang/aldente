@@ -10,7 +10,17 @@ AssetLoader *AssetLoader::asset_loader = new AssetLoader();
 AssetLoader::AssetLoader() {}
 
 void AssetLoader::setup() {
-    boost::filesystem::path path = boost::filesystem::path("assets/fbx");
+    //Load Textures
+    boost::filesystem::path path = boost::filesystem::path("assets/textures");
+    for (auto &entry : boost::make_iterator_range(boost::filesystem::directory_iterator(path), {})) {
+        std::string filepath = std::string("assets/textures/");
+        filepath += entry.path().filename().string();
+
+        load_texture(filepath);
+    }
+
+    //Load Models
+    path = boost::filesystem::path("assets/fbx");
     for (auto &entry : boost::make_iterator_range(boost::filesystem::directory_iterator(path), {})) {
         std::size_t found = entry.path().filename().string().find_first_of("@");
 
@@ -145,16 +155,11 @@ Mesh *AssetLoader::process_mesh(aiMesh *mesh, const aiScene *scene) {
         std::string temp(str.C_Str());
         std::size_t found = temp.find_last_of("/\\");
         std::string fileName = temp.substr(found + 1);
-        std::string toPass("assets/textures/");
-        toPass += fileName;
+        std::string to_pass("assets/textures/");
+        to_pass += fileName;
 
-        //Texture not loaded yet
-        if (textures.count(fileName) == 0) {
-            geo->attachNewTexture(toPass.c_str());
-            textures[fileName] = geo->getTextureGL();
-        } else {
-            geo->attachExistingTexture(textures[fileName]);
-        }
+		geo->has_texture = true;
+        geo->texture = textures[fileName];
     }
 
     geo->populate_buffers();
@@ -171,7 +176,7 @@ Model *AssetLoader::get_model(std::string name) {
         error += name;
         error += " was not loaded. Check for fbx file and double check filename.\n";
         fprintf(stderr, "%s", error.c_str());
-        Model *dflt = new Model(); // WHY?
+        Model *dflt = new Model(); 
         return dflt;
     }
     return assets[name];
@@ -186,4 +191,27 @@ GLuint AssetLoader::get_texture(std::string name) {
         return 0;
     }
     return textures[name];
+}
+
+void AssetLoader::load_texture(std::string path) {
+    GLuint texture;
+
+    glGenTextures(1, &texture);
+
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_TRIANGLES);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_TRIANGLES);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_REPEAT);
+
+    int width, height, channels;
+    unsigned char *image = SOIL_load_image(path.c_str(), &width, &height, &channels, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    SOIL_free_image_data(image);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    std::size_t found = path.find_last_of("/\\");
+    std::string fileName = path.substr(found + 1);
+    textures[fileName] = texture;
 }
