@@ -5,7 +5,7 @@ NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
     start_accept();
 }
 
-void NetworkServer::send_to_all(google::protobuf::Message& message) {
+void NetworkServer::send_to_all(kuuhaku::proto::ServerMessage& message) {
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -26,6 +26,28 @@ void NetworkServer::send_to_all(google::protobuf::Message& message) {
             c++;
         }
     }
+}
+
+std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> NetworkServer::read_all_messages() {
+    std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> messages;
+    unique_lock<mutex> lock(client_list_mutex);
+
+    // No clients connected.
+    if (client_list.empty()) {
+        return messages;
+    }
+
+    for (auto const &c : client_list) {
+        messages[c.first] = std::vector<kuuhaku::proto::ClientMessage>();
+        string serialized;
+        while ((serialized = c.second->read_message()).length() > 0) {
+            kuuhaku::proto::ClientMessage message;
+            message.ParseFromString(serialized);
+            messages[c.first].push_back(message);
+        }
+    }
+
+    return messages;
 }
 
 void NetworkServer::start_accept() {

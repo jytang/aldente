@@ -21,32 +21,11 @@ public:
     NetworkServer(boost::asio::io_service& ios, unsigned int port);
 
     // Sends a message to all clients.
-    void send_to_all(google::protobuf::Message& message);
+    void send_to_all(kuuhaku::proto::ServerMessage& message);
 
     // Read all messages from all clients.
     // Returns a mapping of client id to list of messages.
-    template <typename T>
-    std::unordered_map<int, std::vector<T>> read_all_messages() {
-        std::unordered_map<int, std::vector<T>> messages;
-        unique_lock<mutex> lock(client_list_mutex);
-
-        // No clients connected.
-        if (client_list.empty()) {
-            return messages;
-        }
-
-        for (auto const &c : client_list) {
-            messages[c.first] = std::vector<T>();
-            string serialized;
-            while ((serialized = c.second->read_message()).length() > 0) {
-                T message;
-                message.SerializeToString(&serialized);
-                messages[c.first].push_back(message);
-            }
-        }
-
-        return messages;
-    }
+    std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> read_all_messages();
 
 private:
     // Begin accepting new clients.

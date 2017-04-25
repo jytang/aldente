@@ -24,16 +24,10 @@ public:
     bool is_connected() const;
 
     // Synchronously sends a message to the server. Returns true if successful.
-    bool send(const google::protobuf::Message& message);
+    bool send(const kuuhaku::proto::ClientMessage& message);
 
     // Removes and returns a message from the FIFO queue.
-    template <typename T>
-    bool read_message(T* message) {
-        string serialized = connection.read_message();
-        if (serialized.length() == 0)
-            return false;
-        return message->ParseFromString(serialized);
-    }
+    bool read_message(kuuhaku::proto::ServerMessage* message);
 
 private:
     Connection connection;

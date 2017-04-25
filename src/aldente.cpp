@@ -78,17 +78,27 @@ void Aldente::start_game_loop() {
         }
 
         if (network.get_server()) {
-            kuuhaku::proto::GameObject msg;
-            msg.set_type(kuuhaku::proto::GameObject_Type::GameObject_Type_TILE);
-            auto location = new kuuhaku::proto::GameObject_Location();
-            location->add_x(420);
-            msg.set_allocated_location(location);
-            std::cerr << "[aldente] sending msg: " << msg.DebugString();
+            kuuhaku::proto::ServerMessage msg;
+            msg.set_message("Hello from server");
+            std::cerr << "[aldente] server sent: " << msg.DebugString();
             network.get_server()->send_to_all(msg);
 
-            kuuhaku::proto::GameObject rcv_msg;
-            while (network.get_client()->template read_message<kuuhaku::proto::GameObject>(&rcv_msg))
-                std::cerr << "[aldente] parsed msg: " << rcv_msg.DebugString();
+            kuuhaku::proto::ClientMessage cmsg;
+            cmsg.set_message("Hi from client");
+            std::cerr << "[aldente] client sent: " << cmsg.DebugString();
+            network.get_client()->send(cmsg);
+
+            kuuhaku::proto::ServerMessage rcv_msg;
+            while (network.get_client()->read_message(&rcv_msg))
+                std::cerr << "[aldente] client got: " << rcv_msg.DebugString();
+
+            auto rcv_cmsgs = network.get_server()->read_all_messages();
+            for (auto& c : rcv_cmsgs) {
+                std::cerr << "[aldente] server got (from client " << c.first << "):\n";
+                for (auto& m : c.second) {
+                    std::cerr << "    -> " << m.DebugString();
+                }
+            }
         }
 
         debug_input.handle_movement();

@@ -2,7 +2,11 @@ syntax = "proto2";
 
 package kuuhaku.proto;
 
-message DebugMessage {
+message ServerMessage {
+  required string message = 1;
+}
+
+message ClientMessage {
   required string message = 1;
 }
 
@@ -27,12 +31,12 @@ message GameObject {
   required Type type = 1;
   required Location location = 2;
 }
-/*
+
 message JoystickData {
-  int32 id = 1;
-  bool is_button = 2;
-  int32 input = 3;
-  int32 state = 4;
+  required int32 id = 1;
+  required bool is_button = 2;
+  required int32 input = 3;
+  required int32 state = 4;
 }
 
 message Direction {
@@ -42,5 +46,5 @@ message Direction {
     SOUTH = 2;
     WEST = 3;
   }
-  Cardinal way = 1;
-}*/
+  required Cardinal way = 1;
+}
