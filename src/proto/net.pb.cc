@@ -16,7 +16,6 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 
-namespace kuuhaku {
 namespace proto {
 
 namespace {
@@ -24,9 +23,15 @@ namespace {
 const ::google::protobuf::Descriptor* ServerMessage_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ServerMessage_reflection_ = NULL;
+struct ServerMessageOneofInstance {
+  const ::std::string* message_;
+}* ServerMessage_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* ClientMessage_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   ClientMessage_reflection_ = NULL;
+struct ClientMessageOneofInstance {
+  const ::std::string* message_;
+}* ClientMessage_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* GameState_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GameState_reflection_ = NULL;
@@ -55,8 +60,9 @@ void protobuf_AssignDesc_net_2eproto() {
       "net.proto");
   GOOGLE_CHECK(file != NULL);
   ServerMessage_descriptor_ = file->message_type(0);
-  static const int ServerMessage_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, message_),
+  static const int ServerMessage_offsets_[2] = {
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ServerMessage_default_oneof_instance_, message_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, message_type_),
   };
   ServerMessage_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -66,12 +72,15 @@ void protobuf_AssignDesc_net_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, _has_bits_[0]),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, _unknown_fields_),
       -1,
+      ServerMessage_default_oneof_instance_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, _oneof_case_[0]),
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ServerMessage));
   ClientMessage_descriptor_ = file->message_type(1);
-  static const int ClientMessage_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, message_),
+  static const int ClientMessage_offsets_[2] = {
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, message_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, message_type_),
   };
   ClientMessage_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -81,6 +90,8 @@ void protobuf_AssignDesc_net_2eproto() {
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, _has_bits_[0]),
       GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, _unknown_fields_),
       -1,
+      ClientMessage_default_oneof_instance_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, _oneof_case_[0]),
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientMessage));
@@ -200,8 +211,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
 
 void protobuf_ShutdownFile_net_2eproto() {
   delete ServerMessage::default_instance_;
+  delete ServerMessage_default_oneof_instance_;
   delete ServerMessage_reflection_;
   delete ClientMessage::default_instance_;
+  delete ClientMessage_default_oneof_instance_;
   delete ClientMessage_reflection_;
   delete GameState::default_instance_;
   delete GameState_reflection_;
@@ -222,25 +235,27 @@ void protobuf_AddDesc_net_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tnet.proto\022\rkuuhaku.proto\" \n\rServerMess"
-    "age\022\017\n\007message\030\001 \002(\t\" \n\rClientMessage\022\017\n"
-    "\007message\030\001 \002(\t\"7\n\tGameState\022*\n\007objects\030\001"
-    " \003(\0132\031.kuuhaku.proto.GameObject\"\337\001\n\nGame"
-    "Object\022,\n\004type\030\001 \002(\0162\036.kuuhaku.proto.Gam"
-    "eObject.Type\0224\n\010location\030\002 \002(\0132\".kuuhaku"
-    ".proto.GameObject.Location\032F\n\010Location\022\r"
-    "\n\001x\030\001 \003(\001B\002\020\001\022\r\n\001y\030\002 \003(\001B\002\020\001\022\r\n\001z\030\003 \003(\001B"
-    "\002\020\001\022\r\n\001w\030\004 \003(\001B\002\020\001\"%\n\004Type\022\n\n\006PLAYER\020\000\022\007"
-    "\n\003NPC\020\001\022\010\n\004TILE\020\002\"K\n\014JoystickData\022\n\n\002id\030"
-    "\001 \002(\005\022\021\n\tis_button\030\002 \002(\010\022\r\n\005input\030\003 \002(\005\022"
-    "\r\n\005state\030\004 \002(\005\"q\n\tDirection\022.\n\003way\030\001 \002(\016"
-    "2!.kuuhaku.proto.Direction.Cardinal\"4\n\010C"
-    "ardinal\022\t\n\005NORTH\020\000\022\010\n\004EAST\020\001\022\t\n\005SOUTH\020\002\022"
-    "\010\n\004WEST\020\003", 569);
+    "\n\tnet.proto\022\005proto\"2\n\rServerMessage\022\021\n\007m"
+    "essage\030\001 \001(\tH\000B\016\n\014message_type\"2\n\rClient"
+    "Message\022\021\n\007message\030\001 \001(\tH\000B\016\n\014message_ty"
+    "pe\"/\n\tGameState\022\"\n\007objects\030\001 \003(\0132\021.proto"
+    ".GameObject\"\317\001\n\nGameObject\022$\n\004type\030\001 \001(\016"
+    "2\026.proto.GameObject.Type\022,\n\010location\030\002 \001"
+    "(\0132\032.proto.GameObject.Location\032F\n\010Locati"
+    "on\022\r\n\001x\030\001 \003(\001B\002\020\001\022\r\n\001y\030\002 \003(\001B\002\020\001\022\r\n\001z\030\003 "
+    "\003(\001B\002\020\001\022\r\n\001w\030\004 \003(\001B\002\020\001\"%\n\004Type\022\n\n\006PLAYER"
+    "\020\000\022\007\n\003NPC\020\001\022\010\n\004TILE\020\002\"K\n\014JoystickData\022\n\n"
+    "\002id\030\001 \001(\005\022\021\n\tis_button\030\002 \001(\010\022\r\n\005input\030\003 "
+    "\001(\005\022\r\n\005state\030\004 \001(\005\"i\n\tDirection\022&\n\003way\030\001"
+    " \001(\0162\031.proto.Direction.Cardinal\"4\n\010Cardi"
+    "nal\022\t\n\005NORTH\020\000\022\010\n\004EAST\020\001\022\t\n\005SOUTH\020\002\022\010\n\004W"
+    "EST\020\003", 565);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
+  ServerMessage_default_oneof_instance_ = new ServerMessageOneofInstance;
   ClientMessage::default_instance_ = new ClientMessage();
+  ClientMessage_default_oneof_instance_ = new ClientMessageOneofInstance;
   GameState::default_instance_ = new GameState();
   GameObject::default_instance_ = new GameObject();
   GameObject_Location::default_instance_ = new GameObject_Location();
@@ -272,34 +287,35 @@ const int ServerMessage::kMessageFieldNumber;
 ServerMessage::ServerMessage()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(constructor:proto.ServerMessage)
 }
 
 void ServerMessage::InitAsDefaultInstance() {
+  ServerMessage_default_oneof_instance_->message_ = &::google::protobuf::internal::GetEmptyStringAlreadyInited();
 }
 
 ServerMessage::ServerMessage(const ServerMessage& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(copy_constructor:proto.ServerMessage)
 }
 
 void ServerMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  message_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  clear_has_message_type();
 }
 
 ServerMessage::~ServerMessage() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(destructor:proto.ServerMessage)
   SharedDtor();
 }
 
 void ServerMessage::SharedDtor() {
-  if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete message_;
+  if (has_message_type()) {
+    clear_message_type();
   }
   if (this != default_instance_) {
   }
@@ -326,12 +342,22 @@ ServerMessage* ServerMessage::New() const {
   return new ServerMessage;
 }
 
-void ServerMessage::Clear() {
-  if (has_message()) {
-    if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-      message_->clear();
+void ServerMessage::clear_message_type() {
+  switch(message_type_case()) {
+    case kMessage: {
+      delete message_type_.message_;
+      break;
+    }
+    case MESSAGE_TYPE_NOT_SET: {
+      break;
     }
   }
+  _oneof_case_[0] = MESSAGE_TYPE_NOT_SET;
+}
+
+
+void ServerMessage::Clear() {
+  clear_message_type();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -340,13 +366,13 @@ bool ServerMessage::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(parse_start:proto.ServerMessage)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string message = 1;
+      // optional string message = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
@@ -376,18 +402,18 @@ bool ServerMessage::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(parse_success:proto.ServerMessage)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(parse_failure:proto.ServerMessage)
   return false;
 #undef DO_
 }
 
 void ServerMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.ServerMessage)
-  // required string message = 1;
+  // @@protoc_insertion_point(serialize_start:proto.ServerMessage)
+  // optional string message = 1;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -401,13 +427,13 @@ void ServerMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(serialize_end:proto.ServerMessage)
 }
 
 ::google::protobuf::uint8* ServerMessage::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.ServerMessage)
-  // required string message = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:proto.ServerMessage)
+  // optional string message = 1;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -422,21 +448,24 @@ void ServerMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.ServerMessage)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.ServerMessage)
   return target;
 }
 
 int ServerMessage::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string message = 1;
-    if (has_message()) {
+  switch (message_type_case()) {
+    // optional string message = 1;
+    case kMessage: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->message());
+      break;
     }
-
+    case MESSAGE_TYPE_NOT_SET: {
+      break;
+    }
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -463,9 +492,13 @@ void ServerMessage::MergeFrom(const ::google::protobuf::Message& from) {
 
 void ServerMessage::MergeFrom(const ServerMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_message()) {
+  switch (from.message_type_case()) {
+    case kMessage: {
       set_message(from.message());
+      break;
+    }
+    case MESSAGE_TYPE_NOT_SET: {
+      break;
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -484,14 +517,14 @@ void ServerMessage::CopyFrom(const ServerMessage& from) {
 }
 
 bool ServerMessage::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
 void ServerMessage::Swap(ServerMessage* other) {
   if (other != this) {
-    std::swap(message_, other->message_);
+    std::swap(message_type_, other->message_type_);
+    std::swap(_oneof_case_[0], other->_oneof_case_[0]);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -516,34 +549,35 @@ const int ClientMessage::kMessageFieldNumber;
 ClientMessage::ClientMessage()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(constructor:proto.ClientMessage)
 }
 
 void ClientMessage::InitAsDefaultInstance() {
+  ClientMessage_default_oneof_instance_->message_ = &::google::protobuf::internal::GetEmptyStringAlreadyInited();
 }
 
 ClientMessage::ClientMessage(const ClientMessage& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(copy_constructor:proto.ClientMessage)
 }
 
 void ClientMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  message_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  clear_has_message_type();
 }
 
 ClientMessage::~ClientMessage() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(destructor:proto.ClientMessage)
   SharedDtor();
 }
 
 void ClientMessage::SharedDtor() {
-  if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete message_;
+  if (has_message_type()) {
+    clear_message_type();
   }
   if (this != default_instance_) {
   }
@@ -570,12 +604,22 @@ ClientMessage* ClientMessage::New() const {
   return new ClientMessage;
 }
 
-void ClientMessage::Clear() {
-  if (has_message()) {
-    if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-      message_->clear();
+void ClientMessage::clear_message_type() {
+  switch(message_type_case()) {
+    case kMessage: {
+      delete message_type_.message_;
+      break;
+    }
+    case MESSAGE_TYPE_NOT_SET: {
+      break;
     }
   }
+  _oneof_case_[0] = MESSAGE_TYPE_NOT_SET;
+}
+
+
+void ClientMessage::Clear() {
+  clear_message_type();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -584,13 +628,13 @@ bool ClientMessage::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(parse_start:proto.ClientMessage)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string message = 1;
+      // optional string message = 1;
       case 1: {
         if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
@@ -620,18 +664,18 @@ bool ClientMessage::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(parse_success:proto.ClientMessage)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(parse_failure:proto.ClientMessage)
   return false;
 #undef DO_
 }
 
 void ClientMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.ClientMessage)
-  // required string message = 1;
+  // @@protoc_insertion_point(serialize_start:proto.ClientMessage)
+  // optional string message = 1;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -645,13 +689,13 @@ void ClientMessage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(serialize_end:proto.ClientMessage)
 }
 
 ::google::protobuf::uint8* ClientMessage::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.ClientMessage)
-  // required string message = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:proto.ClientMessage)
+  // optional string message = 1;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -666,21 +710,24 @@ void ClientMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.ClientMessage)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.ClientMessage)
   return target;
 }
 
 int ClientMessage::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string message = 1;
-    if (has_message()) {
+  switch (message_type_case()) {
+    // optional string message = 1;
+    case kMessage: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->message());
+      break;
     }
-
+    case MESSAGE_TYPE_NOT_SET: {
+      break;
+    }
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -707,9 +754,13 @@ void ClientMessage::MergeFrom(const ::google::protobuf::Message& from) {
 
 void ClientMessage::MergeFrom(const ClientMessage& from) {
   GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_message()) {
+  switch (from.message_type_case()) {
+    case kMessage: {
       set_message(from.message());
+      break;
+    }
+    case MESSAGE_TYPE_NOT_SET: {
+      break;
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -728,14 +779,14 @@ void ClientMessage::CopyFrom(const ClientMessage& from) {
 }
 
 bool ClientMessage::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
 
 void ClientMessage::Swap(ClientMessage* other) {
   if (other != this) {
-    std::swap(message_, other->message_);
+    std::swap(message_type_, other->message_type_);
+    std::swap(_oneof_case_[0], other->_oneof_case_[0]);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -760,7 +811,7 @@ const int GameState::kObjectsFieldNumber;
 GameState::GameState()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(constructor:proto.GameState)
 }
 
 void GameState::InitAsDefaultInstance() {
@@ -770,7 +821,7 @@ GameState::GameState(const GameState& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(copy_constructor:proto.GameState)
 }
 
 void GameState::SharedCtor() {
@@ -779,7 +830,7 @@ void GameState::SharedCtor() {
 }
 
 GameState::~GameState() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(destructor:proto.GameState)
   SharedDtor();
 }
 
@@ -819,13 +870,13 @@ bool GameState::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(parse_start:proto.GameState)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .kuuhaku.proto.GameObject objects = 1;
+      // repeated .proto.GameObject objects = 1;
       case 1: {
         if (tag == 10) {
          parse_objects:
@@ -853,18 +904,18 @@ bool GameState::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(parse_success:proto.GameState)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(parse_failure:proto.GameState)
   return false;
 #undef DO_
 }
 
 void GameState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.GameState)
-  // repeated .kuuhaku.proto.GameObject objects = 1;
+  // @@protoc_insertion_point(serialize_start:proto.GameState)
+  // repeated .proto.GameObject objects = 1;
   for (int i = 0; i < this->objects_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->objects(i), output);
@@ -874,13 +925,13 @@ void GameState::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(serialize_end:proto.GameState)
 }
 
 ::google::protobuf::uint8* GameState::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.GameState)
-  // repeated .kuuhaku.proto.GameObject objects = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:proto.GameState)
+  // repeated .proto.GameObject objects = 1;
   for (int i = 0; i < this->objects_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -891,14 +942,14 @@ void GameState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.GameState)
   return target;
 }
 
 int GameState::ByteSize() const {
   int total_size = 0;
 
-  // repeated .kuuhaku.proto.GameObject objects = 1;
+  // repeated .proto.GameObject objects = 1;
   total_size += 1 * this->objects_size();
   for (int i = 0; i < this->objects_size(); i++) {
     total_size +=
@@ -949,7 +1000,6 @@ void GameState::CopyFrom(const GameState& from) {
 
 bool GameState::IsInitialized() const {
 
-  if (!::google::protobuf::internal::AllAreInitialized(this->objects())) return false;
   return true;
 }
 
@@ -1006,7 +1056,7 @@ const int GameObject_Location::kWFieldNumber;
 GameObject_Location::GameObject_Location()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(constructor:proto.GameObject.Location)
 }
 
 void GameObject_Location::InitAsDefaultInstance() {
@@ -1016,7 +1066,7 @@ GameObject_Location::GameObject_Location(const GameObject_Location& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(copy_constructor:proto.GameObject.Location)
 }
 
 void GameObject_Location::SharedCtor() {
@@ -1025,7 +1075,7 @@ void GameObject_Location::SharedCtor() {
 }
 
 GameObject_Location::~GameObject_Location() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(destructor:proto.GameObject.Location)
   SharedDtor();
 }
 
@@ -1068,7 +1118,7 @@ bool GameObject_Location::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(parse_start:proto.GameObject.Location)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -1159,17 +1209,17 @@ bool GameObject_Location::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(parse_success:proto.GameObject.Location)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(parse_failure:proto.GameObject.Location)
   return false;
 #undef DO_
 }
 
 void GameObject_Location::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(serialize_start:proto.GameObject.Location)
   // repeated double x = 1 [packed = true];
   if (this->x_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
@@ -1214,12 +1264,12 @@ void GameObject_Location::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(serialize_end:proto.GameObject.Location)
 }
 
 ::google::protobuf::uint8* GameObject_Location::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(serialize_to_array_start:proto.GameObject.Location)
   // repeated double x = 1 [packed = true];
   if (this->x_size() > 0) {
     target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(
@@ -1280,7 +1330,7 @@ void GameObject_Location::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.GameObject.Location)
   return target;
 }
 
@@ -1423,18 +1473,18 @@ const int GameObject::kLocationFieldNumber;
 GameObject::GameObject()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(constructor:proto.GameObject)
 }
 
 void GameObject::InitAsDefaultInstance() {
-  location_ = const_cast< ::kuuhaku::proto::GameObject_Location*>(&::kuuhaku::proto::GameObject_Location::default_instance());
+  location_ = const_cast< ::proto::GameObject_Location*>(&::proto::GameObject_Location::default_instance());
 }
 
 GameObject::GameObject(const GameObject& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(copy_constructor:proto.GameObject)
 }
 
 void GameObject::SharedCtor() {
@@ -1445,7 +1495,7 @@ void GameObject::SharedCtor() {
 }
 
 GameObject::~GameObject() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(destructor:proto.GameObject)
   SharedDtor();
 }
 
@@ -1480,7 +1530,7 @@ void GameObject::Clear() {
   if (_has_bits_[0 / 32] & 3) {
     type_ = 0;
     if (has_location()) {
-      if (location_ != NULL) location_->::kuuhaku::proto::GameObject_Location::Clear();
+      if (location_ != NULL) location_->::proto::GameObject_Location::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1491,21 +1541,21 @@ bool GameObject::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(parse_start:proto.GameObject)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .kuuhaku.proto.GameObject.Type type = 1;
+      // optional .proto.GameObject.Type type = 1;
       case 1: {
         if (tag == 8) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::kuuhaku::proto::GameObject_Type_IsValid(value)) {
-            set_type(static_cast< ::kuuhaku::proto::GameObject_Type >(value));
+          if (::proto::GameObject_Type_IsValid(value)) {
+            set_type(static_cast< ::proto::GameObject_Type >(value));
           } else {
             mutable_unknown_fields()->AddVarint(1, value);
           }
@@ -1516,7 +1566,7 @@ bool GameObject::MergePartialFromCodedStream(
         break;
       }
 
-      // required .kuuhaku.proto.GameObject.Location location = 2;
+      // optional .proto.GameObject.Location location = 2;
       case 2: {
         if (tag == 18) {
          parse_location:
@@ -1543,24 +1593,24 @@ bool GameObject::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(parse_success:proto.GameObject)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(parse_failure:proto.GameObject)
   return false;
 #undef DO_
 }
 
 void GameObject::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.GameObject)
-  // required .kuuhaku.proto.GameObject.Type type = 1;
+  // @@protoc_insertion_point(serialize_start:proto.GameObject)
+  // optional .proto.GameObject.Type type = 1;
   if (has_type()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->type(), output);
   }
 
-  // required .kuuhaku.proto.GameObject.Location location = 2;
+  // optional .proto.GameObject.Location location = 2;
   if (has_location()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->location(), output);
@@ -1570,19 +1620,19 @@ void GameObject::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(serialize_end:proto.GameObject)
 }
 
 ::google::protobuf::uint8* GameObject::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.GameObject)
-  // required .kuuhaku.proto.GameObject.Type type = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:proto.GameObject)
+  // optional .proto.GameObject.Type type = 1;
   if (has_type()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->type(), target);
   }
 
-  // required .kuuhaku.proto.GameObject.Location location = 2;
+  // optional .proto.GameObject.Location location = 2;
   if (has_location()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1593,7 +1643,7 @@ void GameObject::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.GameObject)
   return target;
 }
 
@@ -1601,13 +1651,13 @@ int GameObject::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .kuuhaku.proto.GameObject.Type type = 1;
+    // optional .proto.GameObject.Type type = 1;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
-    // required .kuuhaku.proto.GameObject.Location location = 2;
+    // optional .proto.GameObject.Location location = 2;
     if (has_location()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1645,7 +1695,7 @@ void GameObject::MergeFrom(const GameObject& from) {
       set_type(from.type());
     }
     if (from.has_location()) {
-      mutable_location()->::kuuhaku::proto::GameObject_Location::MergeFrom(from.location());
+      mutable_location()->::proto::GameObject_Location::MergeFrom(from.location());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1664,7 +1714,6 @@ void GameObject::CopyFrom(const GameObject& from) {
 }
 
 bool GameObject::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
   return true;
 }
@@ -1700,7 +1749,7 @@ const int JoystickData::kStateFieldNumber;
 JoystickData::JoystickData()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(constructor:proto.JoystickData)
 }
 
 void JoystickData::InitAsDefaultInstance() {
@@ -1710,7 +1759,7 @@ JoystickData::JoystickData(const JoystickData& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(copy_constructor:proto.JoystickData)
 }
 
 void JoystickData::SharedCtor() {
@@ -1723,7 +1772,7 @@ void JoystickData::SharedCtor() {
 }
 
 JoystickData::~JoystickData() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(destructor:proto.JoystickData)
   SharedDtor();
 }
 
@@ -1777,13 +1826,13 @@ bool JoystickData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(parse_start:proto.JoystickData)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -1797,7 +1846,7 @@ bool JoystickData::MergePartialFromCodedStream(
         break;
       }
 
-      // required bool is_button = 2;
+      // optional bool is_button = 2;
       case 2: {
         if (tag == 16) {
          parse_is_button:
@@ -1812,7 +1861,7 @@ bool JoystickData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 input = 3;
+      // optional int32 input = 3;
       case 3: {
         if (tag == 24) {
          parse_input:
@@ -1827,7 +1876,7 @@ bool JoystickData::MergePartialFromCodedStream(
         break;
       }
 
-      // required int32 state = 4;
+      // optional int32 state = 4;
       case 4: {
         if (tag == 32) {
          parse_state:
@@ -1856,33 +1905,33 @@ bool JoystickData::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(parse_success:proto.JoystickData)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(parse_failure:proto.JoystickData)
   return false;
 #undef DO_
 }
 
 void JoystickData::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.JoystickData)
-  // required int32 id = 1;
+  // @@protoc_insertion_point(serialize_start:proto.JoystickData)
+  // optional int32 id = 1;
   if (has_id()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
-  // required bool is_button = 2;
+  // optional bool is_button = 2;
   if (has_is_button()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->is_button(), output);
   }
 
-  // required int32 input = 3;
+  // optional int32 input = 3;
   if (has_input()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->input(), output);
   }
 
-  // required int32 state = 4;
+  // optional int32 state = 4;
   if (has_state()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->state(), output);
   }
@@ -1891,28 +1940,28 @@ void JoystickData::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(serialize_end:proto.JoystickData)
 }
 
 ::google::protobuf::uint8* JoystickData::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.JoystickData)
-  // required int32 id = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:proto.JoystickData)
+  // optional int32 id = 1;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->id(), target);
   }
 
-  // required bool is_button = 2;
+  // optional bool is_button = 2;
   if (has_is_button()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->is_button(), target);
   }
 
-  // required int32 input = 3;
+  // optional int32 input = 3;
   if (has_input()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->input(), target);
   }
 
-  // required int32 state = 4;
+  // optional int32 state = 4;
   if (has_state()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->state(), target);
   }
@@ -1921,7 +1970,7 @@ void JoystickData::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.JoystickData)
   return target;
 }
 
@@ -1929,26 +1978,26 @@ int JoystickData::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 id = 1;
+    // optional int32 id = 1;
     if (has_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->id());
     }
 
-    // required bool is_button = 2;
+    // optional bool is_button = 2;
     if (has_is_button()) {
       total_size += 1 + 1;
     }
 
-    // required int32 input = 3;
+    // optional int32 input = 3;
     if (has_input()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->input());
     }
 
-    // required int32 state = 4;
+    // optional int32 state = 4;
     if (has_state()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -2011,7 +2060,6 @@ void JoystickData::CopyFrom(const JoystickData& from) {
 }
 
 bool JoystickData::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
 
   return true;
 }
@@ -2071,7 +2119,7 @@ const int Direction::kWayFieldNumber;
 Direction::Direction()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(constructor:proto.Direction)
 }
 
 void Direction::InitAsDefaultInstance() {
@@ -2081,7 +2129,7 @@ Direction::Direction(const Direction& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(copy_constructor:proto.Direction)
 }
 
 void Direction::SharedCtor() {
@@ -2091,7 +2139,7 @@ void Direction::SharedCtor() {
 }
 
 Direction::~Direction() {
-  // @@protoc_insertion_point(destructor:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(destructor:proto.Direction)
   SharedDtor();
 }
 
@@ -2131,21 +2179,21 @@ bool Direction::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(parse_start:proto.Direction)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .kuuhaku.proto.Direction.Cardinal way = 1;
+      // optional .proto.Direction.Cardinal way = 1;
       case 1: {
         if (tag == 8) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
-          if (::kuuhaku::proto::Direction_Cardinal_IsValid(value)) {
-            set_way(static_cast< ::kuuhaku::proto::Direction_Cardinal >(value));
+          if (::proto::Direction_Cardinal_IsValid(value)) {
+            set_way(static_cast< ::proto::Direction_Cardinal >(value));
           } else {
             mutable_unknown_fields()->AddVarint(1, value);
           }
@@ -2170,18 +2218,18 @@ bool Direction::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(parse_success:proto.Direction)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(parse_failure:proto.Direction)
   return false;
 #undef DO_
 }
 
 void Direction::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:kuuhaku.proto.Direction)
-  // required .kuuhaku.proto.Direction.Cardinal way = 1;
+  // @@protoc_insertion_point(serialize_start:proto.Direction)
+  // optional .proto.Direction.Cardinal way = 1;
   if (has_way()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->way(), output);
@@ -2191,13 +2239,13 @@ void Direction::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(serialize_end:proto.Direction)
 }
 
 ::google::protobuf::uint8* Direction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:kuuhaku.proto.Direction)
-  // required .kuuhaku.proto.Direction.Cardinal way = 1;
+  // @@protoc_insertion_point(serialize_to_array_start:proto.Direction)
+  // optional .proto.Direction.Cardinal way = 1;
   if (has_way()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->way(), target);
@@ -2207,7 +2255,7 @@ void Direction::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(serialize_to_array_end:proto.Direction)
   return target;
 }
 
@@ -2215,7 +2263,7 @@ int Direction::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .kuuhaku.proto.Direction.Cardinal way = 1;
+    // optional .proto.Direction.Cardinal way = 1;
     if (has_way()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->way());
@@ -2268,7 +2316,6 @@ void Direction::CopyFrom(const Direction& from) {
 }
 
 bool Direction::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
   return true;
 }
@@ -2294,6 +2341,5 @@ void Direction::Swap(Direction* other) {
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace proto
-}  // namespace kuuhaku
 
 // @@protoc_insertion_point(global_scope)

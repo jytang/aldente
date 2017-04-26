@@ -5,7 +5,7 @@ NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
     start_accept();
 }
 
-void NetworkServer::send_to_all(kuuhaku::proto::ServerMessage& message) {
+void NetworkServer::send_to_all(proto::ServerMessage& message) {
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -28,8 +28,8 @@ void NetworkServer::send_to_all(kuuhaku::proto::ServerMessage& message) {
     }
 }
 
-std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> NetworkServer::read_all_messages() {
-    std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> messages;
+std::unordered_map<int, std::vector<proto::ClientMessage>> NetworkServer::read_all_messages() {
+    std::unordered_map<int, std::vector<proto::ClientMessage>> messages;
     unique_lock<mutex> lock(client_list_mutex);
 
     // No clients connected.
@@ -38,10 +38,10 @@ std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> NetworkServe
     }
 
     for (auto const &c : client_list) {
-        messages[c.first] = std::vector<kuuhaku::proto::ClientMessage>();
+        messages[c.first] = std::vector<proto::ClientMessage>();
         string serialized;
         while ((serialized = c.second->read_message()).length() > 0) {
-            kuuhaku::proto::ClientMessage message;
+            proto::ClientMessage message;
             message.ParseFromString(serialized);
             messages[c.first].push_back(message);
         }

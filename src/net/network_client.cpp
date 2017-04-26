@@ -22,13 +22,13 @@ bool NetworkClient::is_connected() const {
     return connected;
 }
 
-bool NetworkClient::send(const kuuhaku::proto::ClientMessage& message) {
+bool NetworkClient::send(const proto::ClientMessage& message) {
     string serialized;
     message.SerializeToString(&serialized);
     return connection.send(serialized);
 }
 
-bool NetworkClient::read_message(kuuhaku::proto::ServerMessage* message) {
+bool NetworkClient::read_message(proto::ServerMessage* message) {
     string serialized = connection.read_message();
     if (serialized.length() == 0)
         return false;

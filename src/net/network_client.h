@@ -24,10 +24,10 @@ public:
     bool is_connected() const;
 
     // Synchronously sends a message to the server. Returns true if successful.
-    bool send(const kuuhaku::proto::ClientMessage& message);
+    bool send(const proto::ClientMessage& message);
 
     // Removes and returns a message from the FIFO queue.
-    bool read_message(kuuhaku::proto::ServerMessage* message);
+    bool read_message(proto::ServerMessage* message);
 
 private:
     Connection connection;

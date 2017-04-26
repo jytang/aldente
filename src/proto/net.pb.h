@@ -27,7 +27,6 @@
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace kuuhaku {
 namespace proto {
 
 // Internal implementation detail -- do not call these.
@@ -109,6 +108,11 @@ class ServerMessage : public ::google::protobuf::Message {
   static const ::google::protobuf::Descriptor* descriptor();
   static const ServerMessage& default_instance();
 
+  enum MessageTypeCase {
+    kMessage = 1,
+    MESSAGE_TYPE_NOT_SET = 0,
+  };
+
   void Swap(ServerMessage* other);
 
   // implements Message ----------------------------------------------
@@ -139,7 +143,7 @@ class ServerMessage : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string message = 1;
+  // optional string message = 1;
   inline bool has_message() const;
   inline void clear_message();
   static const int kMessageFieldNumber = 1;
@@ -151,16 +155,24 @@ class ServerMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.ServerMessage)
+  inline MessageTypeCase message_type_case() const;
+  // @@protoc_insertion_point(class_scope:proto.ServerMessage)
  private:
   inline void set_has_message();
-  inline void clear_has_message();
+
+  inline bool has_message_type();
+  void clear_message_type();
+  inline void clear_has_message_type();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* message_;
+  union MessageTypeUnion {
+    ::std::string* message_;
+  } message_type_;
+  ::google::protobuf::uint32 _oneof_case_[1];
+
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -193,6 +205,11 @@ class ClientMessage : public ::google::protobuf::Message {
   static const ::google::protobuf::Descriptor* descriptor();
   static const ClientMessage& default_instance();
 
+  enum MessageTypeCase {
+    kMessage = 1,
+    MESSAGE_TYPE_NOT_SET = 0,
+  };
+
   void Swap(ClientMessage* other);
 
   // implements Message ----------------------------------------------
@@ -223,7 +240,7 @@ class ClientMessage : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required string message = 1;
+  // optional string message = 1;
   inline bool has_message() const;
   inline void clear_message();
   static const int kMessageFieldNumber = 1;
@@ -235,16 +252,24 @@ class ClientMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.ClientMessage)
+  inline MessageTypeCase message_type_case() const;
+  // @@protoc_insertion_point(class_scope:proto.ClientMessage)
  private:
   inline void set_has_message();
-  inline void clear_has_message();
+
+  inline bool has_message_type();
+  void clear_message_type();
+  inline void clear_has_message_type();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::std::string* message_;
+  union MessageTypeUnion {
+    ::std::string* message_;
+  } message_type_;
+  ::google::protobuf::uint32 _oneof_case_[1];
+
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -307,26 +332,26 @@ class GameState : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .kuuhaku.proto.GameObject objects = 1;
+  // repeated .proto.GameObject objects = 1;
   inline int objects_size() const;
   inline void clear_objects();
   static const int kObjectsFieldNumber = 1;
-  inline const ::kuuhaku::proto::GameObject& objects(int index) const;
-  inline ::kuuhaku::proto::GameObject* mutable_objects(int index);
-  inline ::kuuhaku::proto::GameObject* add_objects();
-  inline const ::google::protobuf::RepeatedPtrField< ::kuuhaku::proto::GameObject >&
+  inline const ::proto::GameObject& objects(int index) const;
+  inline ::proto::GameObject* mutable_objects(int index);
+  inline ::proto::GameObject* add_objects();
+  inline const ::google::protobuf::RepeatedPtrField< ::proto::GameObject >&
       objects() const;
-  inline ::google::protobuf::RepeatedPtrField< ::kuuhaku::proto::GameObject >*
+  inline ::google::protobuf::RepeatedPtrField< ::proto::GameObject >*
       mutable_objects();
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.GameState)
+  // @@protoc_insertion_point(class_scope:proto.GameState)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::kuuhaku::proto::GameObject > objects_;
+  ::google::protobuf::RepeatedPtrField< ::proto::GameObject > objects_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -437,7 +462,7 @@ class GameObject_Location : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedField< double >*
       mutable_w();
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.GameObject.Location)
+  // @@protoc_insertion_point(class_scope:proto.GameObject.Location)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -541,23 +566,23 @@ class GameObject : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .kuuhaku.proto.GameObject.Type type = 1;
+  // optional .proto.GameObject.Type type = 1;
   inline bool has_type() const;
   inline void clear_type();
   static const int kTypeFieldNumber = 1;
-  inline ::kuuhaku::proto::GameObject_Type type() const;
-  inline void set_type(::kuuhaku::proto::GameObject_Type value);
+  inline ::proto::GameObject_Type type() const;
+  inline void set_type(::proto::GameObject_Type value);
 
-  // required .kuuhaku.proto.GameObject.Location location = 2;
+  // optional .proto.GameObject.Location location = 2;
   inline bool has_location() const;
   inline void clear_location();
   static const int kLocationFieldNumber = 2;
-  inline const ::kuuhaku::proto::GameObject_Location& location() const;
-  inline ::kuuhaku::proto::GameObject_Location* mutable_location();
-  inline ::kuuhaku::proto::GameObject_Location* release_location();
-  inline void set_allocated_location(::kuuhaku::proto::GameObject_Location* location);
+  inline const ::proto::GameObject_Location& location() const;
+  inline ::proto::GameObject_Location* mutable_location();
+  inline ::proto::GameObject_Location* release_location();
+  inline void set_allocated_location(::proto::GameObject_Location* location);
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.GameObject)
+  // @@protoc_insertion_point(class_scope:proto.GameObject)
  private:
   inline void set_has_type();
   inline void clear_has_type();
@@ -568,7 +593,7 @@ class GameObject : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  ::kuuhaku::proto::GameObject_Location* location_;
+  ::proto::GameObject_Location* location_;
   int type_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
@@ -632,35 +657,35 @@ class JoystickData : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 id = 1;
+  // optional int32 id = 1;
   inline bool has_id() const;
   inline void clear_id();
   static const int kIdFieldNumber = 1;
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
-  // required bool is_button = 2;
+  // optional bool is_button = 2;
   inline bool has_is_button() const;
   inline void clear_is_button();
   static const int kIsButtonFieldNumber = 2;
   inline bool is_button() const;
   inline void set_is_button(bool value);
 
-  // required int32 input = 3;
+  // optional int32 input = 3;
   inline bool has_input() const;
   inline void clear_input();
   static const int kInputFieldNumber = 3;
   inline ::google::protobuf::int32 input() const;
   inline void set_input(::google::protobuf::int32 value);
 
-  // required int32 state = 4;
+  // optional int32 state = 4;
   inline bool has_state() const;
   inline void clear_state();
   static const int kStateFieldNumber = 4;
   inline ::google::protobuf::int32 state() const;
   inline void set_state(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.JoystickData)
+  // @@protoc_insertion_point(class_scope:proto.JoystickData)
  private:
   inline void set_has_id();
   inline void clear_has_id();
@@ -767,14 +792,14 @@ class Direction : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required .kuuhaku.proto.Direction.Cardinal way = 1;
+  // optional .proto.Direction.Cardinal way = 1;
   inline bool has_way() const;
   inline void clear_way();
   static const int kWayFieldNumber = 1;
-  inline ::kuuhaku::proto::Direction_Cardinal way() const;
-  inline void set_way(::kuuhaku::proto::Direction_Cardinal value);
+  inline ::proto::Direction_Cardinal way() const;
+  inline void set_way(::proto::Direction_Cardinal value);
 
-  // @@protoc_insertion_point(class_scope:kuuhaku.proto.Direction)
+  // @@protoc_insertion_point(class_scope:proto.Direction)
  private:
   inline void set_has_way();
   inline void clear_has_way();
@@ -798,193 +823,199 @@ class Direction : public ::google::protobuf::Message {
 
 // ServerMessage
 
-// required string message = 1;
+// optional string message = 1;
 inline bool ServerMessage::has_message() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+  return message_type_case() == kMessage;
 }
 inline void ServerMessage::set_has_message() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void ServerMessage::clear_has_message() {
-  _has_bits_[0] &= ~0x00000001u;
+  _oneof_case_[0] = kMessage;
 }
 inline void ServerMessage::clear_message() {
-  if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_->clear();
+  if (has_message()) {
+    delete message_type_.message_;
+    clear_has_message_type();
   }
-  clear_has_message();
 }
 inline const ::std::string& ServerMessage::message() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.ServerMessage.message)
-  return *message_;
+  if (has_message()) {
+    return *message_type_.message_;
+  }
+  return ::google::protobuf::internal::GetEmptyStringAlreadyInited();
 }
 inline void ServerMessage::set_message(const ::std::string& value) {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  message_->assign(value);
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.ServerMessage.message)
+  message_type_.message_->assign(value);
 }
 inline void ServerMessage::set_message(const char* value) {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  message_->assign(value);
-  // @@protoc_insertion_point(field_set_char:kuuhaku.proto.ServerMessage.message)
+  message_type_.message_->assign(value);
 }
 inline void ServerMessage::set_message(const char* value, size_t size) {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  message_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:kuuhaku.proto.ServerMessage.message)
+  message_type_.message_->assign(
+      reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* ServerMessage::mutable_message() {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:kuuhaku.proto.ServerMessage.message)
-  return message_;
+  return message_type_.message_;
 }
 inline ::std::string* ServerMessage::release_message() {
-  clear_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = message_;
-    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (has_message()) {
+    clear_has_message_type();
+    ::std::string* temp = message_type_.message_;
+    message_type_.message_ = NULL;
     return temp;
+  } else {
+    return NULL;
   }
 }
 inline void ServerMessage::set_allocated_message(::std::string* message) {
-  if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete message_;
-  }
+  clear_message_type();
   if (message) {
     set_has_message();
-    message_ = message;
-  } else {
-    clear_has_message();
-    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    message_type_.message_ = message;
   }
-  // @@protoc_insertion_point(field_set_allocated:kuuhaku.proto.ServerMessage.message)
 }
 
+inline bool ServerMessage::has_message_type() {
+  return message_type_case() != MESSAGE_TYPE_NOT_SET;
+}
+inline void ServerMessage::clear_has_message_type() {
+  _oneof_case_[0] = MESSAGE_TYPE_NOT_SET;
+}
+inline ServerMessage::MessageTypeCase ServerMessage::message_type_case() const {
+  return ServerMessage::MessageTypeCase(_oneof_case_[0]);
+}
 // -------------------------------------------------------------------
 
 // ClientMessage
 
-// required string message = 1;
+// optional string message = 1;
 inline bool ClientMessage::has_message() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
+  return message_type_case() == kMessage;
 }
 inline void ClientMessage::set_has_message() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void ClientMessage::clear_has_message() {
-  _has_bits_[0] &= ~0x00000001u;
+  _oneof_case_[0] = kMessage;
 }
 inline void ClientMessage::clear_message() {
-  if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_->clear();
+  if (has_message()) {
+    delete message_type_.message_;
+    clear_has_message_type();
   }
-  clear_has_message();
 }
 inline const ::std::string& ClientMessage::message() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.ClientMessage.message)
-  return *message_;
+  if (has_message()) {
+    return *message_type_.message_;
+  }
+  return ::google::protobuf::internal::GetEmptyStringAlreadyInited();
 }
 inline void ClientMessage::set_message(const ::std::string& value) {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  message_->assign(value);
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.ClientMessage.message)
+  message_type_.message_->assign(value);
 }
 inline void ClientMessage::set_message(const char* value) {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  message_->assign(value);
-  // @@protoc_insertion_point(field_set_char:kuuhaku.proto.ClientMessage.message)
+  message_type_.message_->assign(value);
 }
 inline void ClientMessage::set_message(const char* value, size_t size) {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  message_->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:kuuhaku.proto.ClientMessage.message)
+  message_type_.message_->assign(
+      reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* ClientMessage::mutable_message() {
-  set_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    message_ = new ::std::string;
+  if (!has_message()) {
+    clear_message_type();
+    set_has_message();
+    message_type_.message_ = new ::std::string;
   }
-  // @@protoc_insertion_point(field_mutable:kuuhaku.proto.ClientMessage.message)
-  return message_;
+  return message_type_.message_;
 }
 inline ::std::string* ClientMessage::release_message() {
-  clear_has_message();
-  if (message_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    return NULL;
-  } else {
-    ::std::string* temp = message_;
-    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (has_message()) {
+    clear_has_message_type();
+    ::std::string* temp = message_type_.message_;
+    message_type_.message_ = NULL;
     return temp;
+  } else {
+    return NULL;
   }
 }
 inline void ClientMessage::set_allocated_message(::std::string* message) {
-  if (message_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete message_;
-  }
+  clear_message_type();
   if (message) {
     set_has_message();
-    message_ = message;
-  } else {
-    clear_has_message();
-    message_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    message_type_.message_ = message;
   }
-  // @@protoc_insertion_point(field_set_allocated:kuuhaku.proto.ClientMessage.message)
 }
 
+inline bool ClientMessage::has_message_type() {
+  return message_type_case() != MESSAGE_TYPE_NOT_SET;
+}
+inline void ClientMessage::clear_has_message_type() {
+  _oneof_case_[0] = MESSAGE_TYPE_NOT_SET;
+}
+inline ClientMessage::MessageTypeCase ClientMessage::message_type_case() const {
+  return ClientMessage::MessageTypeCase(_oneof_case_[0]);
+}
 // -------------------------------------------------------------------
 
 // GameState
 
-// repeated .kuuhaku.proto.GameObject objects = 1;
+// repeated .proto.GameObject objects = 1;
 inline int GameState::objects_size() const {
   return objects_.size();
 }
 inline void GameState::clear_objects() {
   objects_.Clear();
 }
-inline const ::kuuhaku::proto::GameObject& GameState::objects(int index) const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameState.objects)
+inline const ::proto::GameObject& GameState::objects(int index) const {
+  // @@protoc_insertion_point(field_get:proto.GameState.objects)
   return objects_.Get(index);
 }
-inline ::kuuhaku::proto::GameObject* GameState::mutable_objects(int index) {
-  // @@protoc_insertion_point(field_mutable:kuuhaku.proto.GameState.objects)
+inline ::proto::GameObject* GameState::mutable_objects(int index) {
+  // @@protoc_insertion_point(field_mutable:proto.GameState.objects)
   return objects_.Mutable(index);
 }
-inline ::kuuhaku::proto::GameObject* GameState::add_objects() {
-  // @@protoc_insertion_point(field_add:kuuhaku.proto.GameState.objects)
+inline ::proto::GameObject* GameState::add_objects() {
+  // @@protoc_insertion_point(field_add:proto.GameState.objects)
   return objects_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::kuuhaku::proto::GameObject >&
+inline const ::google::protobuf::RepeatedPtrField< ::proto::GameObject >&
 GameState::objects() const {
-  // @@protoc_insertion_point(field_list:kuuhaku.proto.GameState.objects)
+  // @@protoc_insertion_point(field_list:proto.GameState.objects)
   return objects_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::kuuhaku::proto::GameObject >*
+inline ::google::protobuf::RepeatedPtrField< ::proto::GameObject >*
 GameState::mutable_objects() {
-  // @@protoc_insertion_point(field_mutable_list:kuuhaku.proto.GameState.objects)
+  // @@protoc_insertion_point(field_mutable_list:proto.GameState.objects)
   return &objects_;
 }
 
@@ -1000,25 +1031,25 @@ inline void GameObject_Location::clear_x() {
   x_.Clear();
 }
 inline double GameObject_Location::x(int index) const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameObject.Location.x)
+  // @@protoc_insertion_point(field_get:proto.GameObject.Location.x)
   return x_.Get(index);
 }
 inline void GameObject_Location::set_x(int index, double value) {
   x_.Set(index, value);
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.GameObject.Location.x)
+  // @@protoc_insertion_point(field_set:proto.GameObject.Location.x)
 }
 inline void GameObject_Location::add_x(double value) {
   x_.Add(value);
-  // @@protoc_insertion_point(field_add:kuuhaku.proto.GameObject.Location.x)
+  // @@protoc_insertion_point(field_add:proto.GameObject.Location.x)
 }
 inline const ::google::protobuf::RepeatedField< double >&
 GameObject_Location::x() const {
-  // @@protoc_insertion_point(field_list:kuuhaku.proto.GameObject.Location.x)
+  // @@protoc_insertion_point(field_list:proto.GameObject.Location.x)
   return x_;
 }
 inline ::google::protobuf::RepeatedField< double >*
 GameObject_Location::mutable_x() {
-  // @@protoc_insertion_point(field_mutable_list:kuuhaku.proto.GameObject.Location.x)
+  // @@protoc_insertion_point(field_mutable_list:proto.GameObject.Location.x)
   return &x_;
 }
 
@@ -1030,25 +1061,25 @@ inline void GameObject_Location::clear_y() {
   y_.Clear();
 }
 inline double GameObject_Location::y(int index) const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameObject.Location.y)
+  // @@protoc_insertion_point(field_get:proto.GameObject.Location.y)
   return y_.Get(index);
 }
 inline void GameObject_Location::set_y(int index, double value) {
   y_.Set(index, value);
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.GameObject.Location.y)
+  // @@protoc_insertion_point(field_set:proto.GameObject.Location.y)
 }
 inline void GameObject_Location::add_y(double value) {
   y_.Add(value);
-  // @@protoc_insertion_point(field_add:kuuhaku.proto.GameObject.Location.y)
+  // @@protoc_insertion_point(field_add:proto.GameObject.Location.y)
 }
 inline const ::google::protobuf::RepeatedField< double >&
 GameObject_Location::y() const {
-  // @@protoc_insertion_point(field_list:kuuhaku.proto.GameObject.Location.y)
+  // @@protoc_insertion_point(field_list:proto.GameObject.Location.y)
   return y_;
 }
 inline ::google::protobuf::RepeatedField< double >*
 GameObject_Location::mutable_y() {
-  // @@protoc_insertion_point(field_mutable_list:kuuhaku.proto.GameObject.Location.y)
+  // @@protoc_insertion_point(field_mutable_list:proto.GameObject.Location.y)
   return &y_;
 }
 
@@ -1060,25 +1091,25 @@ inline void GameObject_Location::clear_z() {
   z_.Clear();
 }
 inline double GameObject_Location::z(int index) const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameObject.Location.z)
+  // @@protoc_insertion_point(field_get:proto.GameObject.Location.z)
   return z_.Get(index);
 }
 inline void GameObject_Location::set_z(int index, double value) {
   z_.Set(index, value);
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.GameObject.Location.z)
+  // @@protoc_insertion_point(field_set:proto.GameObject.Location.z)
 }
 inline void GameObject_Location::add_z(double value) {
   z_.Add(value);
-  // @@protoc_insertion_point(field_add:kuuhaku.proto.GameObject.Location.z)
+  // @@protoc_insertion_point(field_add:proto.GameObject.Location.z)
 }
 inline const ::google::protobuf::RepeatedField< double >&
 GameObject_Location::z() const {
-  // @@protoc_insertion_point(field_list:kuuhaku.proto.GameObject.Location.z)
+  // @@protoc_insertion_point(field_list:proto.GameObject.Location.z)
   return z_;
 }
 inline ::google::protobuf::RepeatedField< double >*
 GameObject_Location::mutable_z() {
-  // @@protoc_insertion_point(field_mutable_list:kuuhaku.proto.GameObject.Location.z)
+  // @@protoc_insertion_point(field_mutable_list:proto.GameObject.Location.z)
   return &z_;
 }
 
@@ -1090,25 +1121,25 @@ inline void GameObject_Location::clear_w() {
   w_.Clear();
 }
 inline double GameObject_Location::w(int index) const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameObject.Location.w)
+  // @@protoc_insertion_point(field_get:proto.GameObject.Location.w)
   return w_.Get(index);
 }
 inline void GameObject_Location::set_w(int index, double value) {
   w_.Set(index, value);
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.GameObject.Location.w)
+  // @@protoc_insertion_point(field_set:proto.GameObject.Location.w)
 }
 inline void GameObject_Location::add_w(double value) {
   w_.Add(value);
-  // @@protoc_insertion_point(field_add:kuuhaku.proto.GameObject.Location.w)
+  // @@protoc_insertion_point(field_add:proto.GameObject.Location.w)
 }
 inline const ::google::protobuf::RepeatedField< double >&
 GameObject_Location::w() const {
-  // @@protoc_insertion_point(field_list:kuuhaku.proto.GameObject.Location.w)
+  // @@protoc_insertion_point(field_list:proto.GameObject.Location.w)
   return w_;
 }
 inline ::google::protobuf::RepeatedField< double >*
 GameObject_Location::mutable_w() {
-  // @@protoc_insertion_point(field_mutable_list:kuuhaku.proto.GameObject.Location.w)
+  // @@protoc_insertion_point(field_mutable_list:proto.GameObject.Location.w)
   return &w_;
 }
 
@@ -1116,7 +1147,7 @@ GameObject_Location::mutable_w() {
 
 // GameObject
 
-// required .kuuhaku.proto.GameObject.Type type = 1;
+// optional .proto.GameObject.Type type = 1;
 inline bool GameObject::has_type() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1130,18 +1161,18 @@ inline void GameObject::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::kuuhaku::proto::GameObject_Type GameObject::type() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameObject.type)
-  return static_cast< ::kuuhaku::proto::GameObject_Type >(type_);
+inline ::proto::GameObject_Type GameObject::type() const {
+  // @@protoc_insertion_point(field_get:proto.GameObject.type)
+  return static_cast< ::proto::GameObject_Type >(type_);
 }
-inline void GameObject::set_type(::kuuhaku::proto::GameObject_Type value) {
-  assert(::kuuhaku::proto::GameObject_Type_IsValid(value));
+inline void GameObject::set_type(::proto::GameObject_Type value) {
+  assert(::proto::GameObject_Type_IsValid(value));
   set_has_type();
   type_ = value;
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.GameObject.type)
+  // @@protoc_insertion_point(field_set:proto.GameObject.type)
 }
 
-// required .kuuhaku.proto.GameObject.Location location = 2;
+// optional .proto.GameObject.Location location = 2;
 inline bool GameObject::has_location() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1152,26 +1183,26 @@ inline void GameObject::clear_has_location() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline void GameObject::clear_location() {
-  if (location_ != NULL) location_->::kuuhaku::proto::GameObject_Location::Clear();
+  if (location_ != NULL) location_->::proto::GameObject_Location::Clear();
   clear_has_location();
 }
-inline const ::kuuhaku::proto::GameObject_Location& GameObject::location() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.GameObject.location)
+inline const ::proto::GameObject_Location& GameObject::location() const {
+  // @@protoc_insertion_point(field_get:proto.GameObject.location)
   return location_ != NULL ? *location_ : *default_instance_->location_;
 }
-inline ::kuuhaku::proto::GameObject_Location* GameObject::mutable_location() {
+inline ::proto::GameObject_Location* GameObject::mutable_location() {
   set_has_location();
-  if (location_ == NULL) location_ = new ::kuuhaku::proto::GameObject_Location;
-  // @@protoc_insertion_point(field_mutable:kuuhaku.proto.GameObject.location)
+  if (location_ == NULL) location_ = new ::proto::GameObject_Location;
+  // @@protoc_insertion_point(field_mutable:proto.GameObject.location)
   return location_;
 }
-inline ::kuuhaku::proto::GameObject_Location* GameObject::release_location() {
+inline ::proto::GameObject_Location* GameObject::release_location() {
   clear_has_location();
-  ::kuuhaku::proto::GameObject_Location* temp = location_;
+  ::proto::GameObject_Location* temp = location_;
   location_ = NULL;
   return temp;
 }
-inline void GameObject::set_allocated_location(::kuuhaku::proto::GameObject_Location* location) {
+inline void GameObject::set_allocated_location(::proto::GameObject_Location* location) {
   delete location_;
   location_ = location;
   if (location) {
@@ -1179,14 +1210,14 @@ inline void GameObject::set_allocated_location(::kuuhaku::proto::GameObject_Loca
   } else {
     clear_has_location();
   }
-  // @@protoc_insertion_point(field_set_allocated:kuuhaku.proto.GameObject.location)
+  // @@protoc_insertion_point(field_set_allocated:proto.GameObject.location)
 }
 
 // -------------------------------------------------------------------
 
 // JoystickData
 
-// required int32 id = 1;
+// optional int32 id = 1;
 inline bool JoystickData::has_id() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1201,16 +1232,16 @@ inline void JoystickData::clear_id() {
   clear_has_id();
 }
 inline ::google::protobuf::int32 JoystickData::id() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.JoystickData.id)
+  // @@protoc_insertion_point(field_get:proto.JoystickData.id)
   return id_;
 }
 inline void JoystickData::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.JoystickData.id)
+  // @@protoc_insertion_point(field_set:proto.JoystickData.id)
 }
 
-// required bool is_button = 2;
+// optional bool is_button = 2;
 inline bool JoystickData::has_is_button() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
@@ -1225,16 +1256,16 @@ inline void JoystickData::clear_is_button() {
   clear_has_is_button();
 }
 inline bool JoystickData::is_button() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.JoystickData.is_button)
+  // @@protoc_insertion_point(field_get:proto.JoystickData.is_button)
   return is_button_;
 }
 inline void JoystickData::set_is_button(bool value) {
   set_has_is_button();
   is_button_ = value;
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.JoystickData.is_button)
+  // @@protoc_insertion_point(field_set:proto.JoystickData.is_button)
 }
 
-// required int32 input = 3;
+// optional int32 input = 3;
 inline bool JoystickData::has_input() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
@@ -1249,16 +1280,16 @@ inline void JoystickData::clear_input() {
   clear_has_input();
 }
 inline ::google::protobuf::int32 JoystickData::input() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.JoystickData.input)
+  // @@protoc_insertion_point(field_get:proto.JoystickData.input)
   return input_;
 }
 inline void JoystickData::set_input(::google::protobuf::int32 value) {
   set_has_input();
   input_ = value;
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.JoystickData.input)
+  // @@protoc_insertion_point(field_set:proto.JoystickData.input)
 }
 
-// required int32 state = 4;
+// optional int32 state = 4;
 inline bool JoystickData::has_state() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
@@ -1273,20 +1304,20 @@ inline void JoystickData::clear_state() {
   clear_has_state();
 }
 inline ::google::protobuf::int32 JoystickData::state() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.JoystickData.state)
+  // @@protoc_insertion_point(field_get:proto.JoystickData.state)
   return state_;
 }
 inline void JoystickData::set_state(::google::protobuf::int32 value) {
   set_has_state();
   state_ = value;
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.JoystickData.state)
+  // @@protoc_insertion_point(field_set:proto.JoystickData.state)
 }
 
 // -------------------------------------------------------------------
 
 // Direction
 
-// required .kuuhaku.proto.Direction.Cardinal way = 1;
+// optional .proto.Direction.Cardinal way = 1;
 inline bool Direction::has_way() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -1300,36 +1331,35 @@ inline void Direction::clear_way() {
   way_ = 0;
   clear_has_way();
 }
-inline ::kuuhaku::proto::Direction_Cardinal Direction::way() const {
-  // @@protoc_insertion_point(field_get:kuuhaku.proto.Direction.way)
-  return static_cast< ::kuuhaku::proto::Direction_Cardinal >(way_);
+inline ::proto::Direction_Cardinal Direction::way() const {
+  // @@protoc_insertion_point(field_get:proto.Direction.way)
+  return static_cast< ::proto::Direction_Cardinal >(way_);
 }
-inline void Direction::set_way(::kuuhaku::proto::Direction_Cardinal value) {
-  assert(::kuuhaku::proto::Direction_Cardinal_IsValid(value));
+inline void Direction::set_way(::proto::Direction_Cardinal value) {
+  assert(::proto::Direction_Cardinal_IsValid(value));
   set_has_way();
   way_ = value;
-  // @@protoc_insertion_point(field_set:kuuhaku.proto.Direction.way)
+  // @@protoc_insertion_point(field_set:proto.Direction.way)
 }
 
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace proto
-}  // namespace kuuhaku
 
 #ifndef SWIG
 namespace google {
 namespace protobuf {
 
-template <> struct is_proto_enum< ::kuuhaku::proto::GameObject_Type> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::proto::GameObject_Type> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::kuuhaku::proto::GameObject_Type>() {
-  return ::kuuhaku::proto::GameObject_Type_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::proto::GameObject_Type>() {
+  return ::proto::GameObject_Type_descriptor();
 }
-template <> struct is_proto_enum< ::kuuhaku::proto::Direction_Cardinal> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::proto::Direction_Cardinal> : ::google::protobuf::internal::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::kuuhaku::proto::Direction_Cardinal>() {
-  return ::kuuhaku::proto::Direction_Cardinal_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::proto::Direction_Cardinal>() {
+  return ::proto::Direction_Cardinal_descriptor();
 }
 
 }  // namespace google

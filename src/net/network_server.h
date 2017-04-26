@@ -21,11 +21,11 @@ public:
     NetworkServer(boost::asio::io_service& ios, unsigned int port);
 
     // Sends a message to all clients.
-    void send_to_all(kuuhaku::proto::ServerMessage& message);
+    void send_to_all(proto::ServerMessage& message);
 
     // Read all messages from all clients.
     // Returns a mapping of client id to list of messages.
-    std::unordered_map<int, std::vector<kuuhaku::proto::ClientMessage>> read_all_messages();
+    std::unordered_map<int, std::vector<proto::ClientMessage>> read_all_messages();
 
 private:
     // Begin accepting new clients.
