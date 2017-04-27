@@ -26,5 +26,7 @@ public:
     void pass(Shader *s);
 
     void set_color(glm::vec3 color);
+
+    Model* get_model() { return model; };
 };
 
