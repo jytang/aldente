@@ -55,14 +55,14 @@ void FloorTile::update(Tile *hover) {
     rigidBody->getMotionState()->getWorldTransform(t);
     transform.set_position(glm::vec3((float) t.getOrigin().getX(), (float) t.getOrigin().getY(),
                                   (float) t.getOrigin().getZ()));    
-
+    /*
     if (hover == this) {
         Material *mat = new Material(color::windwaker_green);
         model->meshes[0]->material = mat;
     } else {
         Material *mat = new Material(color::indian_red);
         model->meshes[0]->material = mat;
-    }
+    }*/
     //fprintf(stderr, "%f\n", mesh->to_world[3].y);
     //mesh->to_world *= glm::translate(glm::mat4(1.f), glm::vec3(0, 5.0f, 0));
     // Convert the btTransform into the GLM matrix using 'glm::value_ptr'
@@ -109,14 +109,14 @@ void WallTile::update(Tile *hover) {
     rigidBody->getMotionState()->getWorldTransform(t);
     transform.set_position(glm::vec3((float) t.getOrigin().getX(), (float) t.getOrigin().getY(), 
         (float) t.getOrigin().getZ()));    
-
+    /*
     if (hover == this) {
         Material *mat = new Material(color::windwaker_green);
         model->meshes[0]->material = mat;
     } else {
         Material *mat = new Material(color::indian_red);
         model->meshes[0]->material = mat;
-    }
+    }*/
     //fprintf(stderr, "%f\n", mesh->to_world[3].y);
     //mesh->to_world *= glm::translate(glm::mat4(1.f), glm::vec3(0, 5.0f, 0));
     // Convert the btTransform into the GLM matrix using 'glm::value_ptr'

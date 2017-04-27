@@ -11,6 +11,7 @@
 #include <vector>
 #include "tile.h"
 #include "util/colors.h"
+#include "game/construct_types.h"
 
 class Grid {
 private:
@@ -18,8 +19,10 @@ private:
     int width, height;
     int hoverX, hoverZ;
     Tile *hover;
-	
+    int selected = ConstructType::REMOVE;
 public:
+    enum GridDirection { UP, RIGHT, DOWN, LEFT };
+
     Grid(int w, int h);
 
     ~Grid();
@@ -29,5 +32,7 @@ public:
     void update();
 
     //void build(bool is_chest);
+
+    void move_selection(GridDirection d);
 
 };
