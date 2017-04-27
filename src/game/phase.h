@@ -10,10 +10,12 @@ enum PhaseType {
 
 class Phase {
 public:
+    virtual void go() {}
 };
 
 class BuildPhase : public Phase {
 public:
+    void go() override {}
     BuildPhase() : is_menu(true) {}
     bool is_menu;
 };

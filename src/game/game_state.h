@@ -6,7 +6,7 @@
 class GameState {
 public:
     // Adds a mapping of phase id to a Phase instance.
-    static void add_phase(PhaseType type, Phase& phase);
+    static void add_phase(PhaseType type, Phase* phase);
 
     // Sets the current phase type.
     static void set_phase(PhaseType type);
@@ -19,9 +19,9 @@ public:
     static PhaseType get_phase_type();
 
     // Gets the current phase instance.
-    static Phase get_phase();
+    static Phase* get_phase();
 
 private:
     static PhaseType current_phase;
-    static std::unordered_map<PhaseType, Phase> phases;
+    static std::unordered_map<PhaseType, Phase*> phases;
 };

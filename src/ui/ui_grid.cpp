@@ -1,7 +1,8 @@
 #include "ui_grid.h"
 
 #include "util/colors.h"
-#include "events.h"
+#include "../events.h"
+#include "../game/game_state.h"
 
 UIGrid::~UIGrid() {
     for (unsigned int i = 0; i < children.size(); ++i)
@@ -65,7 +66,21 @@ UIGrid::UIGrid(float start_x, float start_y,
     // Set up callbacks.
     // TODO: add semantic game logic abstraction layer
     events::joystick_event.connect([&](events::JoystickData d) {
-            move_selection(Direction::DOWN);});
+        if (GameState::get_phase_type() != PhaseType::BUILD ||
+            !dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) return;
+        if (d.is_button == 0 && d.input == 0) {
+            if (d.state == 5)
+                move_selection(Direction::RIGHT);
+            if (d.state == -5)
+                move_selection(Direction::LEFT);
+        }
+        else if (d.is_button == 0 && d.input == 1) {
+            if (d.state == 5)
+                move_selection(Direction::DOWN);
+            if (d.state == -5)
+                move_selection(Direction::UP);
+        }
+    });
 }
 
 void UIGrid::attach_at(int row, int col, UIElement &child) {

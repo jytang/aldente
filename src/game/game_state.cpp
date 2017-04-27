@@ -1,6 +1,6 @@
 #include "game_state.h"
 
-void GameState::add_phase(PhaseType type, Phase& phase) {
+void GameState::add_phase(PhaseType type, Phase* phase) {
     phases[type] = phase;
 }
 
@@ -32,9 +32,9 @@ PhaseType GameState::get_phase_type() {
     return current_phase;
 }
 
-Phase GameState::get_phase() {
+Phase* GameState::get_phase() {
     return phases[current_phase];
 }
 
 PhaseType GameState::current_phase = PhaseType::MENU;
-std::unordered_map<PhaseType, Phase> GameState::phases;
+std::unordered_map<PhaseType, Phase*> GameState::phases;

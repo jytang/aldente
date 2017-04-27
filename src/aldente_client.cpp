@@ -77,8 +77,22 @@ void AldenteClient::start() {
     window.broadcast_size();
 
     // Game logic.
-    GameState::add_phase(PhaseType::BUILD, BuildPhase());
+    BuildPhase* bp = new BuildPhase();
+    GameState::add_phase(PhaseType::BUILD, bp);
     GameState::set_phase(PhaseType::BUILD);
+
+    events::joystick_event.connect([&](events::JoystickData d) {
+        if (GameState::get_phase_type() == PhaseType::BUILD) {
+            if (d.is_button == true && d.input == 0 && d.state == 0) {
+                BuildPhase* p = dynamic_cast<BuildPhase*>(GameState::get_phase());
+                p->is_menu = false;
+            }
+            else if (d.is_button == true && d.input == 1 && d.state == 0) {
+                BuildPhase* p = dynamic_cast<BuildPhase*>(GameState::get_phase());
+                p->is_menu = true;
+            }
+        }
+    });
 
     while (!window.should_close()) {
         // Do polling
