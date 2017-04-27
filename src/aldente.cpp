@@ -13,6 +13,8 @@
 #include "events.h"
 #include "ui/test_ui.h"
 #include "render.h"
+#include "game/phase.h"
+#include "game/game_state.h"
 
 Aldente::~Aldente() {
     ShaderManager::destroy();
@@ -74,6 +76,10 @@ void Aldente::start_game_loop() {
 
     // Have window fire off a resize event to update all interested systems.
     window.broadcast_size();
+
+    // Game logic.
+    GameState::add_phase(PhaseType::BUILD, BuildPhase());
+    GameState::set_phase(PhaseType::BUILD);
 
     while (!window.should_close()) {
         // Do polling

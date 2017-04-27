@@ -4,6 +4,7 @@
 #include "aldente.h"
 #include "events.h"
 #include "util/config.h"
+#include "game/game_state.h"
 
 // TODO : This class won't be used in the final game anyways.
 static const GLfloat BASE_CAM_SPEED = 0.1f;
@@ -43,6 +44,18 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     break;
                 case GLFW_KEY_Q:
                     events::toggle_debug_shadows_event();
+                    break;
+                case GLFW_KEY_0:
+                    GameState::set_phase(PhaseType::MENU);
+                    break;
+                case GLFW_KEY_1:
+                    GameState::set_phase(PhaseType::BUILD);
+                    break;
+                case GLFW_KEY_2:
+                    GameState::set_phase(PhaseType::DUNGEON);
+                    break;
+                case GLFW_KEY_3:
+                    GameState::set_phase(PhaseType::MINIGAME);
                     break;
                 default:
                     break;
