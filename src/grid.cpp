@@ -45,6 +45,16 @@ Grid::Grid(int w, int h) :
 
     events::build::construct_changed_event.connect([&](ConstructType c) {
         selected = c;
+        fprintf(stderr, "CHANGE: %d\n", c);
+    });
+
+    events::joystick_event.connect([&](events::JoystickData d) {
+        if (GameState::get_phase_type() == PhaseType::BUILD && 
+            !dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) {
+            if (d.is_button == true && d.input == 0 && d.state == 0) {
+                build();
+            }
+        }
     });
 }
 
@@ -59,18 +69,29 @@ void Grid::update() {
 }
 
 void Grid::build() {
+    if (selected == REMOVE) {
+        if (hover->get_construct()) {
+            //TODO Make destructor for construct
+            hover->set_construct(nullptr);
+            hover->buildable = true;
+        }
+        return;
+    }
 
-    if (is_chest) {
-        //Crate* toAdd = new Crate(hover->getX(), hover->getZ());
-        GameObject* toAdd = new GameObject();
-        toAdd->model->meshes = crate->meshes;
-        toAdd->model->model_mat[3] = glm::vec4(hover->getX(), 0, hover->getZ(), 1.0f);
-        hover->add_construct(toAdd);
+    if (hover->buildable) {
+        fprintf(stderr, "BUILD: %d\n", selected);
+        switch (selected) {
+        case CHEST: {
+            Construct* to_add = new Crate(hover->getX(), hover->getZ());
+            hover->set_construct(to_add);
+            hover->buildable = false;
+            break;
+        }
+        default:
+            break;
+        }
     }
-    else {
-        hover->add_construct(nullptr);
-    }
-}*/
+}
 
 void Grid::move_selection(GridDirection d) {
     switch (d) {
@@ -90,4 +111,3 @@ void Grid::move_selection(GridDirection d) {
         break;
     }
 }
-

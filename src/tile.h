@@ -20,6 +20,7 @@ class Tile : public GameObject {
 protected:
     int width, height, x, z;
     bool traversable;
+    
     btRigidBody *rigidBody;
     btBoxShape *box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     btBoxShape *ground = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
@@ -27,6 +28,8 @@ protected:
 private:
 
 public:
+    bool buildable;
+
     Tile();
 
     ~Tile();
@@ -44,6 +47,9 @@ public:
     btRigidBody *getRigid() { return rigidBody; };
 
     void set_construct(Construct* to_set) { construct = to_set; };
+    Construct* get_construct() { return construct; };
+
+    bool isBuildable() { return buildable; };
 };
 
 class FloorTile : public Tile {

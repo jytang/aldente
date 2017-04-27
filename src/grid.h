@@ -31,7 +31,7 @@ public:
 
     void update();
 
-    //void build(bool is_chest);
+    void build();
 
     void move_selection(GridDirection d);
 

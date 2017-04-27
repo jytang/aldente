@@ -135,7 +135,7 @@ Mesh *AssetLoader::process_mesh(aiMesh *mesh, const aiScene *scene) {
     loadMat->specular = glm::vec3(specular.r, specular.g, specular.b);
     loadMat->shininess = shiny;
     final_mesh = new Mesh(geo, loadMat, ShaderManager::get_default());
-    final_mesh->to_world = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 2.0f, 0.0f));
+    final_mesh->to_world = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
     //If textures exist for this mesh
     for (GLuint i = 0; i < assimpMat->GetTextureCount(aiTextureType_DIFFUSE); i++) {

@@ -8,10 +8,10 @@ Tile::Tile() :
 Tile::~Tile() {}
 
 void Tile::draw(SceneCamera &camera) {
-    model->draw(camera, transform.get_world_mat());
-    if (construct) {
+    if (model)
+        model->draw(camera, transform.get_world_mat());
+    if (construct) 
         construct->draw(camera);
-    }
 }
 
 FloorTile::~FloorTile() {}
@@ -23,6 +23,8 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     height = 1;
     this->x = x;
     this->z = z;
+    buildable = true;
+
     Mesh* mesh = new Mesh();
 
     mesh->to_world = glm::mat4(1.0f);
@@ -76,6 +78,8 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     height = 1;
     this->x = x;
     this->z = z;
+    buildable = false;
+
     Mesh* mesh = new Mesh();
 
     mesh->to_world = glm::mat4(1.0f);
