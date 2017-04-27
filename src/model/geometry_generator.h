@@ -17,11 +17,11 @@ public:
 
     static void destroy();
 
-    static Geometry *generate_cube(GLfloat scale, bool with_normals);
+    static Geometry *generate_cube(GLfloat scale);
 
     static Geometry *generate_sphere(GLfloat radius, GLuint divisions);
 
     static Geometry *generate_cylinder(GLfloat radius, GLfloat height, GLuint divisions, bool is_centered);
 
-    static Geometry *generate_plane(GLfloat scale, int texture_type);
+    static Geometry *generate_plane(GLfloat scale, bool has_texture);
 };

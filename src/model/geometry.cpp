@@ -2,12 +2,9 @@
 #include "SOIL.h"
 
 Geometry::Geometry(GLenum draw, GLint wrap, GLint filter) :
-        draw_type(draw), 
-        wrap_type(wrap), 
+        draw_type(draw),
+        wrap_type(wrap),
         filter_type(filter){
-    has_texture = false;
-    has_normals = true;
-
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &NBO);
@@ -25,19 +22,15 @@ void Geometry::populate_buffers() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    if (has_normals) {
-        glBindBuffer(GL_ARRAY_BUFFER, NBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), normals.data(), GL_STATIC_DRAW);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    }
+    glBindBuffer(GL_ARRAY_BUFFER, NBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * normals.size(), normals.data(), GL_STATIC_DRAW);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-    if (has_texture) {
-        glBindBuffer(GL_ARRAY_BUFFER, TBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * tex_coords.size(), tex_coords.data(), GL_STATIC_DRAW);
-        glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    }
+    glBindBuffer(GL_ARRAY_BUFFER, TBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec2) * tex_coords.size(), tex_coords.data(), GL_STATIC_DRAW);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indices.size(), indices.data(), GL_STATIC_DRAW);
@@ -47,8 +40,6 @@ void Geometry::populate_buffers() {
 }
 /*
 void Geometry::attachNewTexture(const char *texture_loc) {
-    has_texture = true;
-
     glGenTextures(1, &texture);
 
     glBindTexture(GL_TEXTURE_2D, texture);

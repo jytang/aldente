@@ -36,7 +36,7 @@ void BasicShader::draw(Geometry *g, glm::mat4 to_world) {
     glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, &V[0][0]);
     // Model matrix
     glUniformMatrix4fv(glGetUniformLocation(shader_id, "model"), 1, GL_FALSE, &to_world[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(shader_id, "mesh_model"), 1, GL_FALSE, &mesh_model[0][0]);
+    //glUniformMatrix4fv(glGetUniformLocation(shader_id, "mesh_model"), 1, GL_FALSE, &mesh_model[0][0]);
 
     glUniform1i(glGetUniformLocation(shader_id, "texture_enabled"), g->has_texture);
     //Bind Texture

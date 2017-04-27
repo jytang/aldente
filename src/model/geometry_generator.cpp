@@ -7,7 +7,7 @@ void GeometryGenerator::destroy() {
         delete (*it);
 }
 
-Geometry *GeometryGenerator::generate_cube(GLfloat scale, bool has_normals) {
+Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     Geometry *cube = new Geometry();
 
     glm::vec3 v0 = {scale / 2.f, scale / 2.f, scale / 2.f};
@@ -61,25 +61,22 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale, bool has_normals) {
     cube->vertices.push_back(v7);
     cube->vertices.push_back(v6);
 
-    if (has_normals) {
-        for (int i = 0; i < 6; ++i)
-            cube->normals.push_back(glm::vec3(0.f, 1.f, 0.f));
-        for (int i = 0; i < 6; ++i)
-            cube->normals.push_back(glm::vec3(0.f, 0.f, -1.f));
-        for (int i = 0; i < 6; ++i)
-            cube->normals.push_back(glm::vec3(-1.f, 0.f, 0.f));
-        for (int i = 0; i < 6; ++i)
-            cube->normals.push_back(glm::vec3(1.f, 0.f, 0.f));
-        for (int i = 0; i < 6; ++i)
-            cube->normals.push_back(glm::vec3(0.f, 0.f, 1.f));
-        for (int i = 0; i < 6; ++i)
-            cube->normals.push_back(glm::vec3(0.f, -1.f, 0.f));
-    }
+    for (int i = 0; i < 6; ++i)
+        cube->normals.push_back(glm::vec3(0.f, 1.f, 0.f));
+    for (int i = 0; i < 6; ++i)
+        cube->normals.push_back(glm::vec3(0.f, 0.f, -1.f));
+    for (int i = 0; i < 6; ++i)
+        cube->normals.push_back(glm::vec3(-1.f, 0.f, 0.f));
+    for (int i = 0; i < 6; ++i)
+        cube->normals.push_back(glm::vec3(1.f, 0.f, 0.f));
+    for (int i = 0; i < 6; ++i)
+        cube->normals.push_back(glm::vec3(0.f, 0.f, 1.f));
+    for (int i = 0; i < 6; ++i)
+        cube->normals.push_back(glm::vec3(0.f, -1.f, 0.f));
 
     for (int i = 0; i < cube->vertices.size(); ++i)
         cube->indices.push_back(i);
 
-    cube->has_normals = has_normals;
     cube->populate_buffers();
     geometries.push_back(cube);
     return cube;
@@ -199,7 +196,6 @@ Geometry *GeometryGenerator::generate_cylinder(GLfloat radius, GLfloat height, G
             v3 = {radius * cos(theta + step), 0, radius * sinf(theta + step)};
         }
 
-
         //Top Portion
         cylinder->vertices.push_back(v_top);
         cylinder->vertices.push_back(v1);
@@ -242,7 +238,7 @@ Geometry *GeometryGenerator::generate_cylinder(GLfloat radius, GLfloat height, G
 
 }
 
-Geometry *GeometryGenerator::generate_plane(GLfloat scale, int has_texture) {
+Geometry *GeometryGenerator::generate_plane(GLfloat scale, bool has_texture) {
     Geometry *plane = new Geometry();
 
     if (has_texture) {
