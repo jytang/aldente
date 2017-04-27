@@ -66,8 +66,14 @@ UIGrid::UIGrid(float start_x, float start_y,
     // Set up callbacks.
     // TODO: add semantic game logic abstraction layer
     events::joystick_event.connect([&](events::JoystickData d) {
-        if (GameState::get_phase_type() != PhaseType::BUILD ||
-            !dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) return;
+        if (GameState::get_phase_type() != PhaseType::BUILD) 
+            return;
+        if (d.is_button == true && d.input == 1 && d.state == 0)
+            events::build::construct_changed_event(ConstructType::NONE);
+        if (!dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) 
+            return;
+
+        // Axes for movement
         if (d.is_button == 0 && d.input == 0) {
             if (d.state == 5)
                 move_selection(Direction::RIGHT);
@@ -79,6 +85,12 @@ UIGrid::UIGrid(float start_x, float start_y,
                 move_selection(Direction::DOWN);
             if (d.state == -5)
                 move_selection(Direction::UP);
+        }
+
+        // Buttons for selection
+        if (d.is_button == true && d.input == 0 && d.state == 0) {
+            events::build::construct_changed_event(
+                selection_row == 0 && selection_col == 0 ? ConstructType::CHEST : ConstructType::REMOVE);
         }
     });
 }

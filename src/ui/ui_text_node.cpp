@@ -10,3 +10,7 @@ void UITextNode::draw(Render2D &renderer_2d,
                              color);
 }
 
+void UITextNode::set_text(std::string& t) {
+    text = t;
+}
+
