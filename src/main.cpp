@@ -18,12 +18,10 @@ int main(int argc, const char *argv[]) {
 
         if (selection == "test") {
             exit(Catch::Session().run(argc, argv));
-        }
-        else if (selection == "server") {
+        } else if (selection == "server") {
             std::cerr << "Server not implemented yet." << std::endl;
             exit(EXIT_FAILURE);
-        }
-        else {
+        } else {
             std::cerr << "Invalid argument." << std::endl;
             exit(EXIT_FAILURE);
         }
