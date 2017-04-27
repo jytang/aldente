@@ -14,4 +14,6 @@ public:
 
 class BuildPhase : public Phase {
 public:
+    BuildPhase() : is_menu(true) {}
+    bool is_menu;
 };
