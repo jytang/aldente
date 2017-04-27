@@ -1,7 +1,7 @@
 #include "debug_input.h"
 
 #include <tuple>
-#include "aldente.h"
+#include "aldente_client.h"
 #include "events.h"
 #include "util/config.h"
 

@@ -1,6 +1,6 @@
 #include "shadows.h"
 
-#include "aldente.h"
+#include "aldente_client.h"
 #include "shaders/shadow_shader.h"
 #include "window.h"
 #include "util/config.h"

@@ -1,5 +1,5 @@
 #include "asset_loader.h"
-#include "aldente.h"
+#include "aldente_client.h"
 #include "util/colors.h"
 
 #include <boost/range.hpp>

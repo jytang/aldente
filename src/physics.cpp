@@ -1,6 +1,6 @@
 #include "physics.h"
 #include "scene/scene.h"
-#include "aldente.h"
+#include "aldente_client.h"
 
 Physics::Physics() {
     // Initialize Bullet. This strictly follows http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World,
