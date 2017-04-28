@@ -15,11 +15,13 @@
 
 class Grid {
 private:
+    void setup_listeners();
+
     std::vector<std::vector<Tile *>> grid;
     int width, height;
     int hoverX, hoverZ;
     Tile *hover;
-    int selected = ConstructType::REMOVE;
+    ConstructType selected = ConstructType::REMOVE;
 public:
     enum GridDirection { UP, RIGHT, DOWN, LEFT };
 
@@ -31,7 +33,11 @@ public:
 
     void update();
 
-    void build();
+    // Returns true if this construct is allowed to be built.
+    bool verify_build(ConstructType type, int x, int z);
+
+    // Builds a construct at a location.
+    void build(ConstructType type, int x, int z);
 
     void move_selection(GridDirection d);
 

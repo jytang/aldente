@@ -37,7 +37,6 @@ void protobuf_ShutdownFile_net_2eproto();
 class ServerMessage;
 class ClientMessage;
 class Construct;
-class BuildState;
 class GameState;
 class GameObject;
 class GameObject_Location;
@@ -111,8 +110,8 @@ class ServerMessage : public ::google::protobuf::Message {
   static const ServerMessage& default_instance();
 
   enum MessageTypeCase {
-    kMessage = 1,
-    kBuildState = 2,
+    kMessage = 2,
+    kBuildUpdate = 3,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -146,10 +145,17 @@ class ServerMessage : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string message = 1;
+  // optional bool status = 1;
+  inline bool has_status() const;
+  inline void clear_status();
+  static const int kStatusFieldNumber = 1;
+  inline bool status() const;
+  inline void set_status(bool value);
+
+  // optional string message = 2;
   inline bool has_message() const;
   inline void clear_message();
-  static const int kMessageFieldNumber = 1;
+  static const int kMessageFieldNumber = 2;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
@@ -158,20 +164,22 @@ class ServerMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // optional .proto.BuildState build_state = 2;
-  inline bool has_build_state() const;
-  inline void clear_build_state();
-  static const int kBuildStateFieldNumber = 2;
-  inline const ::proto::BuildState& build_state() const;
-  inline ::proto::BuildState* mutable_build_state();
-  inline ::proto::BuildState* release_build_state();
-  inline void set_allocated_build_state(::proto::BuildState* build_state);
+  // optional .proto.Construct build_update = 3;
+  inline bool has_build_update() const;
+  inline void clear_build_update();
+  static const int kBuildUpdateFieldNumber = 3;
+  inline const ::proto::Construct& build_update() const;
+  inline ::proto::Construct* mutable_build_update();
+  inline ::proto::Construct* release_build_update();
+  inline void set_allocated_build_update(::proto::Construct* build_update);
 
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ServerMessage)
  private:
+  inline void set_has_status();
+  inline void clear_has_status();
   inline void set_has_message();
-  inline void set_has_build_state();
+  inline void set_has_build_update();
 
   inline bool has_message_type();
   void clear_message_type();
@@ -181,9 +189,10 @@ class ServerMessage : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  bool status_;
   union MessageTypeUnion {
     ::std::string* message_;
-    ::proto::BuildState* build_state_;
+    ::proto::Construct* build_update_;
   } message_type_;
   ::google::protobuf::uint32 _oneof_case_[1];
 
@@ -220,8 +229,8 @@ class ClientMessage : public ::google::protobuf::Message {
   static const ClientMessage& default_instance();
 
   enum MessageTypeCase {
-    kMessage = 1,
-    kBuildRequest = 2,
+    kMessage = 2,
+    kBuildRequest = 3,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -255,10 +264,17 @@ class ClientMessage : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional string message = 1;
+  // optional bool status = 1;
+  inline bool has_status() const;
+  inline void clear_status();
+  static const int kStatusFieldNumber = 1;
+  inline bool status() const;
+  inline void set_status(bool value);
+
+  // optional string message = 2;
   inline bool has_message() const;
   inline void clear_message();
-  static const int kMessageFieldNumber = 1;
+  static const int kMessageFieldNumber = 2;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
@@ -267,10 +283,10 @@ class ClientMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // optional .proto.Construct build_request = 2;
+  // optional .proto.Construct build_request = 3;
   inline bool has_build_request() const;
   inline void clear_build_request();
-  static const int kBuildRequestFieldNumber = 2;
+  static const int kBuildRequestFieldNumber = 3;
   inline const ::proto::Construct& build_request() const;
   inline ::proto::Construct* mutable_build_request();
   inline ::proto::Construct* release_build_request();
@@ -279,6 +295,8 @@ class ClientMessage : public ::google::protobuf::Message {
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ClientMessage)
  private:
+  inline void set_has_status();
+  inline void clear_has_status();
   inline void set_has_message();
   inline void set_has_build_request();
 
@@ -290,6 +308,7 @@ class ClientMessage : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
+  bool status_;
   union MessageTypeUnion {
     ::std::string* message_;
     ::proto::Construct* build_request_;
@@ -401,88 +420,6 @@ class Construct : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static Construct* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class BuildState : public ::google::protobuf::Message {
- public:
-  BuildState();
-  virtual ~BuildState();
-
-  BuildState(const BuildState& from);
-
-  inline BuildState& operator=(const BuildState& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const BuildState& default_instance();
-
-  void Swap(BuildState* other);
-
-  // implements Message ----------------------------------------------
-
-  BuildState* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const BuildState& from);
-  void MergeFrom(const BuildState& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated .proto.Construct constructs = 1;
-  inline int constructs_size() const;
-  inline void clear_constructs();
-  static const int kConstructsFieldNumber = 1;
-  inline const ::proto::Construct& constructs(int index) const;
-  inline ::proto::Construct* mutable_constructs(int index);
-  inline ::proto::Construct* add_constructs();
-  inline const ::google::protobuf::RepeatedPtrField< ::proto::Construct >&
-      constructs() const;
-  inline ::google::protobuf::RepeatedPtrField< ::proto::Construct >*
-      mutable_constructs();
-
-  // @@protoc_insertion_point(class_scope:proto.BuildState)
- private:
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::proto::Construct > constructs_;
-  friend void  protobuf_AddDesc_net_2eproto();
-  friend void protobuf_AssignDesc_net_2eproto();
-  friend void protobuf_ShutdownFile_net_2eproto();
-
-  void InitAsDefaultInstance();
-  static BuildState* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1030,7 +967,31 @@ class Direction : public ::google::protobuf::Message {
 
 // ServerMessage
 
-// optional string message = 1;
+// optional bool status = 1;
+inline bool ServerMessage::has_status() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ServerMessage::set_has_status() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ServerMessage::clear_has_status() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ServerMessage::clear_status() {
+  status_ = false;
+  clear_has_status();
+}
+inline bool ServerMessage::status() const {
+  // @@protoc_insertion_point(field_get:proto.ServerMessage.status)
+  return status_;
+}
+inline void ServerMessage::set_status(bool value) {
+  set_has_status();
+  status_ = value;
+  // @@protoc_insertion_point(field_set:proto.ServerMessage.status)
+}
+
+// optional string message = 2;
 inline bool ServerMessage::has_message() const {
   return message_type_case() == kMessage;
 }
@@ -1100,46 +1061,46 @@ inline void ServerMessage::set_allocated_message(::std::string* message) {
   }
 }
 
-// optional .proto.BuildState build_state = 2;
-inline bool ServerMessage::has_build_state() const {
-  return message_type_case() == kBuildState;
+// optional .proto.Construct build_update = 3;
+inline bool ServerMessage::has_build_update() const {
+  return message_type_case() == kBuildUpdate;
 }
-inline void ServerMessage::set_has_build_state() {
-  _oneof_case_[0] = kBuildState;
+inline void ServerMessage::set_has_build_update() {
+  _oneof_case_[0] = kBuildUpdate;
 }
-inline void ServerMessage::clear_build_state() {
-  if (has_build_state()) {
-    delete message_type_.build_state_;
+inline void ServerMessage::clear_build_update() {
+  if (has_build_update()) {
+    delete message_type_.build_update_;
     clear_has_message_type();
   }
 }
-inline const ::proto::BuildState& ServerMessage::build_state() const {
-  return has_build_state() ? *message_type_.build_state_
-                      : ::proto::BuildState::default_instance();
+inline const ::proto::Construct& ServerMessage::build_update() const {
+  return has_build_update() ? *message_type_.build_update_
+                      : ::proto::Construct::default_instance();
 }
-inline ::proto::BuildState* ServerMessage::mutable_build_state() {
-  if (!has_build_state()) {
+inline ::proto::Construct* ServerMessage::mutable_build_update() {
+  if (!has_build_update()) {
     clear_message_type();
-    set_has_build_state();
-    message_type_.build_state_ = new ::proto::BuildState;
+    set_has_build_update();
+    message_type_.build_update_ = new ::proto::Construct;
   }
-  return message_type_.build_state_;
+  return message_type_.build_update_;
 }
-inline ::proto::BuildState* ServerMessage::release_build_state() {
-  if (has_build_state()) {
+inline ::proto::Construct* ServerMessage::release_build_update() {
+  if (has_build_update()) {
     clear_has_message_type();
-    ::proto::BuildState* temp = message_type_.build_state_;
-    message_type_.build_state_ = NULL;
+    ::proto::Construct* temp = message_type_.build_update_;
+    message_type_.build_update_ = NULL;
     return temp;
   } else {
     return NULL;
   }
 }
-inline void ServerMessage::set_allocated_build_state(::proto::BuildState* build_state) {
+inline void ServerMessage::set_allocated_build_update(::proto::Construct* build_update) {
   clear_message_type();
-  if (build_state) {
-    set_has_build_state();
-    message_type_.build_state_ = build_state;
+  if (build_update) {
+    set_has_build_update();
+    message_type_.build_update_ = build_update;
   }
 }
 
@@ -1156,7 +1117,31 @@ inline ServerMessage::MessageTypeCase ServerMessage::message_type_case() const {
 
 // ClientMessage
 
-// optional string message = 1;
+// optional bool status = 1;
+inline bool ClientMessage::has_status() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ClientMessage::set_has_status() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ClientMessage::clear_has_status() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ClientMessage::clear_status() {
+  status_ = false;
+  clear_has_status();
+}
+inline bool ClientMessage::status() const {
+  // @@protoc_insertion_point(field_get:proto.ClientMessage.status)
+  return status_;
+}
+inline void ClientMessage::set_status(bool value) {
+  set_has_status();
+  status_ = value;
+  // @@protoc_insertion_point(field_set:proto.ClientMessage.status)
+}
+
+// optional string message = 2;
 inline bool ClientMessage::has_message() const {
   return message_type_case() == kMessage;
 }
@@ -1226,7 +1211,7 @@ inline void ClientMessage::set_allocated_message(::std::string* message) {
   }
 }
 
-// optional .proto.Construct build_request = 2;
+// optional .proto.Construct build_request = 3;
 inline bool ClientMessage::has_build_request() const {
   return message_type_case() == kBuildRequest;
 }
@@ -1352,40 +1337,6 @@ inline void Construct::set_z(::google::protobuf::int32 value) {
   set_has_z();
   z_ = value;
   // @@protoc_insertion_point(field_set:proto.Construct.z)
-}
-
-// -------------------------------------------------------------------
-
-// BuildState
-
-// repeated .proto.Construct constructs = 1;
-inline int BuildState::constructs_size() const {
-  return constructs_.size();
-}
-inline void BuildState::clear_constructs() {
-  constructs_.Clear();
-}
-inline const ::proto::Construct& BuildState::constructs(int index) const {
-  // @@protoc_insertion_point(field_get:proto.BuildState.constructs)
-  return constructs_.Get(index);
-}
-inline ::proto::Construct* BuildState::mutable_constructs(int index) {
-  // @@protoc_insertion_point(field_mutable:proto.BuildState.constructs)
-  return constructs_.Mutable(index);
-}
-inline ::proto::Construct* BuildState::add_constructs() {
-  // @@protoc_insertion_point(field_add:proto.BuildState.constructs)
-  return constructs_.Add();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::proto::Construct >&
-BuildState::constructs() const {
-  // @@protoc_insertion_point(field_list:proto.BuildState.constructs)
-  return constructs_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::proto::Construct >*
-BuildState::mutable_constructs() {
-  // @@protoc_insertion_point(field_mutable_list:proto.BuildState.constructs)
-  return &constructs_;
 }
 
 // -------------------------------------------------------------------

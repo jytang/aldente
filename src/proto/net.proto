@@ -3,16 +3,20 @@ syntax = "proto2";
 package proto;
 
 message ServerMessage {
+  optional bool status = 1;
+
   oneof message_type {
-    string message = 1;
-    BuildState build_state = 2;
+    string message = 2;
+    Construct build_update = 3;
   }
 }
 
 message ClientMessage {
+  optional bool status = 1;
+  
   oneof message_type {
-    string message = 1;
-    Construct build_request = 2;
+    string message = 2;
+    Construct build_request = 3;
   }
 }
 
@@ -20,10 +24,6 @@ message Construct {
   optional int32 type = 1;
   optional int32 x = 2;
   optional int32 z = 3;
-}
-
-message BuildState {
-  repeated Construct constructs = 1;
 }
 
 // Below is currently unused.

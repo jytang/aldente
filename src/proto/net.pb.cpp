@@ -25,7 +25,7 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
   ServerMessage_reflection_ = NULL;
 struct ServerMessageOneofInstance {
   const ::std::string* message_;
-  const ::proto::BuildState* build_state_;
+  const ::proto::Construct* build_update_;
 }* ServerMessage_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* ClientMessage_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
@@ -37,9 +37,6 @@ struct ClientMessageOneofInstance {
 const ::google::protobuf::Descriptor* Construct_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Construct_reflection_ = NULL;
-const ::google::protobuf::Descriptor* BuildState_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  BuildState_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GameState_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GameState_reflection_ = NULL;
@@ -68,9 +65,10 @@ void protobuf_AssignDesc_net_2eproto() {
       "net.proto");
   GOOGLE_CHECK(file != NULL);
   ServerMessage_descriptor_ = file->message_type(0);
-  static const int ServerMessage_offsets_[3] = {
+  static const int ServerMessage_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, status_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ServerMessage_default_oneof_instance_, message_),
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ServerMessage_default_oneof_instance_, build_state_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ServerMessage_default_oneof_instance_, build_update_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, message_type_),
   };
   ServerMessage_reflection_ =
@@ -87,7 +85,8 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ServerMessage));
   ClientMessage_descriptor_ = file->message_type(1);
-  static const int ClientMessage_offsets_[3] = {
+  static const int ClientMessage_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, status_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, message_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, build_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, message_type_),
@@ -122,22 +121,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Construct));
-  BuildState_descriptor_ = file->message_type(3);
-  static const int BuildState_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BuildState, constructs_),
-  };
-  BuildState_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      BuildState_descriptor_,
-      BuildState::default_instance_,
-      BuildState_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BuildState, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(BuildState, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(BuildState));
-  GameState_descriptor_ = file->message_type(4);
+  GameState_descriptor_ = file->message_type(3);
   static const int GameState_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameState, objects_),
   };
@@ -152,7 +136,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameState));
-  GameObject_descriptor_ = file->message_type(5);
+  GameObject_descriptor_ = file->message_type(4);
   static const int GameObject_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, location_),
@@ -187,7 +171,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameObject_Location));
   GameObject_Type_descriptor_ = GameObject_descriptor_->enum_type(0);
-  JoystickData_descriptor_ = file->message_type(6);
+  JoystickData_descriptor_ = file->message_type(5);
   static const int JoystickData_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(JoystickData, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(JoystickData, is_button_),
@@ -205,7 +189,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(JoystickData));
-  Direction_descriptor_ = file->message_type(7);
+  Direction_descriptor_ = file->message_type(6);
   static const int Direction_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Direction, way_),
   };
@@ -240,8 +224,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Construct_descriptor_, &Construct::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    BuildState_descriptor_, &BuildState::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GameState_descriptor_, &GameState::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GameObject_descriptor_, &GameObject::default_instance());
@@ -264,8 +246,6 @@ void protobuf_ShutdownFile_net_2eproto() {
   delete ClientMessage_reflection_;
   delete Construct::default_instance_;
   delete Construct_reflection_;
-  delete BuildState::default_instance_;
-  delete BuildState_reflection_;
   delete GameState::default_instance_;
   delete GameState_reflection_;
   delete GameObject::default_instance_;
@@ -285,25 +265,25 @@ void protobuf_AddDesc_net_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tnet.proto\022\005proto\"\\\n\rServerMessage\022\021\n\007m"
-    "essage\030\001 \001(\tH\000\022(\n\013build_state\030\002 \001(\0132\021.pr"
-    "oto.BuildStateH\000B\016\n\014message_type\"]\n\rClie"
-    "ntMessage\022\021\n\007message\030\001 \001(\tH\000\022)\n\rbuild_re"
-    "quest\030\002 \001(\0132\020.proto.ConstructH\000B\016\n\014messa"
-    "ge_type\"/\n\tConstruct\022\014\n\004type\030\001 \001(\005\022\t\n\001x\030"
-    "\002 \001(\005\022\t\n\001z\030\003 \001(\005\"2\n\nBuildState\022$\n\nconstr"
-    "ucts\030\001 \003(\0132\020.proto.Construct\"/\n\tGameStat"
-    "e\022\"\n\007objects\030\001 \003(\0132\021.proto.GameObject\"\317\001"
-    "\n\nGameObject\022$\n\004type\030\001 \001(\0162\026.proto.GameO"
-    "bject.Type\022,\n\010location\030\002 \001(\0132\032.proto.Gam"
-    "eObject.Location\032F\n\010Location\022\r\n\001x\030\001 \003(\001B"
-    "\002\020\001\022\r\n\001y\030\002 \003(\001B\002\020\001\022\r\n\001z\030\003 \003(\001B\002\020\001\022\r\n\001w\030\004"
-    " \003(\001B\002\020\001\"%\n\004Type\022\n\n\006PLAYER\020\000\022\007\n\003NPC\020\001\022\010\n"
-    "\004TILE\020\002\"K\n\014JoystickData\022\n\n\002id\030\001 \001(\005\022\021\n\ti"
-    "s_button\030\002 \001(\010\022\r\n\005input\030\003 \001(\005\022\r\n\005state\030\004"
-    " \001(\005\"i\n\tDirection\022&\n\003way\030\001 \001(\0162\031.proto.D"
-    "irection.Cardinal\"4\n\010Cardinal\022\t\n\005NORTH\020\000"
-    "\022\010\n\004EAST\020\001\022\t\n\005SOUTH\020\002\022\010\n\004WEST\020\003", 751);
+    "\n\tnet.proto\022\005proto\"l\n\rServerMessage\022\016\n\006s"
+    "tatus\030\001 \001(\010\022\021\n\007message\030\002 \001(\tH\000\022(\n\014build_"
+    "update\030\003 \001(\0132\020.proto.ConstructH\000B\016\n\014mess"
+    "age_type\"m\n\rClientMessage\022\016\n\006status\030\001 \001("
+    "\010\022\021\n\007message\030\002 \001(\tH\000\022)\n\rbuild_request\030\003 "
+    "\001(\0132\020.proto.ConstructH\000B\016\n\014message_type\""
+    "/\n\tConstruct\022\014\n\004type\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t\n"
+    "\001z\030\003 \001(\005\"/\n\tGameState\022\"\n\007objects\030\001 \003(\0132\021"
+    ".proto.GameObject\"\317\001\n\nGameObject\022$\n\004type"
+    "\030\001 \001(\0162\026.proto.GameObject.Type\022,\n\010locati"
+    "on\030\002 \001(\0132\032.proto.GameObject.Location\032F\n\010"
+    "Location\022\r\n\001x\030\001 \003(\001B\002\020\001\022\r\n\001y\030\002 \003(\001B\002\020\001\022\r"
+    "\n\001z\030\003 \003(\001B\002\020\001\022\r\n\001w\030\004 \003(\001B\002\020\001\"%\n\004Type\022\n\n\006"
+    "PLAYER\020\000\022\007\n\003NPC\020\001\022\010\n\004TILE\020\002\"K\n\014JoystickD"
+    "ata\022\n\n\002id\030\001 \001(\005\022\021\n\tis_button\030\002 \001(\010\022\r\n\005in"
+    "put\030\003 \001(\005\022\r\n\005state\030\004 \001(\005\"i\n\tDirection\022&\n"
+    "\003way\030\001 \001(\0162\031.proto.Direction.Cardinal\"4\n"
+    "\010Cardinal\022\t\n\005NORTH\020\000\022\010\n\004EAST\020\001\022\t\n\005SOUTH\020"
+    "\002\022\010\n\004WEST\020\003", 731);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -311,7 +291,6 @@ void protobuf_AddDesc_net_2eproto() {
   ClientMessage::default_instance_ = new ClientMessage();
   ClientMessage_default_oneof_instance_ = new ClientMessageOneofInstance;
   Construct::default_instance_ = new Construct();
-  BuildState::default_instance_ = new BuildState();
   GameState::default_instance_ = new GameState();
   GameObject::default_instance_ = new GameObject();
   GameObject_Location::default_instance_ = new GameObject_Location();
@@ -320,7 +299,6 @@ void protobuf_AddDesc_net_2eproto() {
   ServerMessage::default_instance_->InitAsDefaultInstance();
   ClientMessage::default_instance_->InitAsDefaultInstance();
   Construct::default_instance_->InitAsDefaultInstance();
-  BuildState::default_instance_->InitAsDefaultInstance();
   GameState::default_instance_->InitAsDefaultInstance();
   GameObject::default_instance_->InitAsDefaultInstance();
   GameObject_Location::default_instance_->InitAsDefaultInstance();
@@ -339,8 +317,9 @@ struct StaticDescriptorInitializer_net_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int ServerMessage::kStatusFieldNumber;
 const int ServerMessage::kMessageFieldNumber;
-const int ServerMessage::kBuildStateFieldNumber;
+const int ServerMessage::kBuildUpdateFieldNumber;
 #endif  // !_MSC_VER
 
 ServerMessage::ServerMessage()
@@ -351,7 +330,7 @@ ServerMessage::ServerMessage()
 
 void ServerMessage::InitAsDefaultInstance() {
   ServerMessage_default_oneof_instance_->message_ = &::google::protobuf::internal::GetEmptyStringAlreadyInited();
-  ServerMessage_default_oneof_instance_->build_state_ = const_cast< ::proto::BuildState*>(&::proto::BuildState::default_instance());
+  ServerMessage_default_oneof_instance_->build_update_ = const_cast< ::proto::Construct*>(&::proto::Construct::default_instance());
 }
 
 ServerMessage::ServerMessage(const ServerMessage& from)
@@ -364,6 +343,7 @@ ServerMessage::ServerMessage(const ServerMessage& from)
 void ServerMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  status_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   clear_has_message_type();
 }
@@ -408,8 +388,8 @@ void ServerMessage::clear_message_type() {
       delete message_type_.message_;
       break;
     }
-    case kBuildState: {
-      delete message_type_.build_state_;
+    case kBuildUpdate: {
+      delete message_type_.build_update_;
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
@@ -421,6 +401,7 @@ void ServerMessage::clear_message_type() {
 
 
 void ServerMessage::Clear() {
+  status_ = false;
   clear_message_type();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -436,9 +417,24 @@ bool ServerMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string message = 1;
+      // optional bool status = 1;
       case 1: {
-        if (tag == 10) {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &status_)));
+          set_has_status();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_message;
+        break;
+      }
+
+      // optional string message = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_message:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_message()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -448,16 +444,16 @@ bool ServerMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_build_state;
+        if (input->ExpectTag(26)) goto parse_build_update;
         break;
       }
 
-      // optional .proto.BuildState build_state = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_build_state:
+      // optional .proto.Construct build_update = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_build_update:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_build_state()));
+               input, mutable_build_update()));
         } else {
           goto handle_unusual;
         }
@@ -490,20 +486,25 @@ failure:
 void ServerMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto.ServerMessage)
-  // optional string message = 1;
+  // optional bool status = 1;
+  if (has_status()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->status(), output);
+  }
+
+  // optional string message = 2;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "message");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->message(), output);
+      2, this->message(), output);
   }
 
-  // optional .proto.BuildState build_state = 2;
-  if (has_build_state()) {
+  // optional .proto.Construct build_update = 3;
+  if (has_build_update()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->build_state(), output);
+      3, this->build_update(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -516,7 +517,12 @@ void ServerMessage::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ServerMessage::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:proto.ServerMessage)
-  // optional string message = 1;
+  // optional bool status = 1;
+  if (has_status()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->status(), target);
+  }
+
+  // optional string message = 2;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -524,14 +530,14 @@ void ServerMessage::SerializeWithCachedSizes(
       "message");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->message(), target);
+        2, this->message(), target);
   }
 
-  // optional .proto.BuildState build_state = 2;
-  if (has_build_state()) {
+  // optional .proto.Construct build_update = 3;
+  if (has_build_update()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->build_state(), target);
+        3, this->build_update(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -545,19 +551,26 @@ void ServerMessage::SerializeWithCachedSizes(
 int ServerMessage::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional bool status = 1;
+    if (has_status()) {
+      total_size += 1 + 1;
+    }
+
+  }
   switch (message_type_case()) {
-    // optional string message = 1;
+    // optional string message = 2;
     case kMessage: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->message());
       break;
     }
-    // optional .proto.BuildState build_state = 2;
-    case kBuildState: {
+    // optional .proto.Construct build_update = 3;
+    case kBuildUpdate: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->build_state());
+          this->build_update());
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
@@ -594,12 +607,17 @@ void ServerMessage::MergeFrom(const ServerMessage& from) {
       set_message(from.message());
       break;
     }
-    case kBuildState: {
-      mutable_build_state()->::proto::BuildState::MergeFrom(from.build_state());
+    case kBuildUpdate: {
+      mutable_build_update()->::proto::Construct::MergeFrom(from.build_update());
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
       break;
+    }
+  }
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_status()) {
+      set_status(from.status());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -624,6 +642,7 @@ bool ServerMessage::IsInitialized() const {
 
 void ServerMessage::Swap(ServerMessage* other) {
   if (other != this) {
+    std::swap(status_, other->status_);
     std::swap(message_type_, other->message_type_);
     std::swap(_oneof_case_[0], other->_oneof_case_[0]);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -644,6 +663,7 @@ void ServerMessage::Swap(ServerMessage* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int ClientMessage::kStatusFieldNumber;
 const int ClientMessage::kMessageFieldNumber;
 const int ClientMessage::kBuildRequestFieldNumber;
 #endif  // !_MSC_VER
@@ -669,6 +689,7 @@ ClientMessage::ClientMessage(const ClientMessage& from)
 void ClientMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
+  status_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   clear_has_message_type();
 }
@@ -726,6 +747,7 @@ void ClientMessage::clear_message_type() {
 
 
 void ClientMessage::Clear() {
+  status_ = false;
   clear_message_type();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -741,9 +763,24 @@ bool ClientMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional string message = 1;
+      // optional bool status = 1;
       case 1: {
-        if (tag == 10) {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &status_)));
+          set_has_status();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_message;
+        break;
+      }
+
+      // optional string message = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_message:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_message()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -753,13 +790,13 @@ bool ClientMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_build_request;
+        if (input->ExpectTag(26)) goto parse_build_request;
         break;
       }
 
-      // optional .proto.Construct build_request = 2;
-      case 2: {
-        if (tag == 18) {
+      // optional .proto.Construct build_request = 3;
+      case 3: {
+        if (tag == 26) {
          parse_build_request:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_build_request()));
@@ -795,20 +832,25 @@ failure:
 void ClientMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto.ClientMessage)
-  // optional string message = 1;
+  // optional bool status = 1;
+  if (has_status()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->status(), output);
+  }
+
+  // optional string message = 2;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "message");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      1, this->message(), output);
+      2, this->message(), output);
   }
 
-  // optional .proto.Construct build_request = 2;
+  // optional .proto.Construct build_request = 3;
   if (has_build_request()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->build_request(), output);
+      3, this->build_request(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -821,7 +863,12 @@ void ClientMessage::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ClientMessage::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:proto.ClientMessage)
-  // optional string message = 1;
+  // optional bool status = 1;
+  if (has_status()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->status(), target);
+  }
+
+  // optional string message = 2;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -829,14 +876,14 @@ void ClientMessage::SerializeWithCachedSizes(
       "message");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->message(), target);
+        2, this->message(), target);
   }
 
-  // optional .proto.Construct build_request = 2;
+  // optional .proto.Construct build_request = 3;
   if (has_build_request()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->build_request(), target);
+        3, this->build_request(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -850,15 +897,22 @@ void ClientMessage::SerializeWithCachedSizes(
 int ClientMessage::ByteSize() const {
   int total_size = 0;
 
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional bool status = 1;
+    if (has_status()) {
+      total_size += 1 + 1;
+    }
+
+  }
   switch (message_type_case()) {
-    // optional string message = 1;
+    // optional string message = 2;
     case kMessage: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->message());
       break;
     }
-    // optional .proto.Construct build_request = 2;
+    // optional .proto.Construct build_request = 3;
     case kBuildRequest: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -907,6 +961,11 @@ void ClientMessage::MergeFrom(const ClientMessage& from) {
       break;
     }
   }
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_status()) {
+      set_status(from.status());
+    }
+  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -929,6 +988,7 @@ bool ClientMessage::IsInitialized() const {
 
 void ClientMessage::Swap(ClientMessage* other) {
   if (other != this) {
+    std::swap(status_, other->status_);
     std::swap(message_type_, other->message_type_);
     std::swap(_oneof_case_[0], other->_oneof_case_[0]);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1254,225 +1314,6 @@ void Construct::Swap(Construct* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = Construct_descriptor_;
   metadata.reflection = Construct_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int BuildState::kConstructsFieldNumber;
-#endif  // !_MSC_VER
-
-BuildState::BuildState()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:proto.BuildState)
-}
-
-void BuildState::InitAsDefaultInstance() {
-}
-
-BuildState::BuildState(const BuildState& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto.BuildState)
-}
-
-void BuildState::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-BuildState::~BuildState() {
-  // @@protoc_insertion_point(destructor:proto.BuildState)
-  SharedDtor();
-}
-
-void BuildState::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void BuildState::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* BuildState::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return BuildState_descriptor_;
-}
-
-const BuildState& BuildState::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_net_2eproto();
-  return *default_instance_;
-}
-
-BuildState* BuildState::default_instance_ = NULL;
-
-BuildState* BuildState::New() const {
-  return new BuildState;
-}
-
-void BuildState::Clear() {
-  constructs_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool BuildState::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto.BuildState)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .proto.Construct constructs = 1;
-      case 1: {
-        if (tag == 10) {
-         parse_constructs:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_constructs()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(10)) goto parse_constructs;
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:proto.BuildState)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:proto.BuildState)
-  return false;
-#undef DO_
-}
-
-void BuildState::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto.BuildState)
-  // repeated .proto.Construct constructs = 1;
-  for (int i = 0; i < this->constructs_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->constructs(i), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:proto.BuildState)
-}
-
-::google::protobuf::uint8* BuildState::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:proto.BuildState)
-  // repeated .proto.Construct constructs = 1;
-  for (int i = 0; i < this->constructs_size(); i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->constructs(i), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:proto.BuildState)
-  return target;
-}
-
-int BuildState::ByteSize() const {
-  int total_size = 0;
-
-  // repeated .proto.Construct constructs = 1;
-  total_size += 1 * this->constructs_size();
-  for (int i = 0; i < this->constructs_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->constructs(i));
-  }
-
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void BuildState::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const BuildState* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const BuildState*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void BuildState::MergeFrom(const BuildState& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  constructs_.MergeFrom(from.constructs_);
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void BuildState::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void BuildState::CopyFrom(const BuildState& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool BuildState::IsInitialized() const {
-
-  return true;
-}
-
-void BuildState::Swap(BuildState* other) {
-  if (other != this) {
-    constructs_.Swap(&other->constructs_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata BuildState::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = BuildState_descriptor_;
-  metadata.reflection = BuildState_reflection_;
   return metadata;
 }
 

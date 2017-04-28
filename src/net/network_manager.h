@@ -2,6 +2,7 @@
 
 #include "network_client.h"
 #include "network_server.h"
+#include "events.h"
 #include <boost/thread.hpp>
 
 #define CONN_RETRY_SEC 5.0f
@@ -23,6 +24,16 @@ public:
 private:
     // Periodically attempt connection every few seconds.
     static void attempt_connection();
+
+    // Register event listeners.
+    static void register_listeners();
+
+    // Update server and client per game loop iteration.
+    static void update_server();
+    static void update_client();
+
+    static void to_construct(events::build::ConstructData& cd, proto::Construct* c);
+    static void to_construct_data(proto::Construct& c, events::build::ConstructData& cd);
 
     // Runs the io_service.
     static void run_service();

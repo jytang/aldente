@@ -65,7 +65,17 @@ namespace events {
             int z;
         };
         extern signal<void(ConstructType)> construct_changed_event;
+
+        // Client requests to build a construct.
+        extern signal<void(ConstructData &)> request_build_event;
+
+        // Server attempts to build the construct.
         extern signal<void(ConstructData &)> try_build_event;
-        extern signal<void(ConstructData &)> confirm_build_event;
+
+        // Server responds whether or not the build was successful.
+        extern signal<void(ConstructData &, bool)> respond_build_event;
+
+        // Client updates local grid with newly built construct.
+        extern signal<void(ConstructData &)> update_build_event;
     }
 }

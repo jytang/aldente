@@ -1,7 +1,5 @@
 #include "network_manager.h"
 #include "util/config.h"
-#include "events.h"
-
 #include <GLFW/glfw3.h>
 
 NetworkServer* NetworkManager::server;
@@ -49,10 +47,31 @@ void NetworkManager::attempt_connection() {
             time_last_connect_attempt = glfwGetTime();
             if (is_connected) {
                 std::cerr << "Established connection.\n";
+                register_listeners();
                 service_thread = new boost::thread(&NetworkManager::run_service);
             }
         }
     }
+}
+
+void NetworkManager::register_listeners() {
+    // Build phase.
+    events::build::request_build_event.connect([](events::build::ConstructData& cd) {
+        proto::ClientMessage msg;
+        proto::Construct* construct = new proto::Construct();
+        to_construct(cd, construct);
+        msg.set_allocated_build_request(construct);
+        client->send(msg);
+    });
+
+    events::build::respond_build_event.connect([](events::build::ConstructData& cd, bool permitted) {
+        proto::ServerMessage msg;
+        msg.set_status(permitted);
+        proto::Construct* construct = new proto::Construct();
+        to_construct(cd, construct);
+        msg.set_allocated_build_update(construct);
+        server->send_to_all(msg);
+    });
 }
 
 void NetworkManager::run_service() {
@@ -67,23 +86,60 @@ void NetworkManager::run_service() {
 }
 
 void NetworkManager::update() {
-    if (server) {
-        // std::unordered_map<int, std::vector<proto::ClientMessage>>
-        auto recieved = server->read_all_messages();
-        for (auto& sender : recieved) {
-            for (auto& msg : sender.second) {
-                switch (msg.message_type_case()) {
-                    case proto::ClientMessage::MessageTypeCase::kBuildRequest: {
-                        proto::Construct construct = msg.build_request();
-                        events::build::ConstructData cd;
-                        cd.type = static_cast<ConstructType>(construct.type());
-                        cd.x = construct.x();
-                        cd.z = construct.z();
-                        events::build::try_build_event(cd);
-                        std::cerr << "Fire try_build_event\n";
-                    }
-                }
+    if (server)
+        update_server();
+    if (client)
+        update_client();
+}
+
+void NetworkManager::update_server() {
+    for (auto& client : server->read_all_messages()) {
+        for (auto& msg : client.second) {
+            switch (msg.message_type_case()) {
+            case proto::ClientMessage::MessageTypeCase::kBuildRequest: {
+                proto::Construct construct = msg.build_request();
+                events::build::ConstructData cd;
+                to_construct_data(construct, cd);
+                events::build::try_build_event(cd);
+                break;
+            }
+            default:
+                break;
             }
         }
     }
 }
+
+void NetworkManager::update_client() {
+    proto::ServerMessage msg;
+    while (client->read_message(&msg)) {
+        switch (msg.message_type_case()) {
+        case proto::ServerMessage::MessageTypeCase::kBuildUpdate: {
+            if (!msg.status()) {
+                // TODO: construct placement failed. notify player?
+                break;
+            }
+
+            proto::Construct construct = msg.build_update();
+            events::build::ConstructData cd;
+            to_construct_data(construct, cd);
+            events::build::update_build_event(cd);
+        }
+        default:
+            break;
+        }
+    }
+}
+
+void NetworkManager::to_construct(events::build::ConstructData& cd, proto::Construct* c) {
+    c->set_type(cd.type);
+    c->set_x(cd.x);
+    c->set_z(cd.z);
+}
+
+void NetworkManager::to_construct_data(proto::Construct& c, events::build::ConstructData& cd) {
+    cd.type = static_cast<ConstructType>(c.type());
+    cd.x = c.x();
+    cd.z = c.z();
+}
+

@@ -24,9 +24,22 @@ Grid::Grid(int w, int h) :
     }
 
     hover = grid[hoverX][hoverZ];
+    setup_listeners();
+}
 
+Grid::~Grid() {}
+
+void Grid::setup_listeners() {
     events::joystick_event.connect([&](events::JoystickData d) {
         if (Phase::curr_phase != PhaseType::BUILD || BuildPhase::is_menu) return;
+
+        // Wants to build a construct at this tile.
+        if (d.is_button && d.input == 0 && d.state == 0) {
+            events::build::ConstructData cd = { selected, hover->getX(), hover->getZ() };
+            events::build::request_build_event(cd);
+        }
+
+        // Hover tile movement.
         if (d.is_button == 0 && d.input == 0) {
             if (d.state == 5)
                 move_selection(GridDirection::RIGHT);
@@ -43,19 +56,17 @@ Grid::Grid(int w, int h) :
 
     events::build::construct_changed_event.connect([&](ConstructType c) {
         selected = c;
-        fprintf(stderr, "CHANGE: %d\n", c);
     });
 
-    events::joystick_event.connect([&](events::JoystickData d) {
-        if (Phase::curr_phase == PhaseType::BUILD && !BuildPhase::is_menu) {
-            if (d.is_button == true && d.input == 0 && d.state == 0) {
-                build();
-            }
-        }
+    events::build::try_build_event.connect([&](events::build::ConstructData& cd) {
+        bool permitted = verify_build(cd.type, cd.x, cd.z);
+        events::build::respond_build_event(cd, permitted);
+    });
+
+    events::build::update_build_event.connect([&](events::build::ConstructData& cd) {
+        build(cd.type, cd.x, cd.z);
     });
 }
-
-Grid::~Grid() {}
 
 void Grid::update() {
     if (grid[hoverX][hoverZ] != hover) {
@@ -65,28 +76,32 @@ void Grid::update() {
     }
 }
 
-void Grid::build() {
-    if (selected == REMOVE) {
-        if (hover->get_construct()) {
-            //TODO Make destructor for construct
-            hover->set_construct(nullptr);
-            hover->buildable = true;
-        }
+bool Grid::verify_build(ConstructType type, int x, int z) {
+    if (type == REMOVE) {
+        return hover->get_construct() != nullptr;
+    }
+
+    return hover->buildable;
+}
+
+void Grid::build(ConstructType type, int x, int z) {
+    if (type == REMOVE) {
+        //TODO Make destructor for construct
+        hover->set_construct(nullptr);
+        hover->buildable = true;
         return;
     }
 
-    if (hover->buildable) {
-        fprintf(stderr, "BUILD: %d\n", selected);
-        switch (selected) {
-        case CHEST: {
-            Construct* to_add = new Crate(hover->getX(), hover->getZ());
-            hover->set_construct(to_add);
-            hover->buildable = false;
-            break;
-        }
-        default:
-            break;
-        }
+    fprintf(stderr, "BUILD: %d\n", type);
+    switch (type) {
+    case CHEST: {
+        Construct* to_add = new Crate(x, z);
+        hover->set_construct(to_add);
+        hover->buildable = false;
+        break;
+    }
+    default:
+        break;
     }
 }
 
