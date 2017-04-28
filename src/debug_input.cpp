@@ -45,6 +45,36 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_Q:
                     events::toggle_debug_shadows_event();
                     break;
+                case GLFW_KEY_UP: {
+                    events::JoystickData jd = { 1, false, 1, -5 };
+                    events::joystick_event(jd);
+                    break;
+                }
+                case GLFW_KEY_DOWN: {
+                    events::JoystickData jd = { 1, false, 1, 5 };
+                    events::joystick_event(jd);
+                    break;
+                }
+                case GLFW_KEY_LEFT: {
+                    events::JoystickData jd = { 1, false, 0, -5 };
+                    events::joystick_event(jd);
+                    break;
+                }
+                case GLFW_KEY_RIGHT: {
+                    events::JoystickData jd = { 1, false, 0, 5 };
+                    events::joystick_event(jd);
+                    break;
+                }
+                case GLFW_KEY_Z: {
+                    events::JoystickData jd = { 1, true, 0, 0 };
+                    events::joystick_event(jd);
+                    break;
+                }
+                case GLFW_KEY_X: {
+                    events::JoystickData jd = { 1, true, 1, 0 };
+                    events::joystick_event(jd);
+                    break;
+                }
                 case GLFW_KEY_0:
                     Phase::curr_phase = PhaseType::MENU;
                     break;
