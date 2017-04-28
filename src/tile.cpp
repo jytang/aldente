@@ -10,7 +10,7 @@ Tile::~Tile() {}
 void Tile::draw(SceneCamera &camera) {
     if (model)
         model->draw(camera, transform.get_world_mat());
-    if (construct) 
+    if (construct)
         construct->draw(camera);
 }
 
@@ -56,8 +56,7 @@ void FloorTile::update(Tile *hover) {
     // Get the transform from Bullet and into 't'
     rigidBody->getMotionState()->getWorldTransform(t);
     transform.set_position(glm::vec3((float) t.getOrigin().getX(), (float) t.getOrigin().getY(),
-                                  (float) t.getOrigin().getZ()));    
-    /*
+                                  (float) t.getOrigin().getZ()));
     if (hover == this) {
         Material *mat = new Material(color::windwaker_green);
         model->meshes[0]->material = mat;
@@ -84,7 +83,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
 
     mesh->to_world = glm::mat4(1.0f);
     //mesh->to_world *= glm::translate(glm::mat4(1.f), glm::vec3(0,0,0));
-    mesh->geometry = GeometryGenerator::generate_cube(1.0f, true);
+    mesh->geometry = GeometryGenerator::generate_cube(1.0f);
     mesh->shader = ShaderManager::get_default();
     Material *mat = new Material(color::indian_red);
     mesh->material = mat;
@@ -111,8 +110,8 @@ void WallTile::update(Tile *hover) {
 
     // Get the transform from Bullet and into 't'
     rigidBody->getMotionState()->getWorldTransform(t);
-    transform.set_position(glm::vec3((float) t.getOrigin().getX(), (float) t.getOrigin().getY(), 
-        (float) t.getOrigin().getZ()));    
+    transform.set_position(glm::vec3((float) t.getOrigin().getX(), (float) t.getOrigin().getY(),
+        (float) t.getOrigin().getZ()));
     /*
     if (hover == this) {
         Material *mat = new Material(color::windwaker_green);
