@@ -5,14 +5,28 @@ package proto;
 message ServerMessage {
   oneof message_type {
     string message = 1;
+    BuildState build_state = 2;
   }
 }
 
 message ClientMessage {
   oneof message_type {
     string message = 1;
+    Construct build_request = 2;
   }
 }
+
+message Construct {
+  optional int32 type = 1;
+  optional int32 x = 2;
+  optional int32 z = 3;
+}
+
+message BuildState {
+  repeated Construct constructs = 1;
+}
+
+// Below is currently unused.
 
 message GameState {
   repeated GameObject objects = 1;

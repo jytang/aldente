@@ -1,26 +1,28 @@
 #include "network_manager.h"
 #include "util/config.h"
+#include "events.h"
 
 #include <GLFW/glfw3.h>
 
-NetworkManager::NetworkManager() {
+NetworkServer* NetworkManager::server;
+NetworkClient* NetworkManager::client;
+bool NetworkManager::is_server;
+string NetworkManager::server_host;
+int NetworkManager::port;
+boost::thread* NetworkManager::service_thread;
+bool NetworkManager::is_connected = false;
+boost::asio::io_service NetworkManager::io_service;
+
+void NetworkManager::connect() {
     Config::config->get_value(Config::str_is_server, is_server);
     Config::config->get_value(Config::str_server_ip, server_host);
     Config::config->get_value(Config::str_port, port);
 
     server = is_server ? new NetworkServer(io_service, port) : nullptr;
     client = new NetworkClient(io_service);
-}
 
-NetworkManager::~NetworkManager() {
-    disconnect();
-    delete server;
-    delete client;
-}
-
-void NetworkManager::connect() {
     // Try establishing connection in separate thread.
-    std::thread(&NetworkManager::attempt_connection, this).detach();
+    std::thread(&NetworkManager::attempt_connection).detach();
 }
 
 void NetworkManager::disconnect() {
@@ -30,6 +32,8 @@ void NetworkManager::disconnect() {
         service_thread->join();
         delete service_thread;
     }
+    delete server;
+    delete client;
 }
 
 void NetworkManager::attempt_connection() {
@@ -45,7 +49,7 @@ void NetworkManager::attempt_connection() {
             time_last_connect_attempt = glfwGetTime();
             if (is_connected) {
                 std::cerr << "Established connection.\n";
-                service_thread = new boost::thread(&NetworkManager::run_service, this);
+                service_thread = new boost::thread(&NetworkManager::run_service);
             }
         }
     }
@@ -58,6 +62,28 @@ void NetworkManager::run_service() {
         } catch (...) {
             // Silently ignore errors rather than crash. Shouldn't happen.
             std::cerr << "run_service: io_service error\n";
+        }
+    }
+}
+
+void NetworkManager::update() {
+    if (server) {
+        // std::unordered_map<int, std::vector<proto::ClientMessage>>
+        auto recieved = server->read_all_messages();
+        for (auto& sender : recieved) {
+            for (auto& msg : sender.second) {
+                switch (msg.message_type_case()) {
+                    case proto::ClientMessage::MessageTypeCase::kBuildRequest: {
+                        proto::Construct construct = msg.build_request();
+                        events::build::ConstructData cd;
+                        cd.type = static_cast<ConstructType>(construct.type());
+                        cd.x = construct.x();
+                        cd.z = construct.z();
+                        events::build::try_build_event(cd);
+                        std::cerr << "Fire try_build_event\n";
+                    }
+                }
+            }
         }
     }
 }

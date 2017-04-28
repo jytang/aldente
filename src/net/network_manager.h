@@ -8,31 +8,29 @@
 
 class NetworkManager {
 public:
-    NetworkManager();
-    ~NetworkManager();
-
     // Spawns a thread to periodically try connecting to server.
-    void connect();
+    static void connect();
 
     // Disconnects by stopping the io_service.
-    void disconnect();
+    static void disconnect();
 
-    inline NetworkServer* get_server() const { return server; };
-    inline NetworkClient* get_client() const { return client; };
+    // Process input from server and client. Called in update loop.
+    static void update();
+
+    static NetworkServer* server;
+    static NetworkClient* client;
 
 private:
     // Periodically attempt connection every few seconds.
-    void attempt_connection();
+    static void attempt_connection();
 
     // Runs the io_service.
-    void run_service();
+    static void run_service();
 
-    bool is_server;
-    string server_host;
-    int port;
-    boost::thread* service_thread;
-    bool is_connected = false;
-    NetworkServer* server;
-    NetworkClient* client;
-    boost::asio::io_service io_service;
+    static bool is_server;
+    static string server_host;
+    static int port;
+    static boost::thread* service_thread;
+    static bool is_connected;
+    static boost::asio::io_service io_service;
 };

@@ -59,6 +59,13 @@ namespace events {
     extern signal<void()> toggle_debug_shadows_event;
 
     namespace build {
+        struct ConstructData {
+            ConstructType type;
+            int x;
+            int z;
+        };
         extern signal<void(ConstructType)> construct_changed_event;
+        extern signal<void(ConstructData &)> try_build_event;
+        extern signal<void(ConstructData &)> confirm_build_event;
     }
 }

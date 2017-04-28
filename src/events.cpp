@@ -12,5 +12,7 @@ namespace events {
 
     namespace build {
         signal<void(ConstructType)> construct_changed_event;
+        signal<void(ConstructData &)> try_build_event;
+        signal<void(ConstructData &)> confirm_build_event;
     }
 }

@@ -13,6 +13,7 @@
 #include "ui/test_ui.h"
 #include "render.h"
 #include "game/phase.h"
+#include "net/network_manager.h"
 
 AldenteClient::~AldenteClient() {
     ShaderManager::destroy();
@@ -78,6 +79,8 @@ void AldenteClient::start() {
     // Game logic.
     Phase::curr_phase = PhaseType::BUILD;
 
+    NetworkManager::connect();
+
     events::joystick_event.connect([&](events::JoystickData d) {
         if (Phase::curr_phase == PhaseType::BUILD) {
             if (d.is_button == true && d.input == 0 && d.state == 0) {
@@ -95,6 +98,8 @@ void AldenteClient::start() {
             poller->poll();
         }
 
+        NetworkManager::update();
+
         debug_input.handle_movement();
         physics.update();
 
@@ -104,4 +109,6 @@ void AldenteClient::start() {
         ui.draw();
         window.swap_buffers();
     }
+
+    NetworkManager::disconnect();
 }

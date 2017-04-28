@@ -36,6 +36,8 @@ void protobuf_ShutdownFile_net_2eproto();
 
 class ServerMessage;
 class ClientMessage;
+class Construct;
+class BuildState;
 class GameState;
 class GameObject;
 class GameObject_Location;
@@ -110,6 +112,7 @@ class ServerMessage : public ::google::protobuf::Message {
 
   enum MessageTypeCase {
     kMessage = 1,
+    kBuildState = 2,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -155,10 +158,20 @@ class ServerMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
+  // optional .proto.BuildState build_state = 2;
+  inline bool has_build_state() const;
+  inline void clear_build_state();
+  static const int kBuildStateFieldNumber = 2;
+  inline const ::proto::BuildState& build_state() const;
+  inline ::proto::BuildState* mutable_build_state();
+  inline ::proto::BuildState* release_build_state();
+  inline void set_allocated_build_state(::proto::BuildState* build_state);
+
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ServerMessage)
  private:
   inline void set_has_message();
+  inline void set_has_build_state();
 
   inline bool has_message_type();
   void clear_message_type();
@@ -170,6 +183,7 @@ class ServerMessage : public ::google::protobuf::Message {
   mutable int _cached_size_;
   union MessageTypeUnion {
     ::std::string* message_;
+    ::proto::BuildState* build_state_;
   } message_type_;
   ::google::protobuf::uint32 _oneof_case_[1];
 
@@ -207,6 +221,7 @@ class ClientMessage : public ::google::protobuf::Message {
 
   enum MessageTypeCase {
     kMessage = 1,
+    kBuildRequest = 2,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -252,10 +267,20 @@ class ClientMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
+  // optional .proto.Construct build_request = 2;
+  inline bool has_build_request() const;
+  inline void clear_build_request();
+  static const int kBuildRequestFieldNumber = 2;
+  inline const ::proto::Construct& build_request() const;
+  inline ::proto::Construct* mutable_build_request();
+  inline ::proto::Construct* release_build_request();
+  inline void set_allocated_build_request(::proto::Construct* build_request);
+
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ClientMessage)
  private:
   inline void set_has_message();
+  inline void set_has_build_request();
 
   inline bool has_message_type();
   void clear_message_type();
@@ -267,6 +292,7 @@ class ClientMessage : public ::google::protobuf::Message {
   mutable int _cached_size_;
   union MessageTypeUnion {
     ::std::string* message_;
+    ::proto::Construct* build_request_;
   } message_type_;
   ::google::protobuf::uint32 _oneof_case_[1];
 
@@ -276,6 +302,187 @@ class ClientMessage : public ::google::protobuf::Message {
 
   void InitAsDefaultInstance();
   static ClientMessage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class Construct : public ::google::protobuf::Message {
+ public:
+  Construct();
+  virtual ~Construct();
+
+  Construct(const Construct& from);
+
+  inline Construct& operator=(const Construct& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Construct& default_instance();
+
+  void Swap(Construct* other);
+
+  // implements Message ----------------------------------------------
+
+  Construct* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Construct& from);
+  void MergeFrom(const Construct& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline ::google::protobuf::int32 type() const;
+  inline void set_type(::google::protobuf::int32 value);
+
+  // optional int32 x = 2;
+  inline bool has_x() const;
+  inline void clear_x();
+  static const int kXFieldNumber = 2;
+  inline ::google::protobuf::int32 x() const;
+  inline void set_x(::google::protobuf::int32 value);
+
+  // optional int32 z = 3;
+  inline bool has_z() const;
+  inline void clear_z();
+  static const int kZFieldNumber = 3;
+  inline ::google::protobuf::int32 z() const;
+  inline void set_z(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:proto.Construct)
+ private:
+  inline void set_has_type();
+  inline void clear_has_type();
+  inline void set_has_x();
+  inline void clear_has_x();
+  inline void set_has_z();
+  inline void clear_has_z();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::int32 type_;
+  ::google::protobuf::int32 x_;
+  ::google::protobuf::int32 z_;
+  friend void  protobuf_AddDesc_net_2eproto();
+  friend void protobuf_AssignDesc_net_2eproto();
+  friend void protobuf_ShutdownFile_net_2eproto();
+
+  void InitAsDefaultInstance();
+  static Construct* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class BuildState : public ::google::protobuf::Message {
+ public:
+  BuildState();
+  virtual ~BuildState();
+
+  BuildState(const BuildState& from);
+
+  inline BuildState& operator=(const BuildState& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const BuildState& default_instance();
+
+  void Swap(BuildState* other);
+
+  // implements Message ----------------------------------------------
+
+  BuildState* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const BuildState& from);
+  void MergeFrom(const BuildState& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .proto.Construct constructs = 1;
+  inline int constructs_size() const;
+  inline void clear_constructs();
+  static const int kConstructsFieldNumber = 1;
+  inline const ::proto::Construct& constructs(int index) const;
+  inline ::proto::Construct* mutable_constructs(int index);
+  inline ::proto::Construct* add_constructs();
+  inline const ::google::protobuf::RepeatedPtrField< ::proto::Construct >&
+      constructs() const;
+  inline ::google::protobuf::RepeatedPtrField< ::proto::Construct >*
+      mutable_constructs();
+
+  // @@protoc_insertion_point(class_scope:proto.BuildState)
+ private:
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::proto::Construct > constructs_;
+  friend void  protobuf_AddDesc_net_2eproto();
+  friend void protobuf_AssignDesc_net_2eproto();
+  friend void protobuf_ShutdownFile_net_2eproto();
+
+  void InitAsDefaultInstance();
+  static BuildState* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -893,6 +1100,49 @@ inline void ServerMessage::set_allocated_message(::std::string* message) {
   }
 }
 
+// optional .proto.BuildState build_state = 2;
+inline bool ServerMessage::has_build_state() const {
+  return message_type_case() == kBuildState;
+}
+inline void ServerMessage::set_has_build_state() {
+  _oneof_case_[0] = kBuildState;
+}
+inline void ServerMessage::clear_build_state() {
+  if (has_build_state()) {
+    delete message_type_.build_state_;
+    clear_has_message_type();
+  }
+}
+inline const ::proto::BuildState& ServerMessage::build_state() const {
+  return has_build_state() ? *message_type_.build_state_
+                      : ::proto::BuildState::default_instance();
+}
+inline ::proto::BuildState* ServerMessage::mutable_build_state() {
+  if (!has_build_state()) {
+    clear_message_type();
+    set_has_build_state();
+    message_type_.build_state_ = new ::proto::BuildState;
+  }
+  return message_type_.build_state_;
+}
+inline ::proto::BuildState* ServerMessage::release_build_state() {
+  if (has_build_state()) {
+    clear_has_message_type();
+    ::proto::BuildState* temp = message_type_.build_state_;
+    message_type_.build_state_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline void ServerMessage::set_allocated_build_state(::proto::BuildState* build_state) {
+  clear_message_type();
+  if (build_state) {
+    set_has_build_state();
+    message_type_.build_state_ = build_state;
+  }
+}
+
 inline bool ServerMessage::has_message_type() {
   return message_type_case() != MESSAGE_TYPE_NOT_SET;
 }
@@ -976,6 +1226,49 @@ inline void ClientMessage::set_allocated_message(::std::string* message) {
   }
 }
 
+// optional .proto.Construct build_request = 2;
+inline bool ClientMessage::has_build_request() const {
+  return message_type_case() == kBuildRequest;
+}
+inline void ClientMessage::set_has_build_request() {
+  _oneof_case_[0] = kBuildRequest;
+}
+inline void ClientMessage::clear_build_request() {
+  if (has_build_request()) {
+    delete message_type_.build_request_;
+    clear_has_message_type();
+  }
+}
+inline const ::proto::Construct& ClientMessage::build_request() const {
+  return has_build_request() ? *message_type_.build_request_
+                      : ::proto::Construct::default_instance();
+}
+inline ::proto::Construct* ClientMessage::mutable_build_request() {
+  if (!has_build_request()) {
+    clear_message_type();
+    set_has_build_request();
+    message_type_.build_request_ = new ::proto::Construct;
+  }
+  return message_type_.build_request_;
+}
+inline ::proto::Construct* ClientMessage::release_build_request() {
+  if (has_build_request()) {
+    clear_has_message_type();
+    ::proto::Construct* temp = message_type_.build_request_;
+    message_type_.build_request_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline void ClientMessage::set_allocated_build_request(::proto::Construct* build_request) {
+  clear_message_type();
+  if (build_request) {
+    set_has_build_request();
+    message_type_.build_request_ = build_request;
+  }
+}
+
 inline bool ClientMessage::has_message_type() {
   return message_type_case() != MESSAGE_TYPE_NOT_SET;
 }
@@ -985,6 +1278,116 @@ inline void ClientMessage::clear_has_message_type() {
 inline ClientMessage::MessageTypeCase ClientMessage::message_type_case() const {
   return ClientMessage::MessageTypeCase(_oneof_case_[0]);
 }
+// -------------------------------------------------------------------
+
+// Construct
+
+// optional int32 type = 1;
+inline bool Construct::has_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Construct::set_has_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Construct::clear_has_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Construct::clear_type() {
+  type_ = 0;
+  clear_has_type();
+}
+inline ::google::protobuf::int32 Construct::type() const {
+  // @@protoc_insertion_point(field_get:proto.Construct.type)
+  return type_;
+}
+inline void Construct::set_type(::google::protobuf::int32 value) {
+  set_has_type();
+  type_ = value;
+  // @@protoc_insertion_point(field_set:proto.Construct.type)
+}
+
+// optional int32 x = 2;
+inline bool Construct::has_x() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Construct::set_has_x() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Construct::clear_has_x() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Construct::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+inline ::google::protobuf::int32 Construct::x() const {
+  // @@protoc_insertion_point(field_get:proto.Construct.x)
+  return x_;
+}
+inline void Construct::set_x(::google::protobuf::int32 value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:proto.Construct.x)
+}
+
+// optional int32 z = 3;
+inline bool Construct::has_z() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void Construct::set_has_z() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void Construct::clear_has_z() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void Construct::clear_z() {
+  z_ = 0;
+  clear_has_z();
+}
+inline ::google::protobuf::int32 Construct::z() const {
+  // @@protoc_insertion_point(field_get:proto.Construct.z)
+  return z_;
+}
+inline void Construct::set_z(::google::protobuf::int32 value) {
+  set_has_z();
+  z_ = value;
+  // @@protoc_insertion_point(field_set:proto.Construct.z)
+}
+
+// -------------------------------------------------------------------
+
+// BuildState
+
+// repeated .proto.Construct constructs = 1;
+inline int BuildState::constructs_size() const {
+  return constructs_.size();
+}
+inline void BuildState::clear_constructs() {
+  constructs_.Clear();
+}
+inline const ::proto::Construct& BuildState::constructs(int index) const {
+  // @@protoc_insertion_point(field_get:proto.BuildState.constructs)
+  return constructs_.Get(index);
+}
+inline ::proto::Construct* BuildState::mutable_constructs(int index) {
+  // @@protoc_insertion_point(field_mutable:proto.BuildState.constructs)
+  return constructs_.Mutable(index);
+}
+inline ::proto::Construct* BuildState::add_constructs() {
+  // @@protoc_insertion_point(field_add:proto.BuildState.constructs)
+  return constructs_.Add();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto::Construct >&
+BuildState::constructs() const {
+  // @@protoc_insertion_point(field_list:proto.BuildState.constructs)
+  return constructs_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto::Construct >*
+BuildState::mutable_constructs() {
+  // @@protoc_insertion_point(field_mutable_list:proto.BuildState.constructs)
+  return &constructs_;
+}
+
 // -------------------------------------------------------------------
 
 // GameState
