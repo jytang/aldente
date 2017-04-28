@@ -10,12 +10,14 @@ enum PhaseType {
 
 class Phase {
 public:
-    virtual void go() {}
+    virtual void update() = 0;
+    static PhaseType curr_phase;
+private:
+    static std::unordered_map<PhaseType, Phase*> phases;
 };
 
 class BuildPhase : public Phase {
 public:
-    void go() override {}
-    BuildPhase() : is_menu(true) {}
-    bool is_menu;
+    void update();
+    static bool is_menu;
 };

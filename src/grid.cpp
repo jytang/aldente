@@ -1,6 +1,5 @@
 #include "grid.h"
 #include "events.h"
-#include "game/game_state.h"
 #include "game/phase.h"
 
 Grid::Grid(int w, int h) :
@@ -27,8 +26,7 @@ Grid::Grid(int w, int h) :
     hover = grid[hoverX][hoverZ];
 
     events::joystick_event.connect([&](events::JoystickData d) {
-        if (GameState::get_phase_type() != PhaseType::BUILD ||
-            dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) return;
+        if (Phase::curr_phase != PhaseType::BUILD || BuildPhase::is_menu) return;
         if (d.is_button == 0 && d.input == 0) {
             if (d.state == 5)
                 move_selection(GridDirection::RIGHT);
@@ -49,8 +47,7 @@ Grid::Grid(int w, int h) :
     });
 
     events::joystick_event.connect([&](events::JoystickData d) {
-        if (GameState::get_phase_type() == PhaseType::BUILD && 
-            !dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) {
+        if (Phase::curr_phase == PhaseType::BUILD && !BuildPhase::is_menu) {
             if (d.is_button == true && d.input == 0 && d.state == 0) {
                 build();
             }

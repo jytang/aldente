@@ -1,8 +1,8 @@
 #include "ui_grid.h"
 
 #include "util/colors.h"
-#include "../events.h"
-#include "../game/game_state.h"
+#include "events.h"
+#include "../game/phase.h"
 
 UIGrid::~UIGrid() {
     for (unsigned int i = 0; i < children.size(); ++i)
@@ -66,11 +66,11 @@ UIGrid::UIGrid(float start_x, float start_y,
     // Set up callbacks.
     // TODO: add semantic game logic abstraction layer
     events::joystick_event.connect([&](events::JoystickData d) {
-        if (GameState::get_phase_type() != PhaseType::BUILD) 
+        if (Phase::curr_phase != PhaseType::BUILD) 
             return;
         if (d.is_button == true && d.input == 1 && d.state == 0)
             events::build::construct_changed_event(ConstructType::NONE);
-        if (!dynamic_cast<BuildPhase*>(GameState::get_phase())->is_menu) 
+        if (!BuildPhase::is_menu) 
             return;
 
         // Axes for movement

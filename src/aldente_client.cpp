@@ -13,7 +13,6 @@
 #include "ui/test_ui.h"
 #include "render.h"
 #include "game/phase.h"
-#include "game/game_state.h"
 
 AldenteClient::~AldenteClient() {
     ShaderManager::destroy();
@@ -77,19 +76,15 @@ void AldenteClient::start() {
     window.broadcast_size();
 
     // Game logic.
-    BuildPhase* bp = new BuildPhase();
-    GameState::add_phase(PhaseType::BUILD, bp);
-    GameState::set_phase(PhaseType::BUILD);
+    Phase::curr_phase = PhaseType::BUILD;
 
     events::joystick_event.connect([&](events::JoystickData d) {
-        if (GameState::get_phase_type() == PhaseType::BUILD) {
+        if (Phase::curr_phase == PhaseType::BUILD) {
             if (d.is_button == true && d.input == 0 && d.state == 0) {
-                BuildPhase* p = dynamic_cast<BuildPhase*>(GameState::get_phase());
-                p->is_menu = false;
+                BuildPhase::is_menu = false;
             }
             else if (d.is_button == true && d.input == 1 && d.state == 0) {
-                BuildPhase* p = dynamic_cast<BuildPhase*>(GameState::get_phase());
-                p->is_menu = true;
+                BuildPhase::is_menu = true;
             }
         }
     });
