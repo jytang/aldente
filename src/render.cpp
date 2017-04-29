@@ -7,11 +7,14 @@ Render::Render(Window &window, SceneManager &scene_manager)
 // Alternatively can acquire current scene via some ChangeScene event
 void Render::update() {
     // First pass: shadowmap.
-    shadows.shadow_pass(scene_manager.get_current_scene());
+    Scene *curr_scene = scene_manager.get_current_scene();
+    shadows.shadow_pass(curr_scene);
 
     // Second pass: usual rendering.
     window.clear();
-    scene_manager.get_current_scene()->draw();
+
+    curr_scene->draw_skybox(); // Skybox first so no overdrawing of things.
+    curr_scene->draw();
 
     // Debug shadows as necessary.
     shadows.debug_shadows();

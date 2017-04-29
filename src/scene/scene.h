@@ -27,6 +27,8 @@ public:
     // Default is NULL so that the shader attached to each mesh is used instead.
     void draw(Shader *shader = NULL);
 
+    void draw_skybox();
+
     virtual void update();
 
     void addRigid(btRigidBody* toAdd);

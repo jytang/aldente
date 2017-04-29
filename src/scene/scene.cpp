@@ -11,8 +11,10 @@ void Scene::draw(Shader *shader) {
     for (GameObject *gameObj : objs) {
         gameObj->draw(shader, scene_info);
     }
+}
 
-    // Draw skybox.
+void Scene::draw_skybox() {
+    SceneInfo scene_info = { &camera, light_pos };
     ShaderManager::skybox.use();
     ShaderManager::skybox.draw(NULL, scene_info); // NULL because no mesh needed.
 }
@@ -64,7 +66,7 @@ MainScene::MainScene() : Scene() {
             GameObject* currObj = new GameObject();
             currObj->attach_model(currTile);
             objs.push_back(currObj);*/
-			objs.push_back(currRow[j]);
+            objs.push_back(currRow[j]);
 
             if (currRow[j]->getRigid() != NULL) {
                 //physics.dynamicsWorld->addRigidBody(currRow[j]->getRigid());

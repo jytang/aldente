@@ -66,6 +66,8 @@ void SkyboxShader::post_draw() {}
 void SkyboxShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     // Turn off depth mask.
     glDepthMask(GL_FALSE);
+    // Disable back face culling because we are in inside of cube
+    glDisable(GL_CULL_FACE);
 
     // Strip translation from view matrix to make skybox appear infinitely large.
     glm::mat4 view = glm::mat4(glm::mat3(scene_info.camera->V));
@@ -83,6 +85,9 @@ void SkyboxShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     cube_geometry->draw();
     glBindVertexArray(0);
 
+    // Re-enable back face culling
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
     // Reset depth mask (on).
     glDepthMask(GL_TRUE);
 }
