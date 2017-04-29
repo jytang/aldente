@@ -9,4 +9,8 @@ namespace events {
     signal<void(WindowMouseButtonData &)> window_mouse_button_event;
     signal<void(WindowScrollData &)> window_scroll_event;
     signal<void()> toggle_debug_shadows_event;
+
+    namespace build {
+        signal<void(ConstructType)> construct_changed_event;
+    }
 }

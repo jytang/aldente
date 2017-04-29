@@ -2,6 +2,7 @@
 
 #include <boost/signals2.hpp>
 #include "window.h"
+#include "game/construct_types.h"
 
 namespace events {
 
@@ -56,4 +57,8 @@ namespace events {
     extern signal<void(WindowScrollData &)> window_scroll_event;
 
     extern signal<void()> toggle_debug_shadows_event;
+
+    namespace build {
+        extern signal<void(ConstructType)> construct_changed_event;
+    }
 }
