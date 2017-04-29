@@ -65,8 +65,7 @@ void protobuf_AssignDesc_net_2eproto() {
       "net.proto");
   GOOGLE_CHECK(file != NULL);
   ServerMessage_descriptor_ = file->message_type(0);
-  static const int ServerMessage_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, status_),
+  static const int ServerMessage_offsets_[3] = {
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ServerMessage_default_oneof_instance_, message_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ServerMessage_default_oneof_instance_, build_update_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServerMessage, message_type_),
@@ -104,11 +103,12 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ClientMessage));
   Construct_descriptor_ = file->message_type(2);
-  static const int Construct_offsets_[4] = {
+  static const int Construct_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Construct, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Construct, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Construct, z_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Construct, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Construct, status_),
   };
   Construct_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -265,14 +265,14 @@ void protobuf_AddDesc_net_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tnet.proto\022\005proto\"l\n\rServerMessage\022\016\n\006s"
-    "tatus\030\001 \001(\010\022\021\n\007message\030\002 \001(\tH\000\022(\n\014build_"
-    "update\030\003 \001(\0132\020.proto.ConstructH\000B\016\n\014mess"
-    "age_type\"]\n\rClientMessage\022\021\n\007message\030\001 \001"
-    "(\tH\000\022)\n\rbuild_request\030\002 \001(\0132\020.proto.Cons"
-    "tructH\000B\016\n\014message_type\";\n\tConstruct\022\014\n\004"
-    "type\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\n\n\002id\030\004"
-    " \001(\005\"/\n\tGameState\022\"\n\007objects\030\001 \003(\0132\021.pro"
+    "\n\tnet.proto\022\005proto\"\\\n\rServerMessage\022\021\n\007m"
+    "essage\030\001 \001(\tH\000\022(\n\014build_update\030\002 \001(\0132\020.p"
+    "roto.ConstructH\000B\016\n\014message_type\"]\n\rClie"
+    "ntMessage\022\021\n\007message\030\001 \001(\tH\000\022)\n\rbuild_re"
+    "quest\030\002 \001(\0132\020.proto.ConstructH\000B\016\n\014messa"
+    "ge_type\"K\n\tConstruct\022\014\n\004type\030\001 \001(\005\022\t\n\001x\030"
+    "\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\022\016\n\006status\030\005"
+    " \001(\010\"/\n\tGameState\022\"\n\007objects\030\001 \003(\0132\021.pro"
     "to.GameObject\"\317\001\n\nGameObject\022$\n\004type\030\001 \001"
     "(\0162\026.proto.GameObject.Type\022,\n\010location\030\002"
     " \001(\0132\032.proto.GameObject.Location\032F\n\010Loca"
@@ -317,7 +317,6 @@ struct StaticDescriptorInitializer_net_2eproto {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int ServerMessage::kStatusFieldNumber;
 const int ServerMessage::kMessageFieldNumber;
 const int ServerMessage::kBuildUpdateFieldNumber;
 #endif  // !_MSC_VER
@@ -343,7 +342,6 @@ ServerMessage::ServerMessage(const ServerMessage& from)
 void ServerMessage::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  status_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   clear_has_message_type();
 }
@@ -401,7 +399,6 @@ void ServerMessage::clear_message_type() {
 
 
 void ServerMessage::Clear() {
-  status_ = false;
   clear_message_type();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -417,24 +414,9 @@ bool ServerMessage::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional bool status = 1;
+      // optional string message = 1;
       case 1: {
-        if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
-                 input, &status_)));
-          set_has_status();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(18)) goto parse_message;
-        break;
-      }
-
-      // optional string message = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_message:
+        if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_message()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
@@ -444,13 +426,13 @@ bool ServerMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_build_update;
+        if (input->ExpectTag(18)) goto parse_build_update;
         break;
       }
 
-      // optional .proto.Construct build_update = 3;
-      case 3: {
-        if (tag == 26) {
+      // optional .proto.Construct build_update = 2;
+      case 2: {
+        if (tag == 18) {
          parse_build_update:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_build_update()));
@@ -486,25 +468,20 @@ failure:
 void ServerMessage::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto.ServerMessage)
-  // optional bool status = 1;
-  if (has_status()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->status(), output);
-  }
-
-  // optional string message = 2;
+  // optional string message = 1;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
       "message");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->message(), output);
+      1, this->message(), output);
   }
 
-  // optional .proto.Construct build_update = 3;
+  // optional .proto.Construct build_update = 2;
   if (has_build_update()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->build_update(), output);
+      2, this->build_update(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -517,12 +494,7 @@ void ServerMessage::SerializeWithCachedSizes(
 ::google::protobuf::uint8* ServerMessage::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // @@protoc_insertion_point(serialize_to_array_start:proto.ServerMessage)
-  // optional bool status = 1;
-  if (has_status()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->status(), target);
-  }
-
-  // optional string message = 2;
+  // optional string message = 1;
   if (has_message()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->message().data(), this->message().length(),
@@ -530,14 +502,14 @@ void ServerMessage::SerializeWithCachedSizes(
       "message");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->message(), target);
+        1, this->message(), target);
   }
 
-  // optional .proto.Construct build_update = 3;
+  // optional .proto.Construct build_update = 2;
   if (has_build_update()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->build_update(), target);
+        2, this->build_update(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -551,22 +523,15 @@ void ServerMessage::SerializeWithCachedSizes(
 int ServerMessage::ByteSize() const {
   int total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional bool status = 1;
-    if (has_status()) {
-      total_size += 1 + 1;
-    }
-
-  }
   switch (message_type_case()) {
-    // optional string message = 2;
+    // optional string message = 1;
     case kMessage: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->message());
       break;
     }
-    // optional .proto.Construct build_update = 3;
+    // optional .proto.Construct build_update = 2;
     case kBuildUpdate: {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -615,11 +580,6 @@ void ServerMessage::MergeFrom(const ServerMessage& from) {
       break;
     }
   }
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_status()) {
-      set_status(from.status());
-    }
-  }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
@@ -642,7 +602,6 @@ bool ServerMessage::IsInitialized() const {
 
 void ServerMessage::Swap(ServerMessage* other) {
   if (other != this) {
-    std::swap(status_, other->status_);
     std::swap(message_type_, other->message_type_);
     std::swap(_oneof_case_[0], other->_oneof_case_[0]);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -972,6 +931,7 @@ const int Construct::kTypeFieldNumber;
 const int Construct::kXFieldNumber;
 const int Construct::kZFieldNumber;
 const int Construct::kIdFieldNumber;
+const int Construct::kStatusFieldNumber;
 #endif  // !_MSC_VER
 
 Construct::Construct()
@@ -996,6 +956,7 @@ void Construct::SharedCtor() {
   x_ = 0;
   z_ = 0;
   id_ = 0;
+  status_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1041,7 +1002,9 @@ void Construct::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  ZR_(type_, id_);
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(type_, status_);
+  }
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
@@ -1115,6 +1078,21 @@ bool Construct::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(40)) goto parse_status;
+        break;
+      }
+
+      // optional bool status = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_status:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &status_)));
+          set_has_status();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1164,6 +1142,11 @@ void Construct::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->id(), output);
   }
 
+  // optional bool status = 5;
+  if (has_status()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->status(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1192,6 +1175,11 @@ void Construct::SerializeWithCachedSizes(
   // optional int32 id = 4;
   if (has_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->id(), target);
+  }
+
+  // optional bool status = 5;
+  if (has_status()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->status(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1234,6 +1222,11 @@ int Construct::ByteSize() const {
           this->id());
     }
 
+    // optional bool status = 5;
+    if (has_status()) {
+      total_size += 1 + 1;
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -1273,6 +1266,9 @@ void Construct::MergeFrom(const Construct& from) {
     if (from.has_id()) {
       set_id(from.id());
     }
+    if (from.has_status()) {
+      set_status(from.status());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -1300,6 +1296,7 @@ void Construct::Swap(Construct* other) {
     std::swap(x_, other->x_);
     std::swap(z_, other->z_);
     std::swap(id_, other->id_);
+    std::swap(status_, other->status_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

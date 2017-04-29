@@ -48,7 +48,8 @@ void Grid::setup_listeners() {
 
     events::build::try_build_event.connect([&](proto::Construct& c) {
         bool permitted = verify_build(static_cast<ConstructType>(c.type()), c.x(), c.z());
-        events::build::respond_build_event(c, permitted);
+        c.set_status(permitted);
+        events::build::respond_build_event(c);
     });
 
     events::build::update_build_event.connect([&](proto::Construct& c) {

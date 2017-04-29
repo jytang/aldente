@@ -61,9 +61,8 @@ void NetworkManager::register_listeners() {
 
 void NetworkManager::register_server_listeners() {
     // Build phase.
-    events::build::respond_build_event.connect([](proto::Construct& c, bool permitted) {
+    events::build::respond_build_event.connect([](proto::Construct& c) {
         proto::ServerMessage msg;
-        msg.set_status(permitted);
         msg.set_allocated_build_update(new proto::Construct(c));
         server->send_to_all(msg);
     });
@@ -116,13 +115,12 @@ void NetworkManager::update_client() {
     while (client->read_message(&msg)) {
         switch (msg.message_type_case()) {
         case proto::ServerMessage::MessageTypeCase::kBuildUpdate: {
-            if (!msg.status()) {
-                // TODO: construct placement failed. notify player?
-                break;
-            }
-
             proto::Construct construct = msg.build_update();
-            events::build::update_build_event(construct);
+            if (construct.status())
+                events::build::update_build_event(construct);
+            else {
+                // TODO: construct placement failed. client-side notification?
+            }
         }
         default:
             break;

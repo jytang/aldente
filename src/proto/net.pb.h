@@ -110,8 +110,8 @@ class ServerMessage : public ::google::protobuf::Message {
   static const ServerMessage& default_instance();
 
   enum MessageTypeCase {
-    kMessage = 2,
-    kBuildUpdate = 3,
+    kMessage = 1,
+    kBuildUpdate = 2,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -145,17 +145,10 @@ class ServerMessage : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional bool status = 1;
-  inline bool has_status() const;
-  inline void clear_status();
-  static const int kStatusFieldNumber = 1;
-  inline bool status() const;
-  inline void set_status(bool value);
-
-  // optional string message = 2;
+  // optional string message = 1;
   inline bool has_message() const;
   inline void clear_message();
-  static const int kMessageFieldNumber = 2;
+  static const int kMessageFieldNumber = 1;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
@@ -164,10 +157,10 @@ class ServerMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // optional .proto.Construct build_update = 3;
+  // optional .proto.Construct build_update = 2;
   inline bool has_build_update() const;
   inline void clear_build_update();
-  static const int kBuildUpdateFieldNumber = 3;
+  static const int kBuildUpdateFieldNumber = 2;
   inline const ::proto::Construct& build_update() const;
   inline ::proto::Construct* mutable_build_update();
   inline ::proto::Construct* release_build_update();
@@ -176,8 +169,6 @@ class ServerMessage : public ::google::protobuf::Message {
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ServerMessage)
  private:
-  inline void set_has_status();
-  inline void clear_has_status();
   inline void set_has_message();
   inline void set_has_build_update();
 
@@ -189,7 +180,6 @@ class ServerMessage : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  bool status_;
   union MessageTypeUnion {
     ::std::string* message_;
     ::proto::Construct* build_update_;
@@ -395,6 +385,13 @@ class Construct : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 id() const;
   inline void set_id(::google::protobuf::int32 value);
 
+  // optional bool status = 5;
+  inline bool has_status() const;
+  inline void clear_status();
+  static const int kStatusFieldNumber = 5;
+  inline bool status() const;
+  inline void set_status(bool value);
+
   // @@protoc_insertion_point(class_scope:proto.Construct)
  private:
   inline void set_has_type();
@@ -405,6 +402,8 @@ class Construct : public ::google::protobuf::Message {
   inline void clear_has_z();
   inline void set_has_id();
   inline void clear_has_id();
+  inline void set_has_status();
+  inline void clear_has_status();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -414,6 +413,7 @@ class Construct : public ::google::protobuf::Message {
   ::google::protobuf::int32 x_;
   ::google::protobuf::int32 z_;
   ::google::protobuf::int32 id_;
+  bool status_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -967,31 +967,7 @@ class Direction : public ::google::protobuf::Message {
 
 // ServerMessage
 
-// optional bool status = 1;
-inline bool ServerMessage::has_status() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void ServerMessage::set_has_status() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void ServerMessage::clear_has_status() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void ServerMessage::clear_status() {
-  status_ = false;
-  clear_has_status();
-}
-inline bool ServerMessage::status() const {
-  // @@protoc_insertion_point(field_get:proto.ServerMessage.status)
-  return status_;
-}
-inline void ServerMessage::set_status(bool value) {
-  set_has_status();
-  status_ = value;
-  // @@protoc_insertion_point(field_set:proto.ServerMessage.status)
-}
-
-// optional string message = 2;
+// optional string message = 1;
 inline bool ServerMessage::has_message() const {
   return message_type_case() == kMessage;
 }
@@ -1061,7 +1037,7 @@ inline void ServerMessage::set_allocated_message(::std::string* message) {
   }
 }
 
-// optional .proto.Construct build_update = 3;
+// optional .proto.Construct build_update = 2;
 inline bool ServerMessage::has_build_update() const {
   return message_type_case() == kBuildUpdate;
 }
@@ -1337,6 +1313,30 @@ inline void Construct::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
   // @@protoc_insertion_point(field_set:proto.Construct.id)
+}
+
+// optional bool status = 5;
+inline bool Construct::has_status() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void Construct::set_has_status() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void Construct::clear_has_status() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void Construct::clear_status() {
+  status_ = false;
+  clear_has_status();
+}
+inline bool Construct::status() const {
+  // @@protoc_insertion_point(field_get:proto.Construct.status)
+  return status_;
+}
+inline void Construct::set_status(bool value) {
+  set_has_status();
+  status_ = value;
+  // @@protoc_insertion_point(field_set:proto.Construct.status)
 }
 
 // -------------------------------------------------------------------

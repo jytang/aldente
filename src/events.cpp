@@ -18,7 +18,7 @@ namespace events {
         signal<void(ConstructType)> construct_changed_event;
         signal<void(proto::Construct &)> request_build_event;
         signal<void(proto::Construct &)> try_build_event;
-        signal<void(proto::Construct &, bool)> respond_build_event;
+        signal<void(proto::Construct &)> respond_build_event;
         signal<void(proto::Construct &)> update_build_event;
     }
 }

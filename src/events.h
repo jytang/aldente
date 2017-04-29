@@ -83,7 +83,7 @@ namespace events {
         extern signal<void(proto::Construct &)> try_build_event;
 
         // Server responds whether or not the build was successful.
-        extern signal<void(proto::Construct &, bool)> respond_build_event;
+        extern signal<void(proto::Construct &)> respond_build_event;
 
         // Client updates local grid with newly built construct.
         extern signal<void(proto::Construct &)> update_build_event;
