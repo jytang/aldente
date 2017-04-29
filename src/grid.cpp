@@ -67,26 +67,28 @@ void Grid::update() {
 }
 
 bool Grid::verify_build(ConstructType type, int x, int z) {
+    Tile* candidate = grid[x][z];
     if (type == REMOVE) {
-        return hover->get_construct() != nullptr;
+        return candidate->get_construct() != nullptr;
     }
 
-    return hover->buildable;
+    return candidate->buildable;
 }
 
 void Grid::build(ConstructType type, int x, int z) {
+    Tile* candidate = grid[x][z];
     if (type == REMOVE) {
-        //TODO Make destructor for construct
-        hover->set_construct(nullptr);
-        hover->buildable = true;
+        // TODO Make destructor for construct
+        candidate->set_construct(nullptr);
+        candidate->buildable = true;
         return;
     }
 
     switch (type) {
     case CHEST: {
         Construct* to_add = new Crate(x, z);
-        hover->set_construct(to_add);
-        hover->buildable = false;
+        candidate->set_construct(to_add);
+        candidate->buildable = false;
         break;
     }
     default:
