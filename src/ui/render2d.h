@@ -29,9 +29,8 @@ private:
     void render_text(std::string text, GLfloat x, GLfloat y, GLfloat x_scale, GLfloat y_scale, glm::vec3 color);
     void render_rect(GLfloat x, GLfloat y, GLfloat width, GLfloat height, glm::vec3 color, GLuint texture_ID);
 
-    Shader *shader_2d;
     std::map<GLchar, Character> characters;
-    GLuint vao, vbo;
+    GLuint VAO, VBO;
     glm::mat4 projection;
     int screen_width, screen_height;
 };

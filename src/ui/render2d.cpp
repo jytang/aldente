@@ -23,17 +23,14 @@ Render2D::Render2D() {
                     static_cast<GLfloat>(d.height));
     });
 
-    // Setup shader
-    shader_2d = ShaderManager::get_shader_program("text");
-
     // Generate textures for all glyphs.
     setup_glyphs();
 
     // Configure VAO/VBO for texture quads.
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(GLfloat), 0);
@@ -102,13 +99,13 @@ void Render2D::render_text(std::string text,
     glDisable(GL_DEPTH_TEST);
 
     // Activate corresponding render state
-    shader_2d->use();
-    glUniform3f(glGetUniformLocation(shader_2d->shader_id, "baseColor"), color.x, color.y, color.z);
-    glUniformMatrix4fv(glGetUniformLocation(shader_2d->shader_id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniform1i(glGetUniformLocation(shader_2d->shader_id, "hasTexture"), true);
+    Shader::text.use();
+    Shader::text.uni_vec3("baseColor", color);
+    glUniformMatrix4fv(Shader::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniform1i(Shader::text.get_uni("hasTexture"), true);
 
     glActiveTexture(GL_TEXTURE0);
-    glBindVertexArray(vao);
+    glBindVertexArray(VAO);
 
     // Iterate through all characters
     std::string::const_iterator c;
@@ -133,7 +130,7 @@ void Render2D::render_text(std::string text,
         // Render glyph texture over quad
         glBindTexture(GL_TEXTURE_2D, ch.texture_ID);
         // Update content of VBO memory
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // Be sure to use glBufferSubData and not glBufferData
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -155,17 +152,18 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
     glDisable(GL_DEPTH_TEST);
 
     // Send uniforms to the text shader
-    shader_2d->use();
-    glUniform3f(glGetUniformLocation(shader_2d->shader_id, "baseColor"), color.x, color.y, color.z);
-    glUniformMatrix4fv(glGetUniformLocation(shader_2d->shader_id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    Shader::text.use();
+    Shader::text.uni_vec3("baseColor", color);
+    glUniformMatrix4fv(Shader::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniform1i(Shader::text.get_uni("hasTexture"), true);
 
     if (texture_ID == 0)
-        glUniform1i(glGetUniformLocation(shader_2d->shader_id, "hasTexture"), false);
+        glUniform1i(Shader::text.get_uni("hasTexture"), false);
     else
-        glUniform1i(glGetUniformLocation(shader_2d->shader_id, "hasTexture"), true);
+        glUniform1i(Shader::text.get_uni("hasTexture"), true);
 
     // Set active arrays
-    glBindVertexArray(vao);
+    glBindVertexArray(VAO);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture_ID);
@@ -181,7 +179,7 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
         { x + width, y + height,   1.0, 0.0 }
     };
     // Update content of VBO memory
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
