@@ -1,3 +1,7 @@
+ifeq ($(OS),Windows_NT)
+	SHELL=C:/Windows/System32/cmd.exe
+endif
+
 MAIN_TARGET     := aldente
 
 SRC_DIR         := src
@@ -18,6 +22,9 @@ LIBS            += -lboost_system -lboost_filesystem -lboost_thread
 LIBS            += -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
 LIBS            += -lprotobuf
 INCS            += $(shell pkg-config bullet --cflags)
+
+NODEPS          := proto
+
 ifeq ($(shell uname),Darwin)
 	LIBS += -framework OpenGL -framework GLUT
 	INCS += -I/usr/local/include/freetype2
@@ -27,6 +34,10 @@ else
 endif
 
 all : $(DEPFILES) $(MAIN_TARGET)
+
+proto:
+	protoc -I=src/proto --cpp_out=src/proto src/proto/net.proto
+	mv src/proto/net.pb.cc src/proto/net.pb.cpp
 
 # Linking all objects with libs into executable.
 $(MAIN_TARGET): $(MAIN_OBJECTS)
@@ -42,7 +53,9 @@ $(DEP_DIR)/%.dep: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCS) -MM -MT '$(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$<)' $< -MF $@
 
-include $(DEPFILES)
+ifeq (0, $(words $(findstring $(MAKECMDGOALS), $(NODEPS))))
+	-include $(DEPFILES)
+endif
 
 clean:
 	rm -rf $(BUILD_DIR) $(DEP_DIR) $(MAIN_TARGET)
