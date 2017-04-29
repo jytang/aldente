@@ -2,6 +2,7 @@
 
 #include <boost/signals2.hpp>
 #include "window.h"
+#include "proto/net.pb.h"
 #include "game/construct_types.h"
 #include "game/direction.h"
 
@@ -59,13 +60,7 @@ namespace events {
 
     extern signal<void()> toggle_debug_shadows_event;
 
-    namespace build {
-        struct ConstructData {
-            ConstructType type;
-            int x;
-            int z;
-        };
-        
+    namespace build {        
         // Move the selection in the grid. Bool is whether we're in the menu (2D/3D).
         extern signal<void(Direction, bool)> grid_move_event;
 
@@ -76,15 +71,15 @@ namespace events {
         extern signal<void(ConstructType)> construct_changed_event;
 
         // Client requests to build a construct.
-        extern signal<void(ConstructData &)> request_build_event;
+        extern signal<void(proto::Construct &)> request_build_event;
 
         // Server attempts to build the construct.
-        extern signal<void(ConstructData &)> try_build_event;
+        extern signal<void(proto::Construct &)> try_build_event;
 
         // Server responds whether or not the build was successful.
-        extern signal<void(ConstructData &, bool)> respond_build_event;
+        extern signal<void(proto::Construct &, bool)> respond_build_event;
 
         // Client updates local grid with newly built construct.
-        extern signal<void(ConstructData &)> update_build_event;
+        extern signal<void(proto::Construct &)> update_build_event;
     }
 }

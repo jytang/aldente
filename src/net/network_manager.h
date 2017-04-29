@@ -32,9 +32,6 @@ private:
     static void update_server();
     static void update_client();
 
-    static void to_construct(events::build::ConstructData& cd, proto::Construct* c);
-    static void to_construct_data(proto::Construct& c, events::build::ConstructData& cd);
-
     // Runs the io_service.
     static void run_service();
 

@@ -56,20 +56,17 @@ void NetworkManager::attempt_connection() {
 
 void NetworkManager::register_listeners() {
     // Build phase.
-    events::build::request_build_event.connect([](events::build::ConstructData& cd) {
+    // Protobuf will free memory for set_allocated, so we must dynamically create.
+    events::build::request_build_event.connect([](proto::Construct& c) {
         proto::ClientMessage msg;
-        proto::Construct* construct = new proto::Construct();
-        to_construct(cd, construct);
-        msg.set_allocated_build_request(construct);
+        msg.set_allocated_build_request(new proto::Construct(c));
         client->send(msg);
     });
 
-    events::build::respond_build_event.connect([](events::build::ConstructData& cd, bool permitted) {
+    events::build::respond_build_event.connect([](proto::Construct& c, bool permitted) {
         proto::ServerMessage msg;
         msg.set_status(permitted);
-        proto::Construct* construct = new proto::Construct();
-        to_construct(cd, construct);
-        msg.set_allocated_build_update(construct);
+        msg.set_allocated_build_update(new proto::Construct(c));
         server->send_to_all(msg);
     });
 }
@@ -98,9 +95,7 @@ void NetworkManager::update_server() {
             switch (msg.message_type_case()) {
             case proto::ClientMessage::MessageTypeCase::kBuildRequest: {
                 proto::Construct construct = msg.build_request();
-                events::build::ConstructData cd;
-                to_construct_data(construct, cd);
-                events::build::try_build_event(cd);
+                events::build::try_build_event(construct);
                 break;
             }
             default:
@@ -121,25 +116,10 @@ void NetworkManager::update_client() {
             }
 
             proto::Construct construct = msg.build_update();
-            events::build::ConstructData cd;
-            to_construct_data(construct, cd);
-            events::build::update_build_event(cd);
+            events::build::update_build_event(construct);
         }
         default:
             break;
         }
     }
 }
-
-void NetworkManager::to_construct(events::build::ConstructData& cd, proto::Construct* c) {
-    c->set_type(cd.type);
-    c->set_x(cd.x);
-    c->set_z(cd.z);
-}
-
-void NetworkManager::to_construct_data(proto::Construct& c, events::build::ConstructData& cd) {
-    cd.type = static_cast<ConstructType>(c.type());
-    cd.x = c.x();
-    cd.z = c.z();
-}
-

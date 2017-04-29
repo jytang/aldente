@@ -14,9 +14,9 @@ namespace events {
         signal<void(Direction, bool)> grid_move_event;
         signal<void(bool)> grid_placement_event;
         signal<void(ConstructType)> construct_changed_event;
-        signal<void(ConstructData &)> request_build_event;
-        signal<void(ConstructData &)> try_build_event;
-        signal<void(ConstructData &, bool)> respond_build_event;
-        signal<void(ConstructData &)> update_build_event;
+        signal<void(proto::Construct &)> request_build_event;
+        signal<void(proto::Construct &)> try_build_event;
+        signal<void(proto::Construct &, bool)> respond_build_event;
+        signal<void(proto::Construct &)> update_build_event;
     }
 }

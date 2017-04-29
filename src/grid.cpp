@@ -37,21 +37,24 @@ void Grid::setup_listeners() {
 
     events::build::grid_placement_event.connect([&](bool is_menu) {
         if (is_menu) return;
-        events::build::ConstructData cd = { selected, hover->getX(), hover->getZ() };
-        events::build::request_build_event(cd);
+        proto::Construct c;
+        c.set_type(selected);
+        c.set_x(hover->getX());
+        c.set_z(hover->getZ());
+        events::build::request_build_event(c);
     });
 
     events::build::construct_changed_event.connect([&](ConstructType c) {
         selected = c;
     });
 
-    events::build::try_build_event.connect([&](events::build::ConstructData& cd) {
-        bool permitted = verify_build(cd.type, cd.x, cd.z);
-        events::build::respond_build_event(cd, permitted);
+    events::build::try_build_event.connect([&](proto::Construct& c) {
+        bool permitted = verify_build(static_cast<ConstructType>(c.type()), c.x(), c.z());
+        events::build::respond_build_event(c, permitted);
     });
 
-    events::build::update_build_event.connect([&](events::build::ConstructData& cd) {
-        build(cd.type, cd.x, cd.z);
+    events::build::update_build_event.connect([&](proto::Construct& c) {
+        build(static_cast<ConstructType>(c.type()), c.x(), c.z());
     });
 }
 

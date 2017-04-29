@@ -19,8 +19,8 @@ public:
     GLint filter_type = GL_NEAREST_MIPMAP_LINEAR;
 
     Geometry(GLenum draw = GL_TRIANGLES,
-	GLint wrap = GL_REPEAT,
-	GLint filter = GL_NEAREST_MIPMAP_LINEAR);
+    GLint wrap = GL_REPEAT,
+    GLint filter = GL_NEAREST_MIPMAP_LINEAR);
 
     ~Geometry();
 

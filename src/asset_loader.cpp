@@ -176,8 +176,7 @@ Model *AssetLoader::get_model(std::string name) {
         error += name;
         error += " was not loaded. Check for fbx file and double check filename.\n";
         fprintf(stderr, "%s", error.c_str());
-        Model *dflt = new Model(); 
-        return dflt;
+        return nullptr;
     }
     return assets[name];
 }
