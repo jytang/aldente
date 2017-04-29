@@ -59,6 +59,7 @@ namespace events {
     extern signal<void(WindowScrollData &)> window_scroll_event;
 
     extern signal<void()> toggle_debug_shadows_event;
+    extern signal<void()> toggle_ui_event;
 
     namespace build {        
         // Move the selection in the 2D selection grid.

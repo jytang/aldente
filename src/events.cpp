@@ -9,6 +9,7 @@ namespace events {
     signal<void(WindowMouseButtonData &)> window_mouse_button_event;
     signal<void(WindowScrollData &)> window_scroll_event;
     signal<void()> toggle_debug_shadows_event;
+    signal<void()> toggle_ui_event;
 
     namespace build {
         signal<void(Direction)> select_grid_move_event;

@@ -75,6 +75,9 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::joystick_event(jd);
                     break;
                 }
+                case GLFW_KEY_U:
+                    events::toggle_ui_event();
+                    break;
                 case GLFW_KEY_0:
                     GameState::set_phase(&GameState::menu_phase);
                     break;

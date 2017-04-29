@@ -53,4 +53,11 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect)
         }
         title_label.set_text(text);
     });
+
+    events::toggle_ui_event.connect([&](void) {
+        if (enabled)
+            disable();
+        else
+            enable();
+    });
 }

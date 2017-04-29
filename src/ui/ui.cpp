@@ -20,9 +20,11 @@ void UI::detach(UIElement &e) {
 }
 
 void UI::enable() {
+    enabled = true;
     root.enable();
 }
 
 void UI::disable() {
+    enabled = false;
     root.disable();
 }
