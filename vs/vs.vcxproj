@@ -143,7 +143,6 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_filesystem-vc140.1.64.0.0\lib\native\
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\**\*.cpp" />
-    <ClCompile Include="..\src\proto\net.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
