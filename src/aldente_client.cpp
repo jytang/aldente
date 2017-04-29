@@ -14,9 +14,9 @@
 #include "render.h"
 #include "game/game_state.h"
 #include "net/network_manager.h"
+#include "shaders/shader_manager.h"
 
 AldenteClient::~AldenteClient() {
-    ShaderManager::destroy();
     GeometryGenerator::destroy();
     glfwTerminate();
 }

@@ -6,18 +6,19 @@
 
 #include <vector>
 
+#include "shaders/shader_manager.h"
 #include "shaders/shader.h"
 #include "mesh.h"
 #include "scene/scene.h"
 
 class Model {
 private:
-    std::vector<Mesh *> meshes;
-
     Shader *model_shader;
 
 public:
-    Model(Shader *shader = &Shader::basic) : model_shader(shader) {}
+    std::vector<Mesh *> meshes;
+
+    Model(Shader *shader = &ShaderManager::basic) : model_shader(shader) {}
 
     void add_mesh(Mesh *m);
 

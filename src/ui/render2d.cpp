@@ -9,7 +9,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "events.h"
-#include "shaders/shader_manager.h"
 
 Render2D::Render2D() {
     // Setup callbacks for window size.
@@ -99,10 +98,10 @@ void Render2D::render_text(std::string text,
     glDisable(GL_DEPTH_TEST);
 
     // Activate corresponding render state
-    Shader::text.use();
-    Shader::text.uni_vec3("baseColor", color);
-    glUniformMatrix4fv(Shader::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniform1i(Shader::text.get_uni("hasTexture"), true);
+    ShaderManager::text.use();
+    ShaderManager::text.uni_vec3("baseColor", color);
+    glUniformMatrix4fv(ShaderManager::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniform1i(ShaderManager::text.get_uni("hasTexture"), true);
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(VAO);
@@ -152,15 +151,15 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
     glDisable(GL_DEPTH_TEST);
 
     // Send uniforms to the text shader
-    Shader::text.use();
-    Shader::text.uni_vec3("baseColor", color);
-    glUniformMatrix4fv(Shader::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
-    glUniform1i(Shader::text.get_uni("hasTexture"), true);
+    ShaderManager::text.use();
+    ShaderManager::text.uni_vec3("baseColor", color);
+    glUniformMatrix4fv(ShaderManager::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniform1i(ShaderManager::text.get_uni("hasTexture"), true);
 
     if (texture_ID == 0)
-        glUniform1i(Shader::text.get_uni("hasTexture"), false);
+        glUniform1i(ShaderManager::text.get_uni("hasTexture"), false);
     else
-        glUniform1i(Shader::text.get_uni("hasTexture"), true);
+        glUniform1i(ShaderManager::text.get_uni("hasTexture"), true);
 
     // Set active arrays
     glBindVertexArray(VAO);

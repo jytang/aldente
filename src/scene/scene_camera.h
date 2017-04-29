@@ -1,9 +1,9 @@
 #pragma once
 
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "shaders/shader.h"
 #include "model/plane.h"
 
 class SceneCamera {

@@ -1,6 +1,6 @@
 #include "skybox_shader.h"
 
-#include "geometry_generator.h"
+#include "model/geometry_generator.h"
 
 #define SKYBOX_DIRECTORY_PATH "assets/skybox/"
 

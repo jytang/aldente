@@ -31,19 +31,20 @@ void Shadows::shadow_pass(Scene *scene) {
 
     // TODO: refactor scene_info as member of scene
     SceneInfo scene_info = { &scene->camera, scene->light_pos };
-    Shader::shadow.use();
-    Shader::shadow.pre_draw(scene_info);
+    ShaderManager::shadow.use();
+    ShaderManager::shadow.pre_draw(scene_info);
     // Render using scene graph.
-    scene->draw(&Shader::shadow);
-    Shader::shadow.post_draw();
+    scene->draw(&ShaderManager::shadow);
+    ShaderManager::shadow.post_draw();
 }
 
 // Debug shadows by rendering the shadow map texture to a quad.
 void Shadows::debug_shadows() {
     if (!debug_shadows_on) return;
     glViewport(0, 0, screen_width / 3, screen_height / 3);
-    Shader::debug_shadow.use();
-    Shader::debug_shadow.draw(NULL, scene_info);
+    ShaderManager::debug_shadow.use();
+    SceneInfo temp = { NULL, glm::vec3(1.f) }; // hacky, but works
+    ShaderManager::debug_shadow.draw(NULL, temp);
     // Restore viewport
     glViewport(0, 0, screen_width, screen_height);
 }

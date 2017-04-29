@@ -13,8 +13,8 @@ void Scene::draw(Shader *shader) {
     }
 
     // Draw skybox.
-    Shader::skybox.use();
-    Shader::skybox.draw(NULL, scene_info); // NULL because no mesh needed.
+    ShaderManager::skybox.use();
+    ShaderManager::skybox.draw(NULL, scene_info); // NULL because no mesh needed.
 }
 
 void Scene::update() {

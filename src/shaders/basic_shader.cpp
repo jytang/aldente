@@ -37,9 +37,9 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
 
     /* SHADOW AND TRANSFORMATION MATRICES */
     // Send shadow uniforms and bind its texture.
-    glUniformMatrix4fv(uni("light_matrix"), 1, GL_FALSE, &Shader::shadow.light_matrix[0][0]);
+    glUniformMatrix4fv(uni("light_matrix"), 1, GL_FALSE, &ShaderManager::shadow.light_matrix[0][0]);
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, Shader::shadow.shadow_map_tex);
+    glBindTexture(GL_TEXTURE_2D, ShaderManager::shadow.shadow_map_tex);
     glUniform1i(uni("shadow_map"), 0); // ID of this texture=0
 
     // Send lighting uniforms.
