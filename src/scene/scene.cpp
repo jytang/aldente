@@ -56,7 +56,7 @@ MainScene::MainScene() : Scene() {
 
     //Setting up scene graph for Grid
 
-    grid = new Grid(10, 10);
+    grid = new Grid(20, 20);
     std::vector<std::vector<Tile *>> toAdd = grid->getGrid();
     for (int i = 0; i < toAdd.size(); i++) {
         std::vector<Tile *> currRow = toAdd[i];

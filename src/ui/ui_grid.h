@@ -3,13 +3,12 @@
 #include "ui_container.h"
 #include "ui_rectangle.h"
 #include "ui_halo_container.h"
+#include "game/direction.h"
 
 #include <glm/glm.hpp>
 
 class UIGrid : public UIContainer {
 public:
-    enum Direction { UP, RIGHT, DOWN, LEFT };
-
     UIGrid(float start_x, float start_y,
            float grid_width, float grid_height,
            int num_elements, int columns,

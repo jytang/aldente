@@ -1,7 +1,7 @@
 #include "test_ui.h"
 
 #include "util/colors.h"
-#include "../events.h"
+#include "events.h"
 
 TestUI::TestUI(int num_cols, int num_rows, float aspect)
     : UI(), // explicit call base class dflt constructor

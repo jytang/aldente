@@ -3,6 +3,7 @@
 #include <boost/signals2.hpp>
 #include "window.h"
 #include "game/construct_types.h"
+#include "game/direction.h"
 
 namespace events {
 
@@ -64,6 +65,14 @@ namespace events {
             int x;
             int z;
         };
+        
+        // Move the selection in the grid. Bool is whether we're in the menu (2D/3D).
+        extern signal<void(Direction, bool)> grid_move_event;
+
+        // Make a selection in the grid. Bool is whether we're in the menu (2D/3D).
+        extern signal<void(bool)> grid_placement_event;
+
+        // The selected construct type has changed.
         extern signal<void(ConstructType)> construct_changed_event;
 
         // Client requests to build a construct.

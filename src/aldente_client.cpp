@@ -12,7 +12,7 @@
 #include "events.h"
 #include "ui/test_ui.h"
 #include "render.h"
-#include "game/phase.h"
+#include "game/game_state.h"
 #include "net/network_manager.h"
 
 AldenteClient::~AldenteClient() {
@@ -76,21 +76,10 @@ void AldenteClient::start() {
     // Have window fire off a resize event to update all interested systems.
     window.broadcast_size();
 
-    // Game logic.
-    Phase::curr_phase = PhaseType::BUILD;
+    // Game logic. Temporarily start game with build phase.
+    GameState::init(&GameState::build_phase);
 
     NetworkManager::connect();
-
-    events::joystick_event.connect([&](events::JoystickData d) {
-        if (Phase::curr_phase == PhaseType::BUILD) {
-            if (d.is_button == true && d.input == 0 && d.state == 0) {
-                BuildPhase::is_menu = false;
-            }
-            else if (d.is_button == true && d.input == 1 && d.state == 0) {
-                BuildPhase::is_menu = true;
-            }
-        }
-    });
 
     while (!window.should_close()) {
         // Do polling
@@ -99,6 +88,7 @@ void AldenteClient::start() {
         }
 
         NetworkManager::update();
+        GameState::update();
 
         debug_input.handle_movement();
         physics.update();

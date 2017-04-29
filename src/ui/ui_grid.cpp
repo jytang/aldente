@@ -2,7 +2,7 @@
 
 #include "util/colors.h"
 #include "events.h"
-#include "../game/phase.h"
+#include "game/phase.h"
 
 UIGrid::~UIGrid() {
     for (unsigned int i = 0; i < children.size(); ++i)
@@ -64,34 +64,16 @@ UIGrid::UIGrid(float start_x, float start_y,
     toggle_current_selection_halo();
 
     // Set up callbacks.
-    // TODO: add semantic game logic abstraction layer
-    events::joystick_event.connect([&](events::JoystickData d) {
-        if (Phase::curr_phase != PhaseType::BUILD) 
-            return;
-        if (d.is_button == true && d.input == 1 && d.state == 0)
-            events::build::construct_changed_event(ConstructType::NONE);
-        if (!BuildPhase::is_menu) 
-            return;
+    events::build::grid_move_event.connect([&](Direction dir, bool is_menu) {
+        if (!is_menu) return;
+        move_selection(dir);
+    });
 
-        // Axes for movement
-        if (d.is_button == 0 && d.input == 0) {
-            if (d.state == 5)
-                move_selection(Direction::RIGHT);
-            if (d.state == -5)
-                move_selection(Direction::LEFT);
-        }
-        else if (d.is_button == 0 && d.input == 1) {
-            if (d.state == 5)
-                move_selection(Direction::DOWN);
-            if (d.state == -5)
-                move_selection(Direction::UP);
-        }
-
-        // Buttons for selection
-        if (d.is_button == true && d.input == 0 && d.state == 0) {
-            events::build::construct_changed_event(
-                selection_row == 0 && selection_col == 0 ? ConstructType::CHEST : ConstructType::REMOVE);
-        }
+    events::build::grid_placement_event.connect([&](bool is_menu) {
+        if (!is_menu) return;
+        events::build::construct_changed_event(
+            selection_row == 0 && selection_col == 0 ? 
+            ConstructType::CHEST : ConstructType::REMOVE);
     });
 }
 

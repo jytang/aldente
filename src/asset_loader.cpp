@@ -158,7 +158,7 @@ Mesh *AssetLoader::process_mesh(aiMesh *mesh, const aiScene *scene) {
         std::string to_pass("assets/textures/");
         to_pass += fileName;
 
-		geo->has_texture = true;
+        geo->has_texture = true;
         geo->texture = textures[fileName];
     }
 

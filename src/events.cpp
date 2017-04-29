@@ -11,6 +11,8 @@ namespace events {
     signal<void()> toggle_debug_shadows_event;
 
     namespace build {
+        signal<void(Direction, bool)> grid_move_event;
+        signal<void(bool)> grid_placement_event;
         signal<void(ConstructType)> construct_changed_event;
         signal<void(ConstructData &)> request_build_event;
         signal<void(ConstructData &)> try_build_event;

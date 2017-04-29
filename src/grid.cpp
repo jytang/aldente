@@ -30,28 +30,15 @@ Grid::Grid(int w, int h) :
 Grid::~Grid() {}
 
 void Grid::setup_listeners() {
-    events::joystick_event.connect([&](events::JoystickData d) {
-        if (Phase::curr_phase != PhaseType::BUILD || BuildPhase::is_menu) return;
+    events::build::grid_move_event.connect([&](Direction dir, bool is_menu) {
+        if (is_menu) return;
+        move_selection(dir);
+    });
 
-        // Wants to build a construct at this tile.
-        if (d.is_button && d.input == 0 && d.state == 0) {
-            events::build::ConstructData cd = { selected, hover->getX(), hover->getZ() };
-            events::build::request_build_event(cd);
-        }
-
-        // Hover tile movement.
-        if (d.is_button == 0 && d.input == 0) {
-            if (d.state == 5)
-                move_selection(GridDirection::RIGHT);
-            if (d.state == -5)
-                move_selection(GridDirection::LEFT);
-        }
-        else if (d.is_button == 0 && d.input == 1) {
-            if (d.state == 5)
-                move_selection(GridDirection::DOWN);
-            if (d.state == -5)
-                move_selection(GridDirection::UP);
-        }
+    events::build::grid_placement_event.connect([&](bool is_menu) {
+        if (is_menu) return;
+        events::build::ConstructData cd = { selected, hover->getX(), hover->getZ() };
+        events::build::request_build_event(cd);
     });
 
     events::build::construct_changed_event.connect([&](ConstructType c) {
@@ -92,7 +79,6 @@ void Grid::build(ConstructType type, int x, int z) {
         return;
     }
 
-    fprintf(stderr, "BUILD: %d\n", type);
     switch (type) {
     case CHEST: {
         Construct* to_add = new Crate(x, z);
@@ -105,18 +91,18 @@ void Grid::build(ConstructType type, int x, int z) {
     }
 }
 
-void Grid::move_selection(GridDirection d) {
+void Grid::move_selection(Direction d) {
     switch (d) {
-    case GridDirection::UP:
+    case UP:
         hoverZ = glm::max(0, hoverZ - 1);
         break;
-    case GridDirection::RIGHT:
+    case RIGHT:
         hoverX = glm::min(width - 1, hoverX + 1);
         break;
-    case GridDirection::DOWN:
+    case DOWN:
         hoverZ = glm::min(height - 1, hoverZ + 1);
         break;
-    case GridDirection::LEFT:
+    case LEFT:
         hoverX = glm::max(0, hoverX - 1);
         break;
     default:

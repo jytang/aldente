@@ -12,6 +12,7 @@
 #include "tile.h"
 #include "util/colors.h"
 #include "game/construct_types.h"
+#include "game/direction.h"
 
 class Grid {
 private:
@@ -23,8 +24,6 @@ private:
     Tile *hover;
     ConstructType selected = ConstructType::REMOVE;
 public:
-    enum GridDirection { UP, RIGHT, DOWN, LEFT };
-
     Grid(int w, int h);
 
     ~Grid();
@@ -39,6 +38,5 @@ public:
     // Builds a construct at a location.
     void build(ConstructType type, int x, int z);
 
-    void move_selection(GridDirection d);
-
+    void move_selection(Direction d);
 };
