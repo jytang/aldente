@@ -14,23 +14,24 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect)
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
             ui_grid.attach_at(i, j, rect);
-
-            if (i == 0 && j == 0) {
-                UIContainer* cont = new UIContainer(0, 0);
-                UITextNode* text = new UITextNode("Chest", 0, 0, 0.4f, 0.4f, color::white);
-                cont->attach(bottom_rect);
-                cont->attach(*text);
-                ui_grid.attach_at(i, j, *cont);
-            }
-            else if (i == 0 && j == 1) {
-                UIContainer* cont = new UIContainer(0, 0);
-                UITextNode* text = new UITextNode("Remove", 0, 0, 0.4f, 0.4f, color::white);
-                cont->attach(bottom_rect);
-                cont->attach(*text);
-                ui_grid.attach_at(i, j, *cont);
-            }
         }
     }
+
+    UIContainer* cont;
+    UITextNode* text;
+
+    cont = new UIContainer(0, 0);
+    text = new UITextNode("Chest", 0, 0, 0.4f, 0.4f, color::white);
+    cont->attach(bottom_rect);
+    cont->attach(*text);
+    ui_grid.attach_at(0, 0, *cont);
+
+    cont = new UIContainer(0, 0);
+    text = new UITextNode("Remove", 0, 0, 0.4f, 0.4f, color::white);
+    cont->attach(bottom_rect);
+    cont->attach(*text);
+    ui_grid.attach_at(0, 1, *cont);
+
     attach(ui_grid);
 
     info_panel.attach(info_rect);
@@ -41,11 +42,14 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect)
         std::string text;
         switch (c) {
             case CHEST:
-                text = "Building chest"; break;
+                text = "Building chest";
+                break;
             case REMOVE:
-                text = "Removing"; break;
+                text = "Removing";
+                break;
             default:
-                text = "Select a block"; break;
+                text = "Select a block";
+                break;
         }
         title_label.set_text(text);
     });

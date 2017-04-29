@@ -10,7 +10,7 @@
 class NetworkManager {
 public:
     // Spawns a thread to periodically try connecting to server.
-    static void connect();
+    static void connect(bool is_server);
 
     // Disconnects by stopping the io_service.
     static void disconnect();
@@ -27,6 +27,8 @@ private:
 
     // Register event listeners.
     static void register_listeners();
+    static void register_server_listeners();
+    static void register_client_listeners();
 
     // Update server and client per game loop iteration.
     static void update_server();
@@ -35,7 +37,6 @@ private:
     // Runs the io_service.
     static void run_service();
 
-    static bool is_server;
     static string server_host;
     static int port;
     static boost::thread* service_thread;

@@ -79,7 +79,9 @@ void AldenteClient::start() {
     // Game logic. Temporarily start game with build phase.
     GameState::init(&GameState::build_phase);
 
-    NetworkManager::connect();
+    bool is_server;
+    Config::config->get_value(Config::str_is_server, is_server);
+    NetworkManager::connect(is_server);
 
     while (!window.should_close()) {
         // Do polling

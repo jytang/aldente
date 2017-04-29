@@ -6,7 +6,10 @@ void BuildPhase::setup() {
     joystick_conn = events::joystick_event.connect([&](events::JoystickData d) {
         // A button pressed.
         if (d.is_button == true && d.input == 0 && d.state == 0) {
-            events::build::grid_placement_event(is_menu);
+            if (is_menu)
+                events::build::select_grid_confirm_event();
+            else
+                events::build::build_grid_place_event();
             is_menu = false;
         }
         // B button pressed.
@@ -16,17 +19,33 @@ void BuildPhase::setup() {
         }
 
         // Movement axes.
+        Direction dir;
+        bool moving = false;
         if (d.is_button == 0 && d.input == 0) {
+            moving = true;
             if (d.state == 5)
-                events::build::grid_move_event(Direction::RIGHT, is_menu);
-            if (d.state == -5)
-                events::build::grid_move_event(Direction::LEFT, is_menu);
+                dir = Direction::RIGHT;
+            else if (d.state == -5)
+                dir = Direction::LEFT;
+            else
+                moving = false;
+
         }
         else if (d.is_button == 0 && d.input == 1) {
+            moving = true;
             if (d.state == 5)
-                events::build::grid_move_event(Direction::DOWN, is_menu);
-            if (d.state == -5)
-                events::build::grid_move_event(Direction::UP, is_menu);
+                dir = Direction::DOWN;
+            else if (d.state == -5)
+                dir = Direction::UP;
+            else
+                moving = false;
+        }
+
+        if (moving) {
+            if (is_menu)
+                events::build::select_grid_move_event(dir);
+            else
+                events::build::build_grid_move_event(dir);
         }
     });
 }

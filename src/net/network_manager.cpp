@@ -4,15 +4,13 @@
 
 NetworkServer* NetworkManager::server;
 NetworkClient* NetworkManager::client;
-bool NetworkManager::is_server;
 string NetworkManager::server_host;
 int NetworkManager::port;
 boost::thread* NetworkManager::service_thread;
 bool NetworkManager::is_connected = false;
 boost::asio::io_service NetworkManager::io_service;
 
-void NetworkManager::connect() {
-    Config::config->get_value(Config::str_is_server, is_server);
+void NetworkManager::connect(bool is_server) {
     Config::config->get_value(Config::str_server_ip, server_host);
     Config::config->get_value(Config::str_port, port);
 
@@ -55,19 +53,27 @@ void NetworkManager::attempt_connection() {
 }
 
 void NetworkManager::register_listeners() {
-    // Build phase.
-    // Protobuf will free memory for set_allocated, so we must dynamically create.
-    events::build::request_build_event.connect([](proto::Construct& c) {
-        proto::ClientMessage msg;
-        msg.set_allocated_build_request(new proto::Construct(c));
-        client->send(msg);
-    });
+    if (server)
+        register_server_listeners();
+    if (client)
+        register_client_listeners();
+}
 
+void NetworkManager::register_server_listeners() {
+    // Build phase.
     events::build::respond_build_event.connect([](proto::Construct& c, bool permitted) {
         proto::ServerMessage msg;
         msg.set_status(permitted);
         msg.set_allocated_build_update(new proto::Construct(c));
         server->send_to_all(msg);
+    });
+}
+void NetworkManager::register_client_listeners() {
+    // Build phase.
+    events::build::request_build_event.connect([](proto::Construct& c) {
+        proto::ClientMessage msg;
+        msg.set_allocated_build_request(new proto::Construct(c));
+        client->send(msg);
     });
 }
 

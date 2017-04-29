@@ -28,6 +28,7 @@ protected:
 private:
 
 public:
+    // Whether a construct buildable on this tile.
     bool buildable;
 
     Tile();

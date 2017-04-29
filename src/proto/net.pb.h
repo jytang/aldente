@@ -229,8 +229,8 @@ class ClientMessage : public ::google::protobuf::Message {
   static const ClientMessage& default_instance();
 
   enum MessageTypeCase {
-    kMessage = 2,
-    kBuildRequest = 3,
+    kMessage = 1,
+    kBuildRequest = 2,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -264,17 +264,10 @@ class ClientMessage : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // optional bool status = 1;
-  inline bool has_status() const;
-  inline void clear_status();
-  static const int kStatusFieldNumber = 1;
-  inline bool status() const;
-  inline void set_status(bool value);
-
-  // optional string message = 2;
+  // optional string message = 1;
   inline bool has_message() const;
   inline void clear_message();
-  static const int kMessageFieldNumber = 2;
+  static const int kMessageFieldNumber = 1;
   inline const ::std::string& message() const;
   inline void set_message(const ::std::string& value);
   inline void set_message(const char* value);
@@ -283,10 +276,10 @@ class ClientMessage : public ::google::protobuf::Message {
   inline ::std::string* release_message();
   inline void set_allocated_message(::std::string* message);
 
-  // optional .proto.Construct build_request = 3;
+  // optional .proto.Construct build_request = 2;
   inline bool has_build_request() const;
   inline void clear_build_request();
-  static const int kBuildRequestFieldNumber = 3;
+  static const int kBuildRequestFieldNumber = 2;
   inline const ::proto::Construct& build_request() const;
   inline ::proto::Construct* mutable_build_request();
   inline ::proto::Construct* release_build_request();
@@ -295,8 +288,6 @@ class ClientMessage : public ::google::protobuf::Message {
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ClientMessage)
  private:
-  inline void set_has_status();
-  inline void clear_has_status();
   inline void set_has_message();
   inline void set_has_build_request();
 
@@ -308,7 +299,6 @@ class ClientMessage : public ::google::protobuf::Message {
 
   ::google::protobuf::uint32 _has_bits_[1];
   mutable int _cached_size_;
-  bool status_;
   union MessageTypeUnion {
     ::std::string* message_;
     ::proto::Construct* build_request_;
@@ -398,6 +388,13 @@ class Construct : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 z() const;
   inline void set_z(::google::protobuf::int32 value);
 
+  // optional int32 id = 4;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 4;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:proto.Construct)
  private:
   inline void set_has_type();
@@ -406,6 +403,8 @@ class Construct : public ::google::protobuf::Message {
   inline void clear_has_x();
   inline void set_has_z();
   inline void clear_has_z();
+  inline void set_has_id();
+  inline void clear_has_id();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -414,6 +413,7 @@ class Construct : public ::google::protobuf::Message {
   ::google::protobuf::int32 type_;
   ::google::protobuf::int32 x_;
   ::google::protobuf::int32 z_;
+  ::google::protobuf::int32 id_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -1117,31 +1117,7 @@ inline ServerMessage::MessageTypeCase ServerMessage::message_type_case() const {
 
 // ClientMessage
 
-// optional bool status = 1;
-inline bool ClientMessage::has_status() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void ClientMessage::set_has_status() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void ClientMessage::clear_has_status() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void ClientMessage::clear_status() {
-  status_ = false;
-  clear_has_status();
-}
-inline bool ClientMessage::status() const {
-  // @@protoc_insertion_point(field_get:proto.ClientMessage.status)
-  return status_;
-}
-inline void ClientMessage::set_status(bool value) {
-  set_has_status();
-  status_ = value;
-  // @@protoc_insertion_point(field_set:proto.ClientMessage.status)
-}
-
-// optional string message = 2;
+// optional string message = 1;
 inline bool ClientMessage::has_message() const {
   return message_type_case() == kMessage;
 }
@@ -1211,7 +1187,7 @@ inline void ClientMessage::set_allocated_message(::std::string* message) {
   }
 }
 
-// optional .proto.Construct build_request = 3;
+// optional .proto.Construct build_request = 2;
 inline bool ClientMessage::has_build_request() const {
   return message_type_case() == kBuildRequest;
 }
@@ -1337,6 +1313,30 @@ inline void Construct::set_z(::google::protobuf::int32 value) {
   set_has_z();
   z_ = value;
   // @@protoc_insertion_point(field_set:proto.Construct.z)
+}
+
+// optional int32 id = 4;
+inline bool Construct::has_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+inline void Construct::set_has_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+inline void Construct::clear_has_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline void Construct::clear_id() {
+  id_ = 0;
+  clear_has_id();
+}
+inline ::google::protobuf::int32 Construct::id() const {
+  // @@protoc_insertion_point(field_get:proto.Construct.id)
+  return id_;
+}
+inline void Construct::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
+  // @@protoc_insertion_point(field_set:proto.Construct.id)
 }
 
 // -------------------------------------------------------------------

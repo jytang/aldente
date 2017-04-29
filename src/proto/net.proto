@@ -3,6 +3,7 @@ syntax = "proto2";
 package proto;
 
 message ServerMessage {
+  // Reusable success/failure staus flag.
   optional bool status = 1;
 
   oneof message_type {
@@ -12,11 +13,9 @@ message ServerMessage {
 }
 
 message ClientMessage {
-  optional bool status = 1;
-  
   oneof message_type {
-    string message = 2;
-    Construct build_request = 3;
+    string message = 1;
+    Construct build_request = 2;
   }
 }
 
@@ -24,6 +23,7 @@ message Construct {
   optional int32 type = 1;
   optional int32 x = 2;
   optional int32 z = 3;
+  optional int32 id = 4;
 }
 
 // Below is currently unused.

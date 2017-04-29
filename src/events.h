@@ -61,11 +61,17 @@ namespace events {
     extern signal<void()> toggle_debug_shadows_event;
 
     namespace build {        
-        // Move the selection in the grid. Bool is whether we're in the menu (2D/3D).
-        extern signal<void(Direction, bool)> grid_move_event;
+        // Move the selection in the 2D selection grid.
+        extern signal<void(Direction)> select_grid_move_event;
 
-        // Make a selection in the grid. Bool is whether we're in the menu (2D/3D).
-        extern signal<void(bool)> grid_placement_event;
+        // Move the selection in the 3D build grid.
+        extern signal<void(Direction)> build_grid_move_event;
+
+        // Confirm construct selection in the 2D selection grid.
+        extern signal<void()> select_grid_confirm_event;
+
+        // Confirm placement in the 3D build grid.
+        extern signal<void()> build_grid_place_event;
 
         // The selected construct type has changed.
         extern signal<void(ConstructType)> construct_changed_event;

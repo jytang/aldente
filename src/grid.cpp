@@ -30,13 +30,11 @@ Grid::Grid(int w, int h) :
 Grid::~Grid() {}
 
 void Grid::setup_listeners() {
-    events::build::grid_move_event.connect([&](Direction dir, bool is_menu) {
-        if (is_menu) return;
+    events::build::build_grid_move_event.connect([&](Direction dir) {
         move_selection(dir);
     });
 
-    events::build::grid_placement_event.connect([&](bool is_menu) {
-        if (is_menu) return;
+    events::build::build_grid_place_event.connect([&]() {
         proto::Construct c;
         c.set_type(selected);
         c.set_x(hover->getX());
@@ -77,12 +75,6 @@ bool Grid::verify_build(ConstructType type, int x, int z) {
 
 void Grid::build(ConstructType type, int x, int z) {
     Tile* candidate = grid[x][z];
-    if (type == REMOVE) {
-        // TODO Make destructor for construct
-        candidate->set_construct(nullptr);
-        candidate->buildable = true;
-        return;
-    }
 
     switch (type) {
     case CHEST: {
@@ -90,6 +82,11 @@ void Grid::build(ConstructType type, int x, int z) {
         candidate->set_construct(to_add);
         candidate->buildable = false;
         break;
+    }
+    case REMOVE: {
+        // TODO Make destructor for construct
+        candidate->set_construct(nullptr);
+        candidate->buildable = true;
     }
     default:
         break;

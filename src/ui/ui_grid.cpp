@@ -64,13 +64,11 @@ UIGrid::UIGrid(float start_x, float start_y,
     toggle_current_selection_halo();
 
     // Set up callbacks.
-    events::build::grid_move_event.connect([&](Direction dir, bool is_menu) {
-        if (!is_menu) return;
+    events::build::select_grid_move_event.connect([&](Direction dir) {
         move_selection(dir);
     });
 
-    events::build::grid_placement_event.connect([&](bool is_menu) {
-        if (!is_menu) return;
+    events::build::select_grid_confirm_event.connect([&]() {
         events::build::construct_changed_event(
             selection_row == 0 && selection_col == 0 ? 
             ConstructType::CHEST : ConstructType::REMOVE);
