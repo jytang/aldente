@@ -2,13 +2,11 @@
 
 #include "shader.h"
 
-class BasicShader :
-        public Shader {
+class BasicShader : public Shader {
 public:
-    BasicShader(GLuint shader_id);
-
-    void set_material(Material *m);
-
-    void draw(Geometry *g, glm::mat4 to_world);
+    virtual void init() override;
+    virtual void pre_draw(SceneInfo &scene_info) override;
+    virtual void post_draw();
+    virtual void draw(Mesh &mesh, SceneInfo &scene_info,
+                      glm::mat4 to_world) override;
 };
-

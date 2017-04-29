@@ -1,53 +1,65 @@
 #include "basic_shader.h"
-#include "shader_manager.h"
-#include "shadow_shader.h"
-#include "util/util.h"
 
-BasicShader::BasicShader(GLuint shader_id) : Shader(shader_id) {}
+#include "util/colors.h"
 
-void BasicShader::set_material(Material *m) {
-    glUniform3f(glGetUniformLocation(shader_id, "material.diffuse"), m->diffuse.x, m->diffuse.y, m->diffuse.z);
-    glUniform3f(glGetUniformLocation(shader_id, "material.specular"), m->specular.x, m->specular.y, m->specular.z);
-    glUniform3f(glGetUniformLocation(shader_id, "material.ambient"), m->ambient.x, m->ambient.y, m->ambient.z);
-    glUniform1f(glGetUniformLocation(shader_id, "material.shininess"), m->shininess);
-    glUniform1i(glGetUniformLocation(shader_id, "shadows_enabled"), m->shadows);
+void BasicShader::init() {
+    // Nothing to be done. For now.
 }
 
-void BasicShader::draw(Geometry *g, glm::mat4 to_world) {
-    // Bind depth texture from shadow shader, if it exists.
-    ShadowShader *ss = (ShadowShader *) ShaderManager::get_shader_program("shadow");
-    if (ss) {
-        glUniformMatrix4fv(glGetUniformLocation(shader_id, "light_matrix"), 1, GL_FALSE, &ss->light_matrix[0][0]);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, ss->shadow_map_tex);
-        glUniform1i(glGetUniformLocation(shader_id, "shadow_map"), 0);
+void BasicShader::pre_draw(SceneInfo &scene_info) {
+    // Nothing to be done. For now.
+}
 
-        // Basic lighting
-        glm::vec3 light_pos = ss->light_pos;
-        glUniform3f(glGetUniformLocation(shader_id, "dir_light.direction"), -light_pos.x, -light_pos.y, -light_pos.z);
-        glUniform3f(glGetUniformLocation(shader_id, "dir_light.color"), 1.f, 1.f, 1.f);
-        glUniform1f(glGetUniformLocation(shader_id, "dir_light.ambient_coeff"), 0.2f);
-    }
+void BasicShader::post_draw() {
+    // Nothing to be done. For now.
+}
 
-    // Send camera position for shading
-    glUniform3f(glGetUniformLocation(shader_id, "eye_pos"), cam_pos.x, cam_pos.y, cam_pos.z);
-    // Send projection and view matrices
-    glUniformMatrix4fv(glGetUniformLocation(shader_id, "projection"), 1, GL_FALSE, &P[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, &V[0][0]);
-    // Model matrix
-    glUniformMatrix4fv(glGetUniformLocation(shader_id, "model"), 1, GL_FALSE, &to_world[0][0]);
-    //glUniformMatrix4fv(glGetUniformLocation(shader_id, "mesh_model"), 1, GL_FALSE, &mesh_model[0][0]);
+void BasicShader::draw(Mesh &mesh, SceneInfo &scene_info, glm::mat4 to_world) {
+    /* MESH UNIFORMS */
+    // Send mesh local transformation matrix.
+    glUniformMatrix4fv(uni("mesh_model"), 1, GL_FALSE, &mesh.local_transform[0][0]);
 
-    glUniform1i(glGetUniformLocation(shader_id, "texture_enabled"), g->has_texture);
-    //Bind Texture
-    if (g->has_texture) {
+    // Send material.
+    uni_vec3("material.diffuse", mesh.material->diffuse);
+    uni_vec3("material.specular", mesh.material->specular);
+    uni_vec3("material.ambient", mesh.material->ambient);
+    glUniform1f(uni("material.shininess"), mesh.material->shininess);
+    glUniform1i(uni("shadows_enabled"), mesh.material->shadows);
+
+    // Send texture uniforms.
+    glUniform1i(uni("texture_enabled"), mesh.geometry->has_texture);
+    // Bind Texture.
+    if (mesh.geometry->has_texture) {
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, g->texture);
-        glUniform1i(glGetUniformLocation(shader_id, "texture_map"), 1);
+        glBindTexture(GL_TEXTURE_2D, mesh.geometry->texture);
+        glUniform1i(uni("texture_map"), 1); // ID of this texture=1
     }
 
-    // Bind geometry and draw
-    g->bind();
-    g->draw();
+    /* SHADOW AND TRANSFORMATION MATRICES */
+    // Send shadow uniforms and bind its texture.
+    glUniformMatrix4fv(uni("light_matrix"), 1, GL_FALSE, &Shader::shadow.light_matrix[0][0]);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, Shader::shadow.shadow_map_tex);
+    glUniform1i(uni("shadow_map"), 0); // ID of this texture=0
+
+    // Send lighting uniforms.
+    uni_vec3("dir_light.direction", -scene_info.light_pos);
+    uni_vec3("dir_light.color", color::white); // white light
+    glUniform1f(uni("dir_light.ambient_coeff"), 0.2f);
+
+    // Send camera position uniform.
+    uni_vec3("eye_pos", scene_info.camera.cam_pos);
+    // Send projection and view matrices of camera.
+    glUniformMatrix4fv(uni("projection"), 1, GL_FALSE, &scene_info.camera.P[0][0]);
+    glUniformMatrix4fv(uni("view"), 1, GL_FALSE, &scene_info.camera.V[0][0]);
+
+    // Send model_to_world matrix.
+    glUniformMatrix4fv(uni("model"), 1, GL_FALSE, &to_world[0][0]);
+
+    /* ALL DONE. START DRAWING */
+    // Bind mesh geometry and draw.
+    mesh.geometry->bind();
+    mesh.geometry->draw();
+    // Unbind.
     glBindVertexArray(0);
 }

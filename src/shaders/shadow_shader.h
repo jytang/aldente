@@ -2,21 +2,16 @@
 
 #include "shader.h"
 
-#include <glm/glm.hpp>
-
-class ShadowShader :
-        public Shader {
+class ShadowShader : public Shader {
 public:
+    virtual void init() override;
+    virtual void pre_draw(SceneInfo &scene_info) override;
+    virtual void post_draw();
+    virtual void draw(Mesh &mesh, SceneInfo &scene_info,
+                      glm::mat4 to_world) override;
+
     GLuint FBO, shadow_map_tex;
-    unsigned int size;
+    unsigned int shadow_map_size;
     glm::mat4 light_matrix;
-    glm::vec3 light_pos;
-    glm::mat4 light_proj;
-
-    ShadowShader(GLuint shader_id);
-
-    void set_material(Material *m);
-
-    void draw(Geometry *g, glm::mat4 to_world);
 };
 

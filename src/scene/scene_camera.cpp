@@ -25,7 +25,8 @@ void SceneCamera::displace_cam(glm::vec3 displacement) {
     recalculate();
 }
 
-// Frustum stuff is for shadow mapping
+// Recalculate corners of frustum in world space.
+// TODO: parameterize fov and near distance.
 void SceneCamera::update_frustum_corners(int width, int height, GLfloat far) {
     GLfloat aspect_ratio = (float) width / (float) height;
     glm::vec3 cam_right = glm::cross(cam_pos - (cam_pos + cam_front), cam_up);
@@ -56,32 +57,27 @@ glm::mat4 SceneCamera::frustum_ortho(glm::vec3 light_pos) {
     const float FRINGE_Y = 0; // 5.f * 1.7f;
     const float FRINGE_Z = 0; // 5.f * 1.7f;
 
+    // Transform camera frustum into coordinate system of light.
     glm::mat4 light_view = glm::lookAt(light_pos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     glm::vec3 corners_lightspace[8];
-
-    for (int i = 0; i < 8; ++i) {
+    for (int i = 0; i < 8; ++i)
         corners_lightspace[i] = glm::vec3(light_view * glm::vec4(frustum_corners[i], 1.f));
-    }
 
+    // Make AABB with some FRINGE padding.
     glm::vec3 min = corners_lightspace[0];
     glm::vec3 max = corners_lightspace[0];
     for (int i = 0; i < 8; i++) {
-        if (corners_lightspace[i].x > max.x)
-            max.x = corners_lightspace[i].x;
-        else if (corners_lightspace[i].x < min.x)
-            min.x = corners_lightspace[i].x;
-        if (corners_lightspace[i].y > max.y)
-            max.y = corners_lightspace[i].y;
-        else if (corners_lightspace[i].y < min.y)
-            min.y = corners_lightspace[i].y;
-        if (corners_lightspace[i].z > max.z)
-            max.z = corners_lightspace[i].z;
-        else if (corners_lightspace[i].z < min.z)
-            min.z = corners_lightspace[i].z;
+        max.x = glm::max(max.x, corners_lightspace[i].x);
+        max.y = glm::max(max.y, corners_lightspace[i].y);
+        max.z = glm::max(max.z, corners_lightspace[i].z);
+        min.x = glm::min(min.x, corners_lightspace[i].x);
+        min.y = glm::min(min.y, corners_lightspace[i].y);
+        min.z = glm::min(min.z, corners_lightspace[i].z);
     }
 
-    return glm::ortho(min.x - FRINGE_X, max.x + FRINGE_X, min.y - FRINGE_Y, max.y + FRINGE_Y, -max.z - FRINGE_Z,
-                      -min.z + FRINGE_Z);
+    return glm::ortho(min.x - FRINGE_X, max.x + FRINGE_X,
+                      min.y - FRINGE_Y, max.y + FRINGE_Y,
+                      -max.z - FRINGE_Z, -min.z + FRINGE_Z);
 }
 
 

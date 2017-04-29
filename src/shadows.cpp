@@ -7,6 +7,7 @@
 #include "events.h"
 
 #include <iostream>
+#include "scene/scene_info.h"
 
 Shadows::Shadows()
     : debug_shadows_on(false) {
@@ -23,31 +24,19 @@ Shadows::Shadows()
 }
 
 void Shadows::shadow_pass(Scene *scene) {
+    // Update camera frustum. Disgusting place to do it though.
+    // Should be done every frame, but elsewhere.
     float far_plane;
     Config::config->get_value(Config::str_far_plane, far_plane);
-
-    // Disgusting.
     scene->camera.update_frustum_corners(screen_width, screen_height, far_plane);
 
-    ShadowShader *ss = (ShadowShader *) ShaderManager::get_shader_program("shadow");
-    // Set resolution of shadow map.
-    glViewport(0, 0, ss->size, ss->size);
-    // Render to the shadow shader's FBO.
-    glBindFramebuffer(GL_FRAMEBUFFER, ss->FBO);
-    glClear(GL_DEPTH_BUFFER_BIT);
-    ss->use();
-    ss->light_pos = scene->light_pos;
-    // Calculate light projection matrix to use based on frustum intersection
-    ss->light_proj = scene->camera.frustum_ortho(scene->light_pos);
-
-    // Disable back face culling for shadow accuracy
-    glDisable(GL_CULL_FACE);
+    // TODO: refactor scene_info as member of scene
+    SceneInfo scene_info = { &scene->camera, scene->light_pos };
+    Shader::shadow.use();
+    Shader::shadow.pre_draw(scene_info);
     // Render using scene graph.
-    scene->pass(ss);
-    // Re-enable back face culling
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    scene->draw(&Shader::shadow);
+    Shader::shadow.post_draw();
 }
 
 // Debug shadows by rendering the shadow map texture to a quad.

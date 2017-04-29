@@ -1,14 +1,12 @@
 #pragma once
 
 #include <GL/glew.h>
-#include "model/geometry.h"
-#include "material.h"
-#include "shaders/shader.h"
-#include "shaders/shader_manager.h"
-
 #include <glm/glm.hpp>
 #include <map>
 #include <assimp/scene.h>
+
+#include "geometry.h"
+#include "material.h"
 
 struct Anim {
     std::vector<unsigned int> bones;
@@ -19,16 +17,14 @@ class Mesh {
 public:
     Mesh(Geometry *geo = NULL,
          Material *mat = NULL,
-         Shader *shader = ShaderManager::get_default(),
-         glm::mat4 m = glm::mat4(1.0f),
-         bool no_cull = false);
-    //~Mesh();
+         glm::mat4 m = glm::mat4(1.f))
+            : geometry(geo), material(mat),
+              local_transform(m) {}
 
     Geometry *geometry;
     Material *material;
-    Shader *shader;
-    glm::mat4 to_world;
-    bool no_culling;
+    glm::mat4 local_transform;
+
     // map<string, Anim*> animations();
     aiMatrix4x4 inverseBoneMat;
 };

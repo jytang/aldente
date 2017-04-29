@@ -1,8 +1,9 @@
 #pragma once
 
-#include "scene/scene_camera.h"
+#include "scene/scene_info.h"
 #include "model/model.h"
 #include "transform.h"
+#include "shaders/shader.h"
 
 /*
 	This represents an abstract object in the scene.
@@ -19,11 +20,9 @@ public:
 
     void attach_model(Model *m);
 
-    virtual void draw(SceneCamera &camera);
+	void draw(Shader *shader, SceneInfo &scene_info);
 
-	virtual void update();
-
-    void pass(Shader *s);
+	void update();
 
     void set_color(glm::vec3 color);
 

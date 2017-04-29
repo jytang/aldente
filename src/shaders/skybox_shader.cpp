@@ -1,5 +1,19 @@
 #include "skybox_shader.h"
-#include "util/util.h"
+
+
+void SkyboxShader::draw(Mesh &mesh, SceneCamera &camera, glm::mat4 model_to_world) {
+
+}
+
+
+
+
+
+
+
+
+
+
 
 const GLfloat skybox_vertices[] = {
         // Positions

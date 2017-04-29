@@ -23,9 +23,9 @@ public:
 
     virtual ~Scene() {}
 
-    void draw();
-
-    void pass(Shader *s);
+    // Draw using the passed in shader.
+    // Default is NULL so that the shader attached to each mesh is used instead.
+    void draw(Shader *shader = NULL);
 
     virtual void update();
 

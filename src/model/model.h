@@ -8,20 +8,19 @@
 
 #include "shaders/shader.h"
 #include "mesh.h"
-#include "scene/scene_camera.h"
+#include "scene/scene.h"
 
 class Model {
-public:
+private:
     std::vector<Mesh *> meshes;
+
+    Shader *model_shader;
+
+public:
+    Model(Shader *shader = &Shader::basic) : model_shader(shader) {}
 
     void add_mesh(Mesh *m);
 
-    void combine_meshes();
-
-    void draw(SceneCamera &camera, glm::mat4 to_world);
-
-    void update();
-
-    void pass(Shader *s, glm::mat4 to_world);
+    void draw(Shader &shader, SceneInfo &scene_info, glm::mat4 to_world);
 };
 

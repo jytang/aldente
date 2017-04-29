@@ -4,24 +4,18 @@
 #include "util/colors.h"
 #include "asset_loader.h"
 #include "scene_camera.h"
+#include "scene_info.h"
 
-void Scene::draw() {
-    for (GameObject* gameObj : objs) {
-        gameObj->draw(camera);
+void Scene::draw(Shader *shader) {
+    SceneInfo scene_info = { &camera, light_pos };
+    for (GameObject *gameObj : objs) {
+        gameObj->draw(shader, scene_info);
     }
 }
 
 void Scene::update() {
-    for (GameObject* gameObj : objs) {
+    for (GameObject *gameObj : objs) {
         gameObj->update();
-    }
-}
-
-void Scene::pass(Shader *s) {
-    // For passing a different shader than the mesh's shader and drawing,
-    // Used mainly for shadow mapping passes
-    for (GameObject* gameObj : objs) {
-        gameObj->pass(s);
     }
 }
 

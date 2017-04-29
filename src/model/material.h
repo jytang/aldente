@@ -3,15 +3,17 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 
+#include "util/colors.h"
+
 /*
     The overall color of the model, as well as how it is
     affected by the lighting in the scene.
 */
 class Material {
 public:
-    Material(glm::vec3 diffuse = {1.f,1.f,1.f},
-            glm::vec3 ambient = {0.f,0.f,0.f},
-            glm::vec3 specular = {0.f,0.f,0.f},
+    Material(glm::vec3 diffuse = color::white,
+            glm::vec3 ambient = color::black,
+            glm::vec3 specular = color::black,
             GLfloat shininess = 50.f, bool shadows = true)
         : ambient(ambient), diffuse(diffuse), specular(specular),
           shininess(shininess), shadows(shadows) {}
