@@ -1,8 +1,5 @@
 #include "util.h"
 
-GLuint Util::quadVAO;
-GLuint Util::quadVBO;
-
 void Util::print_vec3(glm::vec3 v) {
     std::cerr << v.x << ", " << v.y << ", " << v.z << std::endl;
 }
@@ -98,31 +95,6 @@ glm::vec3 Util::trackball_position(double x_pos, double y_pos, int width, int he
     ret.z = (float) glm::sqrt(1.001 - d * d);
     ret = glm::normalize(ret);
     return ret;
-}
-
-void Util::render_quad() {
-    if (quadVAO == 0) {
-        GLfloat quadVertices[] = {
-                // Positions        // Texture Coords
-                -1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-                -1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-                1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
-                1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-        };
-        // Setup plane VAO
-        glGenVertexArrays(1, &quadVAO);
-        glGenBuffers(1, &quadVBO);
-        glBindVertexArray(quadVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *) 0);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *) (3 * sizeof(GLfloat)));
-    }
-    glBindVertexArray(quadVAO);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    glBindVertexArray(0);
 }
 
 void Util::seed(unsigned int s) {

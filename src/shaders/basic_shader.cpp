@@ -14,24 +14,24 @@ void BasicShader::post_draw() {
     // Nothing to be done. For now.
 }
 
-void BasicShader::draw(Mesh &mesh, SceneInfo &scene_info, glm::mat4 to_world) {
+void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     /* MESH UNIFORMS */
     // Send mesh local transformation matrix.
-    glUniformMatrix4fv(uni("mesh_model"), 1, GL_FALSE, &mesh.local_transform[0][0]);
+    glUniformMatrix4fv(uni("mesh_model"), 1, GL_FALSE, &mesh->local_transform[0][0]);
 
     // Send material.
-    uni_vec3("material.diffuse", mesh.material->diffuse);
-    uni_vec3("material.specular", mesh.material->specular);
-    uni_vec3("material.ambient", mesh.material->ambient);
-    glUniform1f(uni("material.shininess"), mesh.material->shininess);
-    glUniform1i(uni("shadows_enabled"), mesh.material->shadows);
+    uni_vec3("material.diffuse", mesh->material->diffuse);
+    uni_vec3("material.specular", mesh->material->specular);
+    uni_vec3("material.ambient", mesh->material->ambient);
+    glUniform1f(uni("material.shininess"), mesh->material->shininess);
+    glUniform1i(uni("shadows_enabled"), mesh->material->shadows);
 
     // Send texture uniforms.
-    glUniform1i(uni("texture_enabled"), mesh.geometry->has_texture);
+    glUniform1i(uni("texture_enabled"), mesh->geometry->has_texture);
     // Bind Texture.
-    if (mesh.geometry->has_texture) {
+    if (mesh->geometry->has_texture) {
         glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, mesh.geometry->texture);
+        glBindTexture(GL_TEXTURE_2D, mesh->geometry->texture);
         glUniform1i(uni("texture_map"), 1); // ID of this texture=1
     }
 
@@ -58,8 +58,8 @@ void BasicShader::draw(Mesh &mesh, SceneInfo &scene_info, glm::mat4 to_world) {
 
     /* ALL DONE. START DRAWING */
     // Bind mesh geometry and draw.
-    mesh.geometry->bind();
-    mesh.geometry->draw();
+    mesh->geometry->bind();
+    mesh->geometry->draw();
     // Unbind.
     glBindVertexArray(0);
 }

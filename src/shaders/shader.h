@@ -63,5 +63,5 @@ public:
     virtual void post_draw() = 0;
 
     // Draws the mesh's geometry with its material, transformed into world space.
-    virtual void draw(Mesh &mesh, SceneInfo &scene_info, glm::mat4 to_world) = 0;
+    virtual void draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) = 0;
 };

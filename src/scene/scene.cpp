@@ -11,6 +11,10 @@ void Scene::draw(Shader *shader) {
     for (GameObject *gameObj : objs) {
         gameObj->draw(shader, scene_info);
     }
+
+    // Draw skybox.
+    Shader::skybox.use();
+    Shader::skybox.draw(NULL, scene_info); // NULL because no mesh needed.
 }
 
 void Scene::update() {
@@ -27,6 +31,7 @@ void Scene::addRigid(btRigidBody* toAdd) {
 MainScene::MainScene() : Scene() {
     light_pos = glm::vec3(0.f, 2.f, 1.f);
 
+    /*
     // Skybox
     Material *default_material = new Material();
     Mesh *skybox_mesh = new Mesh(nullptr, default_material, ShaderManager::get_shader_program("skybox"));
@@ -36,7 +41,6 @@ MainScene::MainScene() : Scene() {
     sky->attach_model(skybox_model);
     objs.push_back(sky);
 
-	/*
     // Cube
     Geometry *cube_geo = GeometryGenerator::generate_cube(1.f, true);
     Material *cube_mat = new Material(color::ocean_blue);

@@ -1,7 +1,6 @@
 #include "shadows.h"
 
-#include "aldente_client.h"
-#include "shaders/shadow_shader.h"
+#include "shaders/shader.h"
 #include "window.h"
 #include "util/config.h"
 #include "events.h"
@@ -43,8 +42,8 @@ void Shadows::shadow_pass(Scene *scene) {
 void Shadows::debug_shadows() {
     if (!debug_shadows_on) return;
     glViewport(0, 0, screen_width / 3, screen_height / 3);
-    ShaderManager::get_shader_program("debug_shadow")->use();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, ((ShadowShader *) ShaderManager::get_shader_program("shadow"))->shadow_map_tex);
-    Util::render_quad();
+    Shader::debug_shadow.use();
+    Shader::debug_shadow.draw(NULL, scene_info);
+    // Restore viewport
+    glViewport(0, 0, screen_width, screen_height);
 }

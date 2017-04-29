@@ -1,112 +1,50 @@
 #include "skybox_shader.h"
 
+#include "geometry_generator.h"
 
-void SkyboxShader::draw(Mesh &mesh, SceneCamera &camera, glm::mat4 model_to_world) {
+#define SKYBOX_DIRECTORY_PATH "assets/skybox/"
 
+void SkyboxShader::set_skybox(std::string skybox_name) {
+    if (texture_ids.find(skybox_name) != texture_ids.end())
+        current_texture_id = texture_ids[skybox_name];
 }
 
+void SkyboxShader::init() {
+    // Use cube geometry.
+    cube_geometry = GeometryGenerator::generate_cube(2.f);
 
+    // List of skyboxes. Hard-coded for now.
+    std::vector<std::string> skyboxes {
+            "space"
+    };
 
+    // Name of each file, in ppm format. Hard-coded for now.
+    std::vector<std::string> faces {
+            "/right.ppm", "/left.ppm",
+            "/top.ppm", "/bottom.ppm",
+            "/back.ppm", "/front.ppm"
+    };
 
+    int tex_width, tex_height;
+    unsigned char *tex_image;
 
+    // Load and create textures for all skyboxes.
+    for (std::string s : skyboxes) {
+        GLuint id;
+        glGenTextures(1, &id);
+        texture_ids[s] = id;
+        glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 
-
-
-
-
-
-const GLfloat skybox_vertices[] = {
-        // Positions
-        -1.0f, 1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, -1.0f,
-
-        -1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, -1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-
-        -1.0f, -1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f,
-        -1.0f, -1.0f, 1.0f,
-
-        -1.0f, 1.0f, -1.0f,
-        1.0f, 1.0f, -1.0f,
-        1.0f, 1.0f, 1.0f,
-        1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, 1.0f,
-        -1.0f, 1.0f, -1.0f,
-
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, -1.0f,
-        1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f, 1.0f,
-        1.0f, -1.0f, 1.0f
-};
-
-const int NUM_SKYBOXES = 1;
-
-SkyboxShader::SkyboxShader(GLuint shader_id) : Shader(shader_id) {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skybox_vertices), &skybox_vertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *) 0);
-
-    glBindVertexArray(0);
-
-    for (int i = 0; i < NUM_SKYBOXES; ++i) {
-        GLuint texture_id;
-        glGenTextures(1, &texture_id);
-        texture_ids.push_back(texture_id);
-    }
-    load_cubemap();
-}
-
-void SkyboxShader::load_cubemap() {
-    std::vector<const char *> faces;
-    faces.push_back("/right.ppm");
-    faces.push_back("/left.ppm");
-    faces.push_back("/top.ppm");
-    faces.push_back("/bottom.ppm");
-    faces.push_back("/back.ppm");
-    faces.push_back("/front.ppm");
-
-    int width, height;
-    unsigned char *image;
-
-    std::string prefix = "assets/skybox/";
-
-    std::vector<std::string> skybox_names;
-    skybox_names.push_back("space");
-
-    for (int i = 0; i < NUM_SKYBOXES; ++i) {
-        glBindTexture(GL_TEXTURE_CUBE_MAP, texture_ids[i]);
-        for (GLuint j = 0; j < faces.size(); ++j) {
-            std::string path = prefix + skybox_names[i] + std::string(faces[j]);
-            image = Util::loadPPM(path.c_str(), width, height);
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
-                         image);
-            delete image;
+        // Load each face's texture.
+        for (unsigned int i = 0; i < faces.size(); ++i) {
+            std::string path = SKYBOX_DIRECTORY_PATH + s + faces[i];
+            tex_image = Util::loadPPM(path.c_str(), tex_width, tex_height);
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
+                         0, GL_RGB,
+                         tex_width, tex_height,
+                         0, GL_RGB, GL_UNSIGNED_BYTE,
+                         tex_image);
+            delete tex_image;
         }
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -117,26 +55,34 @@ void SkyboxShader::load_cubemap() {
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
     }
+
+    // Set default skybox to be the first one.
+    set_skybox(skyboxes[0]);
 }
 
-void SkyboxShader::set_material(Material *m) {
+void SkyboxShader::pre_draw(SceneInfo &scene_info) {}
+void SkyboxShader::post_draw() {}
 
-}
-
-void SkyboxShader::draw(Geometry *g, glm::mat4 to_world) {
+void SkyboxShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
+    // Turn off depth mask.
     glDepthMask(GL_FALSE);
-    // Strip translation from view matrix.
-    glm::mat4 view = glm::mat4(glm::mat3(V));
 
-    // Send projection and view matrices
-    glUniformMatrix4fv(glGetUniformLocation(shader_id, "projection"), 1, GL_FALSE, &P[0][0]);
-    glUniformMatrix4fv(glGetUniformLocation(shader_id, "view"), 1, GL_FALSE, &view[0][0]);
-    // Bind geometry and draw
-    glBindVertexArray(VAO);
+    // Strip translation from view matrix to make skybox appear infinitely large.
+    glm::mat4 view = glm::mat4(glm::mat3(scene_info.camera->V));
+
+    // Send view and projection matrices
+    glUniformMatrix4fv(get_uni("view"), 1, GL_FALSE, &view[0][0]);
+    glUniformMatrix4fv(get_uni("projection"), 1, GL_FALSE, &scene_info.camera->P[0][0]);
+
+    // Bind active texture.
     glActiveTexture(GL_TEXTURE0);
-    glUniform1i(glGetUniformLocation(shader_id, "skybox"), 0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, texture_ids[current_texture_id]);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glUniform1i(get_uni("skybox"), 0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, current_texture_id);
+
+    cube_geometry->bind();
+    cube_geometry->draw();
     glBindVertexArray(0);
+
+    // Reset depth mask (on).
     glDepthMask(GL_TRUE);
 }

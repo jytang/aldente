@@ -4,6 +4,9 @@
 
 class TextShader : public Shader {
 public:
-    virtual void draw(Mesh &mesh, SceneCamera &camera,
-                      glm::mat4 model_to_world) override;
+    virtual void init() override;
+    virtual void pre_draw(SceneInfo &scene_info) override;
+    virtual void post_draw() override;
+    virtual void draw(Mesh *mesh, SceneInfo &scene_info,
+                      glm::mat4 to_world) override;
 };

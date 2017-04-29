@@ -56,8 +56,8 @@ void ShadowShader::post_draw() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void ShadowShader::draw(Mesh &mesh, SceneInfo &scene_info, glm::mat4 to_world) {
-    glUniformMatrix4fv(uni("mesh_model"), 1, GL_FALSE, &mesh.local_transform[0][0]);
+void ShadowShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
+    glUniformMatrix4fv(uni("mesh_model"), 1, GL_FALSE, &mesh->local_transform[0][0]);
     glUniformMatrix4fv(uni("model"), 1, GL_FALSE, &to_world[0][0]);
     g->bind();
     g->draw();
