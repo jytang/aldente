@@ -9,8 +9,10 @@ public:
     void draw();
     void attach(UIElement &e);
     void detach(UIElement &e);
-    void enable();  // Enables visibility of all contained UI elts.
-    void disable(); // Disables visibliity.
+    void enable();  // Enables visibility of top level UI.
+    void disable(); // Disables visibliity
+    void enable_all();  // Enables visibility of all contained UI elts.
+    void disable_all(); // Disables visibliity.
 protected:
     bool enabled = true;    // by default, UI elements are shown.
 private:
