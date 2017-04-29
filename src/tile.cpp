@@ -7,13 +7,6 @@ Tile::Tile() :
 
 Tile::~Tile() {}
 
-void Tile::draw(SceneCamera &camera) {
-    if (model)
-        model->draw(camera, transform.get_world_mat());
-    if (construct)
-        construct->draw(camera);
-}
-
 FloorTile::~FloorTile() {}
 
 WallTile::~WallTile() {}
@@ -27,9 +20,8 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
 
     Mesh* mesh = new Mesh();
 
-    mesh->to_world = glm::mat4(1.0f);
+    mesh->local_transform = glm::mat4(1.0f);
     mesh->geometry = GeometryGenerator::generate_plane(0.5f, 0);
-    mesh->shader = ShaderManager::get_default();
     Material *mat = new Material(color::indian_red);
     mesh->material = mat;
 
@@ -82,10 +74,9 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
 
     Mesh* mesh = new Mesh();
 
-    mesh->to_world = glm::mat4(1.0f);
+    mesh->local_transform = glm::mat4(1.0f);
     //mesh->to_world *= glm::translate(glm::mat4(1.f), glm::vec3(0,0,0));
     mesh->geometry = GeometryGenerator::generate_cube(1.0f);
-    mesh->shader = ShaderManager::get_default();
     Material *mat = new Material(color::indian_red);
     mesh->material = mat;
 

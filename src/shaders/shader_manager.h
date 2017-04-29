@@ -18,7 +18,7 @@ public:
 
     // Utility shader function to load and compile shader program from file.
     // Returns program ID assigned to the shader program.
-    static GLuint create_shader_program(const char *type);
+    static GLuint create_shader_program(std::string type);
 
     // Compiles and initializes all the static shader instances.
     static void init() {

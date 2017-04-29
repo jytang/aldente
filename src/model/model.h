@@ -9,7 +9,7 @@
 #include "shaders/shader_manager.h"
 #include "shaders/shader.h"
 #include "mesh.h"
-#include "scene/scene.h"
+#include "scene/scene_info.h"
 
 class Model {
 private:
@@ -22,6 +22,6 @@ public:
 
     void add_mesh(Mesh *m);
 
-    void draw(Shader &shader, SceneInfo &scene_info, glm::mat4 to_world);
+    void draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world);
 };
 

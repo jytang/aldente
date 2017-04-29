@@ -9,6 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "events.h"
+#include "shaders/shader_manager.h"
 
 Render2D::Render2D() {
     // Setup callbacks for window size.

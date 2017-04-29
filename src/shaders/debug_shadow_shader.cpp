@@ -1,5 +1,7 @@
 #include "debug_shadow_shader.h"
 
+#include "shader_manager.h"
+
 void DebugShadowShader::init() {
     GLfloat quad_vertices[] = {
             // Positions        // Texture Coords
@@ -17,7 +19,7 @@ void DebugShadowShader::init() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (3 * sizeof(GLfloat)));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *) (3 * sizeof(GLfloat)));
 }
 
 void DebugShadowShader::pre_draw(SceneInfo &scene_info) {}

@@ -10,7 +10,13 @@
 #define VERT_SHADER_FILE "/vert.glsl"
 #define FRAG_SHADER_FILE "/frag.glsl"
 
-GLuint ShaderManager::create_shader_program(const char *type) {
+BasicShader ShaderManager::basic;
+SkyboxShader ShaderManager::skybox;
+ShadowShader ShaderManager::shadow;
+TextShader ShaderManager::text;
+DebugShadowShader ShaderManager::debug_shadow;
+
+GLuint ShaderManager::create_shader_program(std::string type) {
     GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);
     GLuint fragment_shader_id = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -26,7 +32,7 @@ GLuint ShaderManager::create_shader_program(const char *type) {
             vertex_shader_code += "\n" + line;
         vertex_shader_stream.close();
     } else {
-        printf("Impossible to open %s.\n", type);
+        std::cerr << "Impossible to open " << type << std::endl;
     }
 
     // Read the fragment shader code from file.
@@ -43,7 +49,7 @@ GLuint ShaderManager::create_shader_program(const char *type) {
     int info_log_len;
 
     // Compile vertex shader
-    printf("Compiling vertex shader: %s\n", type + VERT_SHADER_FILE);
+    std::cerr << "Compiling vertex shader: " << type + VERT_SHADER_FILE << std::endl;
     char const *vertex_source_pointer = vertex_shader_code.c_str();
     glShaderSource(vertex_shader_id, 1, &vertex_source_pointer, NULL);
     glCompileShader(vertex_shader_id);
@@ -54,11 +60,11 @@ GLuint ShaderManager::create_shader_program(const char *type) {
     if (info_log_len > 0) {
         std::vector<char> vertex_shader_error_message(info_log_len + 1);
         glGetShaderInfoLog(vertex_shader_id, info_log_len, NULL, &vertex_shader_error_message[0]);
-        printf("%s\n", &vertex_shader_error_message[0]);
+        fprintf(stderr, "%s\n", &vertex_shader_error_message[0]);
     }
 
     // Compile fragment shader
-    printf("Compiling fragment shader: %s\n", type + FRAG_SHADER_FILE);
+    std::cerr << "Compiling fragment shader: " << type + FRAG_SHADER_FILE << std::endl;
     char const *fragment_source_pointer = fragment_shader_code.c_str();
     glShaderSource(fragment_shader_id, 1, &fragment_source_pointer, NULL);
     glCompileShader(fragment_shader_id);
@@ -69,7 +75,7 @@ GLuint ShaderManager::create_shader_program(const char *type) {
     if (info_log_len > 0) {
         std::vector<char> fragment_shader_error_message(info_log_len + 1);
         glGetShaderInfoLog(fragment_shader_id, info_log_len, NULL, &fragment_shader_error_message[0]);
-        printf("%s\n", &fragment_shader_error_message[0]);
+        fprintf(stderr, "%s\n", &fragment_shader_error_message[0]);
     }
 
     // Link the program
@@ -84,7 +90,7 @@ GLuint ShaderManager::create_shader_program(const char *type) {
     if (info_log_len > 0) {
         std::vector<char> program_error_message(info_log_len + 1);
         glGetProgramInfoLog(program_id, info_log_len, NULL, &program_error_message[0]);
-        printf("%s\n", &program_error_message[0]);
+        fprintf(stderr, "%s\n", &program_error_message[0]);
     }
 
     glDetachShader(program_id, vertex_shader_id);
@@ -93,7 +99,7 @@ GLuint ShaderManager::create_shader_program(const char *type) {
     glDeleteShader(vertex_shader_id);
     glDeleteShader(fragment_shader_id);
 
-    printf("Compiled and linked shader: %s\n", type);
+    std::cerr << "Compiled and linked shader: " << type << std::endl;
 
     return program_id;
 }

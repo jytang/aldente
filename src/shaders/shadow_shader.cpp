@@ -12,7 +12,7 @@ void ShadowShader::init() {
     glGenTextures(1, &shadow_map_tex);
     glBindTexture(GL_TEXTURE_2D, shadow_map_tex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-                 size, size, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+                 shadow_map_size, shadow_map_size, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     // Borders are clamped to 1.0f so that coordinates outside of range will have no shadows.
@@ -42,7 +42,7 @@ void ShadowShader::pre_draw(SceneInfo &scene_info) {
     // Calculate light projection matrix to use based on frustum intersection
     glm::mat4 light_proj = scene_info.camera->frustum_ortho(scene_info.light_pos);
     // Recalculate light matrix based on current light position and light projection matrix
-    glm::mat4 light_view = glm::lookAt(light_pos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+    glm::mat4 light_view = glm::lookAt(scene_info.light_pos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     light_matrix = light_proj * light_view;
 
     // Send updated light matrix as uniform.
@@ -57,9 +57,9 @@ void ShadowShader::post_draw() {
 }
 
 void ShadowShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
-    glUniformMatrix4fv(uni("mesh_model"), 1, GL_FALSE, &mesh->local_transform[0][0]);
-    glUniformMatrix4fv(uni("model"), 1, GL_FALSE, &to_world[0][0]);
-    g->bind();
-    g->draw();
+    glUniformMatrix4fv(get_uni("mesh_model"), 1, GL_FALSE, &mesh->local_transform[0][0]);
+    glUniformMatrix4fv(get_uni("model"), 1, GL_FALSE, &to_world[0][0]);
+    mesh->geometry->bind();
+    mesh->geometry->draw();
     glBindVertexArray(0);
 }
