@@ -15,6 +15,7 @@ SkyboxShader ShaderManager::skybox;
 ShadowShader ShaderManager::shadow;
 TextShader ShaderManager::text;
 DebugShadowShader ShaderManager::debug_shadow;
+UIShader ShaderManager::ui;
 
 GLuint ShaderManager::create_shader_program(std::string type) {
     GLuint vertex_shader_id = glCreateShader(GL_VERTEX_SHADER);

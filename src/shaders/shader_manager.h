@@ -6,6 +6,7 @@
 #include "shadow_shader.h"
 #include "text_shader.h"
 #include "debug_shadow_shader.h"
+#include "ui_shader.h"
 
 class ShaderManager {
 public:
@@ -15,6 +16,7 @@ public:
     static ShadowShader shadow;
     static TextShader text;
     static DebugShadowShader debug_shadow;
+    static UIShader ui;
 
     // Utility shader function to load and compile shader program from file.
     // Returns program ID assigned to the shader program.
@@ -32,5 +34,7 @@ public:
         text.init();
         debug_shadow.set_id(create_shader_program("debug_shadow"));
         debug_shadow.init();
+        ui.set_id(create_shader_program("ui"));
+        ui.init();
     }
 };
