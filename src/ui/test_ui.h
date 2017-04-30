@@ -6,11 +6,15 @@
 #include "ui_rectangle.h"
 #include "ui_text_node.h"
 #include "ui_image_node.h"
+#include "game/construct_types.h"
 
 class TestUI : public UI {
 public:
-    TestUI(int num_cols, int num_rows, float aspect);
+    TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs);
 private:
+    void update_info_panel(int content_index);
+
+    std::vector<ConstructData> constructs;
     UIGrid ui_grid;
     UIRectangle rect, bottom_rect;
     UIContainer info_panel;

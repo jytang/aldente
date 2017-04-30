@@ -64,17 +64,13 @@ UIGrid::UIGrid(float start_x, float start_y,
     toggle_current_selection_halo();
 
     // Set up callbacks.
-    events::build::select_grid_move_event.connect([&](Direction dir) {
+    events::build::select_grid_move_event.connect([&, columns](Direction dir) {
         move_selection(dir);
-        events::build::construct_changed_event(
-            selection_row == 0 && selection_col == 0 ?
-            ConstructType::CHEST : ConstructType::REMOVE);
+        events::ui_grid_selection_event(selection_row * columns + selection_col);
     });
 
-    events::build::select_grid_confirm_event.connect([&]() {
-        /*events::build::construct_changed_event(
-            selection_row == 0 && selection_col == 0 ? 
-            ConstructType::CHEST : ConstructType::REMOVE);*/
+    events::build::select_grid_confirm_event.connect([&, columns]() {
+        events::ui_grid_selection_event(selection_row * columns + selection_col);
     });
 }
 

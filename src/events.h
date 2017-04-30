@@ -61,6 +61,9 @@ namespace events {
     extern signal<void()> toggle_debug_shadows_event;
     extern signal<void()> toggle_ui_event;
 
+    // The user has made a selection on the UI grid.
+    extern signal<void(int)> ui_grid_selection_event;
+
     namespace build {        
         // Move the selection in the 2D selection grid.
         extern signal<void(Direction)> select_grid_move_event;

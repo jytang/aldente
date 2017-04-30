@@ -13,6 +13,7 @@
 #include "ui/test_ui.h"
 #include "render.h"
 #include "game/game_state.h"
+#include "game/construct_types.h"
 #include "net/network_manager.h"
 #include "shaders/shader_manager.h"
 
@@ -65,7 +66,14 @@ void AldenteClient::start() {
     SceneManager scene_manager;
     Render render(window, scene_manager);
 
-    TestUI ui = TestUI(3, 5, (float) width / (float) height);
+    std::vector<ConstructData> constructs;
+    for (int i = 0; i < 15; i++) {
+        if (i % 2 == 0)
+            constructs.push_back(Constructs::chest);
+        else
+            constructs.push_back(Constructs::remove);
+    }
+    TestUI ui = TestUI(3, 5, (float) width / (float) height, constructs);
 
     // Init the test scene.
     MainScene testScene;

@@ -42,8 +42,8 @@ void Grid::setup_listeners() {
         events::build::request_build_event(c);
     });
 
-    events::build::construct_changed_event.connect([&](ConstructType c) {
-        selected = c;
+    events::build::construct_changed_event.connect([&](ConstructType type) {
+        selected = type;
     });
 
     events::build::try_build_event.connect([&](proto::Construct& c) {

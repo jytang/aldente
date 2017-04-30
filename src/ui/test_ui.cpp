@@ -4,8 +4,9 @@
 #include "events.h"
 #include "asset_loader.h"
 
-TestUI::TestUI(int num_cols, int num_rows, float aspect)
+TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
     : UI(), // explicit call base class dflt constructor
+      constructs(constructs),
       ui_grid(0, 0, 30.f * aspect, 80.f, num_cols*num_rows, num_cols, 12, 12, color::loz_green, 3, 1.f),
       rect(0, 0, 12, 12, color::loz_light_green),
       bottom_rect(0, 0, 12, 3, color::black),
@@ -16,28 +17,17 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect)
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
             ui_grid.attach_at(i, j, rect);
+
+            ConstructData cd = constructs[i * num_cols + j];
+            UIContainer* cont = new UIContainer(0, 0);
+            UITextNode* text = new UITextNode(cd.name, 0, 0, 0.6f, 0.6f, color::white);
+            UIImageNode* image = new UIImageNode(1, 1, 10, 10, color::white, AssetLoader::asset_loader->get_texture(cd.image));
+            cont->attach(bottom_rect);
+            cont->attach(*text);
+            cont->attach(*image);
+            ui_grid.attach_at(i, j, *cont);
         }
     }
-
-    UIContainer* cont;
-    UITextNode* text;
-    UIImageNode* image;
-
-    cont = new UIContainer(0, 0);
-    text = new UITextNode("Chest", 0, 0, 0.6f, 0.6f, color::white);
-    image = new UIImageNode(1, 1, 10, 10, color::white, AssetLoader::asset_loader->get_texture("test.png"));
-    //cont->attach(bottom_rect);
-    //cont->attach(*text);
-    cont->attach(*image);
-    ui_grid.attach_at(0, 0, *cont);
-
-    cont = new UIContainer(0, 0);
-    text = new UITextNode("Remove", 0, 0, 0.6f, 0.6f, color::white);
-    image = new UIImageNode(1, 1, 10, 10, color::white, AssetLoader::asset_loader->get_texture("Tomato.jpg"));
-    //cont->attach(bottom_rect);
-    //cont->attach(*text);
-    cont->attach(*image);
-    ui_grid.attach_at(0, 1, *cont);
 
     attach(ui_grid);
 
@@ -46,24 +36,12 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect)
     info_panel.attach(description_label);
     attach(info_panel);
 
-    events::build::construct_changed_event.connect([&](ConstructType c) {
-        std::string title_text, desc_text;
-        switch (c) {
-            case CHEST:
-                title_text = "Chest";
-                desc_text = "This is a chest.";
-                break;
-            case REMOVE:
-                title_text = "Delete";
-                desc_text = "This is a deletion.";
-                break;
-            default:
-                title_text = "Select a block...";
-                desc_text = "";
-                break;
-        }
-        title_label.set_text(title_text);
-        description_label.set_text(desc_text);
+    // Display info of first element by default
+    update_info_panel(0);
+
+    events::ui_grid_selection_event.connect([&](int content_index) {
+        update_info_panel(content_index);
+        events::build::construct_changed_event(constructs[content_index].type);
     });
 
     events::toggle_ui_event.connect([&](void) {
@@ -72,4 +50,9 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect)
         else
             enable();
     });
+}
+
+void TestUI::update_info_panel(int content_index) {
+    title_label.set_text(constructs[content_index].name);
+    description_label.set_text(constructs[content_index].description);
 }

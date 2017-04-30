@@ -10,6 +10,7 @@ namespace events {
     signal<void(WindowScrollData &)> window_scroll_event;
     signal<void()> toggle_debug_shadows_event;
     signal<void()> toggle_ui_event;
+    signal<void(int)> ui_grid_selection_event;
 
     namespace build {
         signal<void(Direction)> select_grid_move_event;
