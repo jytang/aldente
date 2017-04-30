@@ -4,6 +4,7 @@ SRC_DIR         := src
 INC_DIR         := src
 DEP_DIR         := .dep
 BUILD_DIR       := .build
+PROTO_DIR       := $(SRC_DIR)/proto
 
 CC              := clang++
 CFLAGS          := -std=c++14 -O0 -g -pthread
@@ -27,6 +28,7 @@ else
 endif
 
 all : $(DEPFILES) $(MAIN_TARGET)
+	$(MAKE) -C $(PROTO_DIR)
 
 # Linking all objects with libs into executable.
 $(MAIN_TARGET): $(MAIN_OBJECTS)
