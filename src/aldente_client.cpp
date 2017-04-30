@@ -65,7 +65,7 @@ void AldenteClient::start() {
     SceneManager scene_manager;
     Render render(window, scene_manager);
 
-    TestUI ui = TestUI(5, 7, (float) width / (float) height);
+    TestUI ui = TestUI(3, 5, (float) width / (float) height);
 
     // Init the test scene.
     MainScene testScene;

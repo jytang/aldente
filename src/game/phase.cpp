@@ -14,7 +14,7 @@ void BuildPhase::setup() {
         }
         // B button pressed.
         else if (d.is_button == true && d.input == 1 && d.state == 0) {
-            events::build::construct_changed_event(ConstructType::NONE);
+            //events::build::construct_changed_event(ConstructType::NONE);
             is_menu = true;
         }
 

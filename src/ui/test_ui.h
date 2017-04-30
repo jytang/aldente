@@ -5,6 +5,7 @@
 #include "ui_grid.h"
 #include "ui_rectangle.h"
 #include "ui_text_node.h"
+#include "ui_image_node.h"
 
 class TestUI : public UI {
 public:
@@ -14,5 +15,5 @@ private:
     UIRectangle rect, bottom_rect;
     UIContainer info_panel;
     UIRectangle info_rect;
-    UITextNode title_label;
+    UITextNode title_label, description_label;
 };

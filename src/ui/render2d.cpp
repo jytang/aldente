@@ -44,7 +44,7 @@ void Render2D::setup_glyphs() {
 
     // Load font ("face")
     FT_Face face;
-    assert(!FT_New_Face(ft, "assets/fonts/DejaVuSerif.ttf", 0, &face));
+    assert(!FT_New_Face(ft, "assets/fonts/SherwoodRegular.ttf", 0, &face));
 
     // Width and height params. Width is 0 for dynamic resizing.
     FT_Set_Pixel_Sizes(face, 0, 48);

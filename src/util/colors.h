@@ -24,4 +24,8 @@ namespace color {
     const glm::vec3 wood_tan_light = {255.f / 255.f, 165.f / 255.f, 79.f / 255.f};
     const glm::vec3 wood_sienna = {160.f / 255.f, 82.f / 255.f, 45.f / 255.f};
     const glm::vec3 wood_saddle = {139.f / 255.f, 69.f / 255.f, 19.f / 255.f};
+
+    const glm::vec3 loz_dark_green = { 14 / 255.f, 81 / 255.f, 53 / 255.f };
+    const glm::vec3 loz_green = { 13 / 255.f, 146 / 255.f, 99 / 255.f };
+    const glm::vec3 loz_light_green = { 74 / 255.f, 186 / 255.f, 145 / 255.f };
 }
