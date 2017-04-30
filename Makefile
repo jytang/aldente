@@ -13,12 +13,14 @@ HEADERS         := $(shell find $(INC_DIR) -name '*.h' -type 'f' | sort)
 MAIN_SOURCES    := $(shell find $(SRC_DIR) -name '*.cpp' -type 'f' | sort)
 MAIN_OBJECTS    := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
 DEPFILES        := $(MAIN_SOURCES:$(SRC_DIR)/%.cpp=$(DEP_DIR)/%.dep)
+NODEPS          := clean proto
 
 LIBS            := -lGLEW -lglfw -lassimp -lSOIL -lfreetype
 LIBS            += -lboost_system -lboost_filesystem -lboost_thread
 LIBS            += -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
 LIBS            += -lprotobuf
 INCS            += $(shell pkg-config bullet --cflags)
+
 ifeq ($(shell uname),Darwin)
 	LIBS += -framework OpenGL -framework GLUT
 	INCS += -I/usr/local/include/freetype2
@@ -27,7 +29,9 @@ else
 	LIBS += -lGL -lGLU
 endif
 
-all : $(DEPFILES) $(MAIN_TARGET)
+all: $(DEPFILES) $(MAIN_TARGET)
+
+proto:
 	$(MAKE) -C $(PROTO_DIR)
 
 # Linking all objects with libs into executable.
@@ -44,7 +48,9 @@ $(DEP_DIR)/%.dep: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INCS) -MM -MT '$(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$<)' $< -MF $@
 
-include $(DEPFILES)
-
 clean:
 	rm -rf $(BUILD_DIR) $(DEP_DIR) $(MAIN_TARGET)
+
+ifeq (0, $(words $(findstring $(MAKECMDGOALS), $(NODEPS))))
+	-include $(DEPFILES)
+endif
