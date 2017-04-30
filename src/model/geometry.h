@@ -7,7 +7,6 @@
 class Geometry {
 public:
     bool has_texture;
-    bool has_normals;
     GLuint texture;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec3> normals;
@@ -26,9 +25,9 @@ public:
 
     void populate_buffers();
 
-    void attachTexture(GLuint texture);
+    void attach_texture(GLuint tex_id);
 
-    GLuint getTextureGL();
+    GLuint get_texture();
 
     void draw();
 

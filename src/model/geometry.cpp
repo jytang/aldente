@@ -38,29 +38,13 @@ void Geometry::populate_buffers() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
-/*
-void Geometry::attachNewTexture(const char *texture_loc) {
-    glGenTextures(1, &texture);
 
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap_type);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap_type);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter_type);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter_type);
-
-    int width, height, channels;
-    unsigned char *image = SOIL_load_image(texture_loc, &width, &height, &channels, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    SOIL_free_image_data(image);
-    glBindTexture(GL_TEXTURE_2D, 0);
-}*/
-
-void Geometry::attachTexture(GLuint toAttach) {
-    texture = toAttach;
+void Geometry::attach_texture(GLuint tex_id) {
+    texture = tex_id;
+    has_texture = true;
 }
 
-GLuint Geometry::getTextureGL() {
+GLuint Geometry::get_texture() {
     return texture;
 }
 

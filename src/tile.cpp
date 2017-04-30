@@ -57,6 +57,7 @@ void FloorTile::update(Tile *hover) {
     rigidBody->getMotionState()->getWorldTransform(t);
     transform.set_position(glm::vec3((float) t.getOrigin().getX(), (float) t.getOrigin().getY(),
                                   (float) t.getOrigin().getZ()));
+    /*
     if (hover == this) {
         Material *mat = new Material(color::windwaker_green);
         model->meshes[0]->material = mat;

@@ -2,7 +2,7 @@
 
 #include "scene/scene.h"
 #include "model/model.h"
-#include "soil.h"
+#include "SOIL.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
