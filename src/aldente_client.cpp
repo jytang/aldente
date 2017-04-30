@@ -1,6 +1,9 @@
 #include "aldente_client.h"
 
 #include "window.h"
+#include "input/num_to_button.h"
+#include "input/raw_maps/xbox.h"
+#include "input/raw_maps/debug.h"
 #include "asset_loader.h"
 #include "physics.h"
 #include "scene_manager.h"
@@ -50,6 +53,9 @@ void AldenteClient::start() {
     std::string game_name;
     Config::config->get_value(Config::str_game_name, game_name);
     Window window(game_name, true, width, height);
+
+    // Create raw input translator.
+    input::NumToButton translator(input::BTN_MAP_XBOX, input::KBD_MAP_DEBUG);
 
     // Setup subsystems after window creation.
     glSetup();

@@ -11,6 +11,8 @@ namespace events {
     using boost::signals2::signal;
 
     const int INPUT_ANALOG_LEVELS = 5;
+
+    // Raw joystick input
     struct JoystickData {
         int id; // Which joystick
         bool is_button;
@@ -19,6 +21,24 @@ namespace events {
         // Otherwise, is axis analog level.
     };
     extern signal<void(JoystickData &)> joystick_event;
+
+    // Conceptual button input
+    enum ConceptualButton {
+        BTN_UP, BTN_DOWN, BTN_LEFT, BTN_RIGHT, // D-pad
+        BTN_A, BTN_B, BTN_X, BTN_Y, // Face buttons
+        BTN_BACK, BTN_XBOX, BTN_START, // Middle buttons
+        BTN_LB, BTN_RB, // Bumpers
+
+        AX_LV, AX_LH, AX_RV, AX_RH, // Left and right sticks, vertical and horizontal axes
+        AX_LT, AX_RT, // Left and right triggers
+    };
+    struct ButtonData {
+        int id; // Which controller
+        ConceptualButton input;
+        int state; // If button, zero is not pressed, nonzero is pressed.
+        // Otherwise, is axis analog level.
+    };
+    extern signal<void(ButtonData &)> button_event;
 
     struct WindowSizeData {
         Window *window;

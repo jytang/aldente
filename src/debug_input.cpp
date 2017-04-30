@@ -188,14 +188,13 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
     });
 
     // Test fire for joystick events
-    events::joystick_event.connect([](events::JoystickData &d) {
-        /*fprintf(stderr,
-                "JoystickEvent:\n"
+    events::button_event.connect([](events::ButtonData &d) {
+        fprintf(stderr,
+                "ButtonEvent:\n"
                         "  id: %d\n"
-                        "  is_button: %d\n"
                         "  input: %d\n"
                         "  state: %d\n",
-                d.id, d.is_button, d.input, d.state);*/
+                d.id, d.input, d.state);
     });
 }
 

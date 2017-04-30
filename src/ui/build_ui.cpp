@@ -77,5 +77,6 @@ BuildUI::~BuildUI() {
 void BuildUI::update_info_panel(int content_index) {
     title_label.set_text(constructs[content_index].name);
     description_label.set_text(constructs[content_index].description);
-    cost_label.set_text(std::to_string(constructs[content_index].cost) + "g");
+    std::string s = std::to_string(constructs[content_index].cost) + "g";
+    cost_label.set_text(s);
 }
