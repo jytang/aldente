@@ -1,10 +1,10 @@
-#include "test_ui.h"
+#include "build_ui.h"
 
 #include "util/colors.h"
 #include "events.h"
 #include "asset_loader.h"
 
-TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
+BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
     : UI(), // explicit call base class dflt constructor
       constructs(constructs),
       ui_grid(0, 0, 30.f * aspect, 70.f, num_cols*num_rows, num_cols, 12, 12, color::loz_green, 3, 1.f),
@@ -24,7 +24,7 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructDa
 
             ConstructData cd = constructs[i * num_cols + j];
             UIContainer* cont = new UIContainer(0, 0);
-            UIImageNode* image = new UIImageNode(1, 1, 10, 10, color::white, AssetLoader::asset_loader->get_texture(cd.image));
+            UIImageNode* image = new UIImageNode(1, 1, 10, 10, AssetLoader::asset_loader->get_texture(cd.image));
             cont->attach(*image);
             ui_grid.attach_at(i, j, *cont);
         }
@@ -56,6 +56,7 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructDa
             disable();
         else
             enable();
+    });
 
     // Show or hide the grid.
     events::build::select_grid_confirm_event.connect([&]() {
@@ -68,7 +69,7 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructDa
     });
 }
 
-void TestUI::update_info_panel(int content_index) {
+void BuildUI::update_info_panel(int content_index) {
     title_label.set_text(constructs[content_index].name);
     description_label.set_text(constructs[content_index].description);
     cost_label.set_text(std::to_string(constructs[content_index].cost) + "g");

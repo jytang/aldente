@@ -10,7 +10,7 @@
 #include "poll/input_poller.h"
 #include "util/config.h"
 #include "events.h"
-#include "ui/test_ui.h"
+#include "ui/build_ui.h"
 #include "render.h"
 #include "game/game_state.h"
 #include "game/construct_types.h"
@@ -73,7 +73,7 @@ void AldenteClient::start() {
         else
             constructs.push_back(Constructs::remove);
     }
-    TestUI ui = TestUI(3, 4, (float) width / (float) height, constructs);
+    BuildUI ui = BuildUI(3, 4, (float) width / (float) height, constructs);
 
     // Init the test scene.
     MainScene testScene;

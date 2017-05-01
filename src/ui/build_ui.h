@@ -8,9 +8,9 @@
 #include "ui_image_node.h"
 #include "game/construct_types.h"
 
-class TestUI : public UI {
+class BuildUI : public UI {
 public:
-    TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs);
+    BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs);
 private:
     void update_info_panel(int content_index);
 
