@@ -5,7 +5,8 @@ NetworkClient::NetworkClient(boost::asio::io_service& ios) :
 }
 
 bool NetworkClient::connect(const string& host, unsigned int port) {
-    tcp::resolver::query query(tcp::v4(), host, std::to_string(port));
+    tcp::resolver::query query(tcp::v4(), host, std::to_string(port), 
+        boost::asio::ip::resolver_query_base::flags());
     tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
     try {
         boost::asio::connect(connection.get_socket(), endpoint_iterator);
