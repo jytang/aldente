@@ -20,7 +20,7 @@ class Tile : public GameObject {
 protected:
     int width, height, x, z;
     bool traversable;
-    
+
     btRigidBody *rigidBody;
     btBoxShape *box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     btBoxShape *ground = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
@@ -43,7 +43,7 @@ public:
 
     virtual void update(Tile *hover) = 0;
 
-    void draw(SceneCamera &camera);
+    void draw(Shader *shader, SceneInfo &scene_info) override;
 
     btRigidBody *getRigid() { return rigidBody; };
 

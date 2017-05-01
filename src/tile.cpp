@@ -7,6 +7,12 @@ Tile::Tile() :
 
 Tile::~Tile() {}
 
+// TODO: GET RID OF THIS. DO NOT OVERRIDE GAMEOBJECT::DRAW.
+void Tile::draw(Shader *shader, SceneInfo &scene_info) {
+    GameObject::draw(shader, scene_info);
+    if (construct) construct->draw(shader, scene_info);
+}
+
 FloorTile::~FloorTile() {}
 
 WallTile::~WallTile() {}

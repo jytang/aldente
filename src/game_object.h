@@ -6,23 +6,23 @@
 #include "shaders/shader.h"
 
 /*
-	This represents an abstract object in the scene.
-	Contains all the essential components required to
-	render the model in the scene.
+    This represents an abstract object in the scene.
+    Contains all the essential components required to
+    render the model in the scene.
 */
 class GameObject {
 protected:
     Model *model;
 public:
-    Transform transform; // World matrix now controlled using the Transform Component    
+    Transform transform; // World matrix now controlled using the Transform Component
 
     GameObject();
 
     void attach_model(Model *m);
 
-	void draw(Shader *shader, SceneInfo &scene_info);
+    virtual void draw(Shader *shader, SceneInfo &scene_info);
 
-	void update();
+    void update();
 
     void set_color(glm::vec3 color);
 
