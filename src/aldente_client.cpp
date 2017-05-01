@@ -67,13 +67,13 @@ void AldenteClient::start() {
     Render render(window, scene_manager);
 
     std::vector<ConstructData> constructs;
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 12; i++) {
         if (i % 2 == 0)
             constructs.push_back(Constructs::chest);
         else
             constructs.push_back(Constructs::remove);
     }
-    TestUI ui = TestUI(3, 5, (float) width / (float) height, constructs);
+    TestUI ui = TestUI(3, 4, (float) width / (float) height, constructs);
 
     // Init the test scene.
     MainScene testScene;

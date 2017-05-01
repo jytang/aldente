@@ -16,8 +16,8 @@ private:
 
     std::vector<ConstructData> constructs;
     UIGrid ui_grid;
-    UIRectangle rect, bottom_rect;
-    UIContainer info_panel;
-    UIRectangle info_rect;
-    UITextNode title_label, description_label;
+    UIRectangle rect;
+    UIContainer info_panel, player_panel, shop_panel;
+    UIRectangle info_rect, player_rect;
+    UITextNode title_label, description_label, cost_label, balance_label;
 };

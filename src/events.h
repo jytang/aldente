@@ -77,6 +77,9 @@ namespace events {
         // Confirm placement in the 3D build grid.
         extern signal<void()> build_grid_place_event;
 
+        // Return to the select grid from the place grid.
+        extern signal<void()> select_grid_return_event;
+
         // The selected construct type has changed.
         extern signal<void(ConstructType)> construct_changed_event;
 

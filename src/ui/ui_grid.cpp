@@ -45,8 +45,8 @@ UIGrid::UIGrid(float start_x, float start_y,
     float elt_start_x = start_x + h_border_padding;
     float elt_start_y = start_y + grid_height - v_border_padding - element_height;
     int curr_elt = 0;
-    for (unsigned int row = 0; row < rows; ++row) {
-        for (unsigned int col = 0; col < columns; ++col) {
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < columns; ++col) {
             float adjusted_x = elt_start_x + (total_element_width * col);
             float adjusted_y = elt_start_y - (total_element_height * row);
 
@@ -95,6 +95,11 @@ void UIGrid::draw(Render2D &renderer_2d,
 void UIGrid::enable() {
     grid_bg.enable();
     UIContainer::enable();
+
+    // Deselects all children except for the currently selected.
+    for (int i = 0; i < num_elements; i++)
+        if (i != selection_row * columns + selection_col)
+            children[i]->do_selection();
 }
 
 void UIGrid::disable() {

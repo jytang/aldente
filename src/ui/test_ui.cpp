@@ -7,36 +7,43 @@
 TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
     : UI(), // explicit call base class dflt constructor
       constructs(constructs),
-      ui_grid(0, 0, 30.f * aspect, 80.f, num_cols*num_rows, num_cols, 12, 12, color::loz_green, 3, 1.f),
+      ui_grid(0, 0, 30.f * aspect, 70.f, num_cols*num_rows, num_cols, 12, 12, color::loz_green, 3, 1.f),
       rect(0, 0, 12, 12, color::loz_light_green),
-      bottom_rect(0, 0, 12, 3, color::black),
       info_panel(0, 80.f),
+      player_panel(0, 0),
+      shop_panel(0, 10.f),
       info_rect(0, 0, 30.f * aspect, 20.f, color::loz_dark_green),
-      title_label("Select a block...", 2, 14, 1.f, 1.f, color::white),
-      description_label("", 2, 8, 0.6f, 0.6f, color::white) {
+      player_rect(0, 0, 30.f * aspect, 10.f, color::loz_dark_green),
+      title_label("Select a block...", 2, 12, 1.f, 1.f, color::white),
+      description_label("", 2, 6, 0.6f, 0.6f, color::white),
+      cost_label("0", 40, 12, 1.f, 1.f, color::white),
+      balance_label("100g", 20, 4, 1.f, 1.f, color::white) {
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
             ui_grid.attach_at(i, j, rect);
 
             ConstructData cd = constructs[i * num_cols + j];
             UIContainer* cont = new UIContainer(0, 0);
-            UITextNode* text = new UITextNode(cd.name, 0, 0, 0.6f, 0.6f, color::white);
             UIImageNode* image = new UIImageNode(1, 1, 10, 10, color::white, AssetLoader::asset_loader->get_texture(cd.image));
-            cont->attach(bottom_rect);
-            cont->attach(*text);
             cont->attach(*image);
             ui_grid.attach_at(i, j, *cont);
         }
     }
 
-    attach(ui_grid);
+    shop_panel.attach(ui_grid);
+    attach(shop_panel);
 
     info_panel.attach(info_rect);
     info_panel.attach(title_label);
     info_panel.attach(description_label);
+    info_panel.attach(cost_label);
     attach(info_panel);
 
-    // Display info of first element by default
+    player_panel.attach(player_rect);
+    player_panel.attach(balance_label);
+    attach(player_panel);
+
+    // Display info of first element by default.
     update_info_panel(0);
 
     events::ui_grid_selection_event.connect([&](int content_index) {
@@ -49,10 +56,20 @@ TestUI::TestUI(int num_cols, int num_rows, float aspect, std::vector<ConstructDa
             disable();
         else
             enable();
+
+    // Show or hide the grid.
+    events::build::select_grid_confirm_event.connect([&]() {
+        shop_panel.disable();
+        player_panel.disable();
+    });
+    events::build::select_grid_return_event.connect([&]() {
+        shop_panel.enable();
+        player_panel.enable();
     });
 }
 
 void TestUI::update_info_panel(int content_index) {
     title_label.set_text(constructs[content_index].name);
     description_label.set_text(constructs[content_index].description);
+    cost_label.set_text(std::to_string(constructs[content_index].cost) + "g");
 }
