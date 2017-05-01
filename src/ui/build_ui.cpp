@@ -18,15 +18,15 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       description_label("", 2, 6, 0.6f, 0.6f, color::white),
       cost_label("0", 40, 12, 1.f, 1.f, color::white),
       balance_label("100g", 20, 4, 1.f, 1.f, color::white) {
+    
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
             ui_grid.attach_at(i, j, rect);
 
-            ConstructData cd = constructs[i * num_cols + j];
-            UIContainer* cont = new UIContainer(0, 0);
-            UIImageNode* image = new UIImageNode(1, 1, 10, 10, AssetLoader::asset_loader->get_texture(cd.image));
-            cont->attach(*image);
-            ui_grid.attach_at(i, j, *cont);
+            UIImageNode* item_image = new UIImageNode(1, 1, 10, 10, 
+                AssetLoader::asset_loader->get_texture(constructs[i * num_cols + j].image));
+            ui_grid.attach_at(i, j, *item_image);
+            images.push_back(item_image);
         }
     }
 
@@ -67,6 +67,11 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
         shop_panel.enable();
         player_panel.enable();
     });
+}
+
+BuildUI::~BuildUI() {
+    for (UIImageNode* image : images)
+        delete image;
 }
 
 void BuildUI::update_info_panel(int content_index) {
