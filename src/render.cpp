@@ -13,8 +13,8 @@ void Render::update() {
     // Second pass: usual rendering.
     window.clear();
 
-    curr_scene->draw_skybox(); // Skybox first so no overdrawing of things.
     curr_scene->draw();
+    curr_scene->draw_skybox(); // Skybox rendered last for optimization
 
     // Debug shadows as necessary.
     shadows.debug_shadows();

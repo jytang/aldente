@@ -64,8 +64,6 @@ void SkyboxShader::pre_draw(SceneInfo &scene_info) {}
 void SkyboxShader::post_draw() {}
 
 void SkyboxShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
-    // Turn off depth mask.
-    glDepthMask(GL_FALSE);
     // Disable back face culling because we are in inside of cube
     glDisable(GL_CULL_FACE);
 
@@ -88,6 +86,4 @@ void SkyboxShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     // Re-enable back face culling
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
-    // Reset depth mask (on).
-    glDepthMask(GL_TRUE);
 }
