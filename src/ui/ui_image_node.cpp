@@ -6,6 +6,7 @@ void UIImageNode::draw(Render2D &renderer_2d,
     renderer_2d.render_rectP(offset_x + start_x,
                              offset_y + start_y,
                              width, height,
-                             glm::vec3(1.f), texture_id);
+                             glm::vec3(1.f), texture_id,
+                             1.0f); // image nodes no transparency
 }
 

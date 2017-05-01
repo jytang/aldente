@@ -146,7 +146,8 @@ void Render2D::render_text(std::string text,
 
 void Render2D::render_rect(GLfloat x, GLfloat y,
                            GLfloat width, GLfloat height,
-                           glm::vec3 color, GLuint texture_ID) {
+                           glm::vec3 color, GLuint texture_ID,
+                           GLfloat alpha) {
     // Always render UI regardless of depth.
     glDisable(GL_DEPTH_TEST);
 
@@ -155,6 +156,7 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
     ShaderManager::ui.uni_vec3("baseColor", color);
     glUniformMatrix4fv(ShaderManager::ui.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniform1i(ShaderManager::ui.get_uni("hasTexture"), true);
+    glUniform1f(ShaderManager::ui.get_uni("alpha"), alpha);
 
     if (texture_ID == 0)
         glUniform1i(ShaderManager::ui.get_uni("hasTexture"), false);
@@ -194,12 +196,13 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
 // Render rectangle in terms of percentages of screen width and height.
 void Render2D::render_rectP(GLfloat x, GLfloat y,
                             GLfloat width, GLfloat height,
-                            glm::vec3 color, GLuint texture_ID) {
+                            glm::vec3 color, GLuint texture_ID,
+                            GLfloat alpha) {
     GLfloat adj_x      = x      * UNIT_TO_PERCENT * screen_height;
     GLfloat adj_y      = y      * UNIT_TO_PERCENT * screen_height;
     GLfloat adj_width  = width  * UNIT_TO_PERCENT * screen_height;
     GLfloat adj_height = height * UNIT_TO_PERCENT * screen_height;
-    render_rect(adj_x, adj_y, adj_width, adj_height, color, texture_ID);
+    render_rect(adj_x, adj_y, adj_width, adj_height, color, texture_ID, alpha);
 }
 
 // Render text in terms of percentages of screen width and height.
