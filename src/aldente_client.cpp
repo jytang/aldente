@@ -69,9 +69,9 @@ void AldenteClient::start() {
     std::vector<ConstructData> constructs;
     for (int i = 0; i < 12; i++) {
         if (i % 2 == 0)
-            constructs.push_back(Constructs::chest);
+            constructs.push_back(Constructs::CHEST);
         else
-            constructs.push_back(Constructs::remove);
+            constructs.push_back(Constructs::REMOVE);
     }
     BuildUI ui = BuildUI(3, 4, (float) width / (float) height, constructs);
 

@@ -14,6 +14,6 @@ struct ConstructData {
 };
 
 namespace Constructs {
-    static ConstructData chest = { ConstructType::CHEST, 50, "Chest", "A treasure chest full of gold.", "test.png" };
-    static ConstructData remove = { ConstructType::REMOVE, 0, "Remove", "Remove a block.", "Tomato.jpg" };
+    const static ConstructData CHEST = { ConstructType::CHEST, 50, "Chest", "A treasure chest full of gold.", "test.png" };
+    const static ConstructData REMOVE = { ConstructType::REMOVE, 0, "Remove", "Remove a block.", "Tomato.jpg" };
 }
