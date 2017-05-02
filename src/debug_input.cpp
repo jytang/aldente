@@ -187,7 +187,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
         camera->recalculate();
     });
 
-    // Test fire for joystick events
+    // Test fire for button events
     events::button_event.connect([](events::ButtonData &d) {
         fprintf(stderr,
                 "ButtonEvent:\n"
