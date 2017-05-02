@@ -7,6 +7,9 @@
 #include "animation/animation_player.h"
 #include "btBulletDynamicsCommon.h"
 
+#include <string>
+#include <iostream>
+
 /*
     This represents an abstract object in the scene.
     Contains all the essential components required to
@@ -19,11 +22,13 @@ protected:
     btRigidBody *rigidbody;
 public:
     Transform transform; // World matrix now controlled using the Transform Component
+    std::string tag;
 
     GameObject();
     
     virtual void draw(Shader *shader, SceneInfo &scene_info);
     virtual void update();
+    virtual void on_collision(GameObject *other) { std::cerr << tag << " collided with: " << other->tag << std::endl; }
 
     Model* get_model() { return model; };
     void attach_model(Model *m);

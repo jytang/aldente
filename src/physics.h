@@ -18,6 +18,8 @@ private:
     btCollisionDispatcher *dispatcher;
     btSequentialImpulseConstraintSolver *solver;
     std::map<Scene*, btDiscreteDynamicsWorld*> scene_worlds;
+
+    boost::signals2::connection currentRigidSignal;
 public:
     Physics();
 
@@ -33,6 +35,9 @@ public:
 
     void update();
 
+    void collision_detection();
+
+    void raycast(glm::vec3 position, glm::vec3 dir);
     GameObject *raycast(glm::vec3 position, glm::vec3 dir);
 
     void add_rigid(events::RigidBodyData d);

@@ -105,6 +105,37 @@ void Physics::raycast_mouse(double xpos, double ypos, int width, int height) {
 void Physics::update() {
     //Step in simulation
     dynamicsWorld->stepSimulation(1.f / 60.f, 10);
+    collision_detection();
+}
+
+void Physics::collision_detection() {
+    int num_manifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
+    for (int i = 0; i < num_manifolds; i++)
+    {
+        btPersistentManifold* contact_manifold =  dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+        const btCollisionObject *obj_a = contact_manifold->getBody0();
+        const btCollisionObject *obj_b = contact_manifold->getBody1();
+
+        // Send callbacks to both objects' on_collide.
+        GameObject *go_a = static_cast<GameObject *>(obj_a->getUserPointer());
+        GameObject *go_b = static_cast<GameObject *>(obj_b->getUserPointer());
+        go_a->on_collision(go_b);
+        go_b->on_collision(go_a); // ORDER OF THESE ON_COLLISION CALLS MAY MATTER HERE. CONSIDER BUFFERING.
+
+        // Determine points at which the objects collide.
+        // Unused so far.
+        int num_contacts = contact_manifold->getNumContacts();
+        for (int j = 0; j < num_contacts; j++)
+        {
+            btManifoldPoint& pt = contact_manifold->getContactPoint(j);
+            if (pt.getDistance() < 0.f)
+            {
+                const btVector3& ptA = pt.getPositionWorldOnA();
+                const btVector3& ptB = pt.getPositionWorldOnB();
+                const btVector3& normalOnB = pt.m_normalWorldOnB;
+            }
+        }
+    }
 }
 
 GameObject* Physics::raycast(glm::vec3 position, glm::vec3 dir) {
