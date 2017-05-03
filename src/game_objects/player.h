@@ -22,7 +22,8 @@ private:
     btCapsuleShape *hit_capsule = new btCapsuleShape(0.5f, 1.0f);
 public:
     Player();
-    void update() override;
+    virtual void update() override;
+    virtual void on_collision(GameObject *other) override;
     void do_movement();
     void setup_listeners();
 

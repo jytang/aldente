@@ -56,7 +56,7 @@ void Player::update() {
 
     // If asserts fail, please inform Kavin
     assert(!std::isnan(to_set.getX()));
-    assert(!std::isnan(to_set.getZ())); 
+    assert(!std::isnan(to_set.getZ()));
 
     transform.set_position(glm::vec3((float)to_set.getX(), (float)to_set.getY(),
         (float)to_set.getZ()));
@@ -79,7 +79,7 @@ void Player::do_movement() {
             anim_player.play();
         }
     }
-    
+
 }
 
 void Player::interact() {
@@ -87,7 +87,7 @@ void Player::interact() {
     // is facing a construct.
     if (direction.x != 0 || direction.z != 0)
         events::dungeon::player_request_raycast_event(
-            transform.get_position(), direction, 
+            transform.get_position(), direction,
             [&](GameObject *bt_hit) {
                 Construct *construct = dynamic_cast<Construct*>(bt_hit);
                 if (construct) {
@@ -105,4 +105,8 @@ void Player::start_walk() {
     anim_player.set_anim(model, "walk");
     anim_player.set_loop(true);
     anim_player.play();
+}
+
+void Player::on_collision(GameObject *other) {
+    transform.set_scale(transform.get_scale() * 0.99f);
 }
