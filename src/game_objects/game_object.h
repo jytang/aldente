@@ -28,7 +28,7 @@ public:
     
     virtual void draw(Shader *shader, SceneInfo &scene_info);
     virtual void update();
-    virtual void on_collision(GameObject *other) { std::cerr << tag << " collided with: " << other->tag << std::endl; }
+    virtual void on_collision(GameObject *other) {  }
 
     Model* get_model() { return model; };
     void attach_model(Model *m);
