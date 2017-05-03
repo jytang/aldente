@@ -1,7 +1,7 @@
-#include "num_to_button.h"
+#include "conceptual_translator.h"
 
 namespace input {
-    NumToButton::NumToButton(
+    ConceptualTranslator::ConceptualTranslator(
             const std::map<RawButton, events::ConceptualButton> &joy_map_,
             const std::map<RawKeyboard, events::ConceptualButton> &key_map_
     ) : joy_map(joy_map_), key_map(key_map_) {
@@ -17,9 +17,21 @@ namespace input {
             const int level = found->first.level;
             const int coeff = d.action == GLFW_RELEASE ? 0 : 1;
 
+            // Cache the input
+            const events::ConceptualButton button = found->second;
+            const int state = level * coeff;
+            cache[button] = state;
+
             // Emit the event with controller ID 0
-            events::ButtonData next_d = {0, found->second, level * coeff};
+            events::ButtonData next_d = {0, button, state};
             events::button_event(next_d);
         });
+    }
+
+    int ConceptualTranslator::get_state(events::ConceptualButton button, int joystick) const {
+        assert(joystick == -1); // Per-controller state cache not implemented.
+
+        const auto &found = cache.find(button);
+        return found != cache.end() ? found->second : 0;
     }
 }
