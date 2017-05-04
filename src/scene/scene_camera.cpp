@@ -75,13 +75,9 @@ glm::mat4 SceneCamera::frustum_ortho(glm::vec3 light_pos) {
         min.z = glm::min(min.z, corners_lightspace[i].z);
     }
 
-    /*
     return glm::ortho(min.x - FRINGE_X, max.x + FRINGE_X,
                       min.y - FRINGE_Y, max.y + FRINGE_Y,
                       -max.z - FRINGE_Z, -min.z + FRINGE_Z);
-                      */
-    // HARDCODED. EW.
-    return glm::ortho(-20.f, 20.f, -20.f, 20.f, 0.1f, 100.f);
 }
 
 

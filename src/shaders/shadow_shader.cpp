@@ -40,7 +40,8 @@ void ShadowShader::pre_draw(SceneInfo &scene_info) {
     glDisable(GL_CULL_FACE);
 
     // Calculate light projection matrix to use based on frustum intersection
-    glm::mat4 light_proj = scene_info.camera->frustum_ortho(scene_info.light_pos);
+    glm::mat4 light_proj = // HARD-CODED! EW.
+            glm::ortho(-20.f, 20.f, -20.f, 20.f, -20.f, 20.f); //scene_info.camera->frustum_ortho(scene_info.light_pos);
     // Recalculate light matrix based on current light position and light projection matrix
     glm::mat4 light_view = glm::lookAt(scene_info.light_pos, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
     light_matrix = light_proj * light_view;
