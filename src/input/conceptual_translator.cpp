@@ -44,8 +44,6 @@ namespace input {
     }
 
     int ConceptualTranslator::get_state(events::ConceptualButton button, int joystick) const {
-        assert(joystick == -1); // Per-controller state cache not implemented.
-
         const auto &found = cache.find(button);
         return found != cache.end() ? found->second : 0;
     }

@@ -41,6 +41,17 @@ namespace events {
     };
     extern signal<void(ButtonData &)> button_event;
 
+    // Stick
+    enum Stick {
+        STICK_LEFT, STICK_RIGHT
+    };
+    struct StickData {
+        int id; // Which controller
+        Stick input;
+        std::pair<int, int> state;
+    };
+    extern signal<void(StickData &)> stick_event;
+
     struct WindowSizeData {
         Window *window;
         int width;

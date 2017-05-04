@@ -15,6 +15,7 @@ public:
     // Query last known state, defaults to 0
     // joystick parameter specifies which joystick, -1 is all joysticks.
     // NOTE: querying for individual joysticks (i.e. joystick != -1) is not implemented.
+    // It is assumed there is only one joystick.
     int get_state(events::ConceptualButton button, int joystick = -1) const;
 
 private:
