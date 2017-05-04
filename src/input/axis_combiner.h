@@ -7,7 +7,7 @@ namespace input {
 
 typedef std::map<events::Stick, std::pair<events::ConceptualButton, events::ConceptualButton>> StickMap;
 
-const StickMap STICKS_XBOX = {
+const StickMap STICKS_DEFAULT = {
         {events::STICK_LEFT, {events::AX_LH, events::AX_LV}},
         {events::STICK_RIGHT, {events::AX_RH, events::AX_RV}},
 };

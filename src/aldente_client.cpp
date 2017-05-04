@@ -58,7 +58,7 @@ void AldenteClient::start() {
 
     // Create input handlers.
     input::ConceptualTranslator translator(input::BTN_MAP_MATRICOM, input::KBD_MAP_DEBUG);
-    input::AxisCombiner stick_handler(translator, input::STICKS_XBOX);
+    input::AxisCombiner stick_handler(translator, input::STICKS_DEFAULT);
 
     // Setup subsystems after window creation.
     glSetup();
