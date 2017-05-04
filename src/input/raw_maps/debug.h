@@ -26,6 +26,10 @@ namespace input {
             {{GLFW_KEY_I, 0, 1}, events::BTN_RB},
             {{GLFW_KEY_O, 0, events::INPUT_ANALOG_LEVELS}, events::AX_RT},
 
+            // N, M for stick presses
+            {{GLFW_KEY_N, 0, 1}, events::BTN_LS},
+            {{GLFW_KEY_M, 0, 1}, events::BTN_RS},
+
             // WASD for left stick
             {{GLFW_KEY_W, 0, -events::INPUT_ANALOG_LEVELS}, events::AX_LV},
             {{GLFW_KEY_A, 0, -events::INPUT_ANALOG_LEVELS}, events::AX_LH},

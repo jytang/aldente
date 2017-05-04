@@ -3,6 +3,7 @@
 #include "window.h"
 #include "input/conceptual_translator.h"
 #include "input/raw_maps/xbox.h"
+#include "input/raw_maps/matricom.h"
 #include "input/raw_maps/debug.h"
 #include "asset_loader.h"
 #include "physics.h"
@@ -55,7 +56,7 @@ void AldenteClient::start() {
     Window window(game_name, true, width, height);
 
     // Create raw input translator.
-    input::ConceptualTranslator translator(input::BTN_MAP_XBOX, input::KBD_MAP_DEBUG);
+    input::ConceptualTranslator translator(input::BTN_MAP_MATRICOM, input::KBD_MAP_DEBUG);
 
     // Setup subsystems after window creation.
     glSetup();

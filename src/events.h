@@ -28,6 +28,7 @@ namespace events {
         BTN_A, BTN_B, BTN_X, BTN_Y, // Face buttons
         BTN_BACK, BTN_XBOX, BTN_START, // Middle buttons
         BTN_LB, BTN_RB, // Bumpers
+        BTN_LS, BTN_RS, // Stick presses
 
         AX_LV, AX_LH, AX_RV, AX_RH, // Left and right sticks, vertical and horizontal axes
         AX_LT, AX_RT, // Left and right triggers

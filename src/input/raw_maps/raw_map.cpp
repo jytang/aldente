@@ -1,16 +1,13 @@
 #include "raw_map.h"
+#include <tuple>
 
 namespace input {
 bool operator<(const RawButton& l, const RawButton& r) {
-    if (l.is_button != r.is_button)
-        return l.is_button < r.is_button;
-    return l.input < r.input;
+    return std::tie(l.is_button, l.input) < std::tie(r.is_button, r.input);
 }
 
 bool operator<(const RawKeyboard& l, const RawKeyboard& r) {
-    if (l.key != r.key)
-        return l.key < r.key;
-    return l.mods < r.mods;
+    return std::tie(l.mods, l.key) < std::tie(r.mods, r.key);
     // Level is not used in lookup
 }
 }
