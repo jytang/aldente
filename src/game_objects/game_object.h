@@ -8,7 +8,6 @@
 #include "btBulletDynamicsCommon.h"
 
 #include <string>
-#include <iostream>
 
 /*
     This represents an abstract object in the scene.

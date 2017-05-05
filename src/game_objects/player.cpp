@@ -27,10 +27,6 @@ Player::Player() : GameObject() {
     setup_listeners();
 
     transform.set_position(10.0f, 0.0f, 10.0f);
-
-	// tell bullet about starting position
-	rigidBody->getMotionState()->setWorldTransform(btTransform(btQuaternion(),
-                                          btVector3(10.0f, 0.0f, 10.0f)));
 }
 
 void Player::setup_listeners() {
