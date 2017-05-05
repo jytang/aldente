@@ -86,6 +86,7 @@ void Grid::build(ConstructType type, int col, int row) {
             candidate->set_construct(nullptr);
             candidate->buildable = true;
         }
+        break;
     }
     default:
         break;

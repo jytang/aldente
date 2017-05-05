@@ -2,7 +2,6 @@
 #include "util/config.h"
 #include <GLFW/glfw3.h>
 
-/*
 void NetworkManager::disconnect() {
     if (!io_service.stopped())
         io_service.stop();
@@ -10,22 +9,10 @@ void NetworkManager::disconnect() {
         service_thread->join();
         delete service_thread;
     }
-}*/
-
-void ServerNetworkManager::run_service() {
-    while (!io_service.stopped()) {
-        try {
-            io_service.poll();
-        }
-        catch (...) {
-            // Silently ignore errors rather than crash. Shouldn't happen.
-            std::cerr << "run_service: io_service error\n";
-        }
-    }
 }
 
-void ClientNetworkManager::run_service() {
-    while (!io_service.stopped()) {
+void NetworkManager::run_service() {
+    while (service_thread && !io_service.stopped()) {
         try {
             io_service.poll();
         }
@@ -38,8 +25,7 @@ void ClientNetworkManager::run_service() {
 
 void ServerNetworkManager::connect() {
     register_listeners();
-    //service_thread = new boost::thread(&ServerNetworkManager::run_service, this);
-    //run_service();
+    service_thread = new boost::thread(&NetworkManager::run_service, this);
 }
 
 void ServerNetworkManager::register_listeners() {
@@ -72,7 +58,7 @@ void ClientNetworkManager::connect() {
     Config::config->get_value(Config::str_port, port);
 
     // Try establishing connection in separate thread.
-    std::thread(&ClientNetworkManager::attempt_connection).detach();
+    boost::thread(&ClientNetworkManager::attempt_connection, this).detach();
 }
 
 void ClientNetworkManager::register_listeners() {
@@ -116,12 +102,7 @@ void ClientNetworkManager::attempt_connection() {
             if (is_connected) {
                 std::cerr << "Established connection.\n";
                 register_listeners();
-                //run_service();
-                //service_thread = new boost::thread(&ClientNetworkManager::run_service, this);
-
-                //service_thread = new boost::thread(&run_service, std::ref(io_service));
-
-                //service_thread = new boost::thread(&NetworkManager::run_service);
+                service_thread = new boost::thread(&NetworkManager::run_service, this);
             }
         }
     }
