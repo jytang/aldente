@@ -4,6 +4,7 @@
 #include "catch.h"
 #include "aldente.h"
 #include "aldente_client.h"
+#include "aldente_server.h"
 
 
 int main(int argc, const char *argv[]) {
@@ -19,8 +20,7 @@ int main(int argc, const char *argv[]) {
         if (selection == "test") {
             exit(Catch::Session().run(argc, argv));
         } else if (selection == "server") {
-            std::cerr << "Server not implemented yet." << std::endl;
-            exit(EXIT_FAILURE);
+            aldente = new AldenteServer;
         } else {
             std::cerr << "Invalid argument." << std::endl;
             exit(EXIT_FAILURE);
