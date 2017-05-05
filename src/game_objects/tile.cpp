@@ -23,7 +23,7 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     // Set's the mesh's location relative to the model
     mesh->local_transform = glm::mat4(1.0f);
     mesh->geometry = GeometryGenerator::generate_plane(1.f, true);
-    Material *mat = new Material(color::indian_red);
+    Material *mat = new Material(color::white);
     mesh->material = mat;
     mesh->geometry->attach_texture(AssetLoader::get_texture("cobblestone.png"));
 
@@ -47,7 +47,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     // Set's the mesh's location relative to the model
     mesh->local_transform = glm::mat4(1.0f);
     mesh->geometry = GeometryGenerator::generate_cube(1.0f);
-    Material *mat = new Material(color::indian_red);
+    Material *mat = new Material(color::white);
     mesh->material = mat;
     mesh->geometry->attach_texture(AssetLoader::get_texture("wall.png"));
 

@@ -44,7 +44,8 @@ void main()
     vec3 result;
     if (texture_enabled){
         vec3 tex_color = vec3(texture(texture_map, frag_tex_coord));
-        mat.diffuse = mat.ambient = tex_color;
+        mat.diffuse = tex_color * mat.diffuse;
+        mat.ambient = tex_color * mat.ambient;
     }
 
     result = calc_color(mat, normal, view_dir, light_dir, light_intensity, dir_light.ambient_coeff);

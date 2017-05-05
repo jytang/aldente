@@ -10,7 +10,6 @@
 
 #include <vector>
 #include "tile.h"
-#include "util/colors.h"
 #include "game/construct_types.h"
 #include "game/direction.h"
 

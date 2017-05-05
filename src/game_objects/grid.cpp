@@ -1,9 +1,15 @@
 #include "grid.h"
 #include "events.h"
 #include "game/phase.h"
+#include "util/colors.h"
 
 #include <iostream>
 #include <fstream>
+
+// Default color is white, meaning that it only uses texture
+glm::vec3 default_color = color::white;
+// When selected, will tint the tile green, but keeps texture
+glm::vec3 select_color = color::green;
 
 Grid::Grid(const char *map_loc) :
         hover(nullptr) {
@@ -116,9 +122,9 @@ void Grid::setup_listeners() {
 
 void Grid::update() {
     if (grid[hoverX][hoverZ] != hover) {
-        hover->set_color(color::indian_red);
+        hover->set_color(default_color);
         hover = grid[hoverX][hoverZ];
-        hover->set_color(color::windwaker_green);
+        hover->set_color(select_color);
     }
 }
 
