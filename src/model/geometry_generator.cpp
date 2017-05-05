@@ -19,6 +19,7 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     glm::vec3 v6 = {scale / 2.f, -scale / 2.f, -scale / 2.f};
     glm::vec3 v7 = {-scale / 2.f, -scale / 2.f, -scale / 2.f};
 
+    // Top Face
     cube->vertices.push_back(v0);
     cube->vertices.push_back(v2);
     cube->vertices.push_back(v1);
@@ -26,6 +27,15 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     cube->vertices.push_back(v2);
     cube->vertices.push_back(v3);
 
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+
+
+    // Back Face
     cube->vertices.push_back(v2);
     cube->vertices.push_back(v6);
     cube->vertices.push_back(v3);
@@ -33,13 +43,29 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     cube->vertices.push_back(v6);
     cube->vertices.push_back(v7);
 
+    cube->tex_coords.push_back(glm::vec2(1.f, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+
+    // Left Face
+    cube->vertices.push_back(v3);
+    cube->vertices.push_back(v7);
     cube->vertices.push_back(v1);
-    cube->vertices.push_back(v3);
-    cube->vertices.push_back(v5);
-    cube->vertices.push_back(v3);
+    cube->vertices.push_back(v1);
     cube->vertices.push_back(v7);
     cube->vertices.push_back(v5);
 
+    cube->tex_coords.push_back(glm::vec2(1.f, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+
+    // Right Face
     cube->vertices.push_back(v0);
     cube->vertices.push_back(v4);
     cube->vertices.push_back(v2);
@@ -47,6 +73,14 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     cube->vertices.push_back(v4);
     cube->vertices.push_back(v6);
 
+    cube->tex_coords.push_back(glm::vec2(1.f, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+
+    // Front Face
     cube->vertices.push_back(v1);
     cube->vertices.push_back(v5);
     cube->vertices.push_back(v0);
@@ -54,12 +88,28 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     cube->vertices.push_back(v5);
     cube->vertices.push_back(v4);
 
+    cube->tex_coords.push_back(glm::vec2(1.f, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(0, 1.f));
+    cube->tex_coords.push_back(glm::vec2(1.f, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+
+    // Bottom Face
     cube->vertices.push_back(v5);
     cube->vertices.push_back(v7);
     cube->vertices.push_back(v4);
     cube->vertices.push_back(v4);
     cube->vertices.push_back(v7);
     cube->vertices.push_back(v6);
+
+    // Let's assume Bottom Face has no Texture
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));
+    cube->tex_coords.push_back(glm::vec2(0, 0));    
 
     for (int i = 0; i < 6; ++i)
         cube->normals.push_back(glm::vec3(0.f, 1.f, 0.f));
@@ -240,10 +290,29 @@ Geometry *GeometryGenerator::generate_cylinder(GLfloat radius, GLfloat height, G
 
 Geometry *GeometryGenerator::generate_plane(GLfloat scale, bool has_texture) {
     Geometry *plane = new Geometry();
-
-    if (has_texture) {
+    
         // Done square by square for repeatable texture
 
+    glm::vec3 v0 = { -scale / 2.f, 0, -scale / 2.f }; //Top Left
+    glm::vec3 v1 = { scale / 2.f , 0, -scale / 2.f }; //Top Right
+    glm::vec3 v2 = { -scale / 2.f, 0, scale / 2.f }; //Bottom Left
+    glm::vec3 v3 = { scale / 2.f, 0, scale / 2.f }; //Bottom Right
+
+    plane->vertices.push_back(v0);
+    plane->vertices.push_back(v2);
+    plane->vertices.push_back(v1);
+    plane->vertices.push_back(v1);
+    plane->vertices.push_back(v2);
+    plane->vertices.push_back(v3);
+
+    plane->tex_coords.push_back(glm::vec2(0, 0));
+    plane->tex_coords.push_back(glm::vec2(0, 1.f));
+    plane->tex_coords.push_back(glm::vec2(1.f, 0));
+    plane->tex_coords.push_back(glm::vec2(1.f, 0));
+    plane->tex_coords.push_back(glm::vec2(0, 1.f));
+    plane->tex_coords.push_back(glm::vec2(1.f, 1.f));
+
+        /*
         float divisions = 10.f;
         float step = (scale * 2) / divisions;
 
@@ -285,6 +354,8 @@ Geometry *GeometryGenerator::generate_plane(GLfloat scale, bool has_texture) {
         plane->vertices.push_back(v2);
         plane->vertices.push_back(v3);
     }
+
+    */
 
     glm::vec3 n = {0, 1.0f, 0};
 
