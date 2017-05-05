@@ -8,7 +8,7 @@ void ShadowShader::init() {
     glGenFramebuffers(1, &FBO);
 
     // Generate shadow map texture.
-    shadow_map_size = 2048;
+    shadow_map_size = 4096;
     glGenTextures(1, &shadow_map_tex);
     glBindTexture(GL_TEXTURE_2D, shadow_map_tex);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
