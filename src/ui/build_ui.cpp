@@ -51,7 +51,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
         events::build::construct_changed_event(constructs[content_index].type);
     });
 
-    events::toggle_ui_event.connect([&](void) {
+    events::debug::toggle_ui_event.connect([&](void) {
         if (enabled)
             disable();
         else

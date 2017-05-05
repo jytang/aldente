@@ -16,6 +16,7 @@ class MainScene : public Scene {
 private:
     Grid *grid;
     Tile *hover;
+    bool lights_debug_on = false;
 public:
     MainScene();
     void update() override;

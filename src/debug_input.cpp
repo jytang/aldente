@@ -43,7 +43,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     d.window->close();
                     break;
                 case GLFW_KEY_Q:
-                    events::toggle_debug_shadows_event();
+                    events::debug::toggle_debug_shadows_event();
                     break;
                 case GLFW_KEY_Z: {
                     events::JoystickData jd = { 1, true, 0, 0 };
@@ -56,7 +56,10 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     break;
                 }
                 case GLFW_KEY_U:
-                    events::toggle_ui_event();
+                    events::debug::toggle_ui_event();
+                    break;
+                case GLFW_KEY_L:
+                    events::debug::toggle_light_rotation_event();
                     break;
                 case GLFW_KEY_0:
                     GameState::set_phase(&GameState::menu_phase);

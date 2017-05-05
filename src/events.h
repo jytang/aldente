@@ -92,9 +92,11 @@ namespace events {
     };
     extern signal<void(WindowScrollData &)> window_scroll_event;
 
-    extern signal<void()> toggle_debug_shadows_event;
-    extern signal<void()> toggle_ui_event;
-
+    namespace debug {
+        extern signal<void()> toggle_debug_shadows_event;
+        extern signal<void()> toggle_ui_event;
+        extern signal<void()> toggle_light_rotation_event;
+    }
     // The user has made a selection on the UI grid.
     extern signal<void(int)> ui_grid_selection_event;
 

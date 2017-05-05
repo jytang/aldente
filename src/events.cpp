@@ -10,8 +10,13 @@ namespace events {
     signal<void(WindowCursorData &)> window_cursor_event;
     signal<void(WindowMouseButtonData &)> window_mouse_button_event;
     signal<void(WindowScrollData &)> window_scroll_event;
-    signal<void()> toggle_debug_shadows_event;
-    signal<void()> toggle_ui_event;
+
+    namespace debug {
+        signal<void()> toggle_debug_shadows_event;
+        signal<void()> toggle_ui_event;
+        signal<void()> toggle_light_rotation_event;
+    }
+
     signal<void(int)> ui_grid_selection_event;
     signal<void(RigidBodyData d)> add_rigidbody_event;
     signal<void(GameObject *obj)> remove_rigidbody_event;

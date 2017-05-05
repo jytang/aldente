@@ -12,7 +12,7 @@ Shadows::Shadows()
     : debug_shadows_on(false) {
 
     // Set up callbacks
-    events::toggle_debug_shadows_event.connect([&](void) {
+    events::debug::toggle_debug_shadows_event.connect([&](void) {
         debug_shadows_on = !debug_shadows_on;
     });
 
