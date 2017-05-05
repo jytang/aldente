@@ -57,7 +57,13 @@ void AldenteClient::start() {
     Window window(game_name, true, width, height);
 
     // Create input handlers.
-    input::ConceptualTranslator translator(input::BTN_MAP_MATRICOM, input::KBD_MAP_DEBUG);
+    string controller;
+    Config::config->get_value(Config::str_controller, controller);
+    const auto control_mapping =
+            controller == "XBOX" ? input::BTN_MAP_XBOX :
+            controller == "MATRICOM" ? input::BTN_MAP_MATRICOM :
+            input::BTN_MAP_XBOX;
+    input::ConceptualTranslator translator(control_mapping, input::KBD_MAP_DEBUG);
     input::AxisCombiner stick_handler(translator, input::STICKS_DEFAULT);
 
     // Setup subsystems after window creation.

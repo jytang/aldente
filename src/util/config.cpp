@@ -11,6 +11,7 @@ string Config::str_far_plane = "FarPlane";
 string Config::str_is_server = "IsServer";
 string Config::str_server_ip = "ServerIp";
 string Config::str_port = "Port";
+string Config::str_controller = "Controller";
 
 typedef pair<string, string> StringPair;
 Config *Config::config = new Config();
