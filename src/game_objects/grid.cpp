@@ -3,7 +3,6 @@
 #include "game/phase.h"
 #include "util/colors.h"
 
-#include <iostream>
 #include <fstream>
 
 // Default color is white, meaning that it only uses texture
@@ -13,79 +12,9 @@ glm::vec3 select_color = color::green;
 
 Grid::Grid(const char *map_loc) :
         hover(nullptr) {
-
-    // Loads map from file
-    std::ifstream fin;
-    fin.open(map_loc);
-
-    // File does not exist, exit
-    if (!fin.good())
-        return;
-    
-    std::string str_buf;
-    int int_buf;
-
-    // Parse File
-    while (!fin.eof()) {
-        fin >> str_buf;
-        if (str_buf == "height") {
-            fin >> int_buf;
-            height = int_buf;
-        }
-        else if (str_buf == "width") {
-            fin >> int_buf;
-            width = int_buf;
-        }
-        else if (str_buf == "tag") {
-            // To implement later, if we want some automated way
-            // in the file to check what number corresponds to what type of tile
-        }
-        else if (str_buf == "data") {
-            for (int r = 0; r < height; r++) {
-                std::vector<Tile *> new_row;
-
-                for (int c = 0; c < width; c++) {
-                    fin >> int_buf;
-                    if (int_buf == 3) {                        
-                        FloorTile *new_tile = new FloorTile(c, r);
-                        new_row.push_back(new_tile);
-                    } 
-                    else if (int_buf == 5) {                        
-                        WallTile *new_tile = new WallTile(c, r);
-                        new_row.push_back(new_tile);
-                    }
-                }
-
-                grid.push_back(new_row);
-            }
-        }
-    }
+    load_map(map_loc);
 
     hover = grid[0][0];
-
-    /*
-    //width = w;
-    //height = h;
-    hoverX = 0;
-    hoverZ = 0;
-
-    for (int i = 0; i < width; i++) {
-        std::vector<Tile *> newRow;
-        for (int j = 0; j < height; j++) {
-            if (i == 0 || i == width - 1 || j == 0 || j == height - 1) {
-                WallTile* toAdd = new WallTile(i, j);
-                newRow.push_back(toAdd);
-            } else {
-                FloorTile* toAdd = new FloorTile(i, j);
-                newRow.push_back(toAdd);
-            }
-        }
-        grid.push_back(newRow);
-    }
-
-    hover = grid[hoverX][hoverZ];
-
-    */
 
     setup_listeners();
 }
@@ -176,5 +105,54 @@ void Grid::move_selection(Direction d) {
         break;
     default:
         break;
+    }
+}
+
+void Grid::load_map(const char *map_loc) {
+    // Loads map from file
+    std::ifstream fin;
+    fin.open(map_loc);
+
+    // File does not exist, exit
+    if (!fin.good())
+        return;
+
+    std::string str_buf;
+    int int_buf;
+
+    // Parse File
+    while (!fin.eof()) {
+        fin >> str_buf;
+        if (str_buf == "height") {
+            fin >> int_buf;
+            height = int_buf;
+        }
+        else if (str_buf == "width") {
+            fin >> int_buf;
+            width = int_buf;
+        }
+        else if (str_buf == "tag") {
+            // To implement later, if we want some automated way
+            // in the file to check what number corresponds to what type of tile
+        }
+        else if (str_buf == "data") {
+            for (int r = 0; r < height; r++) {
+                std::vector<Tile *> new_row;
+
+                for (int c = 0; c < width; c++) {
+                    fin >> int_buf;
+                    if (int_buf == 3) {
+                        FloorTile *new_tile = new FloorTile(c, r);
+                        new_row.push_back(new_tile);
+                    }
+                    else if (int_buf == 5) {
+                        WallTile *new_tile = new WallTile(c, r);
+                        new_row.push_back(new_tile);
+                    }
+                }
+
+                grid.push_back(new_row);
+            }
+        }
     }
 }

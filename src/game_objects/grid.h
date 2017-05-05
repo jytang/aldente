@@ -29,6 +29,8 @@ public:
 
     std::vector<std::vector<Tile *>> getGrid() { return grid; };
 
+    void load_map(const char *map_loc);
+
     void update();
 
     // Returns true if this construct is allowed to be built.

@@ -36,7 +36,7 @@ void MainScene::setup_scene() {
     light_pos = glm::vec3(0.f, 2.f, 1.f);
 
     //Setting up scene graph for Grid
-    grid = new Grid("assets/maps/dungeon_test");    
+    grid = new Grid("assets/maps/dungeon_test.txt");
     //grid = new Grid(20, 20);
     std::vector<std::vector<Tile *>> toAdd = grid->getGrid();
     for (int i = 0; i < toAdd.size(); i++) {
