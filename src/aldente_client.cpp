@@ -104,9 +104,10 @@ void AldenteClient::start() {
     // Game logic. Temporarily start game with build phase.
     GameState::init(&GameState::build_phase);
 
-    bool is_server;
-    Config::config->get_value(Config::str_is_server, is_server);
-    NetworkManager::connect(is_server);
+    //ClientNetworkManager network;
+    //network.connect();
+
+    std::cerr << "Starting client..." << std::endl;
 
     while (!window.should_close()) {
         // Do polling
@@ -114,7 +115,7 @@ void AldenteClient::start() {
             poller->poll();
         }
 
-        NetworkManager::update();
+        //network.update();
         GameState::update();
         physics.update();
 
@@ -125,5 +126,5 @@ void AldenteClient::start() {
         window.swap_buffers();
     }
 
-    NetworkManager::disconnect();
+    //network.disconnect();
 }

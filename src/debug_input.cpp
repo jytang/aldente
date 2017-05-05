@@ -84,6 +84,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
     });
 
     // Test fire for button events and stick events
+    /*
     events::button_event.connect([](events::ButtonData &d) {
         fprintf(stderr,
                 "ButtonEvent:\n"
@@ -105,6 +106,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
         debug_input_on = !debug_input_on;
         scene_manager.get_camera()->disable_movement = debug_input_on;
     });
+    */
 }
 
 // TODO: change this to a "FrameEdge" event callback
