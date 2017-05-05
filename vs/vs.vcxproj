@@ -101,7 +101,8 @@
       <Command>xcopy /F /Y "$(SolutionDir)\packages\boost_thread-vc140.1.64.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_thread-vc140-mt-gd-1_64.dll" "$(OutDir)"
 xcopy /F /Y "$(SolutionDir)\packages\boost_system-vc140.1.64.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_system-vc140-mt-gd-1_64.dll" "$(OutDir)"
 xcopy /F /Y "$(SolutionDir)\packages\boost_chrono-vc140.1.64.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_chrono-vc140-mt-gd-1_64.dll" "$(OutDir)"
-xcopy /F /Y "$(SolutionDir)\packages\boost_filesystem-vc140.1.64.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_filesystem-vc140-mt-gd-1_64.dll" "$(OutDir)"</Command>
+xcopy /F /Y "$(SolutionDir)\packages\boost_filesystem-vc140.1.64.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_filesystem-vc140-mt-gd-1_64.dll" "$(OutDir)"
+xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\address-model-$(PlatformArchitecture)\lib\boost_signals-vc140-mt-gd-1_64.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
