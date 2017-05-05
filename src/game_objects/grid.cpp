@@ -31,7 +31,8 @@ Grid::Grid(const char *map_loc) :
             width = int_buf;
         }
         else if (str_buf == "tag") {
-
+            // To implement later, if we want some automated way
+            // in the file to check what number corresponds to what type of tile
         }
         else if (str_buf == "data") {
             for (int r = 0; r < height; r++) {
@@ -40,11 +41,11 @@ Grid::Grid(const char *map_loc) :
                 for (int c = 0; c < width; c++) {
                     fin >> int_buf;
                     if (int_buf == 3) {                        
-                        FloorTile *new_tile = new FloorTile(r, c);
+                        FloorTile *new_tile = new FloorTile(c, r);
                         new_row.push_back(new_tile);
                     } 
                     else if (int_buf == 5) {                        
-                        WallTile *new_tile = new WallTile(r, c);
+                        WallTile *new_tile = new WallTile(c, r);
                         new_row.push_back(new_tile);
                     }
                 }

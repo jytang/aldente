@@ -49,7 +49,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     mesh->material = mat;
 
     model->add_mesh(mesh);
-    transform.set_position(x, 0, z);
+    transform.set_position(x, 0.5f, z);
 
     events::RigidBodyData rigid = {
         glm::vec3(x,0.5f,z), //position
