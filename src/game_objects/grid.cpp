@@ -45,6 +45,10 @@ void Grid::setup_listeners() {
         bool permitted = verify_build(static_cast<ConstructType>(c.type()), c.x(), c.z());
         c.set_status(permitted);
         events::build::respond_build_event(c);
+
+        // Build the construct locally on the server.
+        if (permitted)
+            build(static_cast<ConstructType>(c.type()), c.x(), c.z());
     });
 
     events::build::update_build_event.connect([&](proto::Construct& c) {
