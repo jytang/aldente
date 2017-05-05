@@ -36,14 +36,15 @@ void MainScene::setup_scene() {
     light_pos = glm::vec3(0.f, 2.f, 1.f);
 
     //Setting up scene graph for Grid
-    grid = new Grid(20, 20);
+    grid = new Grid("assets/maps/dungeon_test");    
+    //grid = new Grid(20, 20);
     std::vector<std::vector<Tile *>> toAdd = grid->getGrid();
     for (int i = 0; i < toAdd.size(); i++) {
         std::vector<Tile *> currRow = toAdd[i];
         for (int j = 0; j < currRow.size(); j++) {
             objs.push_back(currRow[j]);
         }
-    }
+    }    
 
     // Test Model loading
     Model *player_model = AssetLoader::get_model(std::string("boy_two_scaled"));

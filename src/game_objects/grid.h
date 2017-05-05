@@ -24,7 +24,7 @@ private:
     Tile *hover;
     ConstructType selected = ConstructType::REMOVE;
 public:
-    Grid(int w, int h);
+    Grid(const char *map_loc);
 
     ~Grid();
 

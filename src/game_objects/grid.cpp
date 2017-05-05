@@ -2,10 +2,63 @@
 #include "events.h"
 #include "game/phase.h"
 
-Grid::Grid(int w, int h) :
+#include <iostream>
+#include <fstream>
+
+Grid::Grid(const char *map_loc) :
         hover(nullptr) {
-    width = w;
-    height = h;
+
+    // Loads map from file
+    std::ifstream fin;
+    fin.open(map_loc);
+
+    // File does not exist, exit
+    if (!fin.good())
+        return;
+    
+    std::string str_buf;
+    int int_buf;
+
+    // Parse File
+    while (!fin.eof()) {
+        fin >> str_buf;
+        if (str_buf == "height") {
+            fin >> int_buf;
+            height = int_buf;
+        }
+        else if (str_buf == "width") {
+            fin >> int_buf;
+            width = int_buf;
+        }
+        else if (str_buf == "tag") {
+
+        }
+        else if (str_buf == "data") {
+            for (int r = 0; r < height; r++) {
+                std::vector<Tile *> new_row;
+
+                for (int c = 0; c < width; c++) {
+                    fin >> int_buf;
+                    if (int_buf == 3) {                        
+                        FloorTile *new_tile = new FloorTile(r, c);
+                        new_row.push_back(new_tile);
+                    } 
+                    else if (int_buf == 5) {                        
+                        WallTile *new_tile = new WallTile(r, c);
+                        new_row.push_back(new_tile);
+                    }
+                }
+
+                grid.push_back(new_row);
+            }
+        }
+    }
+
+    hover = grid[0][0];
+
+    /*
+    //width = w;
+    //height = h;
     hoverX = 0;
     hoverZ = 0;
 
@@ -24,6 +77,9 @@ Grid::Grid(int w, int h) :
     }
 
     hover = grid[hoverX][hoverZ];
+
+    */
+
     setup_listeners();
 }
 
