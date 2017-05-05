@@ -36,8 +36,8 @@ void main()
         bone_trans += bones[bone_ids[3]] * weights[3];
 
         // Currently need inverse due to bug with mesh_model being multipled twice in bone
-        new_pos = inverse(mesh_model) * bone_trans * new_pos;
-        new_norm = inverse(mesh_model) * bone_trans * new_norm;
+        new_pos = bone_trans * new_pos;
+        new_norm = bone_trans * new_norm;
     }
 
     gl_Position = projection * view * model * mesh_model * new_pos;

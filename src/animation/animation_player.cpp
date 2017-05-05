@@ -28,8 +28,7 @@ void AnimationPlayer::update() {
         // Check if Animation has Ended
         if (time_in_ticks > animation->get_anim()->mDuration) {
             if (!loop) {
-                is_paused = true;
-                cur_time = 0.0f;
+                stop();
                 return;
             }
         }
@@ -65,7 +64,8 @@ void AnimationPlayer::pause() {
 
 void AnimationPlayer::stop() {
     is_paused = true;
-    cur_time = 0.0f;
+    cur_time = 0.0f;    
+    reset_model();
 }
 
 void AnimationPlayer::set_speed(float speed) {
@@ -78,6 +78,13 @@ void AnimationPlayer::set_loop(bool will_loop) {
 
 bool AnimationPlayer::check_paused() {
     return is_paused;
+}
+
+// Resets the model to its default pose, without animations
+void AnimationPlayer::reset_model() {
+    for (int i = 0; i < model->bones_final.size(); i++) {
+        model->bones_final[i] = glm::mat4(1.0f);
+    }    
 }
 
 // Processes Animation Node using Assimp's node structure
@@ -116,9 +123,12 @@ void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim
 
     if (model->bone_mapping.find(node_name) != model->bone_mapping.end()) {
         unsigned int bone_index = model->bone_mapping[node_name];
-        // Need to figure out why global_inv_trans is needed, since it causes a bug with mesh_model matrix being
-        // multiplied twice in basic shader.
-        model->bones_final[bone_index] =  model->global_inv_trans * global_trans * model->bone_offsets[bone_index];
+
+        // Calculates final bone transformation matrix. Requires inverse of bones_default
+        // because shader multiples by mesh_model by default, and that is actually already 
+        // incorporated in global_trans, therefore needs to be counteracted with the inverse.
+        model->bones_final[bone_index] =  glm::inverse(model->bones_default[bone_index]) *  
+                            model->global_inv_trans * global_trans * model->bone_offsets[bone_index];
     }
 
     for (unsigned int i = 0; i < node->mNumChildren; i++) {

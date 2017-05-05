@@ -32,6 +32,8 @@ private:
     float speed;
     bool loop;
     bool is_paused;
+    
+    void reset_model();
 
     void process_animation(float anim_time, const aiAnimation *anim, Model *model, const aiNode *node, glm::mat4 parent_mat);
 
