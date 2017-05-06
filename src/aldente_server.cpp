@@ -9,6 +9,7 @@
 #include <chrono>
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include "window.h"
 
 
 AldenteServer::~AldenteServer() {
@@ -46,8 +47,7 @@ void AldenteServer::start() {
 
     // Create hidden window, since GLEW needs a context.
     glfwWindowHint(GLFW_VISIBLE, false);
-    GLFWwindow* offscreen_context = glfwCreateWindow(1280, 720, "", NULL, NULL);
-    glfwMakeContextCurrent(offscreen_context);
+    Window hidden_window("hidden", true, 1280, 720);
 
     glSetup();
     ShaderManager::init();
@@ -63,6 +63,9 @@ void AldenteServer::start() {
     physics.set_scene(&testScene);
     scene_manager.set_current_scene(&testScene);
 
+    ServerNetworkManager network;
+    network.connect();
+
     Timer timer(GAME_TICK);
     Timer::provide(&timer);
 
@@ -70,22 +73,24 @@ void AldenteServer::start() {
         std::cout << "print me once after one second" << std::endl;
     });
 
-    const std::function<void()> cancel = Timer::get()->do_every(std::chrono::milliseconds(500),
-                                                               [&cancel](std::chrono::duration<double> d) {
-        static int count = 0;
-        std::cout << "print me every 0.5 seconds: (" << ++count << " / 5)" << std::endl;
-        if (count >= 5) cancel();
-    });
-
-    ServerNetworkManager network;
-    network.connect();
+    const std::function<void()> cancel = Timer::get()->do_every(
+            std::chrono::milliseconds(500),
+            [&cancel](std::chrono::duration<double> d) {
+                static int count = 0;
+                std::cout << "print me every 0.5 seconds: (" << ++count << " / 5)" << std::endl;
+                if (count >= 5) cancel();
+            });
 
     std::cerr << "Starting server..." << std::endl;
 
     while (true) {
+        std::cerr << "BEFORE: " << Timer::get()->so_far().count() << std::endl;
         network.update();
+        std::cerr << "NET: " << Timer::get()->so_far().count() << std::endl;
         GameState::update();
+        std::cerr << "GS: " << Timer::get()->so_far().count() << std::endl;
         scene_manager.get_current_scene()->update();
+        std::cerr << "SM: " << Timer::get()->so_far().count() << std::endl;
 
         Timer::get()->wait();
     }
