@@ -119,8 +119,9 @@ void Physics::collision_detection() {
         // Send callbacks to both objects' on_collide.
         GameObject *go_a = static_cast<GameObject *>(obj_a->getUserPointer());
         GameObject *go_b = static_cast<GameObject *>(obj_b->getUserPointer());
-        go_a->on_collision(go_b);
-        go_b->on_collision(go_a); // ORDER OF THESE ON_COLLISION CALLS MAY MATTER HERE. CONSIDER BUFFERING.
+        // ORDER OF THESE ON_COLLISION CALLS MAY MATTER HERE. CONSIDER BUFFERING.
+        if (go_a->notify_on_collision) go_a->on_collision(go_b);
+        if (go_b->notify_on_collision) go_b->on_collision(go_a);
 
         // Determine points at which the objects collide.
         // Unused so far.
