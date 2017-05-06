@@ -5,6 +5,9 @@
 
 #include <fstream>
 
+#define FLOOR_TILE 3
+#define WALL_TILE 5
+
 // Default color is white, meaning that it only uses texture
 glm::vec3 default_color = color::white;
 // When selected, will tint the tile green, but keeps texture
@@ -134,25 +137,40 @@ void Grid::load_map(const char *map_loc) {
         else if (str_buf == "tag") {
             // To implement later, if we want some automated way
             // in the file to check what number corresponds to what type of tile
+            // Currently, tile_ids are hardcoded.
         }
         else if (str_buf == "data") {
+            // Parses data and creates grid
             for (int r = 0; r < height; r++) {
                 std::vector<Tile *> new_row;
 
                 for (int c = 0; c < width; c++) {
                     fin >> int_buf;
-                    if (int_buf == 3) {
-                        FloorTile *new_tile = new FloorTile(c, r);
-                        new_row.push_back(new_tile);
-                    }
-                    else if (int_buf == 5) {
-                        WallTile *new_tile = new WallTile(c, r);
-                        new_row.push_back(new_tile);
-                    }
+                    new_row.push_back(make_tile(int_buf, c, r));
                 }
 
                 grid.push_back(new_row);
             }
         }
     }
+
+    fin.close();
+}
+
+Tile *Grid::make_tile(int tile_id, int x, int z) {
+
+    Tile *new_tile = nullptr;
+
+    switch (tile_id) {
+    case FLOOR_TILE:
+        new_tile = new FloorTile(x, z);
+        break;
+    case WALL_TILE:
+        new_tile = new WallTile(x, z);
+        break;
+    default:
+        break;
+    }
+
+    return new_tile;
 }

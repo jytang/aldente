@@ -4,7 +4,7 @@
 #include "events.h"
 
 MainScene::MainScene() : Scene() {
-    
+
 }
 
 void MainScene::update() {
@@ -44,7 +44,7 @@ void MainScene::setup_scene() {
         for (int j = 0; j < currRow.size(); j++) {
             objs.push_back(currRow[j]);
         }
-    }    
+    }
 
     // Test Model loading
     Model *player_model = AssetLoader::get_model(std::string("boy_two_scaled"));
