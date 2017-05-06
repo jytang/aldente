@@ -112,7 +112,7 @@ void Physics::collision_detection() {
     int num_manifolds = dynamicsWorld->getDispatcher()->getNumManifolds();
     for (int i = 0; i < num_manifolds; i++)
     {
-        btPersistentManifold* contact_manifold =  dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
+        btPersistentManifold* contact_manifold = dynamicsWorld->getDispatcher()->getManifoldByIndexInternal(i);
         const btCollisionObject *obj_a = contact_manifold->getBody0();
         const btCollisionObject *obj_b = contact_manifold->getBody1();
 
@@ -125,6 +125,7 @@ void Physics::collision_detection() {
 
         // Determine points at which the objects collide.
         // Unused so far.
+        /*
         int num_contacts = contact_manifold->getNumContacts();
         for (int j = 0; j < num_contacts; j++)
         {
@@ -136,6 +137,7 @@ void Physics::collision_detection() {
                 const btVector3& normalOnB = pt.m_normalWorldOnB;
             }
         }
+        */
     }
 }
 
