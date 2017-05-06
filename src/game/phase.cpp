@@ -47,7 +47,6 @@ void BuildPhase::setup() {
         }
         // B button pressed.
         else if (d.input == events::BTN_B && d.state == 1) {
-            
             events::build::select_grid_return_event();
             is_menu = true;
         }
@@ -85,5 +84,3 @@ void DungeonPhase::teardown() {
     joystick_conn.disconnect();
     button_conn.disconnect();
 }
-
-
