@@ -14,7 +14,7 @@ Color default_color = Color::WHITE;
 Color select_color = Color::GREEN;
 
 Grid::Grid(const char *map_loc) :
-        hover(nullptr) {
+        hover(nullptr), hoverX(0), hoverZ(0) {
     load_map(map_loc);
 
     hover = grid[0][0];
