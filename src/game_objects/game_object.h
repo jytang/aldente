@@ -47,4 +47,6 @@ public:
     void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
     int get_id() { return id; };
     void set_id(int to_set) { id = to_set; };
+
+    void set_position(glm::vec3 pos);
 };

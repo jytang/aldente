@@ -11,7 +11,7 @@ Player::Player() : GameObject() {
     direction = glm::vec3(0.0f);
 
     events::RigidBodyData rigid = {
-        glm::vec3(2.0f, 0.0f, 2.0f), //position
+        glm::vec3(0.0f, 0.0f, 0.0f), //position
         1, //mass
         hit_capsule, //btshape
         glm::vec3(0,0,0), //inertia
@@ -26,8 +26,7 @@ Player::Player() : GameObject() {
 
     setup_listeners();
 
-    transform.set_position(2.0f, 0.0f, 2.0f);
-
+    set_position({ 2.0f, 0.0f, 2.0f });
 }
 
 void Player::setup_listeners() {
