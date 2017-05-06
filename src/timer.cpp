@@ -21,6 +21,10 @@ Timer *Timer::get() {
     return instance;
 }
 
+std::chrono::duration<double> Timer::so_far() {
+    return system_clock::now() - last_tick;
+}
+
 void Timer::wait() {
     // Handle cancels
     for (int id : to_cancel) {

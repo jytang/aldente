@@ -19,6 +19,9 @@ public:
     static void provide(Timer *timer);
     static Timer *get();
 
+    // Returns the amount of time that has passed since the last tick. Good for profiling.
+    Duration so_far();
+
     // Runs all timed out callbacks and causes the timer to block the thread until the next tick interval
     void wait();
 
