@@ -18,8 +18,6 @@ private:
     btCollisionDispatcher *dispatcher;
     btSequentialImpulseConstraintSolver *solver;
     std::map<Scene*, btDiscreteDynamicsWorld*> scene_worlds;
-
-    boost::signals2::connection currentRigidSignal;
 public:
     Physics();
 
