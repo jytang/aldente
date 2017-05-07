@@ -24,8 +24,7 @@ void main()
     vec4 new_pos = vec4(position, 1.0);
     vec4 new_norm = vec4(normal, 0.0);
 
-    bool has_bones = weights[0] + weights[1] + weights[2] + weights[3] > 0;
-    //bool has_bones = dot(weights, vec4(1)) > 0;
+    bool has_bones = dot(weights, vec4(1)) > 0;
 
     if (has_bones){
         // Handles all bone transformations if has bone weights
@@ -35,7 +34,6 @@ void main()
         bone_trans += bones[bone_ids[2]] * weights[2];
         bone_trans += bones[bone_ids[3]] * weights[3];
 
-        // Currently need inverse due to bug with mesh_model being multipled twice in bone
         new_pos = bone_trans * new_pos;
         new_norm = bone_trans * new_norm;
     }
