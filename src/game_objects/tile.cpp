@@ -6,12 +6,6 @@ Tile::Tile() :
     GameObject(),
     construct(nullptr) {}
 
-// TODO: GET RID OF THIS. DO NOT OVERRIDE GAMEOBJECT::DRAW.
-void Tile::draw(Shader *shader, SceneInfo &scene_info) {
-    GameObject::draw(shader, scene_info);
-    if (construct) construct->draw(shader, scene_info);
-}
-
 FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     width = 1;
     height = 1;
@@ -36,6 +30,8 @@ void FloorTile::setup_model() {
     mesh->geometry->attach_texture(AssetLoader::get_texture("cobblestone.png"));
 
     model->add_mesh(mesh);
+
+    transform.set_position((float)x, 0.0f, (float)z);
 }
 
 WallTile::WallTile(int x, int z) : Tile::Tile() {

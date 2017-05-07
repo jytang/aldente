@@ -33,15 +33,11 @@ public:
 
     Tile();
 
-    //Mesh *getMesh() { return mesh; };
-
     int getX() { return x; };
 
     int getZ() { return z; };
 
-    virtual void update() = 0;
-
-    void draw(Shader *shader, SceneInfo &scene_info) override;
+    virtual void update() override = 0;
 
     void set_construct(Construct* to_set) { construct = to_set; };
     Construct* get_construct() { return construct; };
