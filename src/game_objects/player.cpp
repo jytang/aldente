@@ -15,10 +15,10 @@ Player::Player() : GameObject() {
         1, //mass
         hit_capsule, //btshape
         glm::vec3(0,0,0), //inertia
-        this, //the gameobject
+        this //the gameobject
     };
     events::add_rigidbody_event(rigid);
-    
+
     // Lock y-axis
     rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
     //Lock angular rotation
@@ -27,6 +27,8 @@ Player::Player() : GameObject() {
     setup_listeners();
 
     transform.set_position(2.0f, 0.0f, 2.0f);
+
+    notify_on_collision = true;
 }
 
 void Player::setup_listeners() {
