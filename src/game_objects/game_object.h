@@ -32,10 +32,10 @@ public:
 
     GameObject();
 
-    // Parenting Stuff, Implement Later
-    //void add_child(GameObject *obj);
-    //void remove_child(GameObject *obj);
-    //void remove_all();
+    // Parenting Stuff
+    void add_child(GameObject *obj);
+    void remove_child(GameObject *obj);
+    void remove_all();
     
     virtual void draw(Shader *shader, SceneInfo &scene_info);
     virtual void update();
