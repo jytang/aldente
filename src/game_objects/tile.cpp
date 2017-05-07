@@ -59,8 +59,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
         0, //mass
         hit_box, //btshape
         glm::vec3(0,0,0), //inertia
-        this, //the gameobject
-        true
+        this //the gameobject
     };
     events::add_rigidbody_event(rigid);
 }
