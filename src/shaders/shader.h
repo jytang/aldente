@@ -4,8 +4,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <string>
-
 #include "scene/scene_info.h"
 #include "model/mesh.h"
 
@@ -17,13 +15,13 @@ public:
     GLuint get_id() { return shader_id; }
 
     // Returns location of the uniform variable
-    GLint get_uni(std::string uniform) { return glGetUniformLocation(shader_id, uniform.c_str()); }
+    GLint get_uni(const char *uniform) { return glGetUniformLocation(shader_id, uniform); }
 
     // Convenience for passing uniforms.
-    void set_uni(std::string uniform, int val) { glUniform1i(get_uni(uniform), val); }
-    void set_uni(std::string uniform, float val) { glUniform1f(get_uni(uniform), val); }
-    void set_uni(std::string uniform, glm::mat4 mat) { glUniformMatrix4fv(get_uni(uniform), 1, GL_FALSE, glm::value_ptr(mat)); }
-    void set_uni(std::string uniform, glm::vec3 v) { glUniform3f(get_uni(uniform), v.x, v.y, v.z); }
+    void set_uni(const char *uniform, int val) { glUniform1i(get_uni(uniform), val); }
+    void set_uni(const char *uniform, float val) { glUniform1f(get_uni(uniform), val); }
+    void set_uni(const char *uniform, glm::mat4 mat) { glUniformMatrix4fv(get_uni(uniform), 1, GL_FALSE, glm::value_ptr(mat)); }
+    void set_uni(const char *uniform, glm::vec3 v) { glUniform3f(get_uni(uniform), v.x, v.y, v.z); }
 
     // Set GL state to use this shader program.
     void use() { glUseProgram(shader_id); }

@@ -6,6 +6,8 @@
 #include "scene/point_light.h"
 #include "scene/spot_light.h"
 
+#include <cstdio>
+
 void BasicShader::init() {
     // Nothing to be done. For now.
 }
@@ -48,28 +50,36 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
 
     /* LIGHTS */
     // Send directional lights.
-    std::string uni_prefix = "dir_lights["; // Uniform prefix for directional light array.
+    char buf[128]; // hold uniform name as a char *, for perfomance when sending to shader.
+    char *uni_prefix = "dir_lights["; // Uniform prefix for directional light array.
     set_uni("num_dir_lights", (int) scene_info.dir_lights.size());
     for (int i = 0; i < scene_info.dir_lights.size(); ++i) {
         DirectionalLight l = scene_info.dir_lights[i];
-        std::string idx = std::to_string(i);
-        set_uni(uni_prefix + idx + "].direction", l.get_direction());
-        set_uni(uni_prefix + idx + "].color", l.color.to_vec());
-        set_uni(uni_prefix + idx + "].ambient_coeff", l.ambient_coeff);
-        set_uni(uni_prefix + idx + "].intensity", l.intensity);
+        sprintf(buf, "%s%d].direction", uni_prefix, i);
+        set_uni(buf, l.get_direction());
+        sprintf(buf, "%s%d].color", uni_prefix, i);
+        set_uni(buf, l.color.to_vec());
+        sprintf(buf, "%s%d].ambient_coeff", uni_prefix, i);
+        set_uni(buf, l.ambient_coeff);
+        sprintf(buf, "%s%d].intensity", uni_prefix, i);
+        set_uni(buf, l.intensity);
     }
 
     // Send point lights.
     set_uni("num_point_lights", (int) scene_info.point_lights.size());
-    uni_prefix = "point_lights["; // Uniform prefix for point light array.
+	uni_prefix = "point_lights["; // Uniform prefix for point light array.
     for (int i = 0; i < scene_info.point_lights.size(); ++i) {
         PointLight l = scene_info.point_lights[i];
-        std::string idx = std::to_string(i);
-        set_uni(uni_prefix + idx + "].position", l.get_position());
-        set_uni(uni_prefix + idx + "].color", l.color.to_vec());
-        set_uni(uni_prefix + idx + "].ambient_coeff", l.ambient_coeff);
-        set_uni(uni_prefix + idx + "].intensity", l.intensity);
-        set_uni(uni_prefix + idx + "].quadratic", l.quadratic);
+        sprintf(buf, "%s%d].position", uni_prefix, i);
+        set_uni(buf, l.get_position());
+        sprintf(buf, "%s%d].color", uni_prefix, i);
+        set_uni(buf, l.color.to_vec());
+        sprintf(buf, "%s%d].ambient_coeff", uni_prefix, i);
+        set_uni(buf, l.ambient_coeff);
+        sprintf(buf, "%s%d].intensity", uni_prefix, i);
+        set_uni(buf, l.intensity);
+        sprintf(buf, "%s%d].quadratic", uni_prefix, i);
+        set_uni(buf, l.quadratic);
     }
 
     // Send spot lights.
@@ -77,15 +87,22 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     uni_prefix = "spot_lights["; // Uniform prefix for spot light array.
     for (int i = 0; i < scene_info.spot_lights.size(); ++i) {
         SpotLight l = scene_info.spot_lights[i];
-        std::string idx = std::to_string(i);
-        set_uni(uni_prefix + idx + "].position", l.get_position());
-        set_uni(uni_prefix + idx + "].direction", l.get_direction());
-        set_uni(uni_prefix + idx + "].color", l.color.to_vec());
-        set_uni(uni_prefix + idx + "].angle", l.angle);
-        set_uni(uni_prefix + idx + "].taper", l.taper);
-        set_uni(uni_prefix + idx + "].intensity", l.intensity);
-        set_uni(uni_prefix + idx + "].quadratic", l.quadratic);
-        set_uni(uni_prefix + idx + "].ambient_coeff", l.ambient_coeff);
+        sprintf(buf, "%s%d].position", uni_prefix, i);
+        set_uni(buf, l.get_position());
+        sprintf(buf, "%s%d].direction", uni_prefix, i);
+        set_uni(buf, l.get_direction());
+        sprintf(buf, "%s%d].color", uni_prefix, i);
+        set_uni(buf, l.color.to_vec());
+        sprintf(buf, "%s%d].angle", uni_prefix, i);
+        set_uni(buf, l.angle);
+        sprintf(buf, "%s%d].taper", uni_prefix, i);
+        set_uni(buf, l.taper);
+        sprintf(buf, "%s%d].intensity", uni_prefix, i);
+        set_uni(buf, l.intensity);
+        sprintf(buf, "%s%d].quadratic", uni_prefix, i);
+        set_uni(buf, l.quadratic);
+        sprintf(buf, "%s%d].ambient_coeff", uni_prefix, i);
+        set_uni(buf, l.ambient_coeff);
     }
 
     /* TRANSFORMATION MATRICES */
