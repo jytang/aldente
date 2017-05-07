@@ -185,7 +185,7 @@ void Physics::add_rigid(events::RigidBodyData d) {
     d.object->set_rigid(rigidbody);
 
     // Set this rigidbody as a trigger.
-    if (d.trigger)
+    if (d.is_ghost)
         rigidbody->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
     dynamicsWorld->addRigidBody(rigidbody);

@@ -15,7 +15,7 @@ Player::Player() : GameObject() {
         1, //mass
         hit_capsule, //btshape
         glm::vec3(0,0,0), //inertia
-        this //the gameobject
+        this, //the gameobject
     };
     events::add_rigidbody_event(rigid);
 
