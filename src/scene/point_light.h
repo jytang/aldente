@@ -8,7 +8,7 @@ private:
 public:
     PointLight(glm::vec3 default_position,
                Color color = Color::WHITE,
-               float intensity = 1.f,
+               float intensity = 0.5f,
                float quadratic = 0.07f, // 7% inverse square falloff
                float ambient_coeff = 0.2f) // standard 20% ambience
             : Light(intensity, ambient_coeff, color),

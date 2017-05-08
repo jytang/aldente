@@ -12,8 +12,8 @@
 class Material {
 public:
     Material(Color diffuse = Color::WHITE,
-            Color ambient = Color::BLACK,
-            Color specular = Color::BLACK,
+            Color ambient = Color::WHITE,
+            Color specular = Color::WHITE,
             GLfloat shininess = 50.f, bool shadows = true)
         : ambient(ambient), diffuse(diffuse), specular(specular),
           shininess(shininess), shadows(shadows) {}
@@ -24,4 +24,3 @@ public:
     GLfloat shininess;
     bool shadows;
 };
-
