@@ -9,49 +9,14 @@
 #include <chrono>
 #include <iostream>
 #include <boost/filesystem.hpp>
-#include "window.h"
 
-
-AldenteServer::~AldenteServer() {
-    GeometryGenerator::destroy();
-    glfwTerminate();
-}
-
-static void glSetup() {
-    assert(glewInit() == GLEW_OK);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    glEnable(GL_CULL_FACE);
-    glCullFace(GL_BACK);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-}
-
-
-void AldenteServer::start() {
+void AldenteServer::start(bool is_windows) {
     Util::seed(0); // Seed PRNG.
-
-    // For Visual Studio, we're running the server from the aldente/Server directory,
-    // so we need to go up one directory for the correct path.
-    #ifdef _WIN32
-    boost::filesystem::current_path("..");
-    #endif
-
-    // Set up GLFW.
-    assert(glfwInit());
-    glfwSetErrorCallback([](int error, const char *description) {
-        std::cerr << description << std::endl;
-    });
-
-    // Create hidden window, since GLEW needs a context.
-    glfwWindowHint(GLFW_VISIBLE, false);
-    Window hidden_window("hidden", true, 1280, 720);
-
-    glSetup();
-    ShaderManager::init();
-    AssetLoader::setup();
+    
+    // For Visual Studio, we're running the server from the aldente/Server/ directory,
+    // so we need Boost filesystem to go up one directory for the correct path.
+    if (is_windows)
+        boost::filesystem::current_path("..");
     
     Physics physics;
     SceneManager scene_manager;
@@ -84,13 +49,9 @@ void AldenteServer::start() {
     std::cerr << "Starting server..." << std::endl;
 
     while (true) {
-        std::cerr << "BEFORE: " << Timer::get()->so_far().count() << std::endl;
         network.update();
-        std::cerr << "NET: " << Timer::get()->so_far().count() << std::endl;
         GameState::update();
-        std::cerr << "GS: " << Timer::get()->so_far().count() << std::endl;
         scene_manager.get_current_scene()->update();
-        std::cerr << "SM: " << Timer::get()->so_far().count() << std::endl;
 
         Timer::get()->wait();
     }

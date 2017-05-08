@@ -2,10 +2,10 @@
 
 #define CATCH_CONFIG_RUNNER
 #include "catch.h"
+#include "util/util.h"
 #include "aldente.h"
 #include "aldente_client.h"
 #include "aldente_server.h"
-
 
 int main(int argc, const char *argv[]) {
     Aldente *aldente;
@@ -29,6 +29,6 @@ int main(int argc, const char *argv[]) {
         aldente = new AldenteClient;
     }
 
-    aldente->start();
+    aldente->start(Util::has_suffix(argv[0], ".exe"));
     exit(EXIT_SUCCESS);
 }

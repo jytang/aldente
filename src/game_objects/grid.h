@@ -38,7 +38,7 @@ public:
     bool verify_build(ConstructType type, int col, int row);
 
     // Builds a construct at a location.
-    void build(ConstructType type, int col , int row);
+    void build(ConstructType type, int col, int row, bool graphical);
 
     void move_selection(Direction d);
 

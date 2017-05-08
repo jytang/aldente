@@ -117,3 +117,8 @@ bool Util::within_rect(glm::vec2 pos, glm::vec2 bottom_left, glm::vec2 top_right
     }
     return false;
 }
+
+bool Util::has_suffix(const std::string &str, const std::string &suffix) {
+    return str.size() >= suffix.size() &&
+        str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
