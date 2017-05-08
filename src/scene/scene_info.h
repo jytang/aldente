@@ -12,7 +12,7 @@ class SceneInfo {
 public:
     void update();
     Camera camera;
-    std::vector<DirectionalLight> dir_lights;
-    std::vector<PointLight> point_lights;
-    std::vector<SpotLight> spot_lights;
+    std::vector<DirectionalLight *> dir_lights;
+    std::vector<PointLight *> point_lights;
+    std::vector<SpotLight *> spot_lights;
 };

@@ -27,7 +27,7 @@ void MainScene::update() {
     // Rotate directional light sources just to test shadows.
     if (lights_debug_on) {
         for (int i = 0; i < info.dir_lights.size(); ++i) {
-            info.dir_lights[i].transform.rotate(0.f, 0.f, 0.01f, false);
+            info.dir_lights[i]->transform.rotate(0.f, 0.f, 0.01f, false);
         }
     }
 }
@@ -35,16 +35,16 @@ void MainScene::update() {
 void MainScene::setup_scene() {
 
     // Setup lights.
-    DirectionalLight sun = DirectionalLight(glm::vec3(0.f, -1.f, -1.f));
+    DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f));
     add_light(sun);
 
-    PointLight bulb = PointLight(glm::vec3(5.f, 2.f, 5.f), Color::BONE_WHITE);
+    PointLight *bulb = new PointLight(glm::vec3(5.f, 2.f, 5.f), Color::BONE_WHITE);
     add_light(bulb);
 
-    PulsePointLight bulb2 = PulsePointLight(glm::vec3(7.f, 2.f, 10.f), Color::WINDWAKER_GREEN);
+    PulsePointLight *bulb2 = new PulsePointLight(glm::vec3(7.f, 2.f, 10.f), Color::WINDWAKER_GREEN);
     add_light(bulb2);
 
-    SpotLight spot_light = SpotLight(glm::vec3(10.f, 4.f, 5.f),
+    SpotLight *spot_light = new SpotLight(glm::vec3(10.f, 4.f, 5.f),
                                      glm::vec3(0.f, -1.f, 0.f),
                                      Color::MAGENTA);
     add_light(spot_light);
