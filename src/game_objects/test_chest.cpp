@@ -1,7 +1,7 @@
 #include "test_chest.h"
 
 // Test code for playing animation for the boy
-void TestChest::update() { 
+void TestChest::update_this() { 
     anim_player.update();
 }
 

@@ -19,7 +19,7 @@ Crate::Crate(int x, int z) : Construct(x, z) {
     events::add_rigidbody_event(rigid);
 }
 
-void Crate::update() {
+void Crate::update_this() {
     std::cerr << "Test" << std::endl;
     anim_player.update();
 }

@@ -19,7 +19,7 @@ public:
     void stop(); // Pauses the animation player and resets the animation loop
 
     void set_speed(float speed);
-    void set_loop(bool speed);
+    void set_loop(bool will_loop);
 
     bool check_paused();
 

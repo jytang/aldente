@@ -33,16 +33,24 @@ void GameObject::remove_all() {
     children.clear();
 }
 
-// Renders model in scene
+// Renders model and children's models in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
     if (model) {
         connect_skel_to_model();
         model->draw(shader, scene_info, transform.get_world_mat());
     }
+
+    for (auto it = children.begin(); it != children.end(); ++it)
+        (*it)->draw(shader, scene_info);
 }
 
-// Updates Game Object Paramters
+// Runs Game Object's update loop
 void GameObject::update() {
+
+    update_this();
+
+    for (auto it = children.begin(); it != children.end(); ++it)
+        (*it)->update();
 }
 
 // Attaches bones from skeleton to model

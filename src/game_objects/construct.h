@@ -17,13 +17,13 @@ public:
     virtual void interact_trigger() = 0;
 
     virtual void setup_model() = 0;
-    virtual void update() override = 0;
+    virtual void update_this() override = 0;
 };
 
 class Crate : public Construct {
 public:
     Crate(int x, int z);
     void setup_model();
-    void update() override;
+    void update_this() override;
     void interact_trigger() override;
 };

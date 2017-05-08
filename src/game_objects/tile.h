@@ -22,29 +22,27 @@ protected:
     int width, height, x, z;
     bool traversable;
 
+    Construct *construct;
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     btBoxShape *hit_plane = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
-    Construct *construct;
 private:
 
 public:
+    Tile();
+
     // Whether a construct buildable on this tile.
     bool buildable;
 
-    Tile();
-
     int getX() { return x; };
-
     int getZ() { return z; };
 
-    virtual void update() override = 0;
+    virtual void update_this() override = 0;
+    virtual void setup_model() override = 0;
 
     void set_construct(Construct* to_set) { construct = to_set; };
     Construct* get_construct() { return construct; };
 
     bool isBuildable() { return buildable; };
-
-    virtual void setup_model() = 0;
 };
 
 class FloorTile : public Tile {
@@ -53,7 +51,7 @@ public:
     FloorTile(int x, int z);
 
     void setup_model();
-    void update() override{};
+    void update_this() override{};
 };
 
 class WallTile : public Tile {
@@ -63,5 +61,5 @@ public:
 
 
     void setup_model();
-    void update() override{};
+    void update_this() override{};
 };

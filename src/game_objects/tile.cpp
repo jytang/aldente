@@ -16,9 +16,6 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     transform.set_position((float)x, 0.0f, (float)z);
 }
 
-void FloorTile::update() {
-}
-
 void FloorTile::setup_model() {
     Mesh* mesh = new Mesh();
 
@@ -51,9 +48,6 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
         this //the gameobject
     };
     events::add_rigidbody_event(rigid);
-}
-
-void WallTile::update() {
 }
 
 void WallTile::setup_model() {

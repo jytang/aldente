@@ -42,7 +42,7 @@ void Player::setup_listeners() {
 
 // Just calls do_movement for now, can have more
 // functionality later.
-void Player::update() {
+void Player::update_this() {
     // Test code for playing animation for the boy
     anim_player.update();
 
