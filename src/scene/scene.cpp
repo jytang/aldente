@@ -11,7 +11,7 @@ void Scene::draw_skybox() {
     ShaderManager::skybox.draw(NULL, info); // NULL because no mesh needed.
 }
 
-SceneCamera &Scene::get_cam() {
+Camera &Scene::get_cam() {
     return info.camera;
 }
 

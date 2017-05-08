@@ -1,12 +1,10 @@
-#include "scene_camera.h"
+#include "camera.h"
 #include "scene/scene.h"
 #include "events.h"
 
-// TODO : Change this class to "Camera" instead of "SceneCamera"
-
 const float PAN_SPEED = 0.1f;
 
-SceneCamera::SceneCamera(glm::vec3 default_pos,
+Camera::Camera(glm::vec3 default_pos,
                          glm::vec3 default_front,
                          glm::vec3 default_up)
     : default_pos(default_pos), default_front(default_front),
@@ -16,7 +14,7 @@ SceneCamera::SceneCamera(glm::vec3 default_pos,
     setup_listeners();
 }
 
-void SceneCamera::setup_listeners() {
+void Camera::setup_listeners() {
 
     events::build::start_build_event.connect([&]() {
         follow_player = false;
@@ -56,25 +54,25 @@ void SceneCamera::setup_listeners() {
     });
 }
 
-void SceneCamera::recalculate() {
+void Camera::recalculate() {
     V = glm::lookAt(cam_pos, cam_pos + cam_front, cam_up);
 }
 
-void SceneCamera::reset() {
+void Camera::reset() {
     cam_pos = default_pos;
     cam_front = default_front;
     cam_up = default_up;
     recalculate();
 }
 
-void SceneCamera::displace_cam(glm::vec3 displacement) {
+void Camera::displace_cam(glm::vec3 displacement) {
     cam_pos = cam_pos + displacement;
     recalculate();
 }
 
 // Recalculate corners of frustum in world space.
 // TODO: parameterize fov and near distance.
-void SceneCamera::update_frustum_corners(int width, int height, GLfloat far_dist) {
+void Camera::update_frustum_corners(int width, int height, GLfloat far_dist) {
     GLfloat aspect_ratio = (float) width / (float) height;
     glm::vec3 cam_right = glm::cross(cam_pos - (cam_pos + cam_front), cam_up);
 
@@ -98,7 +96,7 @@ void SceneCamera::update_frustum_corners(int width, int height, GLfloat far_dist
     frustum_corners[7] = far_center - (cam_up * (far_height / 2)) + (cam_right * (far_width / 2));
 }
 
-glm::mat4 SceneCamera::frustum_ortho(glm::vec3 light_pos) {
+glm::mat4 Camera::frustum_ortho(glm::vec3 light_pos) {
     // May need to do redo values below
     const float FRINGE_X = 0; // 5.f * 1.7f;
     const float FRINGE_Y = 0; // 5.f * 1.7f;
@@ -130,7 +128,7 @@ glm::mat4 SceneCamera::frustum_ortho(glm::vec3 light_pos) {
 
 /* ADAPTED FROM http://ruh.li/CameraViewFrustum.html */
 // Currently unused, can use for view frustum culling
-void SceneCamera::update_frustum_planes() {
+void Camera::update_frustum_planes() {
     glm::mat4 m = P * V;
     frustum_planes[0].normal.x = m[0][3] + m[0][0];
     frustum_planes[0].normal.y = m[1][3] + m[1][0];

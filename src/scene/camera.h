@@ -6,7 +6,7 @@
 
 #include "model/plane.h"
 
-class SceneCamera {
+class Camera {
 private:
     glm::vec3 default_pos;
     glm::vec3 default_front;
@@ -27,9 +27,9 @@ public:
     Plane frustum_planes[6];
     glm::vec3 frustum_corners[8];
 
-    SceneCamera(glm::vec3 default_pos = glm::vec3(0.f, 0.f, 20.f),
-                glm::vec3 default_front = glm::vec3(0.f, 0.f, -1.f),
-                glm::vec3 default_up = glm::vec3(0.f, 1.f, 0.f));
+    Camera(glm::vec3 default_pos = glm::vec3(0.f, 0.f, 20.f),
+           glm::vec3 default_front = glm::vec3(0.f, 0.f, -1.f),
+           glm::vec3 default_up = glm::vec3(0.f, 1.f, 0.f));
 
     void setup_listeners();
 

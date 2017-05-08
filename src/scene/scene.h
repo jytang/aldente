@@ -18,7 +18,7 @@
 class Scene {
 public:
     SceneInfo info;
-    //std::vector<SceneCamera*> cameras;
+    //std::vector<Camera*> cameras;
     std::vector<GameObject*> objs;
 
     virtual ~Scene() {}
@@ -27,7 +27,7 @@ public:
     // Default is NULL so that the shader attached to each mesh is used instead.
     void draw(Shader *shader = NULL);
     void draw_skybox();
-    SceneCamera &get_cam();
+    Camera &get_cam();
 
     // Add lights to the scene, in accordance with max number of respective light
     void add_light(DirectionalLight l);

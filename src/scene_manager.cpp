@@ -27,7 +27,7 @@ Scene *SceneManager::get_current_scene() {
     return current_scene;
 }
 
-SceneCamera *SceneManager::get_camera() {
+Camera *SceneManager::get_camera() {
     return camera;
 }
 
