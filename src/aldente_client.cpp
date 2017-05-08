@@ -39,7 +39,7 @@ static void glSetup() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-void AldenteClient::start(bool is_windows) {
+void AldenteClient::start() {
     Util::seed(0); // Seed PRNG.
 
     // Set up GLFW.

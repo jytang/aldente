@@ -5,5 +5,5 @@
 
 class AldenteServer : public Aldente {
 public:
-    void start(bool);
+    void start();
 };

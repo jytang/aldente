@@ -10,13 +10,8 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 
-void AldenteServer::start(bool is_windows) {
+void AldenteServer::start() {
     Util::seed(0); // Seed PRNG.
-    
-    // For Visual Studio, we're running the server from the aldente/Server/ directory,
-    // so we need Boost filesystem to go up one directory for the correct path.
-    if (is_windows)
-        boost::filesystem::current_path("..");
     
     Physics physics;
     SceneManager scene_manager;

@@ -30,6 +30,4 @@ public:
     static float random(float min, float max);
 
     static bool within_rect(glm::vec2 pos, glm::vec2 bottom_left, glm::vec2 top_right);
-
-    static bool has_suffix(const std::string &str, const std::string &suffix);
 };

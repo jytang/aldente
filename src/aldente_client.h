@@ -16,5 +16,5 @@ class AldenteClient : public Aldente {
 public:
     ~AldenteClient();
 
-    void start(bool);    // Main Game Loop
+    void start();    // Main Game Loop
 };
