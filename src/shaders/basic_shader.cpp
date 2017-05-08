@@ -67,7 +67,7 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
 
     // Send point lights.
     set_uni("num_point_lights", (int) scene_info.point_lights.size());
-	uni_prefix = "point_lights["; // Uniform prefix for point light array.
+    uni_prefix = "point_lights["; // Uniform prefix for point light array.
     for (int i = 0; i < scene_info.point_lights.size(); ++i) {
         PointLight l = scene_info.point_lights[i];
         sprintf(buf, "%s%d].position", uni_prefix, i);
