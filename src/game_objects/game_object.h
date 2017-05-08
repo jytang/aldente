@@ -31,6 +31,7 @@ public:
     bool notify_on_collision = false; // Physics engine will only call on_collision if this flag is set.
 
     GameObject();
+    ~GameObject();
 
     // Parenting Stuff
     void add_child(GameObject *obj);
@@ -56,4 +57,7 @@ public:
     void set_id(int to_set) { id = to_set; };
 
     void set_position(glm::vec3 pos);
+
+    Model* get_model() { return model; };
+    btRigidBody *get_rigid() { return rigidbody; };
 };

@@ -9,6 +9,30 @@ GameObject::GameObject() {
     id = id_counter++;
 }
 
+GameObject::~GameObject(){
+    for (auto it = children.begin(); it != children.end(); it++) {
+        delete(*it);
+    }
+}
+
+// Adopt a game object
+void GameObject::add_child(GameObject *obj) {
+    children.push_back(obj);
+}
+
+// Disown a single child
+void GameObject::remove_child(GameObject *obj) {
+    // I'm pretty sure this line of code works. Not tested.
+    children.erase(std::remove(children.begin(), children.end(), obj), children.end());
+}
+
+// Get rid of all the children
+void GameObject::remove_all() {
+    for (auto it = children.begin(); it != children.end(); it++)
+        delete(*it);
+    children.clear();
+}
+
 // Renders model in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
     if (model) {
@@ -29,6 +53,8 @@ void GameObject::connect_skel_to_model() {
     model->set_bones(&skel);
 }
 
+
+// Sets the material color for the entire game object's model
 void GameObject::set_color(Color color) {
     for (Mesh* mesh : model->meshes) {
         mesh->material->diffuse = color;
