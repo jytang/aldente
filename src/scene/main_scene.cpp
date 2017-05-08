@@ -3,6 +3,7 @@
 #include "game_objects/player.h"
 #include "events.h"
 #include "util/color.h"
+#include "pulse_point_light.h"
 
 MainScene::MainScene() : Scene() {
 
@@ -40,7 +41,7 @@ void MainScene::setup_scene() {
     PointLight bulb = PointLight(glm::vec3(5.f, 2.f, 5.f), Color::BONE_WHITE);
     add_light(bulb);
 
-    PointLight bulb2 = PointLight(glm::vec3(7.f, 2.f, 10.f), Color::WINDWAKER_GREEN);
+    PulsePointLight bulb2 = PulsePointLight(glm::vec3(7.f, 2.f, 10.f), Color::WINDWAKER_GREEN);
     add_light(bulb2);
 
     SpotLight spot_light = SpotLight(glm::vec3(10.f, 4.f, 5.f),

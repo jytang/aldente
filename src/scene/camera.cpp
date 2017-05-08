@@ -70,6 +70,11 @@ void Camera::displace_cam(glm::vec3 displacement) {
     recalculate();
 }
 
+// Called during update loop
+void Camera::update() {
+
+}
+
 // Recalculate corners of frustum in world space.
 // TODO: parameterize fov and near distance.
 void Camera::update_frustum_corners(int width, int height, GLfloat far_dist) {

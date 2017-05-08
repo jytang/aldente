@@ -8,9 +8,11 @@
 #include "directional_light.h"
 #include "spot_light.h"
 
-struct SceneInfo {
+class SceneInfo {
+public:
+    void update();
     Camera camera;
-    std::vector<PointLight> point_lights;
     std::vector<DirectionalLight> dir_lights;
+    std::vector<PointLight> point_lights;
     std::vector<SpotLight> spot_lights;
 };

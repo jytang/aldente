@@ -12,6 +12,8 @@ public:
               ambient_coeff(ambient_coeff),
               color(color) {}
 
+    virtual void update() {}
+
     Transform transform;
     float intensity;
     float ambient_coeff;

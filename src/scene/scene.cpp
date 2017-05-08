@@ -16,6 +16,7 @@ Camera &Scene::get_cam() {
 }
 
 void Scene::update() {
+    info.update();
     for (GameObject *gameObj : objs) {
         gameObj->update();
     }

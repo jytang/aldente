@@ -37,6 +37,8 @@ public:
 
     void reset();
 
+    void update(); // called during update loop
+
     void update_frustum_corners(int width, int height, GLfloat far_dist);
 
     void update_frustum_planes();
