@@ -19,7 +19,7 @@ private:
     static int id_counter;
 protected:
     Model *model;
-    Skeleton *skel;
+    Skeleton skel;
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
     int id;
@@ -40,12 +40,11 @@ public:
     void set_color(Color color);
 
     Model* get_model() { return model; };
-    void attach_model(Model *m) { model = m; };
-    Skeleton* get_skel() { return skel; };
-    void attach_skel(Skeleton *s) { skel = s; };
+    Skeleton get_skeleton() { return skel; };
+    void attach_model(Model *m) { model = m; skel = m->initial_skeleton; };
+
     btRigidBody *get_rigid() { return rigidbody; };
     void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
     int get_id() { return id; };
     void set_id(int to_set) { id = to_set; };
 };
-

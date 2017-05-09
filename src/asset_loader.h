@@ -24,9 +24,9 @@ private:
 
     static void load_texture(std::string path);
 
-    static void process_node(Model *model, const aiScene *scene, aiNode *node, glm::mat4 model_mat);
+    static void process_node(Model *model, Skeleton *skel, const aiScene *scene, aiNode *node, glm::mat4 model_mat);
     static Mesh *process_mesh(aiMesh *mesh, const aiScene *scene);
-    static void process_bones(Model *model, Mesh *mesh, aiMesh *aimesh);
+    static void process_bones(Skeleton *skel, Mesh *mesh, aiMesh *aimesh);
 
     static void add_bone_to_geo(Geometry *geo, unsigned int vertex_id, unsigned int bone_index, float weight);
     static glm::mat4 convert_ai_matrix(aiMatrix4x4 ai_mat);
@@ -37,5 +37,3 @@ public:
     static Model *get_model(std::string name);
     static GLuint get_texture(std::string name);
 };
-
-

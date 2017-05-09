@@ -6,6 +6,6 @@ void TestChest::update() {
 }
 
 void TestChest::open_chest() {
-    anim_player.set_anim(model, "open");
+    anim_player.set_anim(&skel, "open");
     anim_player.play();
 }

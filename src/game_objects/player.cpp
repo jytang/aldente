@@ -107,7 +107,7 @@ void Player::stop_walk() {
 
 void Player::start_walk() {
     anim_player.set_speed(3.0f);
-    anim_player.set_anim(skel, "walk");
+    anim_player.set_anim(&skel, "walk");
     anim_player.set_loop(true);
     anim_player.play();
 }

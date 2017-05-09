@@ -74,7 +74,7 @@ void SceneCamera::displace_cam(glm::vec3 displacement) {
 
 // Recalculate corners of frustum in world space.
 // TODO: parameterize fov and near distance.
-void SceneCamera::update_frustum_corners(int width, int height, GLfloat far) {
+void SceneCamera::update_frustum_corners(int width, int height, GLfloat far_dist) {
     GLfloat aspect_ratio = (float) width / (float) height;
     glm::vec3 cam_right = glm::cross(cam_pos - (cam_pos + cam_front), cam_up);
 
@@ -82,11 +82,11 @@ void SceneCamera::update_frustum_corners(int width, int height, GLfloat far) {
     GLfloat near_height = 2 * glm::tan(glm::radians(45.f / 2)) * 0.1f;
     GLfloat near_width = near_height * aspect_ratio;
 
-    GLfloat far_height = 2 * glm::tan(glm::radians(45.f / 2)) * far;
+    GLfloat far_height = 2 * glm::tan(glm::radians(45.f / 2)) * far_dist;
     GLfloat far_width = far_height * aspect_ratio;
 
     glm::vec3 near_center = cam_pos + cam_front * 0.1f;
-    glm::vec3 far_center = cam_pos + cam_front * far;
+    glm::vec3 far_center = cam_pos + cam_front * far_dist;
 
     frustum_corners[0] = near_center + (cam_up * (near_height / 2)) - (cam_right * (near_width / 2));
     frustum_corners[1] = near_center + (cam_up * (near_height / 2)) + (cam_right * (near_width / 2));

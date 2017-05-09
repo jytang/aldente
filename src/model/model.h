@@ -19,6 +19,7 @@ private:
 
 public:
     std::vector<Mesh *> meshes;
+    Skeleton initial_skeleton; // Initial skeleton that model is compatible with, not updated.
 
     Model(Shader *shader = &ShaderManager::basic) : model_shader(shader) {}
 

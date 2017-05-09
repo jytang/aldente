@@ -10,7 +10,10 @@ GameObject::GameObject() {
 
 // Renders model in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
-    if (model) model->draw(shader, scene_info, transform.get_world_mat());
+    if (model) {
+        connect_skel_to_model();
+        model->draw(shader, scene_info, transform.get_world_mat());
+    }
 }
 
 // Updates Game Object Paramters
@@ -22,7 +25,7 @@ void GameObject::update() {
 // to be animated independently. This needs to happen before each
 // one's draw call (i.e. cannot just be done in update)
 void GameObject::connect_skel_to_model() {
-    model->set_bones(skel);
+    model->set_bones(&skel);
 }
 
 void GameObject::set_color(Color color) {
