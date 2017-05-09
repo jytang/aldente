@@ -33,7 +33,7 @@ public:
     virtual void draw(Shader *shader, SceneInfo &scene_info);
     virtual void update();
     virtual void on_collision(GameObject *other) {}
-    virtual void setup_model() = 0;
+    virtual void setup_model() {};
 
     void connect_skel_to_model();
 

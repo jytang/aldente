@@ -82,6 +82,9 @@ bool AnimationPlayer::check_paused() {
 
 // Resets the model to its default pose, without animations
 void AnimationPlayer::reset_model() {
+    if (!skel)
+        return;
+
     for (int i = 0; i < skel->bones_final.size(); i++) {
         skel->bones_final[i] = glm::mat4(1.0f);
     }    

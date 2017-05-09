@@ -28,7 +28,6 @@ Player::Player() : GameObject() {
 
     transform.set_position(2.0f, 0.0f, 2.0f);
 
-    notify_on_collision = true;
 }
 
 void Player::setup_listeners() {
