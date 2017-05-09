@@ -8,11 +8,6 @@ GameObject::GameObject() {
     id = id_counter++;
 }
 
-// Attaches a model to the game object
-void GameObject::attach_model(Model *m) {
-    model = m;
-}
-
 // Renders model in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
     if (model) model->draw(shader, scene_info, transform.get_world_mat());
@@ -20,6 +15,14 @@ void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
 
 // Updates Game Object Paramters
 void GameObject::update() {
+}
+
+// Attaches bones from skeleton to model
+// Allows for different game objects using the same model
+// to be animated independently. This needs to happen before each
+// one's draw call (i.e. cannot just be done in update)
+void GameObject::connect_skel_to_model() {
+    model->set_bones(skel);
 }
 
 void GameObject::set_color(Color color) {

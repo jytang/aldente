@@ -1,7 +1,6 @@
 #pragma once
 
 #include "scene/scene_info.h"
-#include "model/model.h"
 #include "transform.h"
 #include "shaders/shader.h"
 #include "animation/animation_player.h"
@@ -20,6 +19,7 @@ private:
     static int id_counter;
 protected:
     Model *model;
+    Skeleton *skel;
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
     int id;
@@ -35,11 +35,16 @@ public:
     virtual void on_collision(GameObject *other) {}
     virtual void setup_model() = 0;
 
-    Model* get_model() { return model; };
-    void attach_model(Model *m);
+    void connect_skel_to_model();
+
     void set_color(Color color);
-    void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
+
+    Model* get_model() { return model; };
+    void attach_model(Model *m) { model = m; };
+    Skeleton* get_skel() { return skel; };
+    void attach_skel(Skeleton *s) { skel = s; };
     btRigidBody *get_rigid() { return rigidbody; };
+    void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
     int get_id() { return id; };
     void set_id(int to_set) { id = to_set; };
 };

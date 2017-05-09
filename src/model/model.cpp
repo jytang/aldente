@@ -13,12 +13,11 @@ void Model::draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world) {
         } else {
             model_shader->use();
 
-
             // Passes bones to shader manually to show that this model is animated
-            for (int i = 0; i < bones_final.size(); i++) {
+            for (int i = 0; i < bones.size(); i++) {
                 char uni_name[128];
                 snprintf(uni_name, sizeof(uni_name), "bones[%d]", i);
-                model_shader->set_uni(uni_name, bones_final[i]);
+                model_shader->set_uni(uni_name, bones[i]);
             }
 
             model_shader->draw(mesh, scene_info, to_world);

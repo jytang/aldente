@@ -1,6 +1,7 @@
 #pragma once
 
 #include "model/model.h"
+#include "model/skeleton.h"
 
 /*
     Used for actually processing the animations and adjusting the bone matrices to actually
@@ -10,7 +11,7 @@ class AnimationPlayer {
 public:
     AnimationPlayer();
 
-    void set_anim(Model *model, std::string anim_name);
+    void set_anim(Skeleton *skel, std::string anim_name);
 
     void update(); // Updates bone matrices for model based on animation playing
     void play(); // Tells the animation player to start playing
@@ -27,7 +28,7 @@ private:
     float cur_time;
     
     Animation *animation; // Current Animation Being Played
-    Model *model; // Current model playing animation
+    Skeleton *skel; // Current skeleton to use when playing animation
 
     float speed;
     bool loop;
@@ -35,7 +36,7 @@ private:
     
     void reset_model();
 
-    void process_animation(float anim_time, const aiAnimation *anim, Model *model, const aiNode *node, glm::mat4 parent_mat);
+    void process_animation(float anim_time, const aiAnimation *anim, const aiNode *node, glm::mat4 parent_mat);
 
     const aiNodeAnim *find_node_anim(const aiAnimation *anim, const std::string node_name);
     glm::mat4 convert_ai_matrix(aiMatrix4x4 ai_mat);

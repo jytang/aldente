@@ -35,15 +35,15 @@ void AnimationPlayer::update() {
 
         float animation_time = fmod(time_in_ticks, (float)animation->get_anim()->mDuration);
 
-        process_animation(animation_time, animation->get_anim(), model, animation->get_root(), glm::mat4(1.0f));
+        process_animation(animation_time, animation->get_anim(), animation->get_root(), glm::mat4(1.0f));
     }
 
     last_time = glfwGetTime();
 }
 
-void AnimationPlayer::set_anim(Model *model, std::string anim_name) {
-    this->model = model;
-    animation = model->animations[anim_name];    
+void AnimationPlayer::set_anim(Skeleton *skel, std::string anim_name) {
+    this->skel = skel;
+    animation = skel->animations[anim_name];
 
     if (animation == NULL) {
         std::cerr << "Error : Animation " << anim_name << " not found." << std::endl;
@@ -82,13 +82,13 @@ bool AnimationPlayer::check_paused() {
 
 // Resets the model to its default pose, without animations
 void AnimationPlayer::reset_model() {
-    for (int i = 0; i < model->bones_final.size(); i++) {
-        model->bones_final[i] = glm::mat4(1.0f);
+    for (int i = 0; i < skel->bones_final.size(); i++) {
+        skel->bones_final[i] = glm::mat4(1.0f);
     }    
 }
 
 // Processes Animation Node using Assimp's node structure
-void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim, Model *model, const aiNode *node, glm::mat4 parent_mat) {
+void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim, const aiNode *node, glm::mat4 parent_mat) {
 
     if (!anim)
         return;
@@ -121,18 +121,18 @@ void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim
 
     glm::mat4 global_trans = parent_mat * node_trans;
 
-    if (model->bone_mapping.find(node_name) != model->bone_mapping.end()) {
-        unsigned int bone_index = model->bone_mapping[node_name];
+    if (skel->bone_mapping.find(node_name) != skel->bone_mapping.end()) {
+        unsigned int bone_index = skel->bone_mapping[node_name];
 
         // Calculates final bone transformation matrix. Requires inverse of bones_default
         // because shader multiples by mesh_model by default, and that is actually already 
         // incorporated in global_trans, therefore needs to be counteracted with the inverse.
-        model->bones_final[bone_index] =  glm::inverse(model->bones_default[bone_index]) *  
-                            model->global_inv_trans * global_trans * model->bone_offsets[bone_index];
+        skel->bones_final[bone_index] =  glm::inverse(skel->bones_default[bone_index]) *
+            skel->global_inv_trans * global_trans * skel->bone_offsets[bone_index];
     }
 
     for (unsigned int i = 0; i < node->mNumChildren; i++) {
-        process_animation(anim_time, anim, model, node->mChildren[i], global_trans);
+        process_animation(anim_time, anim, node->mChildren[i], global_trans);
     }
 }
 
