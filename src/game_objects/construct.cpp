@@ -1,7 +1,7 @@
 #include "construct.h"
 #include "asset_loader.h"
 
-Construct::Construct(int x, int z) {
+Construct::Construct(int x, int z) : GameObject(){
     transform.set_position(x, 0.0f, z);
 }
 

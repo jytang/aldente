@@ -3,6 +3,7 @@
 #include "asset_loader.h"
 
 Tile::Tile() :
+    GameObject(),
     construct(nullptr) {}
 
 // TODO: GET RID OF THIS. DO NOT OVERRIDE GAMEOBJECT::DRAW.

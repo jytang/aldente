@@ -1,8 +1,11 @@
 #include "game_object.h"
 
+int GameObject::id_counter = 0;
+
 GameObject::GameObject() {
     model = new Model();
     rigidbody = nullptr;
+    id = id_counter++;
 }
 
 // Attaches a model to the game object

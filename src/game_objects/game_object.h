@@ -20,7 +20,8 @@ protected:
     Model *model;
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
-
+    static int id_counter;
+    int id;
 public:
     Transform transform; // World matrix now controlled using the Transform Component
     std::string tag; // Identify this GameObject by a human-readable tag.
@@ -38,5 +39,7 @@ public:
     void set_color(Color color);
     void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
     btRigidBody *get_rigid() { return rigidbody; };
+    int get_id() { return id; };
+    void set_id(int to_set) { id = to_set; };
 };
 
