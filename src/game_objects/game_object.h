@@ -16,11 +16,12 @@
     render the model in the scene.
 */
 class GameObject {
+private:
+    static int id_counter;
 protected:
     Model *model;
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
-    static int id_counter;
     int id;
 public:
     Transform transform; // World matrix now controlled using the Transform Component
