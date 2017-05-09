@@ -22,9 +22,10 @@ Crate::Crate(int x, int z) : Construct(x, z) {
 // Activated when a player presses A on it
 void Crate::interact_trigger() {
     // Will change after server/client split
-    model = AssetLoader::get_model("veggie");
+    attach_model(AssetLoader::get_model("veggie"));
 }
 
 void Crate::setup_model() {
-    model = AssetLoader::get_model("chest_good");
+    attach_model(AssetLoader::get_model("chest_good"));
+    transform.set_scale({ 0.005f, 0.005f, 0.005f });
 }
