@@ -79,14 +79,14 @@ void AssetLoader::load(std::string file_loc, std::string file_name) {
         std::string model_name = file_name.substr(0, at_found);
         std::string anim_name = file_name.substr(at_found + 1, dot_found - at_found - 1);
 
-        //std::cerr << "Finding Model : " << model_name << std::endl;
-        //std::cerr << "Saving Animation : " << anim_name << std::endl;
+        std::cerr << "Finding Model : " << model_name << std::endl;
+        std::cerr << "Saving Animation : " << anim_name << std::endl;
 
         Model *model = get_model(model_name);
 
         // Save Animation if Available, Only one per fbx
         if (scene->mNumAnimations > 0) {
-            //std::cerr << "Adding Animation : " << scene->mAnimations[0]->mName.data << std::endl;
+            std::cerr << "Adding Animation : " << scene->mAnimations[0]->mName.data << std::endl;
             Animation *animation = new Animation(import.GetOrphanedScene(), scene->mAnimations[0]);
             model->animations[anim_name] = animation;
         }

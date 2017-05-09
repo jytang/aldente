@@ -70,7 +70,7 @@ void MainScene::graphical_setup() {
 
     // Player instantiation will be here for now until we start working on
     // scene management.
-    Model *player_model = AssetLoader::get_model(std::string("boy_two_scaled"));
+    Model *player_model = AssetLoader::get_model(std::string("boy_two"));
     Player *player = new Player();
     player->transform.set_scale({ 0.4f, 0.4f, 0.4f });
     player->transform.translate({ 2.f, 0.f, 2.f });

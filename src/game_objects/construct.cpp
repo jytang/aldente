@@ -26,5 +26,5 @@ void Crate::interact_trigger() {
 }
 
 void Crate::setup_model() {
-    model = AssetLoader::get_model("chest_good_scaled");
+    model = AssetLoader::get_model("chest_good");
 }
