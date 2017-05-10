@@ -83,6 +83,8 @@ void Grid::build(ConstructType type, int col, int row, bool graphical) {
         Construct* to_add = new Crate(col, row);
         if (graphical)
             to_add->setup_model();
+        to_add->setup_model();
+        children.push_back(to_add);
         candidate->set_construct(to_add);
         candidate->buildable = false;
         break;
@@ -91,6 +93,7 @@ void Grid::build(ConstructType type, int col, int row, bool graphical) {
         // TODO: Move destructor to construct's destructor.
         if (candidate->get_construct() != nullptr) {
             events::remove_rigidbody_event(dynamic_cast<GameObject*>(candidate->get_construct()));
+            remove_child(candidate->get_construct());
             candidate->set_construct(nullptr);
             candidate->buildable = true;
         }

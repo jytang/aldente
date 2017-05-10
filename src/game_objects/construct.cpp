@@ -14,19 +14,18 @@ Crate::Crate(int x, int z) : Construct(x, z) {
         hit_box, //btshape
         glm::vec3(0,0,0), //inertia
         this, //the gameobject
-        true, // is a ghost object
+        false, // is a ghost object
     };
     events::add_rigidbody_event(rigid);
 }
 
 void Crate::update_this() {
-    std::cerr << "Test" << std::endl;
     anim_player.update();
 }
 
 // Activated when a player presses A on it
 void Crate::interact_trigger() {
-    anim_player.set_anim(model, "open");
+    anim_player.set_anim(&skel, "open");
     anim_player.play();
 }
 
@@ -34,4 +33,3 @@ void Crate::setup_model() {
     attach_model(AssetLoader::get_model("chest_good"));
     transform.set_scale({ 0.005f, 0.005f, 0.005f });
 }
-

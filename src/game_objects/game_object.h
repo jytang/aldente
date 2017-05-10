@@ -41,7 +41,7 @@ public:
     void draw(Shader *shader, SceneInfo &scene_info);
     void update(); // Updates this object and all children
 
-    virtual void update_this() = 0; // Update function for this particular object. Use this instead of update()
+    virtual void update_this() {}; // Update function for this particular object. Use this instead of update()
     virtual void on_collision(GameObject *other) {}
     virtual void setup_model() {};
 
@@ -59,7 +59,4 @@ public:
     void set_id(int to_set) { id = to_set; };
 
     void set_position(glm::vec3 pos);
-
-    Model* get_model() { return model; };
-    btRigidBody *get_rigid() { return rigidbody; };
 };

@@ -79,8 +79,8 @@ void AssetLoader::load(std::string file_loc, std::string file_name) {
         std::string model_name = file_name.substr(0, at_found);
         std::string anim_name = file_name.substr(at_found + 1, dot_found - at_found - 1);
 
-        std::cerr << "Finding Model : " << model_name << std::endl;
-        std::cerr << "Saving Animation : " << anim_name << std::endl;
+        //std::cerr << "Finding Model : " << model_name << std::endl;
+        //std::cerr << "Saving Animation : " << anim_name << std::endl;
 
         Model *model = get_model(model_name);
 
@@ -89,6 +89,7 @@ void AssetLoader::load(std::string file_loc, std::string file_name) {
             //std::cerr << "Adding Animation : " << scene->mAnimations[0]->mName.data << std::endl;
             Animation *animation = new Animation(import.GetOrphanedScene(), scene->mAnimations[0]);
             model->initial_skeleton.animations[anim_name] = animation;
+            model->set_shader(&ShaderManager::anim_basic);
         }
     } else {
         // File is only a model
