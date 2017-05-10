@@ -50,7 +50,7 @@ class FloorTile : public Tile {
 public:
     FloorTile(int x, int z);
 
-    void setup_model();
+    void setup_model() override;
     void update_this() override{};
 };
 
@@ -60,6 +60,6 @@ public:
     WallTile(int x, int z);
 
 
-    void setup_model();
+    void setup_model() override;
     void update_this() override{};
 };
