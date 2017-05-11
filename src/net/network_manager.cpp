@@ -15,8 +15,7 @@ void NetworkManager::run_service() {
     while (service_thread && !io_service.stopped()) {
         try {
             io_service.poll();
-        }
-        catch (...) {
+        } catch (...) {
             // Silently ignore errors rather than crash. Shouldn't happen.
             std::cerr << "run_service: io_service error\n";
         }

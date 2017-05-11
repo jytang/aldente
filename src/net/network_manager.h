@@ -12,6 +12,7 @@ class NetworkManager {
 public:
     void disconnect();
     void run_service();
+    
 protected:
     boost::thread* service_thread;
     boost::asio::io_service io_service;
@@ -21,9 +22,11 @@ class ServerNetworkManager : public NetworkManager {
 public:
     ServerNetworkManager() : server(io_service, 9000) {}
     void connect();
-    void register_listeners();
     void update();
+
 private:
+    void register_listeners();
+
     NetworkServer server;
 };
 
@@ -32,10 +35,10 @@ class ClientNetworkManager : public NetworkManager {
 public:
     ClientNetworkManager() : client(io_service) {}
     void connect();
-    void register_listeners();
     void update();
 
 private:
+    void register_listeners();
     void attempt_connection();
 
     NetworkClient client;

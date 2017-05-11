@@ -44,7 +44,7 @@ void Timer::wait() {
     Duration to_wait = tick - delta;
 
     // Block until next tick
-    assert(to_wait >= chrono::milliseconds(0));
+    // assert(to_wait >= chrono::milliseconds(0));
     std::this_thread::sleep_for(to_wait);
     last_tick = system_clock::now();
 }
