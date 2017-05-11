@@ -10,6 +10,9 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject(){
+
+    //TODO : Cleanup for rigid bodies and removing from game
+
     for (GameObject *obj : children)
         delete(obj);
 }
@@ -19,13 +22,13 @@ void GameObject::add_child(GameObject *obj) {
     children.push_back(obj);
 }
 
-// Disown a single child
+// Disown a single child (Note, this does not delete the object, in case of reparenting)
 void GameObject::remove_child(GameObject *obj) {
     // I'm pretty sure this line of code works. Not tested.
     children.erase(std::remove(children.begin(), children.end(), obj), children.end());
 }
 
-// Get rid of all the children
+// Get rid of all the children (Note, this deletes the object.)
 void GameObject::remove_all() {
     for (GameObject *obj : children)
         delete(obj);
