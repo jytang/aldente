@@ -83,7 +83,7 @@ void Grid::build(ConstructType type, int col, int row, bool graphical) {
         Construct* to_add = new Crate(col, row);
         if (graphical)
             to_add->setup_model();
-        to_add->setup_model();
+
         children.push_back(to_add);
         candidate->set_construct(to_add);
         candidate->buildable = false;
