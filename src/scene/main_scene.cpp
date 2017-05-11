@@ -46,6 +46,7 @@ void MainScene::setup_scene() {
     //Setting up map
     grid = new Grid("assets/maps/dungeon_test.txt");
     objs.push_back(grid);
+
 }
 
 void MainScene::graphical_setup() {

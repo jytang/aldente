@@ -13,7 +13,7 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     this->z = z;
     buildable = true;
 
-    transform.set_position((float)x, 0.0f, (float)z);
+    set_position({ x, 0.0f, z });
 }
 
 void FloorTile::setup_model() {
@@ -27,8 +27,6 @@ void FloorTile::setup_model() {
     mesh->geometry->attach_texture(AssetLoader::get_texture("cobblestone.png"));
 
     model->add_mesh(mesh);
-
-    transform.set_position((float)x, 0.0f, (float)z);
 }
 
 WallTile::WallTile(int x, int z) : Tile::Tile() {

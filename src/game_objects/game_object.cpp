@@ -10,9 +10,8 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject(){
-    for (auto it = children.begin(); it != children.end(); it++) {
-        delete(*it);
-    }
+    for (GameObject *obj : children)
+        delete(obj);
 }
 
 // Adopt a game object
@@ -28,8 +27,8 @@ void GameObject::remove_child(GameObject *obj) {
 
 // Get rid of all the children
 void GameObject::remove_all() {
-    for (auto it = children.begin(); it != children.end(); it++)
-        delete(*it);
+    for (GameObject *obj : children)
+        delete(obj);
     children.clear();
 }
 
@@ -40,8 +39,8 @@ void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
         model->draw(shader, scene_info, transform.get_world_mat());
     }
 
-    for (auto it = children.begin(); it != children.end(); ++it)
-        (*it)->draw(shader, scene_info);
+    for (GameObject *obj : children)
+        obj->draw(shader, scene_info);
 }
 
 // Runs Game Object's update loop
@@ -49,8 +48,8 @@ void GameObject::update() {
 
     update_this();
 
-    for (auto it = children.begin(); it != children.end(); ++it)
-        (*it)->update();
+    for (GameObject *obj : children)
+        obj->update();
 }
 
 // Attaches bones from skeleton to model
