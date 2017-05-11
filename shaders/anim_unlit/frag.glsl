@@ -1,6 +1,7 @@
 #version 330 core
 struct Material {
     vec3 diffuse;
+    float alpha;
 };
 
 in vec3 frag_pos;
@@ -26,5 +27,5 @@ void main()
         result = tex_color;
     }
 
-    color = vec4(result, 1.0f);
+    color = vec4(result, material.alpha);
 }
