@@ -14,7 +14,7 @@ public:
               float taper = 20.f, // exponential degree to which light tapers at the edges
               float intensity = 1.f,
               float quadratic = 0.1f, // 10% inverse square falloff
-              float ambient_coeff = 0.2f) // standard 20% ambience
+              float ambient_coeff = 0.07f) // standard 7% ambience
             : Light(intensity, ambient_coeff, color),
               default_position(default_position),
               default_direction(default_direction),

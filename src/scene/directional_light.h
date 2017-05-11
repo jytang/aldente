@@ -9,7 +9,7 @@ public:
     DirectionalLight(glm::vec3 default_direction,
                      Color color = Color::WHITE,
                      float intensity = 1.f,
-                     float ambient_coeff = 0.2f) // standard 20% ambience
+                     float ambient_coeff = 0.07f) // standard 7% ambience
             : Light(intensity, ambient_coeff, color),
               default_direction(default_direction) {}
 

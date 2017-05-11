@@ -28,7 +28,6 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     // Send material.
     set_uni("material.diffuse", mesh->material->diffuse.to_vec());
     set_uni("material.specular", mesh->material->specular.to_vec());
-    set_uni("material.ambient", mesh->material->ambient.to_vec());
     set_uni("material.shininess", mesh->material->shininess);
     set_uni("material.shadows_enabled", mesh->material->shadows);
     set_uni("material.alpha", mesh->material->alpha);

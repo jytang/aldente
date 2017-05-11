@@ -2,7 +2,6 @@
 struct Material {
     vec3 diffuse;
     vec3 specular;
-    vec3 ambient;
     float shininess;
     bool shadows_enabled;
     float alpha;
@@ -76,7 +75,6 @@ void main()
     if (texture_enabled){
         vec3 tex_color = vec3(texture(texture_map, frag_tex_coord));
         mat.diffuse = tex_color * mat.diffuse;
-        mat.ambient = tex_color * mat.ambient;
     }
 
     // Do lighting
@@ -164,8 +162,8 @@ vec3 calc_color(Material mat,
         mat.specular *
         pow(max(dot(normal, normalize(light_dir + view_dir)), 0.0), mat.shininess);
 
-    // Ambient: c_a (ambient color) * k_a (coeff)
-    vec3 ambient = mat.ambient * ambient_coeff;
+    // Ambient: c_a (diffuse color) * k_a (coeff)
+    vec3 ambient = mat.diffuse * ambient_coeff;
 
     // Shadows
     float shadow = 0;

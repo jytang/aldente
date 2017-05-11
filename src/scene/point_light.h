@@ -10,7 +10,7 @@ public:
                Color color = Color::WHITE,
                float intensity = 0.5f,
                float quadratic = 0.07f, // 7% inverse square falloff
-               float ambient_coeff = 0.2f) // standard 20% ambience
+               float ambient_coeff = 0.07f) // standard 7% ambience
             : Light(intensity, ambient_coeff, color),
               default_position(default_position),
               quadratic(quadratic) {}
