@@ -199,6 +199,6 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
 
 // Setup model for all of Grid's children
 void Grid::setup_model() {
-    for (auto it = children.begin(); it != children.end(); ++it)
-        (*it)->setup_model();
+    for (GameObject *obj : children)
+        obj->setup_model();
 }
