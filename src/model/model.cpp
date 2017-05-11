@@ -24,3 +24,16 @@ void Model::draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world) {
         }
     }
 }
+
+void Model::set_color(Color color) {
+    for (Mesh *mesh : meshes) {
+        mesh->material->diffuse = color;
+        mesh->material->ambient = color;
+    }
+}
+
+void Model::set_alpha(float alpha) {
+    for (Mesh *mesh : meshes) {
+        mesh->material->alpha = alpha;
+    }
+}

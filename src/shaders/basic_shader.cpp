@@ -30,7 +30,8 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     set_uni("material.specular", mesh->material->specular.to_vec());
     set_uni("material.ambient", mesh->material->ambient.to_vec());
     set_uni("material.shininess", mesh->material->shininess);
-    set_uni("shadows_enabled", mesh->material->shadows);
+    set_uni("material.shadows_enabled", mesh->material->shadows);
+    set_uni("material.alpha", mesh->material->alpha);
 
     // Send texture uniforms.
     set_uni("texture_enabled", mesh->geometry->has_texture);

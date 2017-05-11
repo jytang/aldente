@@ -48,6 +48,7 @@ public:
     void connect_skel_to_model();
 
     void set_color(Color color);
+    void set_alpha(float alpha);
 
     Model* get_model() { return model; };
     Skeleton get_skeleton() { return skel; };

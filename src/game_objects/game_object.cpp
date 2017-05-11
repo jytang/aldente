@@ -63,12 +63,13 @@ void GameObject::connect_skel_to_model() {
     model->set_bones(&skel);
 }
 
-
 // Sets the material color for the entire game object's model
 void GameObject::set_color(Color color) {
-    for (Mesh* mesh : model->meshes) {
-        mesh->material->diffuse = color;
-    }
+    model->set_color(color);
+}
+
+void GameObject::set_alpha(float alpha) {
+    model->set_alpha(alpha);
 }
 
 // Sets position of both object's transform and rigid body
