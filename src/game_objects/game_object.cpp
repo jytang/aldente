@@ -72,6 +72,9 @@ void GameObject::set_alpha(float alpha) {
     model->set_alpha(alpha);
 }
 
+void GameObject::set_shadows(bool enable) {
+    model->set_shadows(enable);
+}
 // Sets position of both object's transform and rigid body
 // Use this intead of transform.set_position to make sure that rigid body
 // is located in the same place as the object

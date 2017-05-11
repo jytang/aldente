@@ -37,3 +37,9 @@ void Model::set_alpha(float alpha) {
         mesh->material->alpha = alpha;
     }
 }
+
+void Model::set_shadows(bool enable) {
+    for (Mesh *mesh : meshes) {
+        mesh->material->shadows = enable;
+    }
+}

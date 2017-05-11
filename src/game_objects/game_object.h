@@ -49,6 +49,7 @@ public:
 
     void set_color(Color color);
     void set_alpha(float alpha);
+    void set_shadows(bool enable);
 
     Model* get_model() { return model; };
     Skeleton get_skeleton() { return skel; };
