@@ -1,16 +1,12 @@
 #pragma once
 
 /*
-    Contains bone information to be used for skeletal animations. 
+    Contains bone information to be used for skeletal animations.
     Should always be attached to a game object that contains a
     compatible model.
 */
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include "GL/glut.h"
-#endif
+#include <GL/glew.h>
 #include <map>
 #include <vector>
 #include "animation/animation.h"
