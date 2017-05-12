@@ -22,31 +22,32 @@ public:
     // Returns the amount of time that has passed since the last tick. Good for profiling.
     Duration so_far();
 
-    // Runs all timed out callbacks and causes the timer to block the thread until the next tick interval
-    void wait();
+    // Use the catch-up game loop model to perform
+    // quantized timed operations and the provided update function every tick.
+    void catch_up(const std::function<void()> &update = [] {});
 
     // Run callback once after the specified duration in seconds.
     // The callback receives as a parameter the number of seconds after the requested callback time that the
     // callback was actually executed.
     // Returns a function that can be called to cancel the operation.
-    std::function<void()> do_after(const Duration time, const std::function<void(Duration)> callback);
+    std::function<void()> do_after(const Duration time, const std::function<void(Duration)> &callback);
 
     // Run callback every specified duration in seconds.
     // Duration will be adjusted to be as close to schedule as possible.
     // The callback receives as a parameter the number of seconds after the requested callback time that the
     // callback was actually executed.
     // Returns a function that can be called to cancel the operation.
-    std::function<void()> do_every(const Duration time, const std::function<void(Duration)> callback);
+    std::function<void()> do_every(const Duration time, const std::function<void(Duration)> &callback);
 
 private:
     static Timer *instance;
 
     Duration tick;
     Time last_tick;
+    Duration lag;
 
     struct Operation {
         const Duration when; // When to fire
-        Time last_check; // Last time this Operation was checked
         Duration remaining; // Mutable time remaining until operation execution
         const std::function<void(Duration)> callback;
     };
@@ -60,8 +61,9 @@ private:
 
     // Helper to register operations
     std::function<void()> add_op(std::map<int, Operation> &to, const Duration time,
-                                 const std::function<void(Duration)> callback);
+                                 const std::function<void(Duration)> &callback);
 
-    // Helper to handle operations
-    void operate(std::map<int, Operation> &ops, bool remove_when_executed);
+    // Helpers to handle operations
+    void handle_operations(const Duration &elapsed);
+    void operate(const Duration &elapsed, std::map<int, Operation> &ops, bool remove_when_executed);
 };

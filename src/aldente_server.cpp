@@ -17,27 +17,17 @@ void AldenteServer::start() {
     ServerNetworkManager network;
     network.connect();
 
+    std::cerr << "Starting server..." << std::endl;
+
     Timer timer(GAME_TICK);
     Timer::provide(&timer);
 
-    Timer::get()->do_after(std::chrono::seconds(1), [](std::chrono::duration<double> d) {
-        std::cout << "print me once after one second" << std::endl;
-    });
-
-    const std::function<void()> cancel = Timer::get()->do_every(
-            std::chrono::milliseconds(500),
-            [&cancel](std::chrono::duration<double> d) {
-                static int count = 0;
-                std::cout << "print me every 0.5 seconds: (" << ++count << " / 5)" << std::endl;
-                if (count >= 5) cancel();
-            });
-
-    std::cerr << "Starting server..." << std::endl;
-
     while (true) {
         network.update();
-        GameState::update();
-        Timer::get()->wait();
+
+        Timer::get()->catch_up([&]{
+            GameState::update();
+        });
     }
 
     network.disconnect();

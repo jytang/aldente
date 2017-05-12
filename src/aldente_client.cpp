@@ -13,6 +13,7 @@
 #include "poll/input_poller.h"
 #include "util/config.h"
 #include "events.h"
+#include "timer.h"
 #include "ui/build_ui.h"
 #include "render.h"
 #include "game/game_state.h"
@@ -101,6 +102,10 @@ void AldenteClient::start() {
 
     std::cerr << "Starting client..." << std::endl;
 
+    // Used for callbacks
+    Timer timer(GAME_TICK);
+    Timer::provide(&timer);
+
     while (!window.should_close()) {
         // Do polling
         for (auto &poller : pollers) {
@@ -108,6 +113,7 @@ void AldenteClient::start() {
         }
 
         network.update();
+        Timer::get()->catch_up();
         GameState::client_update();
 
         render.update();
