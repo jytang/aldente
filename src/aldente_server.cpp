@@ -11,6 +11,9 @@
 void AldenteServer::start() {
     Util::seed(0); // Seed PRNG.
 
+    Timer timer(GAME_TICK);
+    Timer::provide(&timer);
+
     // Game logic. Temporarily start game with build phase.
     GameState::init(&GameState::build_phase);
 
@@ -18,9 +21,6 @@ void AldenteServer::start() {
     network.connect();
 
     std::cerr << "Starting server..." << std::endl;
-
-    Timer timer(GAME_TICK);
-    Timer::provide(&timer);
 
     while (true) {
         network.update();

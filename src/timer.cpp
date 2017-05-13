@@ -66,7 +66,7 @@ void Timer::operate(const Duration &elapsed, std::map<int, Operation> &ops, bool
 
         // If all time elapsed, callback and remove or reset
         if (op.remaining <= chrono::milliseconds(0)) {
-            op.callback(-op.remaining);
+            op.callback();
 
             if (remove_when_executed) {
                 to_cancel.push_back(id);
@@ -77,16 +77,16 @@ void Timer::operate(const Duration &elapsed, std::map<int, Operation> &ops, bool
     }
 }
 
-std::function<void()> Timer::do_after(const Duration time, const std::function<void(Duration)> &callback) {
+std::function<void()> Timer::do_after(const Duration time, const std::function<void()> &callback) {
     return add_op(afters, time, callback);
 }
 
-std::function<void()> Timer::do_every(const Duration time, const std::function<void(Duration)> &callback) {
+std::function<void()> Timer::do_every(const Duration time, const std::function<void()> &callback) {
     return add_op(everys, time, callback);
 }
 
 std::function<void()> Timer::add_op(std::map<int, Operation> &to, const Duration time,
-                                    const std::function<void(Duration)> &callback) {
+                                    const std::function<void()> &callback) {
     static int id = 0;
     int cur_id = ++id;
     to.emplace(cur_id, Operation{time, time, callback});

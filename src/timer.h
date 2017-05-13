@@ -5,14 +5,14 @@
 #include <chrono>
 #include <functional>
 
-#define GAME_TICK std::chrono::milliseconds(30)
+const auto GAME_TICK = std::chrono::milliseconds(30);
 
 // A single-threaded event loop style timer.
 class Timer {
-typedef std::chrono::time_point<std::chrono::system_clock> Time;
-typedef std::chrono::duration<double> Duration;
-
 public:
+    typedef std::chrono::time_point<std::chrono::system_clock> Time;
+    typedef std::chrono::duration<double> Duration;
+
     Timer(Duration tick);
 
     // Setter/getter for static instance
@@ -30,14 +30,14 @@ public:
     // The callback receives as a parameter the number of seconds after the requested callback time that the
     // callback was actually executed.
     // Returns a function that can be called to cancel the operation.
-    std::function<void()> do_after(const Duration time, const std::function<void(Duration)> &callback);
+    std::function<void()> do_after(const Duration time, const std::function<void()> &callback);
 
     // Run callback every specified duration in seconds.
     // Duration will be adjusted to be as close to schedule as possible.
     // The callback receives as a parameter the number of seconds after the requested callback time that the
     // callback was actually executed.
     // Returns a function that can be called to cancel the operation.
-    std::function<void()> do_every(const Duration time, const std::function<void(Duration)> &callback);
+    std::function<void()> do_every(const Duration time, const std::function<void()> &callback);
 
 private:
     static Timer *instance;
@@ -49,7 +49,7 @@ private:
     struct Operation {
         const Duration when; // When to fire
         Duration remaining; // Mutable time remaining until operation execution
-        const std::function<void(Duration)> callback;
+        const std::function<void()> callback;
     };
 
     // Callback maps from ID -> function
@@ -61,7 +61,7 @@ private:
 
     // Helper to register operations
     std::function<void()> add_op(std::map<int, Operation> &to, const Duration time,
-                                 const std::function<void(Duration)> &callback);
+                                 const std::function<void()> &callback);
 
     // Helpers to handle operations
     void handle_operations(const Duration &elapsed);
