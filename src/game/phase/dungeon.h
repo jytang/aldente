@@ -2,6 +2,8 @@
 
 #include "phase.h"
 
+const auto DUNGEON_TIME = std::chrono::seconds(10);
+
 class DungeonPhase : public TimedPhase {
 public:
     void setup();

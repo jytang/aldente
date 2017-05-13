@@ -2,6 +2,8 @@
 
 #include "phase.h"
 
+const auto BUILD_TIME = std::chrono::seconds(10);
+
 class BuildPhase : public TimedPhase {
 public:
     void setup();
