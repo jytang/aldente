@@ -1,7 +1,7 @@
 #include "ui_grid.h"
 
 #include "events.h"
-#include "game/phase.h"
+#include "game/phase/phase.h"
 
 UIGrid::~UIGrid() {
     for (unsigned int i = 0; i < children.size(); ++i)

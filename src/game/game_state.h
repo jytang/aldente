@@ -1,17 +1,16 @@
 #pragma once
 
-#include "phase.h"
 #include "game_objects/player.h"
 #include "physics.h"
 #include "scene_manager.h"
-#include <map>
+#include "phase/phase.h"
+#include "phase/build.h"
+#include "phase/dungeon.h"
 
 class GameState {
 public:
-    static MenuPhase menu_phase;
     static BuildPhase build_phase;
     static DungeonPhase dungeon_phase;
-    static MinigamePhase minigame_phase;
 
     static Phase* curr_phase;
     static SceneManager scene_manager;

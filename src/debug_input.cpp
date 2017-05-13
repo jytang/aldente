@@ -1,8 +1,5 @@
 #include "debug_input.h"
 
-#include <tuple>
-#include "aldente_client.h"
-#include "events.h"
 #include "util/config.h"
 #include "game/game_state.h"
 
@@ -49,7 +46,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::debug::toggle_debug_input_event();
                     break;
                 case GLFW_KEY_0:
-                    events::debug::client_set_phase_event(&GameState::menu_phase);
+                    // FIXME(metakirby5)
                     break;
                 case GLFW_KEY_1:
                     events::debug::client_set_phase_event(&GameState::build_phase);
@@ -58,7 +55,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::debug::client_set_phase_event(&GameState::dungeon_phase);
                     break;
                 case GLFW_KEY_3:
-                    events::debug::client_set_phase_event(&GameState::minigame_phase);
+                    // FIXME(metakirby5)
                     break;
                 default:
                     break;
@@ -82,31 +79,6 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
 
         last_cursor_pos = current_cursor_pos;
     });
-
-    // Test fire for button events and stick events
-    /*
-    events::button_event.connect([](events::ButtonData &d) {
-        fprintf(stderr,
-                "ButtonEvent:\n"
-                        "  id: %d\n"
-                        "  input: %d\n"
-                        "  state: %d\n",
-                d.id, d.input, d.state);
-    });
-    events::stick_event.connect([](events::StickData &d) {
-        fprintf(stderr,
-                "StickEvent:\n"
-                        "  id: %d\n"
-                        "  input: %d\n"
-                        "  state: (%d, %d)\n",
-                d.id, d.input, d.state.first, d.state.second);
-    });
-
-    events::debug::toggle_debug_input_event.connect([&]() {
-        debug_input_on = !debug_input_on;
-        scene_manager.get_camera()->disable_movement = debug_input_on;
-    });
-    */
 }
 
 // TODO: change this to a "FrameEdge" event callback

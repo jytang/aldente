@@ -108,14 +108,14 @@ void ClientNetworkManager::register_listeners() {
     // Debug.
     events::debug::client_set_phase_event.connect([&](Phase* phase) {
         proto::ClientMessage msg;
-        if (phase == &GameState::menu_phase)
+        /* if (phase == &GameState::menu_phase)               // FIXME(metakirby5)
             msg.set_phase_request(proto::Phase::MENU);
-        else if (phase == &GameState::build_phase)
+        else */ if (phase == &GameState::build_phase)
             msg.set_phase_request(proto::Phase::BUILD);
         else if (phase == &GameState::dungeon_phase)
             msg.set_phase_request(proto::Phase::DUNGEON);
-        else if (phase == &GameState::minigame_phase)
-            msg.set_phase_request(proto::Phase::MINIGAME);
+//        else if (phase == &GameState::minigame_phase)
+//            msg.set_phase_request(proto::Phase::MINIGAME);  // FIXME(metakirby5)
         else {
             std::cerr << "Unrecognized phase. Use the static phases in GameState.\n";
             return;

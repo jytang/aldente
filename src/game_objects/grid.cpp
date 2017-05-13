@@ -1,6 +1,6 @@
 #include "grid.h"
 #include "events.h"
-#include "game/phase.h"
+#include "game/phase/phase.h"
 #include "util/color.h"
 
 #include <fstream>

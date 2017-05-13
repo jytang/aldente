@@ -1,21 +1,4 @@
-#include "phase.h"
-
-#include "game_state.h"
-
-const auto BUILD_TIME = std::chrono::seconds(10);
-const auto DUNGEON_TIME = std::chrono::seconds(10);
-
-void TimedPhase::transition_after(const Timer::Duration &time, Phase *to) {
-    cancel_clock_every = Timer::get()->do_every(std::chrono::seconds(1), [&](){
-        static auto remaining = BUILD_TIME;
-        remaining -= std::chrono::seconds(1);
-        std::cerr << remaining.count() << std::endl;
-        if (remaining <= std::chrono::seconds(0)) {
-            cancel_clock_every();
-            next = to;
-        }
-    });
-}
+#include "build.h"
 
 bool BuildPhase::is_menu = true;
 
@@ -75,25 +58,4 @@ void BuildPhase::teardown() {
     button_conn.disconnect();
 
     events::build::end_build_event();
-}
-
-void DungeonPhase::setup() {
-    joystick_conn = events::stick_event.connect([&](events::StickData d) {
-        // Left stick
-        if (d.input == events::STICK_LEFT) {
-            events::dungeon::network_player_move_event(d);
-        }
-    });
-
-    button_conn = events::button_event.connect([&](events::ButtonData d) {
-        // A button pressed.
-        if (d.input == events::BTN_A && d.state == 1) {
-            events::dungeon::player_interact_event();
-        }
-    });
-}
-
-void DungeonPhase::teardown() {
-    joystick_conn.disconnect();
-    button_conn.disconnect();
 }
