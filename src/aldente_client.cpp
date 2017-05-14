@@ -83,6 +83,7 @@ void AldenteClient::start() {
 
     Render render(window, GameState::scene_manager);
 
+    // Debug Drawer for Bullet
     btDebug bt_debug(&physics);
     bt_debug.set_enable(true); // Set to false to disable debug lines for bullet
 

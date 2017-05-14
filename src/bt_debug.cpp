@@ -31,10 +31,15 @@ void btDebug::draw(SceneInfo &scene_info) {
     if (!enabled)
         return;
 
-    if (physics->dynamicsWorld)
-        physics->dynamicsWorld->setDebugDrawer(this);
+    if (physics->dynamicsWorld == NULL)
+        return;
+    
+    physics->dynamicsWorld->setDebugDrawer(this);
 
+    // Clears past buffers
     clear();
+
+    // Calls "drawLine" for all box colliders registered in the world
     physics->dynamicsWorld->debugDrawWorld();
 
     for (int i = 0; i < geo->vertices.size(); i++)
@@ -42,6 +47,7 @@ void btDebug::draw(SceneInfo &scene_info) {
 
     geo->populate_buffers();
 
+    // Draws all lines
     ShaderManager::unlit.use();
     ShaderManager::unlit.draw(lines, scene_info, glm::mat4(1.0f));
 }

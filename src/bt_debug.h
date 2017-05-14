@@ -13,10 +13,11 @@ public:
 
     btDebug(Physics *physics);
 
-    void clear();
+    void clear(); // Clears buffers
     void draw(SceneInfo &scene_info);
     void set_enable(bool b);
     
+    /* Virtual functions from Bullet's Interface*/
     void drawLine(const btVector3& from, const btVector3& to, const btVector3& color) override;
     void drawContactPoint(const btVector3& PointOnB, const btVector3& normalOnB, btScalar distance, int lifeTime, const btVector3& color) override {};
     void reportErrorWarning(const char* warningString) override {};
