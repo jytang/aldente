@@ -85,7 +85,6 @@ void AldenteClient::start() {
 
     // Debug Drawer for Bullet
     btDebug bt_debug(&GameState::physics);
-    bt_debug.set_enable(true); // Set to false to disable debug lines for bullet
 
     // TODO : BuildUI initialiaziation should be done in BuildPhase setup()
     std::vector<ConstructData> constructs;

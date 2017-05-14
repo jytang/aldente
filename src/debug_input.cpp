@@ -45,6 +45,9 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_V:
                     events::debug::toggle_debug_input_event();
                     break;
+                case GLFW_KEY_B:
+                    events::debug::toggle_bt_debug_drawer_event();
+                    break;
                 case GLFW_KEY_0:
                     // FIXME(metakirby5)
                     break;

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "shaders/shader_manager.h"
 #include "scene_manager.h"
+#include "events.h"
 
 btDebug::btDebug(Physics *physics) : physics(physics) {
     setDebugMode(btIDebugDraw::DBG_DrawWireframe);
@@ -15,6 +16,11 @@ btDebug::btDebug(Physics *physics) : physics(physics) {
     mat->shadows = false;
     lines->material = mat;
     lines->geometry = geo;
+
+    // Connect to debug toggle event.
+    events::debug::toggle_bt_debug_drawer_event.connect([&](void) {
+        enabled = !enabled;
+    });
 }
 
 void btDebug::set_enable(bool b) {

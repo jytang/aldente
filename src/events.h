@@ -102,6 +102,7 @@ namespace events {
         extern signal<void()> toggle_light_rotation_event;
         extern signal<void()> toggle_debug_input_event;
         extern signal<void(Phase*)> client_set_phase_event;
+        extern signal<void()> toggle_bt_debug_drawer_event;
     }
 
     // The user has made a selection on the UI grid.
