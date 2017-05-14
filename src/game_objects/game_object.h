@@ -42,7 +42,7 @@ public:
     void remove_child(GameObject *obj);
     void remove_all();
 
-    void draw(Shader *shader, SceneInfo &scene_info);
+    virtual void draw(Shader *shader, SceneInfo &scene_info);
     void update(); // Updates this object and all children
 
     virtual void update_this() {}; // Update function for this particular object. Use this instead of update()

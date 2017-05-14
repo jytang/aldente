@@ -38,7 +38,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     this->z = z;
     buildable = false;
 
-    transform.set_position(x, 0.5f, z);
+    set_position({x, 0.5f, z});
 
     events::RigidBodyData rigid = {
         glm::vec3(x,0.5f,z), //position

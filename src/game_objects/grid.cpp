@@ -16,7 +16,7 @@ Color select_color = Color::GREEN;
 Color invalid_color = Color::RED;
 
 Grid::Grid(const char *map_loc) :
-        hover(nullptr), hover_col(0), hover_row(0), 
+        hover(nullptr), hover_col(0), hover_row(0),
         width(0), height(0) {
 
     tag = "GRID";
@@ -31,8 +31,15 @@ Grid::Grid(const char *map_loc) :
     setup_listeners();
 }
 
+// Draw using instanced rendering for performance purposes.
+void Grid::draw(Shader *shader, SceneInfo &scene_info) {
+    // Draw all tiles using instanced rendering.
+
+    // Draw all constructs.
+}
+
 void Grid::setup_listeners() {
-    
+
     // When moving selection during build phase
     events::build::build_grid_move_event.connect([&](Direction dir) {
         move_selection(dir);

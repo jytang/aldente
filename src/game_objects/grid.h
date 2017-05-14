@@ -1,7 +1,7 @@
 /*
 * Grid Class:
 *   This class holds a 2D array of Tile pointers that make up the map. Each Tile pointer
-*   represents a coordinate on the map (row, col). The pointer points to a Tile object 
+*   represents a coordinate on the map (row, col). The pointer points to a Tile object
 *   which occupies that space (note that tiles can be more than a single coordinate big).
 *
 *   Also currently handles building constructs and adding them to the map.
@@ -62,4 +62,7 @@ public:
     void remove_goal();
 
     void update_selection();
+
+    // override draw for instanced rendering
+    void draw(Shader *shader, SceneInfo &scene_info) override;
 };
