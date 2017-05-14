@@ -81,7 +81,7 @@ void Player::update_state(float x, float z, float wx, float wz, bool camera) {
             anim_player.play();
     }
 
-    transform.set_position(x, 0.0f, z);
+    set_position({ x, 0.0f, z });
     transform.look_at(glm::vec3(wx, 0, wz));
 
     // Fires the player's position whenever player moves so camera can follow.
