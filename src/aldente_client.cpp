@@ -84,7 +84,7 @@ void AldenteClient::start() {
     Render render(window, GameState::scene_manager);
 
     // Debug Drawer for Bullet
-    btDebug bt_debug(&physics);
+    btDebug bt_debug(&GameState::physics);
     bt_debug.set_enable(true); // Set to false to disable debug lines for bullet
 
     // TODO : BuildUI initialiaziation should be done in BuildPhase setup()
@@ -122,7 +122,7 @@ void AldenteClient::start() {
         GameState::client_update();
 
         render.update();
-        bt_debug.draw(scene_manager.get_current_scene()->info);
+        bt_debug.draw(GameState::scene_manager.get_current_scene()->info);
         ui.draw();
         window.swap_buffers();
     }
