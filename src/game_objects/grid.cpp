@@ -31,11 +31,12 @@ Grid::Grid(const char *map_loc) :
     setup_listeners();
 }
 
-// Draw using instanced rendering for performance purposes.
+// Override draw - using instanced rendering for performance purposes.
 void Grid::draw(Shader *shader, SceneInfo &scene_info) {
-    // Draw all tiles using instanced rendering.
+    // Draw all types of tiles using instanced rendering.
 
-    // Draw all constructs.
+    // Draw all constructs by calling base class function.
+    GameObject::draw(shader, scene_info);
 }
 
 void Grid::setup_listeners() {
@@ -210,7 +211,6 @@ void Grid::load_map(const char *map_loc) {
                     fin >> int_buf;
                     Tile *new_tile = make_tile(int_buf, c, r);
                     new_row.push_back(new_tile);
-                    children.push_back(new_tile);
                 }
                 grid.push_back(new_row);
             }
@@ -235,13 +235,19 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
         break;
     }
 
+    // Push pointer back to tile_types map.
+    tile_types[tile_id].push_back(new_tile);
+
     return new_tile;
 }
 
-// Setup model for all of Grid's children
 void Grid::setup_model() {
-    for (GameObject *obj : children)
-        obj->setup_model();
+    // Only setup model once for each tile type.
+    // Use first element of each tile type vector to set up model.
+    for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {
+        std::vector<Tile *> & vec = it->second;
+        vec[0]->setup_instanced_model(vec.size());
+    }
 }
 
 void Grid::place_goal(glm::vec3 start, int min_dist) {

@@ -7,8 +7,8 @@ void GeometryGenerator::destroy() {
         delete (*it);
 }
 
-Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
-    Geometry *cube = new Geometry();
+Geometry *GeometryGenerator::generate_cube(GLfloat scale, int num_instances) {
+    Geometry *cube = new Geometry(num_instances);
 
     glm::vec3 v0 = {scale / 2.f, scale / 2.f, scale / 2.f};
     glm::vec3 v1 = {-scale / 2.f, scale / 2.f, scale / 2.f};
@@ -132,9 +132,8 @@ Geometry *GeometryGenerator::generate_cube(GLfloat scale) {
     return cube;
 }
 
-Geometry *GeometryGenerator::generate_sphere(GLfloat radius, GLuint divisions) {
-
-    Geometry *sphere = new Geometry();
+Geometry *GeometryGenerator::generate_sphere(GLfloat radius, GLuint divisions, int num_instances) {
+    Geometry *sphere = new Geometry(num_instances);
 
     float fstacks = (float) divisions;
     float fslices = (float) divisions;
@@ -211,8 +210,8 @@ Geometry *GeometryGenerator::generate_sphere(GLfloat radius, GLuint divisions) {
     return sphere;
 }
 
-Geometry *GeometryGenerator::generate_cylinder(GLfloat radius, GLfloat height, GLuint divisions, bool is_centered) {
-    Geometry *cylinder = new Geometry();
+Geometry *GeometryGenerator::generate_cylinder(GLfloat radius, GLfloat height, GLuint divisions, bool is_centered, int num_instances) {
+    Geometry *cylinder = new Geometry(num_instances);
 
     glm::vec3 v_top, v_bot, v0, v1, v2, v3;
 
@@ -288,8 +287,8 @@ Geometry *GeometryGenerator::generate_cylinder(GLfloat radius, GLfloat height, G
 
 }
 
-Geometry *GeometryGenerator::generate_plane(GLfloat scale, bool has_texture) {
-    Geometry *plane = new Geometry();
+Geometry *GeometryGenerator::generate_plane(GLfloat scale, bool has_texture, int num_instances) {
+    Geometry *plane = new Geometry(num_instances);
     
         // Done square by square for repeatable texture
 

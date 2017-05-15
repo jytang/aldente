@@ -50,6 +50,7 @@ public:
     virtual void on_collision(GameObject *other) {} // Server: physics has detected a collision with this and other.
     virtual void on_collision_graphical() {} // Client: this obj has collided, perform graphical update.
     virtual void setup_model() {};
+    virtual void setup_instanced_model(int num_instances) {};
 
     void connect_skel_to_model();
 

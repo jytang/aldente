@@ -21,9 +21,10 @@ public:
     GLint wrap_type = GL_REPEAT;
     GLint filter_type = GL_NEAREST_MIPMAP_LINEAR;
 
-    Geometry(GLenum draw = GL_TRIANGLES,
-    GLint wrap = GL_REPEAT,
-    GLint filter = GL_NEAREST_MIPMAP_LINEAR);
+    Geometry(int num_instances = 1,
+             GLenum draw = GL_TRIANGLES,
+             GLint wrap = GL_REPEAT,
+             GLint filter = GL_NEAREST_MIPMAP_LINEAR);
 
     ~Geometry();
 
@@ -39,4 +40,6 @@ public:
 
 private:
     GLuint VAO, VBO, NBO, TBO, EBO, BBO, WBO;
+    int num_instances;
+    GLuint IVBO;
 };

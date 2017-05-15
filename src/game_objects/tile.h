@@ -37,7 +37,7 @@ public:
     int getZ() { return z; };
 
     virtual void update_this() override = 0;
-    virtual void setup_model() override = 0;
+    virtual void setup_instanced_model(int num_instances) override = 0;
 
     void set_construct(Construct* to_set) { construct = to_set; };
     Construct* get_construct() { return construct; };
@@ -50,7 +50,7 @@ class FloorTile : public Tile {
 public:
     FloorTile(int x, int z);
 
-    void setup_model() override;
+    void setup_instanced_model(int num_instances) override;
     void update_this() override{};
 };
 
@@ -60,6 +60,6 @@ public:
     WallTile(int x, int z);
 
 
-    void setup_model() override;
+    void setup_instanced_model(int num_instances) override;
     void update_this() override{};
 };
