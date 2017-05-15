@@ -36,13 +36,8 @@ void Grid::draw(Shader *shader, SceneInfo &scene_info) {
     // Draw all types of tiles using instanced rendering.
     for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {
         std::vector<Tile *> & vec = it->second;
-        std::vector<glm::mat4> instance_matrix; // vector of all tile transforms
-        for (Tile * t : vec) {
-            // Insert this tile's transform world matrix into the vector
-            instance_matrix.push_back(t->transform.get_world_mat());
-        }
         // Do instanced draw call on first tile
-        vec[0]->draw_instanced(shader, scene_info, instance_matrix);
+        vec[0]->draw_instanced(shader, scene_info); // do not pass in instance matrix because it doesn't change
     }
 
     // Draw all constructs by calling base class function.
@@ -256,7 +251,14 @@ void Grid::setup_model() {
     // Use first element of each tile type vector to set up model.
     for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {
         std::vector<Tile *> & vec = it->second;
-        vec[0]->setup_instanced_model(vec.size());
+
+        std::vector<glm::mat4> instance_matrix; // vector of all tile transforms
+        for (Tile * t : vec) {
+            // Insert this tile's transform world matrix into the vector
+            instance_matrix.push_back(t->transform.get_world_mat());
+        }
+
+        vec[0]->setup_instanced_model(vec.size(), instance_matrix);
     }
 }
 

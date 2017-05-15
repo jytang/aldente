@@ -37,7 +37,8 @@ public:
     int getZ() { return z; };
 
     virtual void update_this() override = 0;
-    virtual void setup_instanced_model(int num_instances) override = 0;
+    virtual void setup_instanced_model(int num_instances,
+                                       std::vector<glm::mat4> &instance_matrix) override = 0;
 
     void set_construct(Construct* to_set) { construct = to_set; };
     Construct* get_construct() { return construct; };
@@ -50,7 +51,8 @@ class FloorTile : public Tile {
 public:
     FloorTile(int x, int z);
 
-    void setup_instanced_model(int num_instances) override;
+    void setup_instanced_model(int num_instances,
+                               std::vector<glm::mat4> &instance_matrix) override;
     void update_this() override{};
 };
 
@@ -59,7 +61,7 @@ class WallTile : public Tile {
 public:
     WallTile(int x, int z);
 
-
-    void setup_instanced_model(int num_instances) override;
+    void setup_instanced_model(int num_instances,
+                               std::vector<glm::mat4> &instance_matrix) override;
     void update_this() override{};
 };

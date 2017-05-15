@@ -44,7 +44,7 @@ public:
 
     virtual void draw(Shader *shader, SceneInfo &scene_info);
     virtual void draw_instanced(Shader *shader, SceneInfo &scene_info,
-                                std::vector<glm::mat4> &instance_matrix);
+                                std::vector<glm::mat4> &instance_matrix = std::vector<glm::mat4>());
     void update(); // Updates this object and all children
 
     virtual void update_this() {}; // Update function for this particular object. Use this instead of update()
@@ -52,7 +52,8 @@ public:
     virtual void on_collision(GameObject *other) {} // Server: physics has detected a collision with this and other.
     virtual void on_collision_graphical() {} // Client: this obj has collided, perform graphical update.
     virtual void setup_model() {};
-    virtual void setup_instanced_model(int num_instances) {};
+    virtual void setup_instanced_model(int num_instances,
+                                       std::vector<glm::mat4> &instance_matrix = std::vector<glm::mat4>()) {};
 
     void connect_skel_to_model();
 
