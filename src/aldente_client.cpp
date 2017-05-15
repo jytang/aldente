@@ -110,19 +110,15 @@ void AldenteClient::start() {
     Timer timer(GAME_TICK);
     Timer::provide(&timer);
 
+    // Setup framerate counter.
     GLuint frame = 0;
-    double prev_ticks = glfwGetTime();
-    double move_prev_ticks = prev_ticks;
+    Timer::get()->do_every(std::chrono::seconds(1), [&](){
+        std::cerr << "FPS: " << frame << std::endl;
+        frame = 0;
+    });
 
     while (!window.should_close()) {
         frame++;
-        double curr_time = glfwGetTime();
-        if (curr_time - prev_ticks > 1.f)
-        {
-            std::cerr << "FPS: " << frame << std::endl;
-            frame = 0;
-            prev_ticks = curr_time;
-        }
 
         // Do polling
         for (auto &poller : pollers) {
