@@ -80,6 +80,12 @@ void Geometry::populate_buffers() {
         glEnableVertexAttribArray(8);
         glVertexAttribPointer(8, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(glm::vec4), (GLvoid*)(3 * sizeof(glm::vec4)));
 
+        // Setup defaults to be identity matrix.
+        glVertexAttrib4f(5, 1.f, 0.f, 0.f, 0.f);
+        glVertexAttrib4f(6, 0.f, 1.f, 0.f, 0.f);
+        glVertexAttrib4f(7, 0.f, 0.f, 1.f, 0.f);
+        glVertexAttrib4f(8, 0.f, 0.f, 0.f, 1.f);
+
         // Step forward by 1 for every instance
         glVertexAttribDivisor(5, 1);
         glVertexAttribDivisor(6, 1);
