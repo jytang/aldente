@@ -18,7 +18,7 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     set_position({ x, 0.0f, z });
 }
 
-void FloorTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> &instance_matrix){
+void FloorTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
     Mesh* mesh = new Mesh();
 
     // Set's the mesh's location relative to the model
@@ -51,7 +51,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     events::add_rigidbody_event(rigid);
 }
 
-void WallTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> &instance_matrix){
+void WallTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
     Mesh* mesh = new Mesh();
 
     // Set's the mesh's location relative to the model

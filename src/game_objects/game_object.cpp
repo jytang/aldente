@@ -54,7 +54,7 @@ void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
 
 // Draw multiple instances of this GameObject, which should have no children.
 void GameObject::draw_instanced(Shader *shader, SceneInfo &scene_info,
-                      std::vector<glm::mat4> &instance_matrix) {
+                      std::vector<glm::mat4> instance_matrix) {
     if (model) {
         connect_skel_to_model();
         model->draw_instanced(shader, scene_info, instance_matrix);
