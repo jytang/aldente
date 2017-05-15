@@ -24,6 +24,8 @@ public:
     Model(Shader *shader = &ShaderManager::basic) : model_shader(shader) {}
 
     void draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world);
+    void draw_instanced(Shader *shader, SceneInfo &scene_info,
+                        std::vector<glm::mat4> &instance_matrix);
 
     void add_mesh(Mesh *m);
 

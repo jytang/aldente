@@ -38,6 +38,8 @@ public:
 
     void bind();
 
+    void bind_instance_matrix(std::vector<glm::mat4> &instance_matrix);
+
 private:
     GLuint VAO, VBO, NBO, TBO, EBO, BBO, WBO;
     int num_instances;

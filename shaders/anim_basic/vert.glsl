@@ -4,6 +4,7 @@ layout (location = 1) in vec3 normal;
 layout (location = 2) in vec2 tex_coord;
 layout (location = 3) in ivec4 bone_ids;
 layout (location = 4) in vec4 weights;
+layout (location = 5) in mat4 instance_matrix; // 3-4 taken up by animation stuff
 
 out vec3 frag_pos;
 out vec3 frag_normal;
@@ -38,9 +39,9 @@ void main()
         new_norm = bone_trans * new_norm;
     }
 
-    gl_Position = projection * view * model * mesh_model * new_pos;
-    frag_pos = vec3(model * mesh_model * vec4(position, 1.0f));
-    frag_normal = mat3(transpose(inverse(model * mesh_model))) * vec3(new_norm);
+    gl_Position = projection * view * instance_matrix * model * mesh_model * new_pos;
+    frag_pos = vec3(instance_matrix * model * mesh_model * vec4(position, 1.0f));
+    frag_normal = mat3(transpose(inverse(instance_matrix * model * mesh_model))) * vec3(new_norm);
     frag_pos_light = light_matrix * vec4(frag_pos, 1.0);
     frag_tex_coord = vec2(tex_coord.x, 1.0 - tex_coord.y); //y-axis usually requires inverting
 }

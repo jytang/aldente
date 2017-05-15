@@ -43,6 +43,8 @@ public:
     void remove_all();
 
     virtual void draw(Shader *shader, SceneInfo &scene_info);
+    virtual void draw_instanced(Shader *shader, SceneInfo &scene_info,
+                                std::vector<glm::mat4> &instance_matrix);
     void update(); // Updates this object and all children
 
     virtual void update_this() {}; // Update function for this particular object. Use this instead of update()

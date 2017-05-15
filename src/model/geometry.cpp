@@ -112,3 +112,12 @@ void Geometry::draw() {
 void Geometry::bind() {
     glBindVertexArray(VAO);
 }
+
+// Fill the IVBO buffer with positions of each instance via instance_matrix.
+void Geometry::bind_instance_matrix(std::vector<glm::mat4> &instance_matrix) {
+    glBindBuffer(GL_ARRAY_BUFFER, IVBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0,
+                    sizeof(glm::mat4) * instance_matrix.size(),
+                    &instance_matrix[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
