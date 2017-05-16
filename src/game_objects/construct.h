@@ -10,6 +10,7 @@
 class Construct : public GameObject {
 protected:
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+    btCylinderShape *goal_hit_box = new btCylinderShape(btVector3(0.005f, 0.5f, 0.005f));
 public:
     Construct(int x, int z);
     Construct(int x, int z, int id);

@@ -18,6 +18,9 @@ private:
     Grid *grid;
     Tile *hover;
     bool lights_debug_on = false;
+    std::mutex goal_mutex; // In case a new goal is created before old one is removed.
+    Goal *goal;
+    int goal_z, goal_x;
 public:
     MainScene();
     void update() override;
@@ -26,4 +29,13 @@ public:
     void graphical_setup() override;
     Player* spawn_new_player(); // Server: spawn new Player, auto-assign id.
     Player* spawn_existing_player(int obj_id); // Client: spawn existing Player with id from server.
+
+    // Places goal with minimum distance from the start. 
+    // Distance calculated using manhattan distance(x diff + z diff)
+    // Note: try not to use a high min dist
+    void place_goal(glm::vec3 start, int min_dist);
+
+    void place_existing_goal(int x, int z, int id);
+
+    void remove_goal();
 };
