@@ -76,6 +76,10 @@ void AldenteClient::start() {
         std::make_shared<GlfwPoller>(),
         std::make_shared<InputPoller>(),
     };
+    
+    // Used for callbacks
+    Timer timer(GAME_TICK);
+    Timer::provide(&timer);
 
     // Game logic. Temporarily start game with build phase.
     GameState::setup(false);
@@ -105,10 +109,6 @@ void AldenteClient::start() {
     network.connect();
 
     std::cerr << "Starting client..." << std::endl;
-
-    // Used for callbacks
-    Timer timer(GAME_TICK);
-    Timer::provide(&timer);
 
     // Setup framerate counter.
     GLuint frame = 0;

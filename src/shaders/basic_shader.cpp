@@ -2,9 +2,9 @@
 
 #include "util/color.h"
 #include "shader_manager.h"
-#include "scene/directional_light.h"
-#include "scene/point_light.h"
-#include "scene/spot_light.h"
+#include "scene/light/directional_light.h"
+#include "scene/light/point_light.h"
+#include "scene/light/spot_light.h"
 
 #include <cstdio>
 

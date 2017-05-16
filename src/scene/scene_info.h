@@ -4,9 +4,9 @@
 #include <vector>
 
 #include "camera.h"
-#include "point_light.h"
-#include "directional_light.h"
-#include "spot_light.h"
+#include "light/point_light.h"
+#include "light/directional_light.h"
+#include "light/spot_light.h"
 
 class SceneInfo {
 public:
