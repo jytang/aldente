@@ -7,7 +7,7 @@ void Model::add_mesh(Mesh *m) {
 void Model::draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world) {
     for (Mesh *mesh : meshes) {
         // Use model's attached shader if a NULL shader is passed in.
-        if (shader != NULL) {
+        if (shader != nullptr) {
             shader->use();
             shader->draw(mesh, scene_info, to_world);
         } else {
@@ -30,7 +30,7 @@ void Model::draw_instanced(Shader *shader, SceneInfo &scene_info,
                     std::vector<glm::mat4> &instance_matrix) {
     for (Mesh *mesh : meshes) {
         // Use model's attached shader if a NULL shader is passed in.
-        if (shader != NULL) {
+        if (shader != nullptr) {
             shader->use();
             mesh->geometry->bind_instance_matrix(instance_matrix); // bind buffers on geometry
             // Pass identity to_world matrix because using instance_matrix for every instance
