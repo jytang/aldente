@@ -51,7 +51,7 @@ Goal::Goal(int x, int z) : Construct(x, z) {
     events::RigidBodyData rigid = {
         glm::vec3(x,0.5f,z), //position
         0, //mass
-        hit_box, //btshape
+        goal_hit_box, //btshape
         glm::vec3(0,0,0), //inertia
         this, //the gameobject
         true, // is a ghost object

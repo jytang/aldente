@@ -6,7 +6,8 @@
 #include "util/color.h"
 #include "light/pulse_point_light.h"
 
-MainScene::MainScene() : Scene() {
+MainScene::MainScene() : Scene(),
+    goal(nullptr) {
 
 }
 
@@ -31,6 +32,29 @@ void MainScene::setup_scene() {
     grid = new Grid("assets/maps/dungeon_test.txt");
     objs.push_back(grid);
 
+    // Attaching events
+    events::dungeon::place_goal_event.connect([&]() {
+        place_goal(glm::vec3(0.0f), 20);
+    });
+
+    events::dungeon::spawn_existing_goal_event.connect([&](int x, int z, int id) {
+        std::unique_lock<std::mutex> lock(goal_mutex);
+        place_existing_goal(x, z, id);
+    });
+
+    events::dungeon::remove_goal_event.connect([&](bool graphical) {
+        std::unique_lock<std::mutex> lock(goal_mutex);
+        if (graphical) {
+            auto position = std::find(objs.begin(), objs.end(), goal);
+            if (position != objs.end())
+                objs.erase(position);
+            delete goal;
+            goal = nullptr;
+        }
+        else {
+            remove_goal();
+        }
+    });
 }
 
 void MainScene::graphical_setup() {
@@ -55,6 +79,7 @@ void MainScene::graphical_setup() {
         lights_debug_on = !lights_debug_on;
     });
 
+	// Setup all GameObject models.
     for (GameObject *obj : objs) {
         obj->setup_model();
     }
@@ -81,4 +106,41 @@ Player* MainScene::spawn_existing_player(int obj_id) {
     player->start_walk();
     
     return player;
+}
+
+void MainScene::place_goal(glm::vec3 start, int min_dist) {
+    // Goal will be in range of (min_dist, edge of map)
+    int new_goal_x = rand() % grid->get_width();
+    int new_goal_z = rand() % grid->get_height();
+
+    std::vector<std::vector<Tile*>> grid_array = grid->get_grid();
+    // If not buildable or too close, find another
+    while (!grid_array[new_goal_z][new_goal_x]->isBuildable() ||
+        (abs(new_goal_x - start.x) + abs(new_goal_z - start.z) < min_dist)) {
+        new_goal_x = rand() % grid->get_width();
+        new_goal_z = rand() % grid->get_height();
+    }
+
+    Goal *new_goal = new Goal(new_goal_x, new_goal_z);
+
+    (grid->get_grid())[new_goal_z][new_goal_x]->set_construct(new_goal);
+    goal = new_goal;
+    goal_x = new_goal_x;
+    goal_z = new_goal_z;
+}
+
+void MainScene::place_existing_goal(int x, int z, int id) {
+    Goal *new_goal = new Goal(x, z, id);
+    goal = new_goal;
+
+    new_goal->setup_model();
+    objs.push_back(new_goal);
+}
+
+void MainScene::remove_goal() {
+    //TODO destructor for goal
+    if (goal) {
+        (grid->get_grid())[goal_z][goal_x]->set_construct(nullptr);
+        events::remove_rigidbody_event(goal);
+    }
 }
