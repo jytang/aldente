@@ -78,10 +78,8 @@ void MainScene::graphical_setup() {
     events::debug::toggle_light_rotation_event.connect([&](void) {
         lights_debug_on = !lights_debug_on;
     });
-}
 
-void MainScene::graphical_setup() {
-
+	// Setup all GameObject models.
     for (GameObject *obj : objs) {
         obj->setup_model();
     }
