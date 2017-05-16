@@ -62,6 +62,9 @@ void GameState::client_update() {
 }
 
 void GameState::set_phase(Phase* phase) {
+    // If no change to phase, don't teardown and setup.
+    if (phase == curr_phase) return;
+
     if (is_server) {
         if (curr_phase)
             curr_phase->teardown();
