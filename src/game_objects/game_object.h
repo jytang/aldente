@@ -59,6 +59,9 @@ public:
     virtual void setup_instanced_model(int num_instances,
                                        std::vector<glm::mat4> instance_matrix = std::vector<glm::mat4>()) {};
 
+    void set_filter_color(Color color);
+    void set_filter_alpha(float alpha);
+    void set_filter_shadows(bool enable);
     void set_color(Color color);
     void set_alpha(float alpha);
     void set_shadows(bool enable);

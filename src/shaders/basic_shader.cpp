@@ -34,12 +34,21 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     // Send mesh local transformation matrix.
     set_uni("mesh_model", mesh->local_transform);
 
-    // Send material. TODO: override from model_filter
-    set_uni("material.diffuse", mesh->material->diffuse.to_vec());
-    set_uni("material.specular", mesh->material->specular.to_vec());
-    set_uni("material.shininess", mesh->material->shininess);
-    set_uni("material.shadows_enabled", mesh->material->shadows);
-    set_uni("material.alpha", mesh->material->alpha);
+    // Send material.
+    // Override from model filter.
+    if (mesh->model_filter.material_filter) {
+        set_uni("material.diffuse", mesh->model_filter.material.diffuse.to_vec());
+        set_uni("material.specular", mesh->model_filter.material.specular.to_vec());
+        set_uni("material.shininess", mesh->model_filter.material.shininess);
+        set_uni("material.shadows_enabled", mesh->model_filter.material.shadows);
+        set_uni("material.alpha", mesh->model_filter.material.alpha);
+    } else {
+        set_uni("material.diffuse", mesh->material->diffuse.to_vec());
+        set_uni("material.specular", mesh->material->specular.to_vec());
+        set_uni("material.shininess", mesh->material->shininess);
+        set_uni("material.shadows_enabled", mesh->material->shadows);
+        set_uni("material.alpha", mesh->material->alpha);
+    }
 
     // Send texture uniforms.
     set_uni("texture_enabled", mesh->geometry->has_texture);

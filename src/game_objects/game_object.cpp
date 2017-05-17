@@ -90,6 +90,18 @@ void GameObject::connect_model_filter(){
     model->set_model_filter(model_filter);
 }
 
+void GameObject::set_filter_color(Color color) {
+    model_filter.material.diffuse = color;
+}
+
+void GameObject::set_filter_alpha(float alpha) {
+    model_filter.material.alpha = alpha;
+}
+
+void GameObject::set_filter_shadows(bool enable) {
+    model_filter.material.shadows = enable;
+}
+
 // Sets the material color for the entire game object's model
 void GameObject::set_color(Color color) {
     model->set_color(color);
