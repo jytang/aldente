@@ -41,8 +41,13 @@ void AnimationPlayer::update() {
     last_time = glfwGetTime();
 }
 
-void AnimationPlayer::set_anim(Skeleton *skel, std::string anim_name) {
+void AnimationPlayer::set_skeleton(Skeleton *skel) {
     this->skel = skel;
+}
+
+void AnimationPlayer::set_anim(std::string anim_name) {
+    if (!skel) return; // cannot set animation without a skeleton
+
     animation = skel->animations[anim_name];
 
     if (animation == NULL) {

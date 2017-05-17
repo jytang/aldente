@@ -11,7 +11,8 @@ class AnimationPlayer {
 public:
     AnimationPlayer();
 
-    void set_anim(Skeleton *skel, std::string anim_name);
+    void set_skeleton(Skeleton *skel);
+    void set_anim(std::string anim_name);
 
     void update(); // Updates bone matrices for model based on animation playing
     void play(); // Tells the animation player to start playing

@@ -79,6 +79,7 @@ void GameObject::update_state(float x, float z, float wx, float wz) {
 void GameObject::attach_model(Model *m) {
     model = m;
     model_filter.skeleton = m->initial_skeleton;
+    anim_player.set_skeleton(&model_filter.skeleton);
 }
 
 // Attaches bones from skeleton to model, as well as an overriding material for the model.

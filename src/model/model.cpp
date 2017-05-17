@@ -5,11 +5,12 @@ void Model::add_mesh(Mesh *m) {
 }
 
 void Model::draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world) {
+    // Use model's attached shader if a NULL shader is passed in.
+    // Otherwise use passed in shader.
+    Shader *shader_to_use = shader == nullptr ? model_shader : shader;
+    shader_to_use->use();
+
     for (Mesh *mesh : meshes) {
-        // Use model's attached shader if a NULL shader is passed in.
-        // Otherwise use passed in shader.
-        Shader *shader_to_use = shader == nullptr ? model_shader : shader;
-        shader_to_use->use();
         shader_to_use->draw(mesh, scene_info, to_world);
     }
 }
@@ -17,10 +18,11 @@ void Model::draw(Shader *shader, SceneInfo &scene_info, glm::mat4 to_world) {
 // Draw multiple instances of this model according to the number of (transformation) mat4s in instance_matrix
 void Model::draw_instanced(Shader *shader, SceneInfo &scene_info,
                     std::vector<glm::mat4> &instance_matrix) {
+    // Use model's attached shader if a NULL shader is passed in.
+    Shader *shader_to_use = shader == nullptr ? model_shader : shader;
+    shader_to_use->use();
+
     for (Mesh *mesh : meshes) {
-        // Use model's attached shader if a NULL shader is passed in.
-        Shader *shader_to_use = shader == nullptr ? model_shader : shader;
-        shader_to_use->use();
         mesh->geometry->bind_instance_matrix(instance_matrix); // bind buffers on geometry
         // Pass identity to_world matrix because using instance_matrix for every instance
         shader_to_use->draw(mesh, scene_info, glm::mat4(1.f));

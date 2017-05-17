@@ -10,7 +10,7 @@ void TestCoin::update_this() {
 }
 
 void TestCoin::spin_coin() {
-    anim_player.set_anim(&skel, "spin");
+    anim_player.set_anim("spin");
     anim_player.set_loop(true);
     anim_player.play();
 }

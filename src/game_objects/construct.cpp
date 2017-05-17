@@ -35,7 +35,7 @@ void Chest::update_this() {
 
 // Activated when a player presses A on it
 void Chest::interact_trigger() {
-    anim_player.set_anim(&skel, "open");
+    anim_player.set_anim("open");
     anim_player.play();
 }
 
@@ -70,7 +70,7 @@ void Goal::setup_model() {
     attach_model(AssetLoader::get_model("warp"));
     model->set_shader(&ShaderManager::anim_unlit);
     anim_player.set_speed(1.0f);
-    anim_player.set_anim(&skel, "spin");
+    anim_player.set_anim("spin");
     anim_player.set_loop(false);
 }
 
