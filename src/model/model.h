@@ -11,12 +11,11 @@
 #include "mesh.h"
 #include "scene/scene_info.h"
 #include "skeleton.h"
+#include "model_filter.h"
 
 class Model {
 private:
     Shader *model_shader;
-    std::vector<glm::mat4> bones; // Final transformation matrix for bones, including animation
-
 public:
     std::vector<Mesh *> meshes;
     Skeleton initial_skeleton; // Initial skeleton that model is compatible with, not updated.
@@ -29,13 +28,13 @@ public:
 
     void add_mesh(Mesh *m);
 
+    void set_model_filter(ModelFilter &filter);
+
     void set_color(Color color);
 
     void set_alpha(float alpha);
 
     void set_shadows(bool enable);
-
-    void set_bones(Skeleton *skel) { bones = skel->bones_final; };
 
     void set_shader(Shader *shader) { model_shader = shader; }
 };

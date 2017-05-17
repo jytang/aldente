@@ -172,11 +172,7 @@ void Grid::move_selection(Direction d) {
 
 // Updates Selected Tile Color
 void Grid::update_selection() {
-    if (grid[hover_row][hover_col] != hover) {
-        hover->set_color(default_color);
-        hover = grid[hover_row][hover_col];
-        hover->set_color(select_color);
-    }
+    // TODO: modify the construct's filter to have transparent material.
 }
 
 void Grid::load_map(const char *map_loc) {

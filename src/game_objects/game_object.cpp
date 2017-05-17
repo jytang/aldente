@@ -44,7 +44,7 @@ void GameObject::remove_all() {
 // Renders model and children's models in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
     if (model) {
-        connect_skel_to_model();
+        connect_model_filter();
         model->draw(shader, scene_info, transform.get_world_mat());
     }
 
@@ -56,7 +56,7 @@ void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
 void GameObject::draw_instanced(Shader *shader, SceneInfo &scene_info,
                       std::vector<glm::mat4> instance_matrix) {
     if (model) {
-        connect_skel_to_model();
+        connect_model_filter();
         model->draw_instanced(shader, scene_info, instance_matrix);
     }
 }
@@ -76,12 +76,17 @@ void GameObject::update_state(float x, float z, float wx, float wz) {
     transform.look_at(direction);
 }
 
-// Attaches bones from skeleton to model
+void GameObject::attach_model(Model *m) {
+    model = m;
+    model_filter.skeleton = m->initial_skeleton;
+}
+
+// Attaches bones from skeleton to model, as well as an overriding material for the model.
 // Allows for different game objects using the same model
 // to be animated independently. This needs to happen before each
 // one's draw call (i.e. cannot just be done in update)
-void GameObject::connect_skel_to_model() {
-    model->set_bones(&skel);
+void GameObject::connect_model_filter(){
+    model->set_model_filter(model_filter);
 }
 
 // Sets the material color for the entire game object's model
@@ -96,11 +101,11 @@ void GameObject::set_alpha(float alpha) {
 void GameObject::set_shadows(bool enable) {
     model->set_shadows(enable);
 }
+
 // Sets position of both object's transform and rigid body
 // Use this intead of transform.set_position to make sure that rigid body
 // is located in the same place as the object
 void GameObject::set_position(glm::vec3 pos) {
-
     // Set for Transform
     transform.set_position(pos);
 

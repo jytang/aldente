@@ -7,6 +7,8 @@
 
 #include "geometry.h"
 #include "material.h"
+#include "model_filter.h"
+
 class Mesh {
 public:
     Mesh(Geometry *geo = NULL,
@@ -17,6 +19,7 @@ public:
 
     Geometry *geometry;
     Material *material;
+    ModelFilter model_filter;
     glm::mat4 local_transform;
 
     // map<string, Anim*> animations();

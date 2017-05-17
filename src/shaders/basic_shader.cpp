@@ -21,11 +21,20 @@ void BasicShader::post_draw() {
 }
 
 void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
+    char buf[128]; // hold uniform name as a char *, for perfomance when sending to shader.
+
+    /* BONES */
+    std::vector<glm::mat4> &bones = mesh->model_filter.skeleton.bones_final;
+    for (int i = 0; i < bones.size(); i++) {
+        sprintf(buf, "bones[%d]", i);
+        set_uni(buf, bones[i]);
+    }
+
     /* MESH UNIFORMS */
     // Send mesh local transformation matrix.
     set_uni("mesh_model", mesh->local_transform);
 
-    // Send material.
+    // Send material. TODO: override from model_filter
     set_uni("material.diffuse", mesh->material->diffuse.to_vec());
     set_uni("material.specular", mesh->material->specular.to_vec());
     set_uni("material.shininess", mesh->material->shininess);
@@ -50,7 +59,6 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
 
     /* LIGHTS */
     // Send directional lights.
-    char buf[128]; // hold uniform name as a char *, for perfomance when sending to shader.
     char *uni_prefix = "dir_lights["; // Uniform prefix for directional light array.
     set_uni("num_dir_lights", (int) scene_info.dir_lights.size());
     for (int i = 0; i < scene_info.dir_lights.size(); ++i) {

@@ -6,6 +6,7 @@
 #include "animation/animation_player.h"
 #include "btBulletDynamicsCommon.h"
 #include "util/color.h"
+#include "model/model_filter.h"
 
 #include <unordered_map>
 #include <string>
@@ -18,9 +19,11 @@
 class GameObject {
 private:
     static int id_counter;
+
+    void connect_model_filter();
 protected:
     Model *model;
-    Skeleton skel;
+    ModelFilter model_filter;
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
     int id;
@@ -56,15 +59,12 @@ public:
     virtual void setup_instanced_model(int num_instances,
                                        std::vector<glm::mat4> instance_matrix = std::vector<glm::mat4>()) {};
 
-    void connect_skel_to_model();
-
     void set_color(Color color);
     void set_alpha(float alpha);
     void set_shadows(bool enable);
 
     Model* get_model() { return model; };
-    Skeleton get_skeleton() { return skel; };
-    void attach_model(Model *m) { model = m; skel = m->initial_skeleton; };
+    void attach_model(Model *m);
 
     btRigidBody *get_rigid() { return rigidbody; };
     void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
