@@ -36,19 +36,18 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
 
     // Send material.
     // Override from model filter.
-    if (mesh->model_filter.material_filter) {
-        set_uni("material.diffuse", mesh->model_filter.material.diffuse.to_vec());
-        set_uni("material.specular", mesh->model_filter.material.specular.to_vec());
-        set_uni("material.shininess", mesh->model_filter.material.shininess);
-        set_uni("material.shadows_enabled", mesh->model_filter.material.shadows);
-        set_uni("material.alpha", mesh->model_filter.material.alpha);
-    } else {
-        set_uni("material.diffuse", mesh->material->diffuse.to_vec());
-        set_uni("material.specular", mesh->material->specular.to_vec());
-        set_uni("material.shininess", mesh->material->shininess);
-        set_uni("material.shadows_enabled", mesh->material->shadows);
-        set_uni("material.alpha", mesh->material->alpha);
-    }
+    glm::vec3 diffuse = mesh->model_filter.override_diffuse ? mesh->model_filter.material.diffuse.to_vec() :
+                        mesh->material->diffuse.to_vec();
+    float alpha = mesh->model_filter.override_alpha ? mesh->model_filter.material.alpha :
+                  mesh->material->alpha;
+    bool shadows = mesh->model_filter.override_shadows ? mesh->model_filter.material.shadows :
+                   mesh->material->shadows;
+    set_uni("material.diffuse", diffuse);
+    set_uni("material.alpha", alpha);
+    set_uni("material.shadows_enabled", shadows);
+
+    set_uni("material.specular", mesh->material->specular.to_vec());
+    set_uni("material.shininess", mesh->material->shininess);
 
     // Send texture uniforms.
     set_uni("texture_enabled", mesh->geometry->has_texture);
