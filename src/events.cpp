@@ -20,7 +20,7 @@ namespace events {
         signal<void()> toggle_bt_debug_drawer_event;
     }
 
-	signal<void(int)> ui_grid_selection_event;
+    signal<void(int)> ui_grid_selection_event;
     signal<void(int)> ui_grid_movement_event;
     signal<void(RigidBodyData d)> add_rigidbody_event;
     signal<void(GameObject *obj)> remove_rigidbody_event;
