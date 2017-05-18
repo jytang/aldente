@@ -12,7 +12,7 @@ Construct::Construct(int x, int z, int id) : GameObject(id) {
     transform.set_position(x, 0.0f, z);
 }
 
-void Construct::s_update_this() {
+void Construct::update_this() {
     anim_player.update();
 }
 
@@ -28,13 +28,13 @@ Chest::Chest(int x, int z) : Construct(x, z) {
     events::add_rigidbody_event(rigid);
 
     // Sets Initial Position (Transform and Rigidbody at same time)
-    set_position({ x, 0.5f, z });
+    set_position({ x, 0.0f, z });
 }
 
 Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
     tag = "CHEST";
     // Sets Initial Position (Transform and Rigidbody at same time)
-    set_position({ x, 0.5f, z });
+    set_position({ x, 0.0f, z });
 }
 
 void Chest::s_interact_trigger(GameObject *other) {

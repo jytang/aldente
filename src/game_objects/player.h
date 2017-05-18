@@ -27,8 +27,8 @@ public:
     Player();
     Player(int obj_id);
 
-    void s_update_this() override;
-    void c_update_state(float x, float z, float wx, float wz) override;
+    void update_this() override;
+    void c_update_state(float x, float z, float wx, float wz, bool enab) override;
     void s_on_collision(GameObject *other) override;
     void c_on_collision() override;
 
@@ -36,10 +36,6 @@ public:
 
     // Player movement
     void prepare_movement(int inX, int inZ);
-<<<<<<< HEAD
-    void update_state(float x, float z, float wx, float wz, bool enab);
-=======
->>>>>>> Updated player's setup model
     void do_movement();
 
     // Called when the player tries to interacts with an object (e.g pressing A)

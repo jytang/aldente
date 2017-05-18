@@ -49,9 +49,10 @@ public:
     void remove_child(GameObject *obj);
     void remove_all();
 
+    void update(); // Updates this object and all children
+    virtual void update_this() {}; // Update function for this particular object. Use this instead of update()
+
     // Server-Specific Functions
-    void s_update(); // Updates this object and all children
-    virtual void s_update_this() {}; // Update function for this particular object. Use this instead of update()
     virtual void s_on_collision(GameObject *other) {} // Server: physics has detected a collision with this and other.
     virtual void s_interact_trigger(GameObject *other) {}; // Callback for when a player presses A on this object. Server update.
 

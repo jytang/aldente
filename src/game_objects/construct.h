@@ -14,7 +14,7 @@ public:
 
     virtual void setup_model() override {};
 
-    virtual void s_update_this() override;
+    virtual void update_this() override;
 
     virtual void s_interact_trigger(GameObject *other) override {};
     virtual void c_interact_trigger() override {};

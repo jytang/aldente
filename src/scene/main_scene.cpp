@@ -14,7 +14,7 @@ void MainScene::update() {
 
 void MainScene::client_update() {
     Scene::client_update();
-    grid->s_update();
+    grid->update();
 
     // Rotate directional light sources just to test shadows.
     if (lights_debug_on) {
@@ -72,12 +72,7 @@ Player* MainScene::spawn_new_player(int conn_id) {
 
 Player* MainScene::spawn_existing_player(int obj_id) {
     Player *player = new Player(obj_id);
-<<<<<<< HEAD
-    player->transform.set_scale({ 0.004f, 0.004f, 0.004f });
-    player->transform.translate({ 2.f, 0.f, 2.f });
-=======
     player->setup_player_model("cat");
->>>>>>> Updated player's setup model
     objs.push_back(player);
 
     return player;

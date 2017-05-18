@@ -34,7 +34,7 @@ Player::Player(int obj_id) : GameObject(obj_id) {
 
 // Just calls do_movement for now, can have more
 // functionality later.
-void Player::s_update_this() {
+void Player::update_this() {
 
     do_movement();
 
@@ -93,10 +93,10 @@ void Player::interact() {
             [&](GameObject *bt_hit) {
                 Construct *construct = dynamic_cast<Construct*>(bt_hit);
 
-                // Register interacts only on constructs for now. Send the game object ID 
-                // of the interacted construct to the server to process.
+                // Interacts with construct, construct itself will handle any client
+                // side effects needed.
                 if (construct) {
-                    events::dungeon::network_interact_event(construct->get_id());
+                    construct->s_interact_trigger(this);
                 }
             });
 }
