@@ -99,7 +99,6 @@ void Grid::setup_listeners() {
             auto position = std::find(children.begin(), children.end(), goal);
             if (position != children.end())
                 children.erase(position);
-            delete goal;
             goal = nullptr;
         }
         else {

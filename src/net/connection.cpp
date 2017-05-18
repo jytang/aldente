@@ -22,11 +22,11 @@ void Connection::start_async_read_header() {
 
 void Connection::start_async_read_body(uint32_t length) {
     rcvbuf.resize(length);
-    socket.async_read_some(boost::asio::buffer(rcvbuf.data(), length),
+    boost::asio::async_read(socket, boost::asio::buffer(rcvbuf.data(), length),
         [&, length](const boost::system::error_code& error, size_t n_bytes) {
         if (!error) {
             if (length != n_bytes) {
-                std::cerr << "ERROR: received unexpected num of bytes; dropping message\n";
+                std::cerr << "ERROR: received unexpected num of bytes (expected=" << length << ", got=" << n_bytes << ")\n";
             } else {
                 // Message body is the string offset by header size.
                 std::string body(rcvbuf.begin(), rcvbuf.end());
