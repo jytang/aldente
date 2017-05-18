@@ -27,6 +27,7 @@ private:
     Goal *goal;
     std::mutex goal_mutex; // In case a new goal is created before old one is removed.
     int goal_z, goal_x;
+    Construct *preview; // the currently selected construct as a transparent preview on the grid
 
     void setup_listeners();
 

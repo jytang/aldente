@@ -109,6 +109,7 @@ namespace events {
 
     // The user has made a selection on the UI grid.
     extern signal<void(int)> ui_grid_selection_event;
+    extern signal<void(int)> ui_grid_movement_event;
 
     // Struct for parameters for rigidbody initialization
     struct RigidBodyData {
@@ -152,7 +153,7 @@ namespace events {
         extern signal<void()> select_grid_return_event;
 
         // The selected construct type has changed.
-        extern signal<void(ConstructType)> construct_changed_event;
+        extern signal<void(ConstructType)> construct_selected_event;
 
         // Client requests to build a construct.
         extern signal<void(proto::Construct &)> request_build_event;

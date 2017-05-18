@@ -65,7 +65,7 @@ UIGrid::UIGrid(float start_x, float start_y,
     // Set up callbacks.
     events::build::select_grid_move_event.connect([&, columns](Direction dir) {
         move_selection(dir);
-        events::ui_grid_selection_event(selection_row * columns + selection_col);
+        events::ui_grid_movement_event(selection_row * columns + selection_col);
     });
 
     events::build::select_grid_confirm_event.connect([&, columns]() {

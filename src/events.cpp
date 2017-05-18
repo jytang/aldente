@@ -20,7 +20,8 @@ namespace events {
         signal<void()> toggle_bt_debug_drawer_event;
     }
 
-    signal<void(int)> ui_grid_selection_event;
+	signal<void(int)> ui_grid_selection_event;
+    signal<void(int)> ui_grid_movement_event;
     signal<void(RigidBodyData d)> add_rigidbody_event;
     signal<void(GameObject *obj)> remove_rigidbody_event;
 
@@ -40,7 +41,7 @@ namespace events {
         signal<void()> select_grid_confirm_event;
         signal<void()> build_grid_place_event;
         signal<void()> select_grid_return_event;
-        signal<void(ConstructType)> construct_changed_event;
+        signal<void(ConstructType)> construct_selected_event;
         signal<void(proto::Construct &)> request_build_event;
         signal<void(proto::Construct &)> try_build_event;
         signal<void(proto::Construct &)> respond_build_event;

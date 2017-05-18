@@ -49,8 +49,10 @@ void BuildPhase::client_setup() {
         }
         // B button pressed.
         else if (d.input == events::BTN_B && d.state == 1) {
-            events::build::select_grid_return_event();
-            is_menu = true;
+            if (!is_menu) {
+                events::build::select_grid_return_event();
+                is_menu = true;
+            }
         }
     });
 }

@@ -8,13 +8,6 @@
 #define FLOOR_TILE 3
 #define WALL_TILE 5
 
-// Default color is white, meaning that it only uses texture
-Color default_color = Color::WHITE;
-// When selected, will tint the tile green, but keeps texture
-Color select_color = Color::GREEN;
-// When selected but not on a valid location for building
-Color invalid_color = Color::RED;
-
 Grid::Grid(const char *map_loc) :
         hover(nullptr), hover_col(0), hover_row(0),
         width(0), height(0) {
@@ -60,8 +53,22 @@ void Grid::setup_listeners() {
         events::build::request_build_event(c);
     });
 
-    events::build::construct_changed_event.connect([&](ConstructType type) {
+    events::build::construct_selected_event.connect([&](ConstructType type) {
+        // Create preview construct here
         selected = type;
+
+        preview = new Chest(hover_col, hover_row, 0);
+        preview->setup_model();
+        preview->set_filter_color(Color::GREEN);
+        preview->set_filter_alpha(0.2f);
+        children.push_back(preview);
+    });
+
+    events::build::select_grid_return_event.connect([&]() {
+        // Remove preview from children
+        remove_child(preview);
+        if (preview) delete preview;
+        preview = nullptr;
     });
 
     events::build::try_build_event.connect([&](proto::Construct& c) {
@@ -168,9 +175,12 @@ void Grid::move_selection(Direction d) {
     }
 }
 
-// Updates Selected Tile Color
+// Updates Selected Tile
 void Grid::update_selection() {
-    // TODO: modify the construct's filter to have transparent material.
+    hover = grid[hover_row][hover_col];
+
+    // Move preview to selected tile
+    preview->transform.set_position(hover_col, 0.0f, hover_row);
 }
 
 void Grid::load_map(const char *map_loc) {

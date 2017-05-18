@@ -46,9 +46,12 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     // Display info of first element by default.
     update_info_panel(0);
 
-    events::ui_grid_selection_event.connect([&](int content_index) {
+    events::ui_grid_movement_event.connect([&](int content_index) {
         update_info_panel(content_index);
-        events::build::construct_changed_event(constructs[content_index].type);
+    });
+
+    events::ui_grid_selection_event.connect([&](int content_index) {
+        events::build::construct_selected_event(constructs[content_index].type);
     });
 
     events::debug::toggle_ui_event.connect([&](void) {
