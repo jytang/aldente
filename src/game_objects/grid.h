@@ -40,7 +40,6 @@ private:
 public:
     Grid(const char *map_loc);
 
-    void update_this() override {};
     void setup_model() override; // Loads tile models, only call this on client
 
     std::vector<std::vector<Tile *>> getGrid() { return grid; };
@@ -54,9 +53,6 @@ public:
     // For moving cursor on tile during build phase
     void move_selection(Direction d);
 
-    // Loads tile models, only call this on client
-    void graphical_setup();
-
     // Places goal with minimum distance from the start.
     // Distance calculated using manhattan distance(x diff + z diff)
     // Note: try not to use a high min dist
@@ -69,5 +65,5 @@ public:
     void update_selection();
 
     // override draw for instanced rendering
-    void draw(Shader *shader, SceneInfo &scene_info) override;
+    void c_draw(Shader *shader, SceneInfo &scene_info) override;
 };

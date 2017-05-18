@@ -12,6 +12,10 @@ Construct::Construct(int x, int z, int id) : GameObject(id) {
     transform.set_position(x, 0.0f, z);
 }
 
+void Construct::s_update_this() {
+    anim_player.update();
+}
+
 Chest::Chest(int x, int z) : Construct(x, z) {
     transform.set_scale(0.6f, 0.6f, 0.6f);
     events::RigidBodyData rigid = {
@@ -29,12 +33,15 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
     transform.set_scale(0.6f, 0.6f, 0.6f);
 }
 
-void Chest::update_this() {
-    anim_player.update();
+void Chest::s_interact_trigger(GameObject *other) {
+    
+    // Check if other is a player, than grant some money
+
+    // TODO : Send signal to client to tell that this chest is opened
 }
 
-// Activated when a player presses A on it
-void Chest::interact_trigger() {
+// Activated when a player presses A on it, graphical
+void Chest::c_interact_trigger() {
     anim_player.set_anim("open");
     anim_player.play();
 }
@@ -75,7 +82,7 @@ void Goal::setup_model() {
     anim_player.play();
 }
 
-void Goal::on_collision(GameObject *other) {
+void Goal::s_on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player && player->is_enabled()) {
         events::dungeon::network_collision_event(id);
@@ -83,9 +90,8 @@ void Goal::on_collision(GameObject *other) {
     }
 }
 
-void Goal::on_collision_graphical() {
-}
-
-void Goal::update_this() {
-    anim_player.update();
+void Goal::c_on_collision() {
+    if (anim_player.check_paused()) {
+        anim_player.play();
+    }
 }

@@ -19,7 +19,7 @@
 
 class Tile : public GameObject {
 protected:
-    int width, height, x, z;
+    int x, z;
     bool traversable;
 
     Construct *construct;
@@ -36,7 +36,6 @@ public:
     int getX() { return x; };
     int getZ() { return z; };
 
-    virtual void update_this() override = 0;
     virtual void setup_instanced_model(int num_instances,
                                        std::vector<glm::mat4> instance_matrix) override = 0;
 
@@ -53,7 +52,6 @@ public:
 
     void setup_instanced_model(int num_instances,
                                std::vector<glm::mat4> instance_matrix) override;
-    void update_this() override{};
 };
 
 class WallTile : public Tile {
@@ -63,5 +61,4 @@ public:
 
     void setup_instanced_model(int num_instances,
                                std::vector<glm::mat4> instance_matrix) override;
-    void update_this() override{};
 };

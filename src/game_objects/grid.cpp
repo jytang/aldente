@@ -25,16 +25,16 @@ Grid::Grid(const char *map_loc) :
 }
 
 // Override draw - using instanced rendering for performance purposes.
-void Grid::draw(Shader *shader, SceneInfo &scene_info) {
+void Grid::c_draw(Shader *shader, SceneInfo &scene_info) {
     // Draw all types of tiles using instanced rendering.
     for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {
         std::vector<Tile *> & vec = it->second;
         // Do instanced draw call on first tile
-        vec[0]->draw_instanced(shader, scene_info); // do not pass in instance matrix because it doesn't change
+        vec[0]->c_draw_instanced(shader, scene_info); // do not pass in instance matrix because it doesn't change
     }
 
     // Draw all constructs by calling base class function.
-    GameObject::draw(shader, scene_info);
+    GameObject::c_draw(shader, scene_info);
 }
 
 void Grid::setup_listeners() {

@@ -44,7 +44,7 @@ void GameObject::remove_all() {
 }
 
 // Renders model and children's models in scene
-void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
+void GameObject::c_draw(Shader *shader, SceneInfo &scene_info) {
     if (!enabled) return;
 
     if (model) {
@@ -53,11 +53,11 @@ void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
     }
 
     for (GameObject *obj : children)
-        obj->draw(shader, scene_info);
+        obj->c_draw(shader, scene_info);
 }
 
 // Draw multiple instances of this GameObject, which should have no children.
-void GameObject::draw_instanced(Shader *shader, SceneInfo &scene_info,
+void GameObject::c_draw_instanced(Shader *shader, SceneInfo &scene_info,
                       std::vector<glm::mat4> instance_matrix) {
     if (model) {
         connect_model_filter();
@@ -66,16 +66,16 @@ void GameObject::draw_instanced(Shader *shader, SceneInfo &scene_info,
 }
 
 // Runs Game Object's update loop
-void GameObject::update() {
+void GameObject::s_update() {
     if (!enabled) return;
-    
-    update_this();
+
+    s_update_this();
 
     for (GameObject *obj : children)
-        obj->update();
+        obj->s_update();
 }
 
-void GameObject::update_state(float x, float z, float wx, float wz, bool enab) {
+void GameObject::c_update_state(float x, float z, float wx, float wz, bool enab) {
     enabled = enab;
     if (enabled) {
         transform.set_position(x, 0.0f, z);

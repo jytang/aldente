@@ -14,7 +14,6 @@
 
 class Player : public GameObject {
 private:
-
     // to_move is for saving the joystick input in each frame.
     int to_moveX;
     int to_moveZ;
@@ -28,10 +27,11 @@ public:
     Player();
     Player(int obj_id);
 
-    virtual void update_this() override;
-    virtual void on_collision(GameObject *other) override;
-    virtual void on_collision_graphical() override;
+    virtual void s_update_this() override;
+    virtual void s_on_collision(GameObject *other) override;
+    virtual void c_on_collision() override;
 
+    // Player movement
     void prepare_movement(int inX, int inZ);
     void update_state(float x, float z, float wx, float wz, bool enab);
     void do_movement();
@@ -39,6 +39,7 @@ public:
     // Called when the player tries to interacts with an object (e.g pressing A)
     void interact();
 
+    // Animation Cues
     void start_walk();
     void stop_walk();
 

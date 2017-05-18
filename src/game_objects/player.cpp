@@ -36,7 +36,7 @@ Player::Player(int obj_id) : GameObject(obj_id) {
 
 // Just calls do_movement for now, can have more
 // functionality later.
-void Player::update_this() {
+void Player::s_update_this() {
 
     do_movement();
 
@@ -74,7 +74,7 @@ void Player::update_state(float x, float z, float wx, float wz, bool enab) {
             anim_player.play();
     }
 
-    GameObject::update_state(x, z, wx, wz, enab);
+    GameObject::c_update_state(x, z, wx, wz, enab);
 }
 
 void Player::do_movement() {
@@ -114,14 +114,16 @@ void Player::start_walk() {
     anim_player.play();
 }
 
-void Player::on_collision(GameObject *other) {
+// Server collision
+void Player::s_on_collision(GameObject *other) {
     // TODO: actual game logic here...
 
     // Then notify clients that this collision happened.
     events::dungeon::network_collision_event(id);
 }
 
-void Player::on_collision_graphical() {
+// Graphical collision
+void Player::c_on_collision() {
     transform.rotate(0, 0.1f, 0);
 }
 

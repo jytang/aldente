@@ -9,8 +9,6 @@ Tile::Tile() :
 }
 
 FloorTile::FloorTile(int x, int z) : Tile::Tile() {
-    width = 1;
-    height = 1;
     this->x = x;
     this->z = z;
     buildable = true;
@@ -33,8 +31,6 @@ void FloorTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> 
 }
 
 WallTile::WallTile(int x, int z) : Tile::Tile() {
-    width = 1;
-    height = 1;
     this->x = x;
     this->z = z;
     buildable = false;
