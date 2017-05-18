@@ -16,25 +16,28 @@ void Construct::s_update_this() {
     anim_player.update();
 }
 
+/************CHEST***************/
+
 Chest::Chest(int x, int z) : Construct(x, z) {
-    transform.set_scale(0.6f, 0.6f, 0.6f);
-    events::RigidBodyData rigid = {
-        glm::vec3(x,0.5f,z), //position
-        0, //mass
-        hit_box, //btshape
-        glm::vec3(0,0,0), //inertia
-        this, //the gameobject
-        false, // is a ghost object
-    };
+    tag = "CHEST";
+
+    //Creates Rigid Body
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = hit_box;
     events::add_rigidbody_event(rigid);
+
+    // Sets Initial Position (Transform and Rigidbody at same time)
+    set_position({ x, 0.5f, z });
 }
 
 Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
-    transform.set_scale(0.6f, 0.6f, 0.6f);
+    tag = "CHEST";
+    // Sets Initial Position (Transform and Rigidbody at same time)
+    set_position({ x, 0.5f, z });
 }
 
 void Chest::s_interact_trigger(GameObject *other) {
-    
     // Check if other is a player, than grant some money
 
     // TODO : Send signal to client to tell that this chest is opened
@@ -48,33 +51,71 @@ void Chest::c_interact_trigger() {
 
 void Chest::setup_model() {
     attach_model(AssetLoader::get_model("chest_good"));
-    transform.set_scale({ 0.005f, 0.005f, 0.005f });
+    transform.set_scale({ 0.006f, 0.006f, 0.006f });
 }
 
+/************SPIKES***************/
+Spikes::Spikes(int x, int z) : Construct(x, z) {
+    tag = "SPIKES";
+
+    //Creates Rigid Body
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = hit_box;
+    rigid.is_ghost = true;
+    events::add_rigidbody_event(rigid);
+
+    // Sets Initial Position
+    set_position({ x, 0.0f, z });
+}
+
+Spikes::Spikes(int x, int z, int id) : Construct(x, z, id) {
+    tag = "SPIKES";
+    // Sets Initial Position (Transform and Rigidbody at same time)
+    set_position({ x, 0.0f, z });
+}
+
+void Spikes::s_on_collision(GameObject *other) {
+    Player *player = dynamic_cast<Player*>(other);
+    if (player) {
+        events::dungeon::network_collision_event(id);
+    }
+}
+
+void Spikes::c_on_collision() {
+    std::cerr << "TEST" << std::endl;
+    anim_player.set_anim("trigger");
+    anim_player.play();
+}
+
+void Spikes::setup_model() {
+    attach_model(AssetLoader::get_model("spikes"));
+    transform.set_scale({ 0.4f, 0.4f, 0.4f });
+}
+
+/************GOAL***************/
 Goal::Goal(int x, int z) : Construct(x, z) {
-    transform.set_scale(0.006f, 0.006f, 0.006f);
     tag = "GOAL";
 
-    events::RigidBodyData rigid = {
-        glm::vec3(x,0.5f,z), //position
-        0, //mass
-        goal_hit_box, //btshape
-        glm::vec3(0,0,0), //inertia
-        this, //the gameobject
-        true, // is a ghost object
-    };
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = goal_hit_box;
+    rigid.is_ghost = true;
     events::add_rigidbody_event(rigid);
 
     notify_on_collision = true;
+
+    set_position({ x, 0.5f, z });
 }
 
 Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
-    transform.set_scale(0.006f, 0.006f, 0.006f);
     tag = "GOAL";
+    set_position({ x, 0.5f, z });
 }
 
 void Goal::setup_model() {
     attach_model(AssetLoader::get_model("warp"));
+    transform.set_scale(0.006f, 0.006f, 0.006f);
     model->set_shader(&ShaderManager::anim_unlit);
     anim_player.set_speed(1.0f);
     anim_player.set_anim("spin");

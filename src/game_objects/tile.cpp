@@ -35,16 +35,11 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     this->z = z;
     buildable = false;
 
-    set_position({x, 0.5f, z});
-
-    events::RigidBodyData rigid = {
-        glm::vec3(x,0.5f,z), //position
-        0, //mass
-        hit_box, //btshape
-        glm::vec3(0,0,0), //inertia
-        this //the gameobject
-    };
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = hit_box;
     events::add_rigidbody_event(rigid);
+    set_position({ x, 0.5f, z });
 }
 
 void WallTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){

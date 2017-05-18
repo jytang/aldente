@@ -124,20 +124,7 @@ Construct* Grid::build(ConstructType type, int col, int row, bool graphical, int
     Tile* candidate = grid[row][col];
     Construct* to_add = nullptr;
 
-    switch (type) {
-    case CHEST: {
-        to_add = graphical ? new Chest(col, row, id) : new Chest(col, row);
-        if (graphical) {
-            to_add->setup_model();
-            children.push_back(to_add);
-            candidate->set_construct(to_add);
-        } else {
-            candidate->buildable = false;
-            candidate->set_construct(to_add);
-        }
-        break;
-    }
-    case REMOVE: {
+    if (type == REMOVE) {
         // TODO: Move destructor to construct's destructor.
         if (candidate->get_construct() != nullptr) {
             if (!graphical) {
@@ -150,10 +137,23 @@ Construct* Grid::build(ConstructType type, int col, int row, bool graphical, int
                 candidate->set_construct(nullptr);
             }
         }
-        break;
     }
-    default:
-        break;
+    else if (type != NONE) {
+        switch (type) {
+        case CHEST:
+            to_add = graphical ? new Chest(col, row, id) : new Chest(col, row);
+            break;
+        default:
+            return nullptr;
+            break;
+        }
+	
+	if (graphical)
+            to_add->setup_model();
+
+        children.push_back(to_add);
+        candidate->set_construct(to_add);
+        candidate->buildable = false;
     }
 
     return to_add;

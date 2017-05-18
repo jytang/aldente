@@ -12,13 +12,10 @@ Player::Player() : GameObject() {
     to_moveZ = 0;
     move_speed = 2.0f;
 
-    events::RigidBodyData rigid = {
-        glm::vec3(0.0f, 0.0f, 0.0f), //position
-        1, //mass
-        hit_capsule, //btshape
-        glm::vec3(0,0,0), //inertia
-        this, //the gameobject
-    };
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = hit_capsule;
+    rigid.mass = 1;
     events::add_rigidbody_event(rigid);
 
     // Notify on collision.
@@ -26,6 +23,7 @@ Player::Player() : GameObject() {
 
     // Lock y-axis
     rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+
     //Lock angular rotation
     rigidbody->setAngularFactor(0);
 }

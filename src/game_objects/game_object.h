@@ -26,8 +26,11 @@ protected:
     ModelFilter model_filter; // For passing parameters from game object down to mesh level
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
+
     int id;
     bool enabled;
+
+    float height_offset;
 public:
     static std::unordered_map<int, GameObject*> game_objects;
     std::vector<GameObject *> children;
