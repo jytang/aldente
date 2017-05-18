@@ -54,9 +54,9 @@ proto::Phase DungeonPhase::update() {
     GameState::physics.update();
 
     // Send the position and orientation of the specified game objects.
-    // Currently sending all Player objects and Goal.
+    // Currently sending all Player objects and Constructs.
     for (auto const & o : GameObject::game_objects) {
-        if (dynamic_cast<Player*>(o.second) || dynamic_cast<Goal*>(o.second))
+        if (dynamic_cast<Player*>(o.second) || dynamic_cast<Construct*>(o.second))
             context.updated_objects.insert(o.second);
     }
     events::dungeon::update_state_event(&context);
