@@ -8,7 +8,7 @@ class DungeonPhase : public TimedPhase {
 public:
     DungeonPhase(Context& context) : TimedPhase(context) {};
     void setup();
-    Phase* update();
+    proto::Phase update() override;
     void teardown();
     void client_setup();
     void client_update();

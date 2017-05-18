@@ -1,8 +1,10 @@
+#include <game/game_state.h>
 #include "build.h"
 
 bool BuildPhase::is_menu = true;
 
 void BuildPhase::setup() {
+    transition_after(10, proto::Phase::DUNGEON);
 }
 
 void BuildPhase::client_setup() {
@@ -56,6 +58,7 @@ void BuildPhase::client_setup() {
 }
 
 void BuildPhase::teardown() {
+    cancel_clock_every();
 }
 
 void BuildPhase::client_teardown() {

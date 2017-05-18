@@ -291,9 +291,9 @@ void protobuf_AddDesc_net_2eproto() {
     "EST\020\002\022\t\n\005SPIKE\020\003\"~\n\tStickData\022%\n\005input\030\001"
     " \001(\0162\026.proto.StickData.Stick\022\t\n\001x\030\002 \001(\005\022"
     "\t\n\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK"
-    "_LEFT\020\000\022\017\n\013STICK_RIGHT\020\001*7\n\005Phase\022\010\n\004MEN"
-    "U\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020\002\022\014\n\010MINIGAME\020"
-    "\003", 1081);
+    "_LEFT\020\000\022\017\n\013STICK_RIGHT\020\001*A\n\005Phase\022\010\n\004NOO"
+    "P\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020\002\022\014\n"
+    "\010MINIGAME\020\003", 1091);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -331,6 +331,7 @@ bool Phase_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -359,7 +360,7 @@ void ServerMessage::InitAsDefaultInstance() {
   ServerMessage_default_oneof_instance_->build_update_ = const_cast< ::proto::Construct*>(&::proto::Construct::default_instance());
   ServerMessage_default_oneof_instance_->join_response_ = const_cast< ::proto::JoinResponse*>(&::proto::JoinResponse::default_instance());
   ServerMessage_default_oneof_instance_->state_update_ = const_cast< ::proto::GameState*>(&::proto::GameState::default_instance());
-  ServerMessage_default_oneof_instance_->phase_update_ = 0;
+  ServerMessage_default_oneof_instance_->phase_update_ = 4;
 }
 
 ServerMessage::ServerMessage(const ServerMessage& from)
@@ -799,7 +800,7 @@ void ClientMessage::InitAsDefaultInstance() {
   ClientMessage_default_oneof_instance_->build_request_ = const_cast< ::proto::Construct*>(&::proto::Construct::default_instance());
   ClientMessage_default_oneof_instance_->join_request_ = &::google::protobuf::internal::GetEmptyStringAlreadyInited();
   ClientMessage_default_oneof_instance_->move_request_ = const_cast< ::proto::StickData*>(&::proto::StickData::default_instance());
-  ClientMessage_default_oneof_instance_->phase_request_ = 0;
+  ClientMessage_default_oneof_instance_->phase_request_ = 4;
   ClientMessage_default_oneof_instance_->interact_request_ = 0;
 }
 

@@ -30,7 +30,7 @@ public:
     static void client_update();
 
     // Force a phase change to the specified phase.
-    static void set_phase(Phase* phase);
+    // If server, dispatch the change to clients.
     static void set_phase(proto::Phase phase);
     static void set_client_phase(proto::Phase phase);
 
@@ -39,6 +39,7 @@ public:
     static Player* add_new_player();
     static Player* add_existing_player(int obj_id, bool is_client);
 private:
+    static void set_phase(Phase* phase);
     static MainScene testScene;
     static int num_players;
     static bool is_server;

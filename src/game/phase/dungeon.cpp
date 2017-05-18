@@ -1,7 +1,10 @@
+#include <game/game_state.h>
 #include "dungeon.h"
 #include "game_objects/player.h"
 
 void DungeonPhase::setup() {
+    transition_after(10, proto::Phase::BUILD);
+
     collision_conn = events::dungeon::network_collision_event.connect([&](int obj_id) {
         context.collisions.insert(obj_id);
     });
@@ -37,7 +40,7 @@ void DungeonPhase::client_setup() {
     });
 }
 
-Phase* DungeonPhase::update() {
+proto::Phase DungeonPhase::update() {
     // Send the position and orientation of the specified game objects.
     // Currently sending all Player objects and Goal.
     for (auto const & o : GameObject::game_objects) {
@@ -56,9 +59,9 @@ Phase* DungeonPhase::update() {
     }
 
     if (all_players_done)
-        return next;
+        return proto::Phase::BUILD;
     else
-        return nullptr;
+        return next;
 }
 
 void DungeonPhase::client_update() {
@@ -67,6 +70,7 @@ void DungeonPhase::client_update() {
 }
 
 void DungeonPhase::teardown() {
+    cancel_clock_every();
     collision_conn.disconnect();
     interact_conn.disconnect();
     flag_conn.disconnect();

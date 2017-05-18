@@ -74,6 +74,7 @@ message StickData {
 }
 
 enum Phase {
+  NOOP = 4;
   MENU = 0;
   BUILD = 1;
   DUNGEON = 2;

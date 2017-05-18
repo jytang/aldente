@@ -31,7 +31,7 @@ void ServerNetworkManager::connect() {
 }
 
 void ServerNetworkManager::register_listeners() {
-    // Generic message to all.  
+    // Generic message to all.
     events::server::announce.connect([&](proto::ServerMessage &message) {
         server.send_to_all(message);
     });
@@ -108,7 +108,7 @@ void ServerNetworkManager::update() {
                 // Announce phase change to all clients.
                 proto::ServerMessage phase_announce;
                 phase_announce.set_phase_update(phase);
-                server.send_to_all(phase_announce);
+                events::server::announce(phase_announce);
                 break;
             }
             case proto::ClientMessage::MessageTypeCase::kInteractRequest: {
