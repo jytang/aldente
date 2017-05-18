@@ -15,6 +15,8 @@ public:
     virtual std::map<int, bool> get_flags() { return std::map<int, bool>(); };
 protected:
     Context& context;
+
+    // If you must instigate a phase change outside of update() (e.g. via timed callback), do it here.
     proto::Phase next;
 };
 
