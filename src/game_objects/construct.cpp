@@ -40,7 +40,8 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
 void Chest::s_interact_trigger(GameObject *other) {
     // Check if other is a player, than grant some money
 
-    // TODO : Send signal to client to tell that this chest is opened
+    // Send signal to client to tell that this chest is opened
+    events::dungeon::network_interact_event(id);
 }
 
 // Activated when a player presses A on it, graphical
