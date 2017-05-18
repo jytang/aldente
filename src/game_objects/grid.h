@@ -15,6 +15,7 @@
 #include "tile.h"
 #include "game/construct_types.h"
 #include "game/direction.h"
+#include "construct_preview.h"
 
 class Grid : public GameObject{
 private:
@@ -28,11 +29,8 @@ private:
     std::mutex goal_mutex; // In case a new goal is created before old one is removed.
     int goal_z, goal_x;
 
-    // Preview constructs
-    Construct *preview; // the currently selected construct as a transparent preview on the grid
-    Construct *chest_preview;
+    ConstructPreview preview; // the currently selected construct as a transparent preview on the grid
 
-    void setup_previews();
     void setup_listeners();
 
     // For loading and creating map

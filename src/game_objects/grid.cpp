@@ -56,23 +56,16 @@ void Grid::setup_listeners() {
     events::build::construct_selected_event.connect([&](ConstructType type) {
         selected = type;
 
-        // Set preview construct accordingly
-        switch(type) {
-            case CHEST:
-                preview = chest_preview;
-                break;
-            default:
-                preview = chest_preview;
-                break;
-        }
-        children.push_back(preview);
+        // Change preview to this construct type.
+        preview.set_construct_type(type);
+        children.push_back(&preview);
         // Update preview position based on hover position
         update_selection();
     });
 
     events::build::select_grid_return_event.connect([&]() {
         // Remove preview from children
-        remove_child(preview);
+        remove_child(&preview);
     });
 
     events::build::try_build_event.connect([&](proto::Construct& c) {
@@ -184,7 +177,7 @@ void Grid::update_selection() {
     hover = grid[hover_row][hover_col];
 
     // Move preview to selected tile
-    preview->transform.set_position(hover_col, 0.0f, hover_row);
+    preview.curr_preview->transform.set_position(hover_col, 0.0f, hover_row);
 }
 
 void Grid::load_map(const char *map_loc) {
@@ -254,17 +247,7 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
     return new_tile;
 }
 
-void Grid::setup_previews() {
-    // Setup preview constructs
-    chest_preview = new Chest(hover_col, hover_row, -1);
-    chest_preview->setup_model();
-    chest_preview->set_filter_color(Color::GREEN);
-    chest_preview->set_filter_alpha(0.5f);
-}
-
 void Grid::setup_model() {
-    setup_previews();
-
     // Only setup model once for each tile type.
     // Use first element of each tile type vector to set up model.
     for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {
