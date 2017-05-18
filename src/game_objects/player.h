@@ -27,13 +27,19 @@ public:
     Player();
     Player(int obj_id);
 
-    virtual void s_update_this() override;
-    virtual void s_on_collision(GameObject *other) override;
-    virtual void c_on_collision() override;
+    void s_update_this() override;
+    void c_update_state(float x, float z, float wx, float wz) override;
+    void s_on_collision(GameObject *other) override;
+    void c_on_collision() override;
+
+    void setup_player_model(std::string model_name); // Loads player model
 
     // Player movement
     void prepare_movement(int inX, int inZ);
+<<<<<<< HEAD
     void update_state(float x, float z, float wx, float wz, bool enab);
+=======
+>>>>>>> Updated player's setup model
     void do_movement();
 
     // Called when the player tries to interacts with an object (e.g pressing A)

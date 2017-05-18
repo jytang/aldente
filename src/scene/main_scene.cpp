@@ -60,7 +60,6 @@ void MainScene::graphical_setup() {
 
 Player* MainScene::spawn_new_player(int conn_id) {
     Player *player = new Player();
-    player->transform.set_scale({ 0.4f, 0.4f, 0.4f });
 
     // TODO: determine where each player starts based on client id. 
     // For now, players 1-4 start at (2, 2), (2, 3), (2, 4), (2, 5) respectively.
@@ -73,14 +72,13 @@ Player* MainScene::spawn_new_player(int conn_id) {
 
 Player* MainScene::spawn_existing_player(int obj_id) {
     Player *player = new Player(obj_id);
+<<<<<<< HEAD
     player->transform.set_scale({ 0.004f, 0.004f, 0.004f });
     player->transform.translate({ 2.f, 0.f, 2.f });
+=======
+    player->setup_player_model("cat");
+>>>>>>> Updated player's setup model
     objs.push_back(player);
-    
-    Model *player_model = AssetLoader::get_model(std::string("cat"));
-    player_model->set_shader(&ShaderManager::anim_unlit);
-    player->attach_model(player_model);
-    player->start_walk();
-    
+
     return player;
 }

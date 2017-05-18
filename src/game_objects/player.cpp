@@ -57,7 +57,7 @@ void Player::prepare_movement(int inX, int inZ) {
     to_moveZ = inZ;
 }
 
-void Player::update_state(float x, float z, float wx, float wz, bool enab) {
+void Player::c_update_state(float x, float z, float wx, float wz, bool enab) {
     anim_player.update();
     float dx = std::fabs(x - transform.get_position().x);
     float dz = std::fabs(z - transform.get_position().z);
@@ -139,3 +139,15 @@ void Player::reset_position() {
     transform.look_at(direction);
 }
 
+void Player::setup_player_model(std::string model_name) {
+    Model *player_model = AssetLoader::get_model(model_name);
+    player_model->set_shader(&ShaderManager::anim_unlit);
+    attach_model(player_model);
+    start_walk();
+
+    // Sets scale. Need better way to do this later.
+    if (model_name == "boy_two")
+        transform.set_scale({ 0.4f, 0.4f, 0.4f });
+    else if (model_name == "cat")
+        transform.set_scale({ 0.004f, 0.004f, 0.004f });
+}
