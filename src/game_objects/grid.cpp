@@ -54,21 +54,25 @@ void Grid::setup_listeners() {
     });
 
     events::build::construct_selected_event.connect([&](ConstructType type) {
-        // Create preview construct here
         selected = type;
 
-        preview = new Chest(hover_col, hover_row, 0);
-        preview->setup_model();
-        preview->set_filter_color(Color::GREEN);
-        preview->set_filter_alpha(0.2f);
+        // Set preview construct accordingly
+        switch(type) {
+            case CHEST:
+                preview = chest_preview;
+                break;
+            default:
+                preview = chest_preview;
+                break;
+        }
         children.push_back(preview);
+        // Update preview position based on hover position
+        update_selection();
     });
 
     events::build::select_grid_return_event.connect([&]() {
         // Remove preview from children
         remove_child(preview);
-        if (preview) delete preview;
-        preview = nullptr;
     });
 
     events::build::try_build_event.connect([&](proto::Construct& c) {
@@ -250,7 +254,17 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
     return new_tile;
 }
 
+void Grid::setup_previews() {
+    // Setup preview constructs
+    chest_preview = new Chest(hover_col, hover_row, -1);
+    chest_preview->setup_model();
+    chest_preview->set_filter_color(Color::GREEN);
+    chest_preview->set_filter_alpha(0.5f);
+}
+
 void Grid::setup_model() {
+    setup_previews();
+
     // Only setup model once for each tile type.
     // Use first element of each tile type vector to set up model.
     for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {
