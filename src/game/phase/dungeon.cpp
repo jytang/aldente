@@ -3,7 +3,7 @@
 #include "game_objects/player.h"
 
 void DungeonPhase::setup() {
-    transition_after(10, proto::Phase::BUILD);
+//    transition_after(10, proto::Phase::BUILD);
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int obj_id) {
         context.collisions.insert(obj_id);

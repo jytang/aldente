@@ -4,7 +4,7 @@
 bool BuildPhase::is_menu = true;
 
 void BuildPhase::setup() {
-    transition_after(10, proto::Phase::DUNGEON);
+//    transition_after(10, proto::Phase::DUNGEON);
 }
 
 void BuildPhase::client_setup() {
