@@ -69,10 +69,10 @@ void GameObject::c_draw_instanced(Shader *shader, SceneInfo &scene_info,
 void GameObject::s_update() {
     if (!enabled) return;
 
-    update_this();
+    s_update_this();
 
     for (GameObject *obj : children)
-        obj->update();
+        obj->s_update();
 }
 
 void GameObject::c_update_state(float x, float z, float wx, float wz, bool enab) {

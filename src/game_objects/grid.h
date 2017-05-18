@@ -56,9 +56,8 @@ public:
     // Places goal with minimum distance from the start.
     // Distance calculated using manhattan distance(x diff + z diff)
     // Note: try not to use a high min dist
-    void place_goal(glm::vec3 start, int min_dist);
-
-    void place_existing_goal(int x, int z, int id);
+    void s_place_goal(glm::vec3 start, int min_dist);
+    void c_place_goal(int x, int z, int id);
 
     void remove_goal();
 

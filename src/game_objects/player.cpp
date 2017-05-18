@@ -34,7 +34,7 @@ Player::Player(int obj_id) : GameObject(obj_id) {
 
 // Just calls do_movement for now, can have more
 // functionality later.
-void Player::update_this() {
+void Player::s_update_this() {
 
     do_movement();
 

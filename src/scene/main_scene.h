@@ -20,10 +20,11 @@ private:
     bool lights_debug_on = false;
 public:
     MainScene();
-    void update() override;
-    void client_update() override;
+    void s_update() override;
+    void c_update() override;
     void setup_scene() override;
     void graphical_setup() override;
-    Player* spawn_new_player(int conn_id); // Server: spawn new Player, auto-assign id.
-    Player* spawn_existing_player(int obj_id); // Client: spawn existing Player with id from server.
+
+    Player* s_spawn_player(int conn_id); // Server: spawn new Player, auto-assign id.
+    Player* c_spawn_player(int obj_id); // Client: spawn existing Player with id from server.
 };

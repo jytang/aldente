@@ -91,7 +91,7 @@ void Grid::setup_listeners() {
 
     events::dungeon::place_goal_event.connect([&]() {
         remove_goal();
-        place_goal(glm::vec3(0.0f),20);
+        s_place_goal(glm::vec3(0.0f),20);
     });
 
     events::dungeon::spawn_existing_goal_event.connect([&](int x, int z, int id) {
@@ -102,7 +102,7 @@ void Grid::setup_listeners() {
                 children.erase(position);
             goal = nullptr;
         }
-        place_existing_goal(x, z, id);
+        c_place_goal(x, z, id);
     });
 
     events::build::end_build_event.connect([&]() {
@@ -269,7 +269,7 @@ void Grid::setup_model() {
     }
 }
 
-void Grid::place_goal(glm::vec3 start, int min_dist) {
+void Grid::s_place_goal(glm::vec3 start, int min_dist) {
     // Goal will be in range of (min_dist, edge of map)
     int new_goal_x = rand() % width;
     int new_goal_z = rand() % height;
@@ -289,7 +289,7 @@ void Grid::place_goal(glm::vec3 start, int min_dist) {
     goal_z = new_goal_z;
 }
 
-void Grid::place_existing_goal(int x, int z, int id) {
+void Grid::c_place_goal(int x, int z, int id) {
     goal = new Goal(x, z, id);
 
     goal->setup_model();

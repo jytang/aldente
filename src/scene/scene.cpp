@@ -24,13 +24,13 @@ Camera &Scene::get_cam() {
     return info.camera;
 }
 
-void Scene::update() {
+void Scene::s_update() {
     for (GameObject *gameObj : objs) {
-        gameObj->update();
+        gameObj->s_update();
     }
 }
 
-void Scene::client_update() {
+void Scene::c_update() {
     info.update();
 }
 

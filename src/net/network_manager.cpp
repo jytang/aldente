@@ -201,7 +201,7 @@ void ClientNetworkManager::update() {
             // If the server successfully added this client to the game, create a local Player object.
             if (resp.status()) {
                 client_id = resp.id();
-                GameState::add_existing_player(resp.obj_id(), true)->get_id();
+                GameState::c_add_player(resp.obj_id(), true)->get_id();
             }
             break;
         }

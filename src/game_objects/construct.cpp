@@ -12,7 +12,7 @@ Construct::Construct(int x, int z, int id) : GameObject(id) {
     transform.set_position(x, 0.0f, z);
 }
 
-void Construct::update_this() {
+void Construct::s_update_this() {
     anim_player.update();
 }
 

@@ -8,13 +8,12 @@ MainScene::MainScene() : Scene() {
 
 }
 
-void MainScene::update() {
-    Scene::update();
+void MainScene::s_update() {
+    Scene::s_update();
 }
 
-void MainScene::client_update() {
-    Scene::client_update();
-    grid->update();
+void MainScene::c_update() {
+    Scene::c_update();
 
     // Rotate directional light sources just to test shadows.
     if (lights_debug_on) {
@@ -58,7 +57,7 @@ void MainScene::graphical_setup() {
     }
 }
 
-Player* MainScene::spawn_new_player(int conn_id) {
+Player* MainScene::s_spawn_player(int conn_id) {
     Player *player = new Player();
 
     // TODO: determine where each player starts based on client id. 
@@ -70,7 +69,7 @@ Player* MainScene::spawn_new_player(int conn_id) {
     return player;
 }
 
-Player* MainScene::spawn_existing_player(int obj_id) {
+Player* MainScene::c_spawn_player(int obj_id) {
     Player *player = new Player(obj_id);
     player->setup_player_model("cat");
     objs.push_back(player);
