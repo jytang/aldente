@@ -221,7 +221,7 @@ void ClientNetworkManager::update() {
                     }
                     all_exist = false;
                 } else {
-                    GameObject::game_objects[obj.id()]->update_state(obj.x(), obj.z(), obj.wx(), obj.wz(), obj.enabled());
+                    GameObject::game_objects[obj.id()]->c_update_state(obj.x(), obj.z(), obj.wx(), obj.wz(), obj.enabled());
                 }
             }
 
@@ -229,10 +229,10 @@ void ClientNetworkManager::update() {
             // already exist, which avoids a potential race condition of a collision of a not-yet-created game obj.
             if (all_exist) {
                 for (int obj_id : state.collisions()) {
-                    GameObject::game_objects[obj_id]->on_collision_graphical();
+                    GameObject::game_objects[obj_id]->c_on_collision();
                 }
                 for (int obj_id : state.interacts()) {
-                    GameObject::game_objects[obj_id]->interact_trigger();
+                    GameObject::game_objects[obj_id]->c_interact_trigger();
                 }
             }
             break;

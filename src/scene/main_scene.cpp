@@ -1,7 +1,5 @@
 #include "main_scene.h"
-#include "game_objects/test_chest.h"
 #include "game_objects/player.h"
-#include "game_objects/test_coin.h"
 #include "events.h"
 #include "util/color.h"
 #include "light/pulse_point_light.h"
@@ -16,7 +14,7 @@ void MainScene::update() {
 
 void MainScene::client_update() {
     Scene::client_update();
-    grid->update();
+    grid->s_update();
 
     // Rotate directional light sources just to test shadows.
     if (lights_debug_on) {
