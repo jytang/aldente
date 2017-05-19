@@ -103,6 +103,11 @@ void Grid::setup_listeners() {
         }
         place_existing_goal(x, z, id);
     });
+
+    events::build::end_build_event.connect([&]() {
+        // Removes any existing preview when leaving build phase.
+        remove_child(&preview);
+    });
 }
 
 bool Grid::verify_build(ConstructType type, int col, int row) {
