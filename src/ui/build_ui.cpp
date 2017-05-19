@@ -4,7 +4,6 @@
 #include "events.h"
 #include "asset_loader.h"
 
-#include "ui_clock.h"
 #include "timer.h"
 
 BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
@@ -20,23 +19,22 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       title_label("Select a block...", 2, 12, 1.f, 1.f, Color::WHITE),
       description_label("", 2, 6, 0.6f, 0.6f, Color::WHITE),
       cost_label("0", 40, 12, 1.f, 1.f, Color::WHITE),
-      balance_label("100g", 20, 4, 1.f, 1.f, Color::WHITE) {
+      balance_label("100g", 20, 4, 1.f, 1.f, Color::WHITE),
+      clock(47.5f * aspect, 90.f, 5.f * aspect, 10.f, Color::WHITE, Color::BLACK) {
 
     // TEST. REMOVE ME.
-    UIClock *clock = new UIClock(47.5f * aspect, 90.f, 5.f * aspect, 10.f, Color::WHITE, Color::BLACK);
-    attach(*clock);
-    clock->set_time(5);
+    attach(clock);
     Timer::get()->do_every(std::chrono::seconds(1), [&]() {
         static int seconds = 0;
         ++seconds;
-        clock->set_time(seconds);
+        clock.set_time(seconds);
     });
 
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
             ui_grid.attach_at(i, j, rect);
 
-            UIImageNode* item_image = new UIImageNode(1, 1, 10, 10, 
+            UIImageNode* item_image = new UIImageNode(1, 1, 10, 10,
                 AssetLoader::get_texture(constructs[i * num_cols + j].image));
             ui_grid.attach_at(i, j, *item_image);
             images.push_back(item_image);
@@ -72,7 +70,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
             disable();
         else
             enable();
-    });    
+    });
 
     // Show or hide the grid.
     events::build::select_grid_confirm_event.connect([&]() {

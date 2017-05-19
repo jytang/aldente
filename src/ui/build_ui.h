@@ -8,6 +8,8 @@
 #include "ui_image_node.h"
 #include "game/construct_types.h"
 
+#include "ui_clock.h"
+
 class BuildUI : public UI {
 public:
     BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs);
@@ -22,5 +24,7 @@ private:
     UIContainer info_panel, player_panel, shop_panel;
     UIRectangle info_rect, player_rect;
     UITextNode title_label, description_label, cost_label, balance_label;
+    UIClock clock;
+
     std::vector<UIImageNode*> images;
 };
