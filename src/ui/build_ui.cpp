@@ -4,6 +4,9 @@
 #include "events.h"
 #include "asset_loader.h"
 
+#include "ui_clock.h"
+#include "timer.h"
+
 BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
     : UI(), // explicit call base class dflt constructor
       constructs(constructs),
@@ -18,7 +21,17 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       description_label("", 2, 6, 0.6f, 0.6f, Color::WHITE),
       cost_label("0", 40, 12, 1.f, 1.f, Color::WHITE),
       balance_label("100g", 20, 4, 1.f, 1.f, Color::WHITE) {
-    
+
+    // TEST. REMOVE ME.
+    UIClock *clock = new UIClock(47.5f * aspect, 90.f, 5.f * aspect, 10.f, Color::WHITE, Color::BLACK);
+    attach(*clock);
+    clock->set_time(5);
+    Timer::get()->do_every(std::chrono::seconds(1), [&]() {
+        static int seconds = 0;
+        ++seconds;
+        clock->set_time(seconds);
+    });
+
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
             ui_grid.attach_at(i, j, rect);
