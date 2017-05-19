@@ -71,7 +71,8 @@ void Goal::setup_model() {
     model->set_shader(&ShaderManager::anim_unlit);
     anim_player.set_speed(1.0f);
     anim_player.set_anim("spin");
-    anim_player.set_loop(false);
+    anim_player.set_loop(true);
+    anim_player.play();
 }
 
 void Goal::on_collision(GameObject *other) {
@@ -83,9 +84,6 @@ void Goal::on_collision(GameObject *other) {
 }
 
 void Goal::on_collision_graphical() {
-    if (anim_player.check_paused()) {
-        anim_player.play();
-    }
 }
 
 void Goal::update_this() {
