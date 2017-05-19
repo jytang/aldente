@@ -14,5 +14,6 @@ private:
     template <typename T>
     T* make_preview();
 
-    std::map<ConstructType, Construct *> construct_map;
+    // make the previews lazily and fu<k;ng cache them
+    std::map<ConstructType, Construct *> cached_previews;
 };

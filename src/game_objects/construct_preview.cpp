@@ -6,19 +6,19 @@ void ConstructPreview::set_construct_type(ConstructType type) {
     remove_child(curr_preview);
 
     // Call make_preview if never made preview before
-    if (construct_map.find(type) == construct_map.end()) {
+    if (cached_previews.find(type) == cached_previews.end()) {
         switch (type) {
             case CHEST:
-                construct_map[type] = make_preview<Chest>();
+                cached_previews[type] = make_preview<Chest>();
                 break;
             default:
-                construct_map[type] = make_preview<Chest>();
+                cached_previews[type] = make_preview<Chest>();
                 break;
         }
     }
 
     // Set curr preview to be visibile
-    curr_preview = construct_map[type];
+    curr_preview = cached_previews[type];
     add_child(curr_preview);
 }
 
