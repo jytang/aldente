@@ -60,10 +60,13 @@ void MainScene::graphical_setup() {
     }
 }
 
-Player* MainScene::spawn_new_player() {
+Player* MainScene::spawn_new_player(int conn_id) {
     Player *player = new Player();
     player->transform.set_scale({ 0.4f, 0.4f, 0.4f });
-    player->transform.translate({ 2.f, 0.f, 2.f });
+
+    // TODO: determine where each player starts based on client id. 
+    // For now, players 1-4 start at (2, 2), (2, 3), (2, 4), (2, 5) respectively.
+    player->set_start_position({ 2.f, 0, 1.f + conn_id });
     objs.push_back(player);
 
     return player;
@@ -72,7 +75,6 @@ Player* MainScene::spawn_new_player() {
 Player* MainScene::spawn_existing_player(int obj_id) {
     Player *player = new Player(obj_id);
     player->transform.set_scale({ 0.004f, 0.004f, 0.004f });
-    player->transform.translate({ 2.f, 0.f, 2.f });
     objs.push_back(player);
     
     Model *player_model = AssetLoader::get_model(std::string("cat"));

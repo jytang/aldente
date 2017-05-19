@@ -21,6 +21,8 @@ private:
 
     float move_speed;
 
+    glm::vec3 start_pos;
+
     btCapsuleShape *hit_capsule = new btCapsuleShape(0.5f, 1.0f);
 public:
     Player();
@@ -42,4 +44,10 @@ public:
 
     // TODO after we make more player models
     void setup_model() {}
+
+    // Set this player's spawn position.
+    void set_start_position(glm::vec3 pos);
+
+    // Sets the player's position to its set start position.
+    void reset_position();
 };

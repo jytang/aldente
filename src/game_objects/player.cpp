@@ -28,8 +28,6 @@ Player::Player() : GameObject() {
     rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
     //Lock angular rotation
     rigidbody->setAngularFactor(0);
-
-    set_position({ 2.0f, 0.0f, 2.0f });
 }
 
 Player::Player(int obj_id) : GameObject(obj_id) {
@@ -126,3 +124,18 @@ void Player::on_collision(GameObject *other) {
 void Player::on_collision_graphical() {
     transform.rotate(0, 0.1f, 0);
 }
+
+void Player::set_start_position(glm::vec3 pos) {
+    start_pos = pos;
+}
+
+void Player::reset_position() {
+    set_position(start_pos);
+    to_moveX = 0;
+    to_moveZ = 0;
+
+    // Face south.
+    direction = glm::vec3(0, 0, 1);
+    transform.look_at(direction);
+}
+

@@ -28,7 +28,7 @@ void GameState::setup(bool is_server) {
             resp.set_id(conn_id);
 
             // For now, allow more than 4 players to join the game.
-            Player* player = add_new_player();
+            Player* player = add_new_player(conn_id);
             resp.set_obj_id(player->get_id());
             context.player_ids.push_back(player->get_id());
             players[conn_id] = player;
@@ -49,7 +49,6 @@ void GameState::setup(bool is_server) {
 void GameState::update() {
     assert(curr_phase);
     set_phase(curr_phase->update());
-    physics.update();
     scene_manager.get_current_scene()->update();
 }
 
@@ -103,10 +102,10 @@ void GameState::set_phase(proto::Phase phase) {
     }
 }
 
-Player* GameState::add_new_player() {
+Player* GameState::add_new_player(int conn_id) {
     // For now, only create players on the main scene.
     assert(scene_manager.get_current_scene() == &testScene);
-    return testScene.spawn_new_player();
+    return testScene.spawn_new_player(conn_id);
 }
 
 Player* GameState::add_existing_player(int obj_id, bool is_client) {    

@@ -22,6 +22,8 @@ void DungeonPhase::setup() {
 
     for (int id : context.player_ids) {
         goal_reached_flags[id] = false;
+        Player* player = dynamic_cast<Player*>(GameObject::game_objects[id]);
+        player->reset_position();
     }
 }
 
@@ -46,6 +48,8 @@ void DungeonPhase::client_setup() {
 }
 
 proto::Phase DungeonPhase::update() {
+    GameState::physics.update();
+
     // Send the position and orientation of the specified game objects.
     // Currently sending all Player objects and Goal.
     for (auto const & o : GameObject::game_objects) {

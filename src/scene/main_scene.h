@@ -24,6 +24,6 @@ public:
     void client_update() override;
     void setup_scene() override;
     void graphical_setup() override;
-    Player* spawn_new_player(); // Server: spawn new Player, auto-assign id.
+    Player* spawn_new_player(int conn_id); // Server: spawn new Player, auto-assign id.
     Player* spawn_existing_player(int obj_id); // Client: spawn existing Player with id from server.
 };
