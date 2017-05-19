@@ -2,7 +2,7 @@
 #include "events.h"
 
 NetworkServer::NetworkServer(boost::asio::io_service& ios, unsigned int port) :
-    acceptor(ios, tcp::endpoint(tcp::v4(), port)), next_id(0) {
+    acceptor(ios, tcp::endpoint(tcp::v4(), port)) {
     start_accept();
 }
 
@@ -74,10 +74,11 @@ void NetworkServer::start_accept() {
 
     acceptor.async_accept(new_connection->get_socket(),
         [&, new_connection](const boost::system::error_code& error) {
+            int next_id = next_available_id();
             if (!error) {
                 std::cerr << "Accepted new connection." << std::endl;
                 unique_lock<mutex> lock(client_list_mutex);
-                client_list[++next_id] = new_connection;
+                client_list[next_id] = new_connection;
                 new_connection->start_async_read_header();
             }
             else {
@@ -90,4 +91,12 @@ void NetworkServer::start_accept() {
             // Accept the next client.
             start_accept();
     });
+}
+
+int NetworkServer::next_available_id() {
+    int id = 1;
+    while (client_list.find(id) != client_list.end()) {
+        id++;
+    }
+    return id;
 }

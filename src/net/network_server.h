@@ -29,6 +29,9 @@ public:
     // Returns a mapping of client id to list of messages.
     std::unordered_map<int, std::vector<proto::ClientMessage>> read_all_messages();
 
+    // Get next free id in client_list. Starts at ID=1, and disconnects remove from the list.
+    int next_available_id();
+
 private:
     // Begin accepting new clients.
     void start_accept();
@@ -37,5 +40,4 @@ private:
     tcp::acceptor acceptor;
     std::unordered_map<int, boost::shared_ptr<Connection>> client_list;
     mutex client_list_mutex;
-    int next_id;
 };
