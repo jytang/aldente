@@ -49,6 +49,7 @@ namespace events {
         signal<void(proto::Construct &)> respond_build_event;
         signal<void(proto::Construct &)> update_build_event;
         signal<void(std::pair<int, int>)> pan_camera_event;
+		signal<void(int,int)> hover_position_updated_event;
         signal<void()> start_build_event;
         signal<void()> end_build_event;
     }

@@ -18,6 +18,7 @@ void Camera::setup_listeners() {
 
     events::build::start_build_event.connect([&]() {
         follow_player = false;
+		follow_hover = true;
         cam_pos = glm::vec3(0, 6.0f, 5.0f);
         cam_front = glm::normalize(-cam_pos);
         glm::vec3 left = glm::cross(glm::vec3(0, 1, 0), cam_front);
@@ -27,9 +28,10 @@ void Camera::setup_listeners() {
 
     events::build::end_build_event.connect([&]() {
         follow_player = true;
+		follow_hover = false;
     });
 
-    events::build::pan_camera_event.connect([&](std::pair<int, int> state) {
+    /*events::build::pan_camera_event.connect([&](std::pair<int, int> state) {
         if (disable_movement)
             return;
 
@@ -38,7 +40,21 @@ void Camera::setup_listeners() {
         if (!follow_player) {
             displace_cam(glm::vec3(state.first, 0, state.second) * PAN_SPEED);
         }
-    });
+    });*/
+
+	events::build::hover_position_updated_event.connect([&](int x, int z) {
+		if (disable_movement)
+			return;
+
+		if (follow_hover) {
+			glm::vec3 pos = glm::vec3(x, 0, z);
+			cam_pos = pos + glm::vec3(0, 6.0f, 6.0f);
+			cam_front = glm::normalize(pos - cam_pos);
+			glm::vec3 left = glm::cross(glm::vec3(0, 1, 0), cam_front);
+			cam_up = glm::cross(cam_front, left);
+			recalculate();
+		}
+	});
 
     events::dungeon::player_position_updated_event.connect([&](glm::vec3 pos) {
         if (disable_movement)

@@ -13,6 +13,7 @@ private:
     glm::vec3 default_up;
 
     bool follow_player;
+	bool follow_hover;
 public:
     glm::vec3 cam_pos;
     glm::vec3 cam_front;
