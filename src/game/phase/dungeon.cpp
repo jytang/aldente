@@ -23,6 +23,7 @@ void DungeonPhase::setup() {
     for (int id : context.player_ids) {
         goal_reached_flags[id] = false;
         Player* player = dynamic_cast<Player*>(GameObject::game_objects[id]);
+        assert(player);
         player->reset_position();
     }
 }
