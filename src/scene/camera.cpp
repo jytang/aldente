@@ -31,6 +31,7 @@ void Camera::setup_listeners() {
         follow_hover = false;
     });
 
+    // Commented this out in case we still wanted it later for debugging
     /*events::build::pan_camera_event.connect([&](std::pair<int, int> state) {
         if (disable_movement)
             return;
@@ -42,9 +43,9 @@ void Camera::setup_listeners() {
         }
     });*/
 
-	events::build::hover_position_updated_event.connect([&](int x, int z) {
+    events::build::hover_position_updated_event.connect([&](int x, int z) {
         if (disable_movement)
-	        return;
+            return;
 
         if (follow_hover) {
             glm::vec3 pos = glm::vec3(x, 0, z);
@@ -52,9 +53,9 @@ void Camera::setup_listeners() {
             cam_front = glm::normalize(pos - cam_pos);
             glm::vec3 left = glm::cross(glm::vec3(0, 1, 0), cam_front);
             cam_up = glm::cross(cam_front, left);
-            recalculate();
+            recalcuate();
         }
-	});
+    });
 
     events::dungeon::player_position_updated_event.connect([&](glm::vec3 pos) {
         if (disable_movement)
