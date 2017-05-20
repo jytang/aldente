@@ -74,19 +74,19 @@ void NetworkServer::start_accept() {
 
     acceptor.async_accept(new_connection->get_socket(),
         [&, new_connection](const boost::system::error_code& error) {
-            int next_id = next_available_id();
             if (!error) {
                 std::cerr << "Accepted new connection." << std::endl;
-                unique_lock<mutex> lock(client_list_mutex);
-                client_list[next_id] = new_connection;
+                int next_id = next_available_id();
+                {
+                    unique_lock<mutex> lock(client_list_mutex);
+                    client_list[next_id] = new_connection;
+                }
                 new_connection->start_async_read_header();
+                events::menu::request_join_event(next_id);
             }
             else {
                 std::cerr << "accept() error: " << error << "," << error.message() << "\n";
             }
-
-            if (!error)
-                events::menu::request_join_event(next_id);
 
             // Accept the next client.
             start_accept();
