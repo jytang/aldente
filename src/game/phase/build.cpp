@@ -20,13 +20,14 @@ void BuildPhase::client_setup() {
             // Movement axes.
             Direction dir;
             bool moving = true;
-            if (d.state.first == events::INPUT_ANALOG_LEVELS)
+
+            if (d.state.first == events::INPUT_ANALOG_LEVELS && d.state.second == 0)
                 dir = Direction::RIGHT;
-            else if (d.state.first == -events::INPUT_ANALOG_LEVELS)
+            else if (d.state.first == -events::INPUT_ANALOG_LEVELS && d.state.second == 0)
                 dir = Direction::LEFT;
-            else if (d.state.second == events::INPUT_ANALOG_LEVELS)
+            else if (d.state.second == events::INPUT_ANALOG_LEVELS && d.state.first == 0)
                 dir = Direction::DOWN;
-            else if (d.state.second == -events::INPUT_ANALOG_LEVELS)
+            else if (d.state.second == -events::INPUT_ANALOG_LEVELS && d.state.first == 0)
                 dir = Direction::UP;
             else
                 moving = false;
@@ -44,6 +45,9 @@ void BuildPhase::client_setup() {
     });
 
     button_conn = events::button_event.connect([&](events::ButtonData d) {
+        Direction dir;
+        bool d_pad = false;
+
         // A button pressed.
         if (d.input == events::BTN_A && d.state == 1) {
             if (is_menu)
@@ -52,12 +56,44 @@ void BuildPhase::client_setup() {
                 events::build::build_grid_place_event();
             is_menu = false;
         }
+
         // B button pressed.
         else if (d.input == events::BTN_B && d.state == 1) {
             if (!is_menu) {
                 events::build::select_grid_return_event();
                 is_menu = true;
             }
+        }
+
+        // D-Pad-Up pressed.
+        else if (d.input == events::BTN_UP && d.state == 1) {
+            dir = Direction::UP;
+            d_pad = true;
+        }
+
+        // D-Pad-Right pressed.
+        else if (d.input == events::BTN_RIGHT && d.state == 1) {
+            dir = Direction::RIGHT;
+            d_pad = true;
+        }
+
+        // D-Pad-Down pressed.
+        else if (d.input == events::BTN_DOWN && d.state == 1) {
+            dir = Direction::DOWN;
+            d_pad = true;
+        }
+
+        // D-Pad-Left pressed.
+        else if (d.input == events::BTN_LEFT && d.state == 1) {
+            dir = Direction::LEFT;
+            d_pad = true;
+        }
+
+        if (d_pad) {
+            if (is_menu)
+                events::build::select_grid_move_event(dir);
+            else
+                events::build::build_grid_move_event(dir);
         }
     });
 
