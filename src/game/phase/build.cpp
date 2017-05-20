@@ -10,6 +10,8 @@ void BuildPhase::setup() {
 
 void BuildPhase::client_setup() {
     events::build::start_build_event();
+    events::build::select_grid_return_event();
+    is_menu = true;
 
     joystick_conn = events::stick_event.connect([&](events::StickData d) {
 
