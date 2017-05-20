@@ -177,7 +177,7 @@ namespace events {
         extern signal<void(std::pair<int, int>)> pan_camera_event;
 
 		// Camera follows hover 
-		extern signal<void(int,int)> hover_position_updated_event;
+        extern signal<void(int,int)> hover_position_updated_event;
 
         // Signals that the build phase has started
         extern signal<void()> start_build_event;

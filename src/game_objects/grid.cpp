@@ -43,7 +43,7 @@ void Grid::setup_listeners() {
     events::build::build_grid_move_event.connect([&](Direction dir) {
         move_selection(dir);
         update_selection();
-		events::build::hover_position_updated_event(hover_col, hover_row);
+        events::build::hover_position_updated_event(hover_col, hover_row);
     });
 
     events::build::build_grid_place_event.connect([&]() {
