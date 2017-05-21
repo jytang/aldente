@@ -65,6 +65,7 @@ namespace events {
     };
     extern signal<void(AudioData &)> music_event;
     extern signal<void(AudioData &)> sound_effects_event;
+    extern signal<void()> toggle_mute_event;
 
     struct WindowSizeData {
         Window *window;

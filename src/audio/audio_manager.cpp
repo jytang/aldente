@@ -19,4 +19,13 @@ AudioManager::AudioManager() {
         music.setLoop(true);
         music.play();
     });
+
+    events::toggle_mute_event.connect([&]() {
+        if (music.getStatus() == sf::SoundSource::Status::Paused) {
+            music.play();
+        } else {
+            music.pause();
+        }
+        music.pause();
+    });
 }
