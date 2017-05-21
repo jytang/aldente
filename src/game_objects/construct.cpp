@@ -4,16 +4,18 @@
 
 Construct::Construct(int x, int z) : GameObject() {
     tag = "CONSTRUCT";
-    transform.set_position(x, 0.0f, z);
+    set_position({ x, 0.0f, z });
 }
 
 Construct::Construct(int x, int z, int id) : GameObject(id) {
     tag = "CONSTRUCT";
-    transform.set_position(x, 0.0f, z);
+    set_position({ x, 0.0f, z });
 }
 
 void Construct::c_update_state(float x, float z, float wx, float wz) {
     anim_player.update();
+
+    GameObject::c_update_state(x, z, wx, wz);
 }
 
 /************CHEST***************/
@@ -25,16 +27,12 @@ Chest::Chest(int x, int z) : Construct(x, z) {
     events::RigidBodyData rigid;
     rigid.object = this;
     rigid.shape = hit_box;
+    rigid.position = { x, 0.0f, z };
     events::add_rigidbody_event(rigid);
-
-    // Sets Initial Position (Transform and Rigidbody at same time)
-    set_position({ x, 0.0f, z });
 }
 
 Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
     tag = "CHEST";
-    // Sets Initial Position (Transform and Rigidbody at same time)
-    set_position({ x, 0.0f, z });
 }
 
 void Chest::s_interact_trigger(GameObject *other) {
@@ -64,16 +62,12 @@ Spikes::Spikes(int x, int z) : Construct(x, z) {
     rigid.object = this;
     rigid.shape = hit_box;
     rigid.is_ghost = true;
+    rigid.position = { x, 0.0f, z };
     events::add_rigidbody_event(rigid);
-
-    // Sets Initial Position
-    set_position({ x, 0.0f, z });
 }
 
 Spikes::Spikes(int x, int z, int id) : Construct(x, z, id) {
     tag = "SPIKES";
-    // Sets Initial Position (Transform and Rigidbody at same time)
-    set_position({ x, 0.0f, z });
 }
 
 void Spikes::s_on_collision(GameObject *other) {
@@ -84,7 +78,6 @@ void Spikes::s_on_collision(GameObject *other) {
 }
 
 void Spikes::c_on_collision() {
-    std::cerr << "TEST" << std::endl;
     anim_player.set_anim("trigger");
     anim_player.play();
 }
@@ -106,11 +99,14 @@ Goal::Goal(int x, int z) : Construct(x, z) {
 
     notify_on_collision = true;
 
+    // Goal has height offset needed
     set_position({ x, 0.5f, z });
 }
 
 Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
     tag = "GOAL";
+
+    // Goal has height offset needed
     set_position({ x, 0.5f, z });
 }
 
@@ -129,11 +125,5 @@ void Goal::s_on_collision(GameObject *other) {
     if (player && player->is_enabled()) {
         events::dungeon::network_collision_event(id);
         events::dungeon::player_finished_event(player->get_id());
-    }
-}
-
-void Goal::c_on_collision() {
-    if (anim_player.check_paused()) {
-        anim_player.play();
     }
 }

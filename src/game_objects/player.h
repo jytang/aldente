@@ -32,7 +32,7 @@ public:
     void s_on_collision(GameObject *other) override;
     void c_on_collision() override;
 
-    void setup_player_model(std::string model_name); // Loads player model
+    void setup_player_model(std::string &model_name); // Loads player model
 
     // Player movement
     void prepare_movement(int inX, int inZ);
