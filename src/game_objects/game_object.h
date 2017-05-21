@@ -27,6 +27,7 @@ protected:
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
     int id;
+    bool enabled;
 public:
     static std::unordered_map<int, GameObject*> game_objects;
     std::vector<GameObject *> children;
@@ -74,4 +75,8 @@ public:
     int get_id() { return id; };
 
     void set_position(glm::vec3 pos);
+
+    void disable();
+    void enable();
+    bool is_enabled() { return enabled; };
 };

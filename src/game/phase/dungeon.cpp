@@ -18,6 +18,7 @@ void DungeonPhase::setup() {
 
     flag_conn = events::dungeon::player_finished_event.connect([&](int player_id) {
         goal_reached_flags[player_id] = true;
+        GameObject::game_objects[player_id]->disable();
     });
 
     for (int id : context.player_ids) {
@@ -25,6 +26,7 @@ void DungeonPhase::setup() {
         Player* player = dynamic_cast<Player*>(GameObject::game_objects[id]);
         assert(player);
         player->reset_position();
+        player->enable();
     }
 }
 

@@ -37,6 +37,14 @@ Physics::Physics() {
 
         raycast_mouse(d.x_pos, d.y_pos, width, height);
     });
+
+    events::enable_rigidbody_event.connect([&](GameObject *obj) {
+        enable_rigid(obj);
+    });
+
+    events::disable_rigidbody_event.connect([&](GameObject *obj) {
+        disable_rigid(obj);
+    });
 }
 
 Physics::~Physics() {}
@@ -201,4 +209,12 @@ void Physics::add_rigid(events::RigidBodyData d) {
 void Physics::remove_rigid(GameObject *obj) {
     dynamicsWorld->removeRigidBody(obj->get_rigid());
     obj->set_rigid(nullptr);
+}
+
+void Physics::disable_rigid(GameObject *obj) {
+    obj->get_rigid()->setActivationState(false);
+}
+
+void Physics::enable_rigid(GameObject *obj) {
+    obj->get_rigid()->setActivationState(true);
 }

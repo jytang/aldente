@@ -131,6 +131,8 @@ namespace events {
     };
     extern signal<void(RigidBodyData d)> add_rigidbody_event;
     extern signal<void(GameObject *obj)> remove_rigidbody_event;
+    extern signal<void(GameObject *obj)> disable_rigidbody_event;
+    extern signal<void(GameObject *obj)> enable_rigidbody_event;
 
     namespace server {
         extern signal<void(proto::ServerMessage &)> announce;

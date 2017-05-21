@@ -1,6 +1,7 @@
 #include "game_object.h"
 #include "util/util_bt.h"
 #include <iostream>
+#include "events.h"
 
 std::unordered_map<int, GameObject*> GameObject::game_objects;
 int GameObject::id_counter = 0;
@@ -13,6 +14,7 @@ GameObject::GameObject(int id) : id(id) {
     rigidbody = nullptr;
     game_objects[id] = this;
     direction = glm::vec3(0.0f);
+    enabled = true;
 }
 
 GameObject::~GameObject(){
@@ -43,7 +45,7 @@ void GameObject::remove_all() {
 
 // Renders model and children's models in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
-    if (model) {
+    if (model && enabled) {
         connect_model_filter();
         model->draw(shader, scene_info, transform.get_world_mat());
     }
@@ -64,16 +66,19 @@ void GameObject::draw_instanced(Shader *shader, SceneInfo &scene_info,
 // Runs Game Object's update loop
 void GameObject::update() {
 
-    update_this();
+    if(enabled)
+        update_this();
 
     for (GameObject *obj : children)
         obj->update();
 }
 
 void GameObject::update_state(float x, float z, float wx, float wz) {
-    transform.set_position(x, 0.0f, z);
-    direction = glm::vec3(wx, 0, wz);
-    transform.look_at(direction);
+    if (enabled) {
+        transform.set_position(x, 0.0f, z);
+        direction = glm::vec3(wx, 0, wz);
+        transform.look_at(direction);
+    }
 }
 
 void GameObject::attach_model(Model *m) {
@@ -133,5 +138,19 @@ void GameObject::set_position(glm::vec3 pos) {
         initialTransform.setRotation(btQuaternion::getIdentity());
         rigidbody->setWorldTransform(initialTransform);
         rigidbody->getMotionState()->setWorldTransform(initialTransform);
+    }
+}
+
+void GameObject::disable() {
+    enabled = false;
+    if (rigidbody) {
+        events::disable_rigidbody_event(this);
+    }
+}
+
+void GameObject::enable() {
+    enabled = true;
+    if (rigidbody) {
+        events::enable_rigidbody_event(this);
     }
 }

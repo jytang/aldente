@@ -26,6 +26,8 @@ namespace events {
     signal<void(int)> ui_grid_movement_event;
     signal<void(RigidBodyData d)> add_rigidbody_event;
     signal<void(GameObject *obj)> remove_rigidbody_event;
+    signal<void(GameObject *obj)> disable_rigidbody_event;
+    signal<void(GameObject *obj)> enable_rigidbody_event;
 
     namespace server {
         signal<void(proto::ServerMessage &)> announce;

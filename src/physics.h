@@ -40,5 +40,9 @@ public:
     void add_rigid(events::RigidBodyData d);
 
     void remove_rigid(GameObject *obj);
+
+    void disable_rigid(GameObject *obj);
+
+    void enable_rigid(GameObject *obj);
 };
 
