@@ -212,9 +212,9 @@ void Physics::remove_rigid(GameObject *obj) {
 }
 
 void Physics::disable_rigid(GameObject *obj) {
-    obj->get_rigid()->setActivationState(false);
+    dynamicsWorld->removeRigidBody(obj->get_rigid());
 }
 
 void Physics::enable_rigid(GameObject *obj) {
-    obj->get_rigid()->setActivationState(true);
+    dynamicsWorld->addRigidBody(obj->get_rigid());
 }
