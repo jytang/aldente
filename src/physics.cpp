@@ -207,14 +207,18 @@ void Physics::add_rigid(events::RigidBodyData d) {
 }
 
 void Physics::remove_rigid(GameObject *obj) {
-    dynamicsWorld->removeRigidBody(obj->get_rigid());
-    obj->set_rigid(nullptr);
+    if (obj->get_rigid()) {
+        dynamicsWorld->removeRigidBody(obj->get_rigid());
+        obj->set_rigid(nullptr);
+    }
 }
 
 void Physics::disable_rigid(GameObject *obj) {
-    dynamicsWorld->removeRigidBody(obj->get_rigid());
+    if(obj->is_enabled())
+        dynamicsWorld->removeRigidBody(obj->get_rigid());
 }
 
 void Physics::enable_rigid(GameObject *obj) {
-    dynamicsWorld->addRigidBody(obj->get_rigid());
+    if(!obj->is_enabled())
+        dynamicsWorld->addRigidBody(obj->get_rigid());
 }
