@@ -12,4 +12,5 @@ public:
     AudioManager();
 private:
     sf::Music music;
+    bool muted;
 };
