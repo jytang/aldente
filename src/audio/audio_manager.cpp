@@ -26,6 +26,5 @@ AudioManager::AudioManager() {
         } else {
             music.pause();
         }
-        music.pause();
     });
 }
