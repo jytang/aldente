@@ -6,6 +6,7 @@
 * gameobject such as health, gold, movement, etc.
 */
 
+#include <game/player_stats.h>
 #include "game_object.h"
 #include "game/direction.h"
 #include "btBulletDynamicsCommon.h"
@@ -50,4 +51,6 @@ public:
 
     // Sets the player's position to its set start position.
     void reset_position();
+
+    PlayerStats stats;
 };
