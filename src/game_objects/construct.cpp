@@ -77,7 +77,7 @@ void Goal::setup_model() {
 
 void Goal::on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
-    if (player) {
+    if (player && player->is_enabled()) {
         events::dungeon::network_collision_event(id);
         events::dungeon::player_finished_event(player->get_id());
     }

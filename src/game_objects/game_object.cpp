@@ -143,15 +143,19 @@ void GameObject::set_position(glm::vec3 pos) {
 }
 
 void GameObject::disable() {
-    enabled = false;
-    if (rigidbody) {
-        events::disable_rigidbody_event(this);
+    if (enabled) {
+        enabled = false;
+        if (rigidbody) {
+            events::disable_rigidbody_event(this);
+        }
     }
 }
 
 void GameObject::enable() {
-    enabled = true;
-    if (rigidbody) {
-        events::enable_rigidbody_event(this);
+    if (!enabled) {
+        enabled = true;
+        if (rigidbody) {
+            events::enable_rigidbody_event(this);
+        }
     }
 }
