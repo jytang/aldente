@@ -45,7 +45,9 @@ void GameObject::remove_all() {
 
 // Renders model and children's models in scene
 void GameObject::draw(Shader *shader, SceneInfo &scene_info) {
-    if (model && enabled) {
+    if (!enabled) return;
+
+    if (model) {
         connect_model_filter();
         model->draw(shader, scene_info, transform.get_world_mat());
     }
@@ -65,9 +67,9 @@ void GameObject::draw_instanced(Shader *shader, SceneInfo &scene_info,
 
 // Runs Game Object's update loop
 void GameObject::update() {
-
-    if(enabled)
-        update_this();
+    if (!enabled) return;
+    
+    update_this();
 
     for (GameObject *obj : children)
         obj->update();
