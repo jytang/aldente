@@ -253,7 +253,7 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
     return new_tile;
 }
 
-void Grid::setup_model() {
+void Grid::setup_model(std::string &model_name) {
     // Only setup model once for each tile type.
     // Use first element of each tile type vector to set up model.
     for (auto it = tile_types.begin(); it != tile_types.end(); ++it) {

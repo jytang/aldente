@@ -41,8 +41,8 @@ void Chest::c_interact_trigger() {
     anim_player.play();
 }
 
-void Chest::setup_model() {
-    attach_model(AssetLoader::get_model("chest_good"));
+void Chest::setup_model(std::string &model_name) {
+    attach_model(AssetLoader::get_model(model_name));
     transform.set_scale({ 0.006f, 0.006f, 0.006f });
 }
 
@@ -74,8 +74,8 @@ void Spikes::c_on_collision() {
     anim_player.play();
 }
 
-void Spikes::setup_model() {
-    attach_model(AssetLoader::get_model("spikes"));
+void Spikes::setup_model(std::string &model_name) {
+    attach_model(AssetLoader::get_model(model_name));
     transform.set_scale({ 0.4f, 0.4f, 0.4f });
 }
 
@@ -95,8 +95,8 @@ Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
     }
 }
 
-void Goal::setup_model() {
-    attach_model(AssetLoader::get_model("warp"));
+void Goal::setup_model(std::string &model_name) {
+    attach_model(AssetLoader::get_model(model_name));
     transform.set_scale(0.006f, 0.006f, 0.006f);
     model->set_shader(&ShaderManager::anim_unlit);
     anim_player.set_speed(1.0f);

@@ -68,7 +68,7 @@ public:
     virtual void c_interact_trigger() {}; // Callback for when a player presses A on this object. Graphical update.
 
     // Model setup and related functions
-    virtual void setup_model() {};
+    virtual void setup_model(std::string &model_name = std::string()) {};
     virtual void setup_instanced_model(int num_instances,
                                        std::vector<glm::mat4> instance_matrix = std::vector<glm::mat4>()) {};
 
