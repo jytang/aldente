@@ -4,15 +4,18 @@
 #include "events.h"
 
 std::unordered_map<int, GameObject*> GameObject::game_objects;
-int GameObject::id_counter = 0;
-
-GameObject::GameObject() : GameObject(id_counter++) {
-}
+int GameObject::id_counter = STARTING_ID;
 
 GameObject::GameObject(int id) : id(id) {
+
+    if (id == REQUIRE_ID) {
+        // This object is new and being made on the server
+        this->id = id_counter++;
+    }
+
     model = new Model();
     rigidbody = nullptr;
-    game_objects[id] = this;
+    game_objects[this->id] = this;
     direction = glm::vec3(0.0f);
     enabled = true;
 }

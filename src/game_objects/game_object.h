@@ -11,6 +11,11 @@
 #include <unordered_map>
 #include <string>
 
+#define CLIENT_ONLY_ID -1
+#define REQUIRE_ID 0
+#define STARTING_ID 1
+#define ON_SERVER 0
+
 /*
     This represents an abstract object in the scene.
     Contains all the essential components required to
@@ -40,8 +45,7 @@ public:
     std::string tag; // Identify this GameObject by a human-readable tag.
     bool notify_on_collision = false; // Physics engine will only call on_collision if this flag is set.
 
-    GameObject();
-    GameObject(int id);
+    GameObject(int id = 0);
     ~GameObject();
 
     // Parenting Stuff

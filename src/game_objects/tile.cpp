@@ -6,6 +6,9 @@ Tile::Tile() :
     GameObject(),
     construct(nullptr) {
     tag = "TILE";
+    // Currently, Tile IDs are not being set by the server, and is being done independently
+    // for the client and server, so they aren't properly in sync. 
+    // This is fine for now, but will need to be changed later if we want dynamic tile changes. 
 }
 
 FloorTile::FloorTile(int x, int z) : Tile::Tile() {

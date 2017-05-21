@@ -24,8 +24,7 @@ private:
 
     btCapsuleShape *hit_capsule = new btCapsuleShape(0.5f, 1.0f);
 public:
-    Player();
-    Player(int obj_id);
+    Player(int id = 0);
 
     void s_update_this() override;
     void c_update_state(float x, float z, float wx, float wz, bool enab) override;

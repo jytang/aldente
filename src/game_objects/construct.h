@@ -9,8 +9,7 @@
 
 class Construct : public GameObject {
 public:
-    Construct(int x = 0, int z = 0);
-    Construct(int x, int z, int id);
+    Construct(int x, int z, int id = 0);
 
     virtual void setup_model() override {};
 
@@ -24,8 +23,7 @@ public:
 
 class Chest : public Construct {
 public:
-    Chest(int x = 0, int z = 0);
-    Chest(int x, int z, int id);
+    Chest(int x, int z, int id = 0);
 
     void setup_model() override;
     
@@ -38,8 +36,7 @@ private:
 
 class Goal : public Construct {
 public:
-    Goal(int x = 0, int z = 0);
-    Goal(int x, int z, int id);
+    Goal(int x, int z, int id = 0);
 
     void setup_model() override;
 
@@ -51,8 +48,7 @@ private:
 
 class Spikes : public Construct {
 public:
-    Spikes(int x = 0, int z = 0);
-    Spikes(int x, int z, int id);
+    Spikes(int x, int z, int id = 0);
 
     void setup_model() override;
     void s_on_collision(GameObject *other) override;

@@ -6,30 +6,29 @@
 
 #define ANIMATE_DELTA 0.001f
 
-Player::Player() : GameObject() {
+Player::Player(int id) : GameObject(id) {
     tag = "PLAYER";
-    to_moveX = 0;
-    to_moveZ = 0;
-    move_speed = 2.0f;
 
-    events::RigidBodyData rigid;
-    rigid.object = this;
-    rigid.shape = hit_capsule;
-    rigid.mass = 1;
-    events::add_rigidbody_event(rigid);
+    if (id == ON_SERVER) {
+        to_moveX = 0;
+        to_moveZ = 0;
+        move_speed = 2.0f;
 
-    // Notify on collision.
-    notify_on_collision = true;
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_capsule;
+        rigid.mass = 1;
+        events::add_rigidbody_event(rigid);
 
-    // Lock y-axis
-    rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+        // Notify on collision.
+        notify_on_collision = true;
 
-    //Lock angular rotation
-    rigidbody->setAngularFactor(0);
-}
+        // Lock y-axis
+        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
 
-Player::Player(int obj_id) : GameObject(obj_id) {
-    tag = "PLAYER";
+        //Lock angular rotation
+        rigidbody->setAngularFactor(0);
+    }
 }
 
 // Just calls do_movement for now, can have more

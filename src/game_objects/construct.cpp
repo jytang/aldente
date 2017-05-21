@@ -2,11 +2,6 @@
 #include "asset_loader.h"
 #include "player.h"
 
-Construct::Construct(int x, int z) : GameObject() {
-    tag = "CONSTRUCT";
-    set_position({ x, 0.0f, z });
-}
-
 Construct::Construct(int x, int z, int id) : GameObject(id) {
     tag = "CONSTRUCT";
     set_position({ x, 0.0f, z });
@@ -20,19 +15,17 @@ void Construct::c_update_state(float x, float z, float wx, float wz) {
 
 /************CHEST***************/
 
-Chest::Chest(int x, int z) : Construct(x, z) {
-    tag = "CHEST";
-
-    //Creates Rigid Body
-    events::RigidBodyData rigid;
-    rigid.object = this;
-    rigid.shape = hit_box;
-    rigid.position = { x, 0.0f, z };
-    events::add_rigidbody_event(rigid);
-}
-
 Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
     tag = "CHEST";
+
+    if (id == ON_SERVER) {
+        //Creates Rigid Body
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_box;
+        rigid.position = { x, 0.0f, z };
+        events::add_rigidbody_event(rigid);
+    }    
 }
 
 void Chest::s_interact_trigger(GameObject *other) {
@@ -54,20 +47,19 @@ void Chest::setup_model() {
 }
 
 /************SPIKES***************/
-Spikes::Spikes(int x, int z) : Construct(x, z) {
-    tag = "SPIKES";
-
-    //Creates Rigid Body
-    events::RigidBodyData rigid;
-    rigid.object = this;
-    rigid.shape = hit_box;
-    rigid.is_ghost = true;
-    rigid.position = { x, 0.0f, z };
-    events::add_rigidbody_event(rigid);
-}
 
 Spikes::Spikes(int x, int z, int id) : Construct(x, z, id) {
     tag = "SPIKES";
+
+    if (id == ON_SERVER) {
+        //Creates Rigid Body
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_box;
+        rigid.is_ghost = true;
+        rigid.position = { x, 0.0f, z };
+        events::add_rigidbody_event(rigid);
+    }
 }
 
 void Spikes::s_on_collision(GameObject *other) {
@@ -88,26 +80,19 @@ void Spikes::setup_model() {
 }
 
 /************GOAL***************/
-Goal::Goal(int x, int z) : Construct(x, z) {
-    tag = "GOAL";
-
-    events::RigidBodyData rigid;
-    rigid.object = this;
-    rigid.shape = goal_hit_box;
-    rigid.is_ghost = true;
-    events::add_rigidbody_event(rigid);
-
-    notify_on_collision = true;
-
-    // Goal has height offset needed
-    set_position({ x, 0.5f, z });
-}
-
 Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
     tag = "GOAL";
 
-    // Goal has height offset needed
-    set_position({ x, 0.5f, z });
+    if (id == ON_SERVER) {
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = goal_hit_box;
+        rigid.is_ghost = true;
+        rigid.position = { x, 0.5f, z };
+        events::add_rigidbody_event(rigid);
+
+        notify_on_collision = true;
+    }
 }
 
 void Goal::setup_model() {
