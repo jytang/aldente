@@ -59,7 +59,7 @@ void Player::prepare_movement(int inX, int inZ) {
     to_moveZ = inZ;
 }
 
-void Player::update_state(float x, float z, float wx, float wz) {
+void Player::update_state(float x, float z, float wx, float wz, bool enab) {
     anim_player.update();
     float dx = std::fabs(x - transform.get_position().x);
     float dz = std::fabs(z - transform.get_position().z);
@@ -74,7 +74,7 @@ void Player::update_state(float x, float z, float wx, float wz) {
             anim_player.play();
     }
 
-    GameObject::update_state(x, z, wx, wz);
+    GameObject::update_state(x, z, wx, wz, enab);
 }
 
 void Player::do_movement() {

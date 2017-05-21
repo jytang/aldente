@@ -52,7 +52,8 @@ public:
     void update(); // Updates this object and all children
 
     virtual void update_this() {}; // Update function for this particular object. Use this instead of update()
-    virtual void update_state(float x, float z, float wx, float wz); // Updates this object's position and orientation.
+    // Updates this object's position, orientation, and enabled status.
+    virtual void update_state(float x, float z, float wx, float wz, bool enab);
     virtual void on_collision(GameObject *other) {} // Server: physics has detected a collision with this and other.
     virtual void on_collision_graphical() {} // Client: this obj has collided, perform graphical update.
     virtual void interact_trigger() {}; // Callback for when a player presses A on this object. Graphical update.

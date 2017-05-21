@@ -59,6 +59,7 @@ message GameObject {
   optional float wx = 5;
   optional float wz = 6;
   optional int32 client_id = 7;
+  optional bool enabled = 8;
 }
 
 message StickData {

@@ -73,7 +73,8 @@ void GameObject::update() {
         obj->update();
 }
 
-void GameObject::update_state(float x, float z, float wx, float wz) {
+void GameObject::update_state(float x, float z, float wx, float wz, bool enab) {
+    enabled = enab;
     if (enabled) {
         transform.set_position(x, 0.0f, z);
         direction = glm::vec3(wx, 0, wz);

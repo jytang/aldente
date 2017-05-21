@@ -33,7 +33,7 @@ public:
     virtual void on_collision_graphical() override;
 
     void prepare_movement(int inX, int inZ);
-    void update_state(float x, float z, float wx, float wz);
+    void update_state(float x, float z, float wx, float wz, bool enab);
     void do_movement();
 
     // Called when the player tries to interacts with an object (e.g pressing A)

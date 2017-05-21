@@ -169,7 +169,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameState));
   GameObject_descriptor_ = file->message_type(5);
-  static const int GameObject_offsets_[7] = {
+  static const int GameObject_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, x_),
@@ -177,6 +177,7 @@ void protobuf_AssignDesc_net_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, wx_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, wz_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, client_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, enabled_),
   };
   GameObject_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -283,17 +284,17 @@ void protobuf_AddDesc_net_2eproto() {
     "e\022\016\n\006status\030\001 \001(\010\022\023\n\013num_players\030\002 \001(\005\022\n"
     "\n\002id\030\003 \001(\005\022\016\n\006obj_id\030\004 \001(\005\"V\n\tGameState\022"
     "\"\n\007objects\030\001 \003(\0132\021.proto.GameObject\022\022\n\nc"
-    "ollisions\030\002 \003(\005\022\021\n\tinteracts\030\003 \003(\005\"\263\001\n\nG"
+    "ollisions\030\002 \003(\005\022\021\n\tinteracts\030\003 \003(\005\"\304\001\n\nG"
     "ameObject\022\n\n\002id\030\001 \001(\005\022$\n\004type\030\002 \001(\0162\026.pr"
     "oto.GameObject.Type\022\t\n\001x\030\003 \001(\002\022\t\n\001z\030\004 \001("
     "\002\022\n\n\002wx\030\005 \001(\002\022\n\n\002wz\030\006 \001(\002\022\021\n\tclient_id\030\007"
-    " \001(\005\"2\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL\020\001\022\t\n\005CH"
-    "EST\020\002\022\t\n\005SPIKE\020\003\"~\n\tStickData\022%\n\005input\030\001"
-    " \001(\0162\026.proto.StickData.Stick\022\t\n\001x\030\002 \001(\005\022"
-    "\t\n\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK"
-    "_LEFT\020\000\022\017\n\013STICK_RIGHT\020\001*A\n\005Phase\022\010\n\004NOO"
-    "P\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020\002\022\014\n"
-    "\010MINIGAME\020\003", 1091);
+    " \001(\005\022\017\n\007enabled\030\010 \001(\010\"2\n\004Type\022\n\n\006PLAYER\020"
+    "\000\022\010\n\004GOAL\020\001\022\t\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\"~\n\tSti"
+    "ckData\022%\n\005input\030\001 \001(\0162\026.proto.StickData."
+    "Stick\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\""
+    "(\n\005Stick\022\016\n\nSTICK_LEFT\020\000\022\017\n\013STICK_RIGHT\020"
+    "\001*A\n\005Phase\022\010\n\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020"
+    "\001\022\013\n\007DUNGEON\020\002\022\014\n\010MINIGAME\020\003", 1108);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -2352,6 +2353,7 @@ const int GameObject::kZFieldNumber;
 const int GameObject::kWxFieldNumber;
 const int GameObject::kWzFieldNumber;
 const int GameObject::kClientIdFieldNumber;
+const int GameObject::kEnabledFieldNumber;
 #endif  // !_MSC_VER
 
 GameObject::GameObject()
@@ -2379,6 +2381,7 @@ void GameObject::SharedCtor() {
   wx_ = 0;
   wz_ = 0;
   client_id_ = 0;
+  enabled_ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -2424,8 +2427,8 @@ void GameObject::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 127) {
-    ZR_(id_, client_id_);
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(id_, enabled_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -2550,6 +2553,21 @@ bool GameObject::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(64)) goto parse_enabled;
+        break;
+      }
+
+      // optional bool enabled = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_enabled:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &enabled_)));
+          set_has_enabled();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2615,6 +2633,11 @@ void GameObject::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->client_id(), output);
   }
 
+  // optional bool enabled = 8;
+  if (has_enabled()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->enabled(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -2659,6 +2682,11 @@ void GameObject::SerializeWithCachedSizes(
   // optional int32 client_id = 7;
   if (has_client_id()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->client_id(), target);
+  }
+
+  // optional bool enabled = 8;
+  if (has_enabled()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->enabled(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2713,6 +2741,11 @@ int GameObject::ByteSize() const {
           this->client_id());
     }
 
+    // optional bool enabled = 8;
+    if (has_enabled()) {
+      total_size += 1 + 1;
+    }
+
   }
   if (!unknown_fields().empty()) {
     total_size +=
@@ -2761,6 +2794,9 @@ void GameObject::MergeFrom(const GameObject& from) {
     if (from.has_client_id()) {
       set_client_id(from.client_id());
     }
+    if (from.has_enabled()) {
+      set_enabled(from.enabled());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -2791,6 +2827,7 @@ void GameObject::Swap(GameObject* other) {
     std::swap(wx_, other->wx_);
     std::swap(wz_, other->wz_);
     std::swap(client_id_, other->client_id_);
+    std::swap(enabled_, other->enabled_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

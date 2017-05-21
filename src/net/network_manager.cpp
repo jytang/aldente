@@ -67,6 +67,7 @@ void ServerNetworkManager::register_listeners() {
             go->set_z(obj->transform.get_position().z);
             go->set_wx(obj->direction.x);
             go->set_wz(obj->direction.z);
+            go->set_enabled(obj->is_enabled());
         }
 
         // If there were any game obj collisions, send those objects' ids.
@@ -220,7 +221,7 @@ void ClientNetworkManager::update() {
                     }
                     all_exist = false;
                 } else {
-                    GameObject::game_objects[obj.id()]->update_state(obj.x(), obj.z(), obj.wx(), obj.wz());
+                    GameObject::game_objects[obj.id()]->update_state(obj.x(), obj.z(), obj.wx(), obj.wz(), obj.enabled());
                 }
             }
 
