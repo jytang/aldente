@@ -40,7 +40,7 @@ private:
 public:
     Grid(const char *map_loc);
 
-    void setup_model(std::string &model_name) override; // Loads tile models, only call this on client
+    void setup_model() override; // Loads tile models, only call this on client
 
     std::vector<std::vector<Tile *>> getGrid() { return grid; };
 

@@ -26,8 +26,8 @@ public:
     static void setup(bool is_server);
 
     // Update state given input. Called in the game loop.
-    static void update();
-    static void client_update();
+    static void s_update();
+    static void c_update();
 
     // Force a phase change to the specified phase.
     // If server, dispatch the change to clients.

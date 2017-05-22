@@ -138,7 +138,7 @@ void Player::reset_position() {
     transform.look_at(direction);
 }
 
-void Player::setup_model(std::string &model_name) {
+void Player::setup_player_model(std::string &model_name) {
     Model *player_model = AssetLoader::get_model(model_name);
     player_model->set_shader(&ShaderManager::anim_unlit);
     attach_model(player_model);

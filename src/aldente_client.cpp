@@ -131,7 +131,7 @@ void AldenteClient::start() {
 
         network.update();
         Timer::get()->catch_up();
-        GameState::client_update();
+        GameState::c_update();
 
         render.update();
         bt_debug.draw(GameState::scene_manager.get_current_scene()->info);

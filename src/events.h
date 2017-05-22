@@ -125,7 +125,7 @@ namespace events {
         bool is_ghost = false; // whether this rigidbody is a ghost/trigger
         float mass = 0.0f;
         glm::vec3 inertia = glm::vec3(0.0f);
-        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f); // Initial position
+        glm::vec3 position = glm::vec3(0.0f); // Initial position
     };
 
     extern signal<void(RigidBodyData d)> add_rigidbody_event;

@@ -11,7 +11,7 @@ class Construct : public GameObject {
 public:
     Construct(int x, int z, int id = 0);
 
-    virtual void setup_model(std::string &model_name = std::string()) override {};
+    virtual void setup_model() override {};
 
     void c_update_state(float x, float z, float wx, float wz) override;
 
@@ -25,7 +25,7 @@ class Chest : public Construct {
 public:
     Chest(int x, int z, int id = 0);
 
-    void setup_model(std::string &model_name = std::string("chest_good")) override;
+    void setup_model() override;
     
     void s_interact_trigger(GameObject *other) override;
     void c_interact_trigger() override;
@@ -38,7 +38,7 @@ class Goal : public Construct {
 public:
     Goal(int x, int z, int id = 0);
 
-    void setup_model(std::string &model_name = std::string("goal")) override;
+    void setup_model() override;
 
     void s_on_collision(GameObject *other) override;
 
@@ -50,7 +50,7 @@ class Spikes : public Construct {
 public:
     Spikes(int x, int z, int id = 0);
 
-    void setup_model(std::string &model_name = std::string("spikes")) override;
+    void setup_model() override;
     void s_on_collision(GameObject *other) override;
     void c_on_collision() override;
 

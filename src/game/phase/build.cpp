@@ -4,11 +4,11 @@
 
 bool BuildPhase::is_menu = true;
 
-void BuildPhase::setup() {
+void BuildPhase::s_setup() {
 //    transition_after(10, proto::Phase::DUNGEON);
 }
 
-void BuildPhase::client_setup() {
+void BuildPhase::c_setup() {
     events::build::start_build_event();
     events::build::select_grid_return_event();
     is_menu = true;
@@ -102,11 +102,11 @@ void BuildPhase::client_setup() {
     events::music_event(d);
 }
 
-void BuildPhase::teardown() {
+void BuildPhase::s_teardown() {
     cancel_clock_every();
 }
 
-void BuildPhase::client_teardown() {
+void BuildPhase::c_teardown() {
     joystick_conn.disconnect();
     button_conn.disconnect();
 

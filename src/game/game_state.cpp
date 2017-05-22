@@ -53,15 +53,15 @@ void GameState::setup(bool is_server) {
     }
 }
 
-void GameState::update() {
+void GameState::s_update() {
     assert(curr_phase);
-    set_phase(curr_phase->update());
+    set_phase(curr_phase->s_update());
     scene_manager.get_current_scene()->s_update();
 }
 
-void GameState::client_update() {
+void GameState::c_update() {
     scene_manager.get_current_scene()->c_update();
-    curr_phase->client_update();
+    curr_phase->c_update();
 }
 
 void GameState::set_phase(Phase* phase) {
@@ -70,15 +70,15 @@ void GameState::set_phase(Phase* phase) {
 
     if (is_server) {
         if (curr_phase)
-            curr_phase->teardown();
+            curr_phase->s_teardown();
         curr_phase = phase;
-        curr_phase->setup();
+        curr_phase->s_setup();
     }
     else {
         if (curr_phase)
-            curr_phase->client_teardown();
+            curr_phase->c_teardown();
         curr_phase = phase;
-        curr_phase->client_setup();
+        curr_phase->c_setup();
     }
 }
 

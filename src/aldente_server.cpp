@@ -27,7 +27,7 @@ void AldenteServer::start() {
         network.update();
 
         Timer::get()->catch_up([&]{
-            GameState::update();
+            GameState::s_update();
         });
     }
 

@@ -3,7 +3,7 @@
 #include "game_objects/player.h"
 #include "audio/audio_manager.h"
 
-void DungeonPhase::setup() {
+void DungeonPhase::s_setup() {
 //    transition_after(10, proto::Phase::BUILD);
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int obj_id) {
@@ -30,7 +30,7 @@ void DungeonPhase::setup() {
     }
 }
 
-void DungeonPhase::client_setup() {
+void DungeonPhase::c_setup() {
     joystick_conn = events::stick_event.connect([&](events::StickData d) {
         // Left stick
         if (d.input == events::STICK_LEFT) {
@@ -50,7 +50,7 @@ void DungeonPhase::client_setup() {
     events::music_event(d);
 }
 
-proto::Phase DungeonPhase::update() {
+proto::Phase DungeonPhase::s_update() {
     GameState::physics.update();
 
     // Send the position and orientation of the specified game objects.
@@ -76,19 +76,19 @@ proto::Phase DungeonPhase::update() {
         return next;
 }
 
-void DungeonPhase::client_update() {
+void DungeonPhase::c_update() {
     GameObject* player_obj = GameObject::game_objects[context.player_id];
     events::dungeon::player_position_updated_event(player_obj->transform.get_position());
 }
 
-void DungeonPhase::teardown() {
+void DungeonPhase::s_teardown() {
     cancel_clock_every();
     collision_conn.disconnect();
     interact_conn.disconnect();
     flag_conn.disconnect();
 }
 
-void DungeonPhase::client_teardown() {
+void DungeonPhase::c_teardown() {
     joystick_conn.disconnect();
     button_conn.disconnect();
 }

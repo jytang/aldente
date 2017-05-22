@@ -261,7 +261,7 @@ Model *AssetLoader::get_model(std::string name) {
         error += name;
         error += " was not loaded. Check for fbx file and double check filename.\n";
         fprintf(stderr, "%s", error.c_str());
-        return NULL;
+        assert(false);
     }
 
     return models[name];
@@ -273,7 +273,7 @@ GLuint AssetLoader::get_texture(std::string name) {
         error += name;
         error += " was not loaded.\n";
         fprintf(stderr, "%s", error.c_str());
-        return NULL;
+        assert(false);
     }
     return textures[name];
 }

@@ -31,7 +31,7 @@ public:
     void s_on_collision(GameObject *other) override;
     void c_on_collision() override;
 
-    void setup_model(std::string &model_name) override;
+    void setup_player_model(std::string &model_name); // Loads player model
 
     // Player movement
     void prepare_movement(int inX, int inZ);
@@ -43,6 +43,9 @@ public:
     // Animation Cues
     void start_walk();
     void stop_walk();
+
+    // TODO after we make more player models
+    void setup_model() {}
 
     // Set this player's spawn position.
     void set_start_position(glm::vec3 pos);

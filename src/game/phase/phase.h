@@ -6,12 +6,12 @@
 class Phase {
 public:
     Phase(Context& context) : context(context), next(proto::Phase::NOOP) {};
-    virtual void setup() = 0;
-    virtual proto::Phase update() { return next; };
-    virtual void teardown() = 0;
-    virtual void client_setup() = 0;
-    virtual void client_update() {};
-    virtual void client_teardown() = 0;
+    virtual void s_setup() = 0;
+    virtual proto::Phase s_update() { return next; };
+    virtual void s_teardown() = 0;
+    virtual void c_setup() = 0;
+    virtual void c_update() {};
+    virtual void c_teardown() = 0;
     virtual std::map<int, bool> get_flags() { return std::map<int, bool>(); };
 protected:
     Context& context;
