@@ -13,11 +13,8 @@ ClockUI::ClockUI(float aspect)
 
     attach(clock);
 
-    // TEST. REMOVE ME.
-    Timer::get()->do_every(std::chrono::seconds(1), [&]() {
-        static int seconds = 0;
-        ++seconds;
-        set_time(seconds);
+    events::ui::update_time.connect([&](int time) {
+        set_time(time);
     });
 }
 
