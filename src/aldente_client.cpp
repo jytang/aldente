@@ -14,10 +14,9 @@
 #include "util/config.h"
 #include "events.h"
 #include "timer.h"
-#include "ui/build_ui.h"
+#include "ui/ui_manager.h"
 #include "render.h"
 #include "game/game_state.h"
-#include "game/construct_types.h"
 #include "net/network_manager.h"
 #include "shaders/shader_manager.h"
 #include "audio/audio_manager.h"
@@ -94,15 +93,7 @@ void AldenteClient::start() {
     // Debug Drawer for Bullet
     btDebug bt_debug(&GameState::physics);
 
-    // TODO : BuildUI initialiaziation should be done in BuildPhase setup()
-    std::vector<ConstructData> constructs;
-    for (int i = 0; i < 12; i++) {
-        if (i % 2 == 0)
-            constructs.push_back(Constructs::CHEST);
-        else
-            constructs.push_back(Constructs::REMOVE);
-    }
-    BuildUI ui = BuildUI(3, 4, (float) width / (float) height, constructs);
+    UIManager ui_manager((float) width / (float) height);
 
     DebugInput debug_input(window, GameState::scene_manager, GameState::physics);
 
@@ -135,7 +126,7 @@ void AldenteClient::start() {
 
         render.update();
         bt_debug.draw(GameState::scene_manager.get_current_scene()->info);
-        ui.draw();
+        ui_manager.draw();
         window.swap_buffers();
     }
 

@@ -19,16 +19,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       title_label("Select a block...", 2, 12, 1.f, 1.f, Color::WHITE),
       description_label("", 2, 6, 0.6f, 0.6f, Color::WHITE),
       cost_label("0", 40, 12, 1.f, 1.f, Color::WHITE),
-      balance_label("100g", 20, 4, 1.f, 1.f, Color::WHITE),
-      clock(47.5f * aspect, 90.f, 20.f * aspect, 10.f, Color::WHITE, Color::BLACK) {
-
-    // TEST. REMOVE ME.
-    attach(clock);
-    Timer::get()->do_every(std::chrono::seconds(1), [&]() {
-        static int seconds = 0;
-        ++seconds;
-        clock.set_time(seconds);
-    });
+      balance_label("100g", 20, 4, 1.f, 1.f, Color::WHITE) {
 
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
@@ -65,13 +56,6 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
         events::build::construct_selected_event(constructs[content_index].type);
     });
 
-    events::debug::toggle_ui_event.connect([&](void) {
-        if (enabled)
-            disable();
-        else
-            enable();
-    });
-
     // Show or hide the grid.
     events::build::select_grid_confirm_event.connect([&]() {
         shop_panel.disable();
@@ -80,16 +64,6 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     events::build::select_grid_return_event.connect([&]() {
         shop_panel.enable();
         player_panel.enable();
-    });
-
-    // Enables Build UI on the start of the build phase
-    events::build::start_build_event.connect([&]() {
-        enable();
-    });
-
-    // Disables Build UI at the end of the build phase
-    events::build::end_build_event.connect([&]() {
-        disable();
     });
 }
 
