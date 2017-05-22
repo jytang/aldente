@@ -4,7 +4,7 @@
 
 #include "ui_grid.h"
 #include "ui_rectangle.h"
-#include "ui_text_node.h"
+#include "ui_text_box.h"
 #include "ui_image_node.h"
 #include "game/construct_types.h"
 
@@ -21,7 +21,7 @@ private:
     UIRectangle rect;
     UIContainer info_panel, player_panel, shop_panel;
     UIRectangle info_rect, player_rect;
-    UITextNode title_label, description_label, cost_label, balance_label;
+    UITextBox title_label, description_label, cost_label, balance_label;
 
     std::vector<UIImageNode*> images;
 };
