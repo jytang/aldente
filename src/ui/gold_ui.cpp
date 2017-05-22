@@ -6,17 +6,17 @@
 #include "asset_loader.h"
 
 GoldUI::GoldUI(float aspect)
-        : UI(),
+        : UI(90.f * aspect, 0.f),
           gold_delta("+0g",
-                     50.f * aspect, 50.f, // starting coordinates
-                     10.f * aspect, 10.f, // width and height
+                     0.f, 10.f, // starting coordinates
+                     5.f * aspect, 5.f, // width and height
                      Color::WHITE),
           total_gold("500g",
-                     50.f * aspect, 40.f,
-                     10.f * aspect, 10.f,
+                     0.f, 5.f,
+                     5.f * aspect, 5.f,
                      Color::WHITE),
-          gold_image(50.f * aspect, 30.f,
-                     5.f, 5.f, AssetLoader::get_texture("Tomato.jpg")) {
+          gold_image(5.f * aspect, 5.f,
+                     5.f * aspect, 5.f, AssetLoader::get_texture("Tomato.jpg")) {
 
     attach(gold_delta);
     gold_delta.disable(); // not shown by default
