@@ -42,6 +42,7 @@ class GameState;
 class IdPair;
 class GameObject;
 class StickData;
+class PlayerStats;
 
 enum GameObject_Type {
   GameObject_Type_PLAYER = 0,
@@ -137,6 +138,7 @@ class ServerMessage : public ::google::protobuf::Message {
     kStateUpdate = 4,
     kPhaseUpdate = 5,
     kPlayerFinished = 6,
+    kPlayerStatsUpdate = 7,
     MESSAGE_TYPE_NOT_SET = 0,
   };
 
@@ -223,6 +225,15 @@ class ServerMessage : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 player_finished() const;
   inline void set_player_finished(::google::protobuf::int32 value);
 
+  // optional .proto.PlayerStats player_stats_update = 7;
+  inline bool has_player_stats_update() const;
+  inline void clear_player_stats_update();
+  static const int kPlayerStatsUpdateFieldNumber = 7;
+  inline const ::proto::PlayerStats& player_stats_update() const;
+  inline ::proto::PlayerStats* mutable_player_stats_update();
+  inline ::proto::PlayerStats* release_player_stats_update();
+  inline void set_allocated_player_stats_update(::proto::PlayerStats* player_stats_update);
+
   inline MessageTypeCase message_type_case() const;
   // @@protoc_insertion_point(class_scope:proto.ServerMessage)
  private:
@@ -232,6 +243,7 @@ class ServerMessage : public ::google::protobuf::Message {
   inline void set_has_state_update();
   inline void set_has_phase_update();
   inline void set_has_player_finished();
+  inline void set_has_player_stats_update();
 
   inline bool has_message_type();
   void clear_message_type();
@@ -248,6 +260,7 @@ class ServerMessage : public ::google::protobuf::Message {
     ::proto::GameState* state_update_;
     int phase_update_;
     ::google::protobuf::int32 player_finished_;
+    ::proto::PlayerStats* player_stats_update_;
   } message_type_;
   ::google::protobuf::uint32 _oneof_case_[1];
 
@@ -1147,6 +1160,95 @@ class StickData : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static StickData* default_instance_;
 };
+// -------------------------------------------------------------------
+
+class PlayerStats : public ::google::protobuf::Message {
+ public:
+  PlayerStats();
+  virtual ~PlayerStats();
+
+  PlayerStats(const PlayerStats& from);
+
+  inline PlayerStats& operator=(const PlayerStats& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PlayerStats& default_instance();
+
+  void Swap(PlayerStats* other);
+
+  // implements Message ----------------------------------------------
+
+  PlayerStats* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PlayerStats& from);
+  void MergeFrom(const PlayerStats& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 id = 1;
+  inline bool has_id() const;
+  inline void clear_id();
+  static const int kIdFieldNumber = 1;
+  inline ::google::protobuf::int32 id() const;
+  inline void set_id(::google::protobuf::int32 value);
+
+  // optional int32 coins = 2;
+  inline bool has_coins() const;
+  inline void clear_coins();
+  static const int kCoinsFieldNumber = 2;
+  inline ::google::protobuf::int32 coins() const;
+  inline void set_coins(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:proto.PlayerStats)
+ private:
+  inline void set_has_id();
+  inline void clear_has_id();
+  inline void set_has_coins();
+  inline void clear_has_coins();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::uint32 _has_bits_[1];
+  mutable int _cached_size_;
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 coins_;
+  friend void  protobuf_AddDesc_net_2eproto();
+  friend void protobuf_AssignDesc_net_2eproto();
+  friend void protobuf_ShutdownFile_net_2eproto();
+
+  void InitAsDefaultInstance();
+  static PlayerStats* default_instance_;
+};
 // ===================================================================
 
 
@@ -1406,6 +1508,49 @@ inline void ServerMessage::set_player_finished(::google::protobuf::int32 value) 
     set_has_player_finished();
   }
   message_type_.player_finished_ = value;
+}
+
+// optional .proto.PlayerStats player_stats_update = 7;
+inline bool ServerMessage::has_player_stats_update() const {
+  return message_type_case() == kPlayerStatsUpdate;
+}
+inline void ServerMessage::set_has_player_stats_update() {
+  _oneof_case_[0] = kPlayerStatsUpdate;
+}
+inline void ServerMessage::clear_player_stats_update() {
+  if (has_player_stats_update()) {
+    delete message_type_.player_stats_update_;
+    clear_has_message_type();
+  }
+}
+inline const ::proto::PlayerStats& ServerMessage::player_stats_update() const {
+  return has_player_stats_update() ? *message_type_.player_stats_update_
+                      : ::proto::PlayerStats::default_instance();
+}
+inline ::proto::PlayerStats* ServerMessage::mutable_player_stats_update() {
+  if (!has_player_stats_update()) {
+    clear_message_type();
+    set_has_player_stats_update();
+    message_type_.player_stats_update_ = new ::proto::PlayerStats;
+  }
+  return message_type_.player_stats_update_;
+}
+inline ::proto::PlayerStats* ServerMessage::release_player_stats_update() {
+  if (has_player_stats_update()) {
+    clear_has_message_type();
+    ::proto::PlayerStats* temp = message_type_.player_stats_update_;
+    message_type_.player_stats_update_ = NULL;
+    return temp;
+  } else {
+    return NULL;
+  }
+}
+inline void ServerMessage::set_allocated_player_stats_update(::proto::PlayerStats* player_stats_update) {
+  clear_message_type();
+  if (player_stats_update) {
+    set_has_player_stats_update();
+    message_type_.player_stats_update_ = player_stats_update;
+  }
 }
 
 inline bool ServerMessage::has_message_type() {
@@ -2377,6 +2522,58 @@ inline void StickData::set_id(::google::protobuf::int32 value) {
   set_has_id();
   id_ = value;
   // @@protoc_insertion_point(field_set:proto.StickData.id)
+}
+
+// -------------------------------------------------------------------
+
+// PlayerStats
+
+// optional int32 id = 1;
+inline bool PlayerStats::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PlayerStats::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PlayerStats::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PlayerStats::clear_id() {
+  id_ = 0;
+  clear_has_id();
+}
+inline ::google::protobuf::int32 PlayerStats::id() const {
+  // @@protoc_insertion_point(field_get:proto.PlayerStats.id)
+  return id_;
+}
+inline void PlayerStats::set_id(::google::protobuf::int32 value) {
+  set_has_id();
+  id_ = value;
+  // @@protoc_insertion_point(field_set:proto.PlayerStats.id)
+}
+
+// optional int32 coins = 2;
+inline bool PlayerStats::has_coins() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void PlayerStats::set_has_coins() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void PlayerStats::clear_has_coins() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void PlayerStats::clear_coins() {
+  coins_ = 0;
+  clear_has_coins();
+}
+inline ::google::protobuf::int32 PlayerStats::coins() const {
+  // @@protoc_insertion_point(field_get:proto.PlayerStats.coins)
+  return coins_;
+}
+inline void PlayerStats::set_coins(::google::protobuf::int32 value) {
+  set_has_coins();
+  coins_ = value;
+  // @@protoc_insertion_point(field_set:proto.PlayerStats.coins)
 }
 
 

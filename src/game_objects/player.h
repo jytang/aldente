@@ -58,5 +58,10 @@ public:
 
     // Allows manipulation of stats through callback.
     // This is done so that the clients can receive any associated updates.
-    void modify_stats(std::function<void(PlayerStats &)> modifier);
+    // FOR SERVER USE ONLY.
+    void s_modify_stats(std::function<void(PlayerStats &)> modifier);
+
+    // Allows client to be updated with a server player status message.
+    // FOR CLIENT USE ONLY.
+    void c_update_stats(const proto::PlayerStats &update);
 };

@@ -256,6 +256,16 @@ void ClientNetworkManager::update() {
             events::player_finished_event(msg.player_finished());
             break;
         }
+        case proto::ServerMessage::MessageTypeCase::kPlayerStatsUpdate: {
+            const auto &update = msg.player_stats_update();
+
+            // Find the player in question and update their status
+            Player *player = dynamic_cast<Player *>(GameObject::game_objects[update.id()]);
+            assert(player);
+            player->c_update_stats(update);
+
+            break;
+        }
         default:
             break;
         }

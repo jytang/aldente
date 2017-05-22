@@ -10,6 +10,7 @@ message ServerMessage {
     GameState state_update = 4;
     Phase phase_update = 5;
     int32 player_finished = 6;
+    PlayerStats player_stats_update = 7;
   }
 }
 
@@ -86,4 +87,9 @@ enum Phase {
   BUILD = 1;
   DUNGEON = 2;
   MINIGAME = 3;
+}
+
+message PlayerStats {
+  optional int32 id = 1;
+  optional int32 coins = 2;
 }

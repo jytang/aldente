@@ -1,6 +1,7 @@
 #include "construct.h"
 #include "asset_loader.h"
 #include "player.h"
+#include "game/collectibles/gold.h"
 #include "game/collectibles/nothing.h"
 
 Construct::Construct(int x, int z, int id) : GameObject(id) {
@@ -14,7 +15,8 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
     tag = "CHEST";
 
     // Chest should hold nothing until specified
-    contents = std::make_unique<collectibles::Nothing>();
+    // TODO(metakirby5): Swap with Nothing and add a set_contents method
+    contents = std::make_unique<collectibles::Gold>(10);
 
     if (id == ON_SERVER) {
         //Creates Rigid Body
@@ -31,6 +33,9 @@ void Chest::s_interact_trigger(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player) {
         contents->collected_by(player);
+
+        // Remove the item once collected
+        contents = std::make_unique<collectibles::Nothing>();
     }
 
     // Send signal to client to tell that this chest is opened
