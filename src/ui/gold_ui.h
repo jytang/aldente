@@ -8,6 +8,8 @@ class GoldUI : public UI {
 public:
     GoldUI(float aspect);
 private:
+    void set_gold(int gold);
+
     UITextBox gold_delta;
     UITextBox total_gold;
     UIImageNode gold_image;

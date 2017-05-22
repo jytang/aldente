@@ -5,6 +5,8 @@
 #include "util/color.h"
 #include "asset_loader.h"
 
+#include <string>
+
 GoldUI::GoldUI(float aspect)
         : UI(90.f * aspect, 0.f),
           gold_delta("+0g",
@@ -25,5 +27,10 @@ GoldUI::GoldUI(float aspect)
     attach(gold_image);
 
     events::ui::update_time.connect([&](int time) {
+        set_gold(time);
     });
+}
+
+void GoldUI::set_gold(int gold) {
+    total_gold.set_text(std::to_string(gold) + "g");
 }
