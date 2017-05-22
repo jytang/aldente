@@ -64,9 +64,9 @@ namespace events {
         signal<void()> place_goal_event;
         signal<void(StickData &)> network_player_move_event;
         signal<void(Context*)> update_state_event;
-        signal<void(int)> network_collision_event;
+        signal<void(int, int)> network_collision_event;
         signal<void()> player_interact_event;
-        signal<void(int)> network_interact_event;
+        signal<void(int, int)> network_interact_event;
         signal<void(int, int, int)> spawn_existing_goal_event;
         signal<void(int)> player_finished_event;
         signal<void()> post_dungeon_camera_event;

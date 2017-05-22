@@ -75,12 +75,18 @@ void ServerNetworkManager::register_listeners() {
         }
 
         // If there were any game obj collisions, send those objects' ids.
-        for (int obj_id : context->collisions)
-            state->add_collisions(obj_id);
+        for (const auto &collision : context->collisions) {
+            auto *cur = state->add_collisions();
+            cur->set_initiator(collision.first);
+            cur->set_other(collision.second);
+        }
 
         // If there were any game obj interacts, send those objects' ids.
-        for (int obj_id : context->interacts)
-            state->add_interacts(obj_id);
+        for (const auto &interact : context->interacts) {
+            auto *cur = state->add_interacts();
+            cur->set_initiator(interact.first);
+            cur->set_other(interact.second);
+        }
 
         context->updated_objects.clear();
         context->collisions.clear();
@@ -232,11 +238,11 @@ void ClientNetworkManager::update() {
             // Call all collision handlers of game objects that collided. Only executed if all game object IDs sent
             // already exist, which avoids a potential race condition of a collision of a not-yet-created game obj.
             if (all_exist) {
-                for (int obj_id : state.collisions()) {
-                    GameObject::game_objects[obj_id]->c_on_collision();
+                for (auto &p : state.collisions()) {
+                    GameObject::game_objects[p.other()]->c_on_collision(GameObject::game_objects[p.initiator()]);
                 }
-                for (int obj_id : state.interacts()) {
-                    GameObject::game_objects[obj_id]->c_interact_trigger();
+                for (auto &p : state.interacts()) {
+                    GameObject::game_objects[p.other()]->c_interact_trigger(GameObject::game_objects[p.initiator()]);
                 }
             }
             break;

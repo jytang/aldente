@@ -51,6 +51,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GameState_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GameState_reflection_ = NULL;
+const ::google::protobuf::Descriptor* IdPair_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  IdPair_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GameObject_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GameObject_reflection_ = NULL;
@@ -170,7 +173,23 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameState));
-  GameObject_descriptor_ = file->message_type(5);
+  IdPair_descriptor_ = file->message_type(5);
+  static const int IdPair_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IdPair, initiator_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IdPair, other_),
+  };
+  IdPair_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      IdPair_descriptor_,
+      IdPair::default_instance_,
+      IdPair_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IdPair, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(IdPair, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(IdPair));
+  GameObject_descriptor_ = file->message_type(6);
   static const int GameObject_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, type_),
@@ -193,7 +212,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(GameObject));
   GameObject_Type_descriptor_ = GameObject_descriptor_->enum_type(0);
-  StickData_descriptor_ = file->message_type(6);
+  StickData_descriptor_ = file->message_type(7);
   static const int StickData_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StickData, input_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StickData, x_),
@@ -236,6 +255,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GameState_descriptor_, &GameState::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    IdPair_descriptor_, &IdPair::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GameObject_descriptor_, &GameObject::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     StickData_descriptor_, &StickData::default_instance());
@@ -256,6 +277,8 @@ void protobuf_ShutdownFile_net_2eproto() {
   delete JoinResponse_reflection_;
   delete GameState::default_instance_;
   delete GameState_reflection_;
+  delete IdPair::default_instance_;
+  delete IdPair_reflection_;
   delete GameObject::default_instance_;
   delete GameObject_reflection_;
   delete StickData::default_instance_;
@@ -285,19 +308,21 @@ void protobuf_AddDesc_net_2eproto() {
     "(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\022\016\n\006"
     "status\030\005 \001(\010\"O\n\014JoinResponse\022\016\n\006status\030\001"
     " \001(\010\022\023\n\013num_players\030\002 \001(\005\022\n\n\002id\030\003 \001(\005\022\016\n"
-    "\006obj_id\030\004 \001(\005\"V\n\tGameState\022\"\n\007objects\030\001 "
-    "\003(\0132\021.proto.GameObject\022\022\n\ncollisions\030\002 \003"
-    "(\005\022\021\n\tinteracts\030\003 \003(\005\"\304\001\n\nGameObject\022\n\n\002"
-    "id\030\001 \001(\005\022$\n\004type\030\002 \001(\0162\026.proto.GameObjec"
-    "t.Type\022\t\n\001x\030\003 \001(\002\022\t\n\001z\030\004 \001(\002\022\n\n\002wx\030\005 \001(\002"
-    "\022\n\n\002wz\030\006 \001(\002\022\021\n\tclient_id\030\007 \001(\005\022\017\n\007enabl"
-    "ed\030\010 \001(\010\"2\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL\020\001\022\t"
-    "\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\"~\n\tStickData\022%\n\005inp"
-    "ut\030\001 \001(\0162\026.proto.StickData.Stick\022\t\n\001x\030\002 "
-    "\001(\005\022\t\n\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nS"
-    "TICK_LEFT\020\000\022\017\n\013STICK_RIGHT\020\001*A\n\005Phase\022\010\n"
-    "\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020"
-    "\002\022\014\n\010MINIGAME\020\003", 1135);
+    "\006obj_id\030\004 \001(\005\"t\n\tGameState\022\"\n\007objects\030\001 "
+    "\003(\0132\021.proto.GameObject\022!\n\ncollisions\030\002 \003"
+    "(\0132\r.proto.IdPair\022 \n\tinteracts\030\003 \003(\0132\r.p"
+    "roto.IdPair\"*\n\006IdPair\022\021\n\tinitiator\030\001 \001(\005"
+    "\022\r\n\005other\030\002 \001(\005\"\304\001\n\nGameObject\022\n\n\002id\030\001 \001"
+    "(\005\022$\n\004type\030\002 \001(\0162\026.proto.GameObject.Type"
+    "\022\t\n\001x\030\003 \001(\002\022\t\n\001z\030\004 \001(\002\022\n\n\002wx\030\005 \001(\002\022\n\n\002wz"
+    "\030\006 \001(\002\022\021\n\tclient_id\030\007 \001(\005\022\017\n\007enabled\030\010 \001"
+    "(\010\"2\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL\020\001\022\t\n\005CHES"
+    "T\020\002\022\t\n\005SPIKE\020\003\"~\n\tStickData\022%\n\005input\030\001 \001"
+    "(\0162\026.proto.StickData.Stick\022\t\n\001x\030\002 \001(\005\022\t\n"
+    "\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK_L"
+    "EFT\020\000\022\017\n\013STICK_RIGHT\020\001*A\n\005Phase\022\010\n\004NOOP\020"
+    "\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020\002\022\014\n\010M"
+    "INIGAME\020\003", 1209);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -307,6 +332,7 @@ void protobuf_AddDesc_net_2eproto() {
   Construct::default_instance_ = new Construct();
   JoinResponse::default_instance_ = new JoinResponse();
   GameState::default_instance_ = new GameState();
+  IdPair::default_instance_ = new IdPair();
   GameObject::default_instance_ = new GameObject();
   StickData::default_instance_ = new StickData();
   ServerMessage::default_instance_->InitAsDefaultInstance();
@@ -314,6 +340,7 @@ void protobuf_AddDesc_net_2eproto() {
   Construct::default_instance_->InitAsDefaultInstance();
   JoinResponse::default_instance_->InitAsDefaultInstance();
   GameState::default_instance_->InitAsDefaultInstance();
+  IdPair::default_instance_->InitAsDefaultInstance();
   GameObject::default_instance_->InitAsDefaultInstance();
   StickData::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_net_2eproto);
@@ -2143,44 +2170,34 @@ bool GameState::MergePartialFromCodedStream(
           goto handle_unusual;
         }
         if (input->ExpectTag(10)) goto parse_objects;
-        if (input->ExpectTag(16)) goto parse_collisions;
+        if (input->ExpectTag(18)) goto parse_collisions;
         break;
       }
 
-      // repeated int32 collisions = 2;
+      // repeated .proto.IdPair collisions = 2;
       case 2: {
-        if (tag == 16) {
+        if (tag == 18) {
          parse_collisions:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 16, input, this->mutable_collisions())));
-        } else if (tag == 18) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_collisions())));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_collisions()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_collisions;
-        if (input->ExpectTag(24)) goto parse_interacts;
+        if (input->ExpectTag(18)) goto parse_collisions;
+        if (input->ExpectTag(26)) goto parse_interacts;
         break;
       }
 
-      // repeated int32 interacts = 3;
+      // repeated .proto.IdPair interacts = 3;
       case 3: {
-        if (tag == 24) {
+        if (tag == 26) {
          parse_interacts:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 24, input, this->mutable_interacts())));
-        } else if (tag == 26) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_interacts())));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+                input, add_interacts()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_interacts;
+        if (input->ExpectTag(26)) goto parse_interacts;
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -2216,15 +2233,15 @@ void GameState::SerializeWithCachedSizes(
       1, this->objects(i), output);
   }
 
-  // repeated int32 collisions = 2;
+  // repeated .proto.IdPair collisions = 2;
   for (int i = 0; i < this->collisions_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->collisions(i), output);
   }
 
-  // repeated int32 interacts = 3;
+  // repeated .proto.IdPair interacts = 3;
   for (int i = 0; i < this->interacts_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       3, this->interacts(i), output);
   }
 
@@ -2245,16 +2262,18 @@ void GameState::SerializeWithCachedSizes(
         1, this->objects(i), target);
   }
 
-  // repeated int32 collisions = 2;
+  // repeated .proto.IdPair collisions = 2;
   for (int i = 0; i < this->collisions_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteInt32ToArray(2, this->collisions(i), target);
+      WriteMessageNoVirtualToArray(
+        2, this->collisions(i), target);
   }
 
-  // repeated int32 interacts = 3;
+  // repeated .proto.IdPair interacts = 3;
   for (int i = 0; i < this->interacts_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteInt32ToArray(3, this->interacts(i), target);
+      WriteMessageNoVirtualToArray(
+        3, this->interacts(i), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -2276,24 +2295,20 @@ int GameState::ByteSize() const {
         this->objects(i));
   }
 
-  // repeated int32 collisions = 2;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->collisions_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->collisions(i));
-    }
-    total_size += 1 * this->collisions_size() + data_size;
+  // repeated .proto.IdPair collisions = 2;
+  total_size += 1 * this->collisions_size();
+  for (int i = 0; i < this->collisions_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->collisions(i));
   }
 
-  // repeated int32 interacts = 3;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->interacts_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->interacts(i));
-    }
-    total_size += 1 * this->interacts_size() + data_size;
+  // repeated .proto.IdPair interacts = 3;
+  total_size += 1 * this->interacts_size();
+  for (int i = 0; i < this->interacts_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->interacts(i));
   }
 
   if (!unknown_fields().empty()) {
@@ -2360,6 +2375,280 @@ void GameState::Swap(GameState* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = GameState_descriptor_;
   metadata.reflection = GameState_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int IdPair::kInitiatorFieldNumber;
+const int IdPair::kOtherFieldNumber;
+#endif  // !_MSC_VER
+
+IdPair::IdPair()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto.IdPair)
+}
+
+void IdPair::InitAsDefaultInstance() {
+}
+
+IdPair::IdPair(const IdPair& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto.IdPair)
+}
+
+void IdPair::SharedCtor() {
+  _cached_size_ = 0;
+  initiator_ = 0;
+  other_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+IdPair::~IdPair() {
+  // @@protoc_insertion_point(destructor:proto.IdPair)
+  SharedDtor();
+}
+
+void IdPair::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void IdPair::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* IdPair::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return IdPair_descriptor_;
+}
+
+const IdPair& IdPair::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_net_2eproto();
+  return *default_instance_;
+}
+
+IdPair* IdPair::default_instance_ = NULL;
+
+IdPair* IdPair::New() const {
+  return new IdPair;
+}
+
+void IdPair::Clear() {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<IdPair*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(initiator_, other_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool IdPair::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto.IdPair)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 initiator = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &initiator_)));
+          set_has_initiator();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_other;
+        break;
+      }
+
+      // optional int32 other = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_other:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &other_)));
+          set_has_other();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto.IdPair)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto.IdPair)
+  return false;
+#undef DO_
+}
+
+void IdPair::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto.IdPair)
+  // optional int32 initiator = 1;
+  if (has_initiator()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->initiator(), output);
+  }
+
+  // optional int32 other = 2;
+  if (has_other()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->other(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:proto.IdPair)
+}
+
+::google::protobuf::uint8* IdPair::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:proto.IdPair)
+  // optional int32 initiator = 1;
+  if (has_initiator()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->initiator(), target);
+  }
+
+  // optional int32 other = 2;
+  if (has_other()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->other(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:proto.IdPair)
+  return target;
+}
+
+int IdPair::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional int32 initiator = 1;
+    if (has_initiator()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->initiator());
+    }
+
+    // optional int32 other = 2;
+    if (has_other()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->other());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void IdPair::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const IdPair* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const IdPair*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void IdPair::MergeFrom(const IdPair& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_initiator()) {
+      set_initiator(from.initiator());
+    }
+    if (from.has_other()) {
+      set_other(from.other());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void IdPair::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void IdPair::CopyFrom(const IdPair& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool IdPair::IsInitialized() const {
+
+  return true;
+}
+
+void IdPair::Swap(IdPair* other) {
+  if (other != this) {
+    std::swap(initiator_, other->initiator_);
+    std::swap(other_, other->other_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata IdPair::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = IdPair_descriptor_;
+  metadata.reflection = IdPair_reflection_;
   return metadata;
 }
 

@@ -6,12 +6,12 @@
 void DungeonPhase::s_setup() {
 //    transition_after(10, proto::Phase::BUILD);
 
-    collision_conn = events::dungeon::network_collision_event.connect([&](int obj_id) {
-        context.collisions.insert(obj_id);
+    collision_conn = events::dungeon::network_collision_event.connect([&](int dispatcher, int other) {
+        context.collisions.emplace(dispatcher, other);
     });
 
-    interact_conn = events::dungeon::network_interact_event.connect([&](int obj_id) {
-        context.interacts.insert(obj_id);
+    interact_conn = events::dungeon::network_interact_event.connect([&](int dispatcher, int other) {
+        context.interacts.emplace(dispatcher, other);
     });
 
     events::dungeon::place_goal_event();

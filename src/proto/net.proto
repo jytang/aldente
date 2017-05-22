@@ -41,8 +41,13 @@ message JoinResponse {
 
 message GameState {
   repeated GameObject objects = 1;
-  repeated int32 collisions = 2;
-  repeated int32 interacts = 3;
+  repeated IdPair collisions = 2;
+  repeated IdPair interacts = 3;
+}
+
+message IdPair {
+  optional int32 initiator = 1;
+  optional int32 other = 2;
 }
 
 message GameObject {

@@ -116,11 +116,11 @@ void Player::s_on_collision(GameObject *other) {
     // TODO: actual game logic here...
 
     // Then notify clients that this collision happened.
-    events::dungeon::network_collision_event(id);
+    events::dungeon::network_collision_event(id, other->get_id());
 }
 
 // Graphical collision
-void Player::c_on_collision() {
+void Player::c_on_collision(GameObject *other) {
     transform.rotate(0, 0.1f, 0);
 }
 

@@ -26,11 +26,11 @@ void Chest::s_interact_trigger(GameObject *other) {
     // Check if other is a player, than grant some money
 
     // Send signal to client to tell that this chest is opened
-    events::dungeon::network_interact_event(id);
+    events::dungeon::network_interact_event(other->get_id(), id);
 }
 
 // Activated when a player presses A on it, graphical
-void Chest::c_interact_trigger() {
+void Chest::c_interact_trigger(GameObject *other) {
     anim_player.set_anim("open");
     anim_player.play();
 }
@@ -59,11 +59,11 @@ Spikes::Spikes(int x, int z, int id) : Construct(x, z, id) {
 void Spikes::s_on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player) {
-        events::dungeon::network_collision_event(id);
+        events::dungeon::network_interact_event(other->get_id(), id);
     }
 }
 
-void Spikes::c_on_collision() {
+void Spikes::c_on_collision(GameObject *other) {
     anim_player.set_anim("trigger");
     anim_player.play();
 }
@@ -102,7 +102,7 @@ void Goal::setup_model() {
 void Goal::s_on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player && player->is_enabled()) {
-        events::dungeon::network_collision_event(id);
+        events::dungeon::network_interact_event(other->get_id(), id);
         events::dungeon::player_finished_event(player->get_id());
     }
 }

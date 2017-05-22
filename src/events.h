@@ -204,14 +204,16 @@ namespace events {
         // Server sends context containing position, collisions, and interactions of game objects to all clients.
         extern signal<void(Context*)> update_state_event;
 
-        // Server notifying clients that a collision occurred with game object of given id.
-        extern signal<void(int)> network_collision_event;
+        // Server notifying clients that a collision occurred with game object of given ids.
+        // Convention for ID order is (dispatcher, other).
+        extern signal<void(int, int)> network_collision_event;
 
         // Player interact (e.g opening a chest)
         extern signal<void()> player_interact_event;
 
         // Send an interaction over the network.
-        extern signal<void(int)> network_interact_event;
+        // Convention for ID order is (dispatcher, other).
+        extern signal<void(int, int)> network_interact_event;
         
         // Spawn an existing goal object on the client, at the given position.
         extern signal<void(int, int, int)> spawn_existing_goal_event;

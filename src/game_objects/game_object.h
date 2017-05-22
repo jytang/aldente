@@ -64,8 +64,8 @@ public:
     virtual void c_draw_instanced(Shader *shader, SceneInfo &scene_info,
                                 std::vector<glm::mat4> instance_matrix = std::vector<glm::mat4>());
     virtual void c_update_state(float x, float z, float wx, float wz, bool enab); // Updates this object's position and orientation on client side.
-    virtual void c_on_collision() {} // Client: this obj has collided, perform graphical update.
-    virtual void c_interact_trigger() {}; // Callback for when a player presses A on this object. Graphical update.
+    virtual void c_on_collision(GameObject *other) {} // Client: this obj has collided, perform graphical update.
+    virtual void c_interact_trigger(GameObject *other) {}; // Callback for when a player presses A on this object. Graphical update.
 
     // Model setup and related functions
     virtual void setup_model() {};
