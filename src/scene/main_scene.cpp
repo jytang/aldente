@@ -25,7 +25,8 @@ void MainScene::c_update() {
 
 void MainScene::setup_scene() {
     //Setting up map
-    grid = new Grid("assets/maps/dungeon_test.txt");
+    grid = new Grid("assets/maps/dungeon_wtf.txt");
+    //grid = new Grid("assets/maps/dungeon_test.txt");
     objs.push_back(grid);
 
 }
