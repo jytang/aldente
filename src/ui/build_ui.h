@@ -8,8 +8,6 @@
 #include "ui_image_node.h"
 #include "game/construct_types.h"
 
-#include "ui_clock.h"
-
 class BuildUI : public UI {
 public:
     BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs);

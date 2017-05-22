@@ -17,6 +17,7 @@ public:
           color(color) {}
     void draw(Render2D &renderer_2d, float offset_x, float offset_y) override;
     void set_text(std::string t);
+    void set_x_scale(float x);
 private:
     std::string text;
     float x_scale, y_scale;
