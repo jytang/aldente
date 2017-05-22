@@ -84,6 +84,8 @@ void GameObject::c_update_state(float x, float z, float wx, float wz, bool enab)
         transform.set_position(x, 0.0f, z);
         direction = glm::vec3(wx, 0, wz);
         transform.look_at(direction);
+
+        anim_player.update();
     }
 }
 

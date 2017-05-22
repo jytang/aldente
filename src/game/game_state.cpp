@@ -34,7 +34,7 @@ void GameState::setup(bool is_server) {
                 resp.set_obj_id(player->get_id());
             } else {
                 // Need to create a new player for the client.
-                Player *player = add_new_player(conn_id);
+                Player *player = s_add_player(conn_id);
                 resp.set_obj_id(player->get_id());
                 context.player_ids.push_back(player->get_id());
                 players[conn_id] = player;

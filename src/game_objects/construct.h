@@ -13,8 +13,6 @@ public:
 
     virtual void setup_model() override {};
 
-    void c_update_state(float x, float z, float wx, float wz) override;
-
     virtual void s_interact_trigger(GameObject *other) override {};
     virtual void c_interact_trigger() override {};
     virtual void s_on_collision(GameObject *other) override {};

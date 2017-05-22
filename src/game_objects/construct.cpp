@@ -7,12 +7,6 @@ Construct::Construct(int x, int z, int id) : GameObject(id) {
     set_position({ x, 0.0f, z });
 }
 
-void Construct::c_update_state(float x, float z, float wx, float wz) {
-    anim_player.update();
-
-    GameObject::c_update_state(x, z, wx, wz);
-}
-
 /************CHEST***************/
 
 Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
