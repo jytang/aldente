@@ -3,7 +3,7 @@
 class PlayerStats {
 public:
     PlayerStats()
-            : coins(0);
+            : coins(0) {}
 
     int get_coins();
     int add_coins(int delta);

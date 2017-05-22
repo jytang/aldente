@@ -34,7 +34,7 @@ void Chest::update_this() {
 }
 
 // Activated when a player presses A on it
-void Chest::interact_trigger() {
+void Chest::on_interact(GameObject *other) {
     anim_player.set_anim("open");
     anim_player.play();
 }
@@ -78,12 +78,12 @@ void Goal::setup_model() {
 void Goal::on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player && player->is_enabled()) {
-        events::dungeon::network_collision_event(id);
+        events::dungeon::network_collision_event(id, player->get_id());
         events::dungeon::player_finished_event(player->get_id());
     }
 }
 
-void Goal::on_collision_graphical() {
+void Goal::on_collision_graphical(GameObject *other) {
 }
 
 void Goal::update_this() {

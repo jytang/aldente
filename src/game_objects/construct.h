@@ -20,7 +20,7 @@ class Chest : public Construct {
 public:
     Chest(int x, int z);
     Chest(int x, int z, int id);
-    void interact_trigger();
+    void on_interact(GameObject *other) override;
     void setup_model() override;
     void update_this() override;
 private:
@@ -33,7 +33,7 @@ public:
     Goal(int x, int z, int id);
     void setup_model();
     void on_collision(GameObject *other);
-    void on_collision_graphical();
+    void on_collision_graphical(GameObject *other) override;
     void update_this();
 private:
     btCylinderShape *goal_hit_box = new btCylinderShape(btVector3(0.005f, 0.5f, 0.005f));

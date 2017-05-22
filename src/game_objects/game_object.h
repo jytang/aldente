@@ -55,8 +55,9 @@ public:
     // Updates this object's position, orientation, and enabled status.
     virtual void update_state(float x, float z, float wx, float wz, bool enab);
     virtual void on_collision(GameObject *other) {} // Server: physics has detected a collision with this and other.
-    virtual void on_collision_graphical() {} // Client: this obj has collided, perform graphical update.
-    virtual void interact_trigger() {}; // Callback for when a player presses A on this object. Graphical update.
+    virtual void on_interact(GameObject *other) {} // Server: Interaction happened with other object.
+    virtual void on_collision_graphical(GameObject *other) {} // Client: this obj has collided, perform graphical update.
+    virtual void on_interact_graphical(GameObject *other) {}; // Callback for when a player presses A on this object. Graphical update.
     virtual void setup_model() {};
     virtual void setup_instanced_model(int num_instances,
                                        std::vector<glm::mat4> instance_matrix = std::vector<glm::mat4>()) {};

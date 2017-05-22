@@ -31,7 +31,7 @@ public:
 
     virtual void update_this() override;
     virtual void on_collision(GameObject *other) override;
-    virtual void on_collision_graphical() override;
+    virtual void on_collision_graphical(GameObject *other) override;
 
     void prepare_movement(int inX, int inZ);
     void update_state(float x, float z, float wx, float wz, bool enab);

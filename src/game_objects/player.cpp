@@ -98,7 +98,8 @@ void Player::interact() {
                 // Register interacts only on constructs for now. Send the game object ID 
                 // of the interacted construct to the server to process.
                 if (construct) {
-                    events::dungeon::network_interact_event(construct->get_id());
+                    construct->on_interact(GameObject::game_objects[id]);
+                    events::dungeon::network_interact_event(id, construct->get_id());
                 }
             });
 }
@@ -118,10 +119,10 @@ void Player::on_collision(GameObject *other) {
     // TODO: actual game logic here...
 
     // Then notify clients that this collision happened.
-    events::dungeon::network_collision_event(id);
+    events::dungeon::network_collision_event(id, other->get_id());
 }
 
-void Player::on_collision_graphical() {
+void Player::on_collision_graphical(GameObject *other) {
     transform.rotate(0, 0.1f, 0);
 }
 
