@@ -20,7 +20,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       description_label("", 2, 6, 0.6f, 0.6f, Color::WHITE),
       cost_label("0", 40, 12, 1.f, 1.f, Color::WHITE),
       balance_label("100g", 20, 4, 1.f, 1.f, Color::WHITE),
-      clock(47.5f * aspect, 90.f, 5.f * aspect, 10.f, Color::WHITE, Color::BLACK) {
+      clock(47.5f * aspect, 90.f, 20.f * aspect, 10.f, Color::WHITE, Color::BLACK) {
 
     // TEST. REMOVE ME.
     attach(clock);

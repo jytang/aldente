@@ -12,7 +12,7 @@ UIClock::UIClock(float start_x, float start_y,
     attach(clock_bg);
 
     // Start clock at 00:00.
-    clock_text = UITextNode(format_time(0), 0, 0, width / 10.f, height / 3.f, clock_color);
+    clock_text = UITextNode(format_time(0), 0, height / 10.f, width / 5.f / 4.8f, height / 4.8f, clock_color);
     attach(clock_text);
 }
 
