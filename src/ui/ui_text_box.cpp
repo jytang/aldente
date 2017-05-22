@@ -20,7 +20,7 @@ UITextBox::UITextBox(std::string text,
     attach(bg);
 
     // Set text node accordingly, fill bg as much as possible.
-    float text_width = width / text.length() / X_SCALE_FACTOR;
+    float text_width = calc_text_width(text);
     float text_height = height / Y_SCALE_FACTOR;
     float y_offset = height / Y_OFFSET_FACTOR;
     text_node = UITextNode(text, 0, y_offset, text_width, text_height, text_color);
@@ -28,7 +28,7 @@ UITextBox::UITextBox(std::string text,
 
     // Setup debug listener
     events::debug::toggle_ui_text_box_background_event.connect([&]{
-        this->alpha = this->alpha == 0.99f ? initial_alpha : 0.99f;
+        this->alpha = this->alpha == 1 ? initial_alpha : 1;
         bg.set_alpha(this->alpha);
     });
 }
@@ -37,5 +37,33 @@ void UITextBox::set_text(std::string new_text) {
     text_node.set_text(new_text);
 
     // Adjust text_width accordingly.
-    text_node.set_x_scale(width / new_text.length() / X_SCALE_FACTOR);
+    text_node.set_x_scale(calc_text_width(new_text));
+}
+
+void UITextBox::set_width(float width) {
+    this->width = width;
+    bg.set_width(width);
+    text_node.set_x_scale(calc_text_width(text_node.get_text()));
+}
+
+void UITextBox::set_height(float height) {
+    this->height = height;
+    bg.set_height(height);
+    text_node.set_y_scale(height / Y_SCALE_FACTOR);
+}
+
+void UITextBox::set_text_color(Color text_color) {
+    text_node.set_color(text_color);
+}
+
+void UITextBox::set_bg_color(Color bg_color) {
+    bg.set_color(bg_color);
+}
+
+void UITextBox::set_alpha(float alpha) {
+    bg.set_alpha(alpha);
+}
+
+float UITextBox::calc_text_width(std::string s) {
+    return (width / s.length()) / X_SCALE_FACTOR;
 }

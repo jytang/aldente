@@ -19,6 +19,8 @@ public:
     virtual void detach(UIElement &child) {} // only containers implement this
     virtual void do_selection() {} // "selectable" subclasses implement this
     virtual void do_action() {} // "actionable" subclasses implement this
+    void set_start_x(float start_x) { this->start_x = start_x; }
+    void set_start_y(float start_y) { this->start_y = start_y; }
 protected:
     bool enabled = true;    // by default, UI elements are shown.
     float start_x, start_y; // starting coordinates (in UI units)

@@ -8,14 +8,20 @@
 
 class UITextBox : public UIContainer {
 public:
-    UITextBox() {} // default ctor
     UITextBox(std::string text,
               float start_x, float start_y,
               float width, float height,
               Color text_color, Color bg_color = Color::WHITE,
               float alpha = 0.f);
     void set_text(std::string new_text);
+    void set_width(float width);
+    void set_height(float height);
+    void set_text_color(Color text_color);
+    void set_bg_color(Color bg_color);
+    void set_alpha(float alpha);
 private:
+    float calc_text_width(std::string s);
+
     float width, height;
     float alpha, initial_alpha;
     UIRectangle bg;

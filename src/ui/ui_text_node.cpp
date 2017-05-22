@@ -9,11 +9,3 @@ void UITextNode::draw(Render2D &renderer_2d,
                              x_scale, y_scale,
                              color);
 }
-
-void UITextNode::set_text(std::string t) {
-    text = t;
-}
-
-void UITextNode::set_x_scale(float x) {
-    x_scale = x;
-}
