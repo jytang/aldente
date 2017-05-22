@@ -47,6 +47,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     break;
                 case GLFW_KEY_B:
                     events::debug::toggle_bt_debug_drawer_event();
+                    events::debug::toggle_ui_text_box_background_event();
                     break;
                 case GLFW_KEY_M:
                     events::toggle_mute_event();

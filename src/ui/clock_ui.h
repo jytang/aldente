@@ -10,5 +10,5 @@ private:
     std::string format_time(int seconds);
     void set_time(int seconds);
 
-    UITextBox *clock;
+    UITextBox clock;
 };

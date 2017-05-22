@@ -9,15 +9,15 @@
 class UITextBox : public UIContainer {
 public:
     UITextBox() {} // default ctor
-    UITextBox(float start_x, float start_y,
+    UITextBox(std::string text,
+              float start_x, float start_y,
               float width, float height,
-              std::string text,
-              Color text_color,
-              Color bg_color,
-              float alpha);
+              Color text_color, Color bg_color = Color::WHITE,
+              float alpha = 0.f);
     void set_text(std::string new_text);
 private:
     float width, height;
+    float alpha, initial_alpha;
     UIRectangle bg;
     UITextNode text_node;
 };

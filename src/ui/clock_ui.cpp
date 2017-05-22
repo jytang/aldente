@@ -4,14 +4,14 @@
 #include "timer.h"
 #include "util/color.h"
 
-ClockUI::ClockUI(float aspect) {
-    // Clock starts at 00:00.
-    // DYNAMICALLY ALLOCATED TO FIX BUG WITH CHILDREN NOT BEING REAL.
-    clock = new UITextBox(40.f * aspect, 90.f, 20.f * aspect, 10.f,
-                      format_time(0),
-                      Color::WHITE, Color::BLACK,
-                      0.5f);
-    attach(*clock);
+ClockUI::ClockUI(float aspect)
+        : clock(format_time(0), // clock starts at 00:00
+          40.f * aspect, 90.f, // starting coordinates
+          20.f * aspect, 10.f, // width and height
+          Color::WHITE, Color::BLACK, // foreground and background
+          0.5f) { // transparency
+
+    attach(clock);
 
     // TEST. REMOVE ME.
     Timer::get()->do_every(std::chrono::seconds(1), [&]() {
@@ -22,7 +22,7 @@ ClockUI::ClockUI(float aspect) {
 }
 
 void ClockUI::set_time(int seconds) {
-    clock->set_text(format_time(seconds));
+    clock.set_text(format_time(seconds));
 }
 
 std::string ClockUI::format_time(int seconds) {
