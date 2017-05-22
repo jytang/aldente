@@ -90,6 +90,6 @@ enum Phase {
 }
 
 message PlayerStats {
-  optional int32 id = 1;
+  optional int32 id = 1; // Refers to GameObject ID of player.
   optional int32 coins = 2;
 }
