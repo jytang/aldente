@@ -5,7 +5,7 @@
 
 class UI {
 public:
-    UI();
+    UI(float start_x = 0.f, float start_y = 0.f);
     void draw();
     void attach(UIElement &e);
     void detach(UIElement &e);

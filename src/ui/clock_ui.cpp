@@ -5,11 +5,12 @@
 #include "util/color.h"
 
 ClockUI::ClockUI(float aspect)
-        : clock(format_time(0), // clock starts at 00:00
-          40.f * aspect, 90.f, // starting coordinates
-          20.f * aspect, 10.f, // width and height
-          Color::WHITE, Color::BLACK, // foreground and background
-          0.5f) { // transparency
+        : UI(40.f * aspect, 90.f),
+          clock(format_time(0), // clock starts at 00:00
+                0.f, 0.f, // starting coordinates
+                20.f * aspect, 10.f, // width and height
+                Color::WHITE, Color::BLACK, // foreground and background
+                0.5f) { // transparency
 
     attach(clock);
 

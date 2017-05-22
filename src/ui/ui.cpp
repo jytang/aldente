@@ -2,8 +2,8 @@
 
 #include "ui_grid.h"
 
-UI::UI() {
-    root = UIContainer(0, 0);
+UI::UI(float start_x, float start_y)  {
+    root = UIContainer(start_x, start_y);
 }
 
 void UI::draw() {

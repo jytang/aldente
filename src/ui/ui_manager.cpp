@@ -4,6 +4,7 @@
 #include "game/construct_types.h"
 #include "build_ui.h"
 #include "clock_ui.h"
+#include "gold_ui.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -36,12 +37,13 @@ void UIManager::setup_uis() {
             break;
         }
     }
-    BuildUI *build_ui = new BuildUI(3, 4, aspect, constructs);
-    ui_map["build"] = build_ui;
+    ui_map["build"] = new BuildUI(3, 4, aspect, constructs);
 
     /* CLOCK UI */
-    ClockUI *clock_ui = new ClockUI(aspect);
-    ui_map["clock"] = clock_ui;
+    ui_map["clock"] = new ClockUI(aspect);
+
+    /* GOLD UI */
+    ui_map["gold"] = new GoldUI(aspect);
 }
 
 void UIManager::setup_listeners() {
