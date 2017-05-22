@@ -1,6 +1,7 @@
 #include "construct.h"
 #include "asset_loader.h"
 #include "player.h"
+#include "game/collectibles/nothing.h"
 
 Construct::Construct(int x, int z, int id) : GameObject(id) {
     tag = "CONSTRUCT";
@@ -11,6 +12,9 @@ Construct::Construct(int x, int z, int id) : GameObject(id) {
 
 Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
     tag = "CHEST";
+
+    // Chest should hold nothing until specified
+    contents = std::make_unique<collectibles::Nothing>();
 
     if (id == ON_SERVER) {
         //Creates Rigid Body
@@ -24,6 +28,10 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
 
 void Chest::s_interact_trigger(GameObject *other) {
     // Check if other is a player, than grant some money
+    Player *player = dynamic_cast<Player*>(other);
+    if (player) {
+        contents->collected_by(player);
+    }
 
     // Send signal to client to tell that this chest is opened
     events::dungeon::network_interact_event(other->get_id(), id);

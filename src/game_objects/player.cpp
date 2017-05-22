@@ -150,3 +150,8 @@ void Player::setup_player_model(std::string &model_name) {
     else if (model_name == "cat")
         transform.set_scale({ 0.004f, 0.004f, 0.004f });
 }
+
+void Player::modify_stats(std::function<void(PlayerStats &)> modifier) {
+    modifier(stats);
+    // TODO: dispatch status update event, send to clients
+}

@@ -24,6 +24,8 @@ private:
     glm::vec3 start_pos;
 
     btCapsuleShape *hit_capsule = new btCapsuleShape(0.5f, 1.0f);
+
+    PlayerStats stats;
 public:
     Player(int id = 0);
 
@@ -54,5 +56,7 @@ public:
     // Sets the player's position to its set start position.
     void reset_position();
 
-    PlayerStats stats;
+    // Allows manipulation of stats through callback.
+    // This is done so that the clients can receive any associated updates.
+    void modify_stats(std::function<void(PlayerStats &)> modifier);
 };
