@@ -181,6 +181,9 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game_objects\grid.h" />
     <ClInclude Include="..\src\game_objects\player.h" />
     <ClInclude Include="..\src\game_objects\tile.h" />
+    <ClInclude Include="..\src\game_objects\traps\mobile_trap.h" />
+    <ClInclude Include="..\src\game_objects\traps\slime.h" />
+    <ClInclude Include="..\src\game_objects\traps\trap.h" />
     <ClInclude Include="..\src\input\axis_combiner.h" />
     <ClInclude Include="..\src\input\conceptual_translator.h" />
     <ClInclude Include="..\src\input\raw_maps\debug.h" />
@@ -273,6 +276,9 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\game_objects\grid.cpp" />
     <ClCompile Include="..\src\game_objects\player.cpp" />
     <ClCompile Include="..\src\game_objects\tile.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\mobile_trap.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\slime.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\trap.cpp" />
     <ClCompile Include="..\src\input\axis_combiner.cpp" />
     <ClCompile Include="..\src\input\conceptual_translator.cpp" />
     <ClCompile Include="..\src\input\conceptual_translator_test.cpp" />
