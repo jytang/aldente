@@ -89,7 +89,7 @@ void Grid::setup_listeners() {
         build(static_cast<ConstructType>(c.type()), c.x(), c.z(), true, c.id());
     });
 
-    events::dungeon::place_goal_event.connect([&]() {
+    events::dungeon::s_prepare_dungeon_event.connect([&]() {
         remove_goal();
         s_place_goal(glm::vec3(0.0f),20);
     });

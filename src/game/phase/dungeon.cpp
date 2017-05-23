@@ -14,7 +14,7 @@ void DungeonPhase::s_setup() {
         context.interacts.emplace(dispatcher, other);
     });
 
-    events::dungeon::place_goal_event();
+    events::dungeon::s_prepare_dungeon_event();
 
     flag_conn = events::dungeon::player_finished_event.connect([&](int player_id) {
         Player *player = dynamic_cast<Player*>(GameObject::game_objects[player_id]);
