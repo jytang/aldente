@@ -8,5 +8,5 @@
 */
 class Trap : public Construct {
 public:
-    Trap(int x, int z, int id = 0);
+    Trap(int x, int z, int id = 0) : Construct(x, z, id) {};
 };

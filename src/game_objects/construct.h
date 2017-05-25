@@ -54,15 +54,3 @@ public:
 private:
     btCylinderShape *goal_hit_box = new btCylinderShape(btVector3(0.005f, 0.5f, 0.005f));
 };
-
-class Spikes : public Construct {
-public:
-    Spikes(int x, int z, int id = 0);
-
-    void setup_model() override;
-    void s_on_collision(GameObject *other) override;
-    void c_on_collision(GameObject *other) override;
-
-private:
-    btBoxShape *hit_box = new btBoxShape(btVector3(0.25f, 0.25f, 0.25f));
-};

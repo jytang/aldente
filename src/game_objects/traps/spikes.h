@@ -1,12 +1,12 @@
-#include "trap.h"
+#include "collision_trap.h"
 
-class Spikes : public Trap {
+class Spikes : public CollisionTrap {
 public:
     Spikes(int x, int z, int id = 0);
 
     void setup_model() override;
-    void s_on_collision(GameObject *other) override;
-    void c_on_collision(GameObject *other) override;
+
+    void play_trigger_animation() override;
 
 private:
     btBoxShape *hit_box = new btBoxShape(btVector3(0.25f, 0.25f, 0.25f));
