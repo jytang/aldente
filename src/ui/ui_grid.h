@@ -16,7 +16,8 @@ public:
            float element_width, float element_height,
            Color grid_bg_color,
            float inter_padding=0.75f,
-           float selection_halo_padding=0.3f); // hardcoded defaults :(
+           float selection_halo_padding=0.3f, // hardcoded defaults :(
+           float grid_bg_alpha=1.f);
     ~UIGrid();
     void attach_at(int row, int col, UIElement &child);
     void detach_at(int row, int col, UIElement &child);

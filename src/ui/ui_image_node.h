@@ -15,6 +15,9 @@ public:
           texture_id(texture_id) {}
 
     void draw(Render2D &renderer_2d, float offset_x, float offset_y) override;
+    void set_width(float width)   { this->width = width; }
+    void set_height(float height) { this->height = height; }
+    void set_image(GLuint image)  { this->texture_id = image; }
 private:
     float width, height;
     GLuint texture_id;

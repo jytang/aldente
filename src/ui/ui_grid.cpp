@@ -14,7 +14,8 @@ UIGrid::UIGrid(float start_x, float start_y,
         float element_width, float element_height,
         Color grid_bg_color,
         float inter_padding,
-        float selection_halo_padding)
+        float selection_halo_padding,
+        float grid_bg_alpha)
     : UIContainer(start_x, start_y),
     grid_width(grid_width), grid_height(grid_height),
     num_elements(num_elements), columns(columns),
@@ -38,7 +39,7 @@ UIGrid::UIGrid(float start_x, float start_y,
     // Create grid background element and add to children
     grid_bg = UIRectangle(start_x, start_y,
                           grid_width, grid_height,
-                          grid_bg_color);
+                          grid_bg_color, grid_bg_alpha);
 
     // Build empty attachment points across the grid.
     float elt_start_x = start_x + h_border_padding;
