@@ -115,10 +115,6 @@ namespace events {
         extern signal<void()> toggle_ui_text_box_background_event;
     }
 
-    // The user has made a selection on the UI grid.
-    extern signal<void(int)> ui_grid_selection_event;
-    extern signal<void(int)> ui_grid_movement_event;
-
     // Struct for parameters for rigidbody initialization
     struct RigidBodyData {
         GameObject *object = nullptr; //Object that has the rigidBody
