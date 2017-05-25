@@ -3,7 +3,7 @@
 #include "util/util_bt.h"
 #include "timer.h"
 
-MobileTrap::MobileTrap(int x, int z, int id) : Trap(x, z, id) {
+MobileTrap::MobileTrap(int x, int z, int id) : CollisionTrap(x, z, id) {
     if (id == ON_SERVER) {
         // Initial Direction
         direction = { 0, 0, 1 };
@@ -20,6 +20,8 @@ void MobileTrap::s_update_this() {
 
     if (move_type == MoveType::WALL)
         check_wall();
+    else if (move_type == MoveType::AI)
+        update_ai();
 
     handle_movement();
 

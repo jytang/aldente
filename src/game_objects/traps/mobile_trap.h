@@ -1,26 +1,30 @@
 #pragma once
 
-#include "trap.h"
+#include "collision_trap.h"
 
 /* 
-    Traps that move and attack by using their collider box
-    Currently, will change direction when it hits the wall.
-    Later, we want to split differnet move types for WALL, TIME, and AI. 
+    Traps that move and attack by using their collider box.
+    There are three movement types for mobile traps:
+        Wall - Changes direction whenever it hits a wall
+        Time - Changes direction every certain interval
+        AI - Not yet defined. Define it in ur own class.
+
+    All mobile traps always move forward, and currently do not stop.
 */
-class MobileTrap : public Trap {
+class MobileTrap : public CollisionTrap {
 private:
     std::function<void()> cancel_timer;
 protected:
     float move_speed = 1.0f;
-    float rotation_amount; // Amount to rotate when changing directions (Counterclockwise)
-    bool random_rotations_on; // Whether or not should use random rotations
+    float rotation_amount = 90.0f; // Amount to rotate when changing directions (Counterclockwise)
+    bool random_rotations_on = false; // Whether or not should use random rotations
     
     // Designated which type of movement monster uses
     enum MoveType {
         WALL, TIME, AI
     };
 
-    MoveType move_type;
+    MoveType move_type = WALL;
 
     virtual void change_direction();
 
