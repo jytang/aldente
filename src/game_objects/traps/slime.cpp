@@ -31,8 +31,6 @@ SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
     }
 }
 
-
-
 SlimeYellow::SlimeYellow(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
 
