@@ -17,6 +17,12 @@ MobileTrap::MobileTrap(int x, int z, int id) : Trap(x, z, id) {
         // Initial Direction
         direction = { 0, 0, -1 };
 
+        // Lock y-axis
+        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+
+        //Lock angular rotation
+        rigidbody->setAngularFactor(0);
+
         // Default MoveSpeed
         move_speed = 1.0f;
     }
