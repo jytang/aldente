@@ -45,7 +45,9 @@ namespace events {
     namespace menu {
         signal<void(int)> request_join_event;
         signal<void(int, proto::JoinResponse &)> respond_join_event;
-        signal<void(int)> spawn_existing_player_event;
+
+        // Spawns a player with given obj id and model name.
+        signal<void(int, std::string &)> spawn_existing_player_event;
     }
 
     namespace ui {

@@ -661,6 +661,18 @@ class JoinResponse : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 obj_id() const;
   inline void set_obj_id(::google::protobuf::int32 value);
 
+  // optional string model_name = 5;
+  inline bool has_model_name() const;
+  inline void clear_model_name();
+  static const int kModelNameFieldNumber = 5;
+  inline const ::std::string& model_name() const;
+  inline void set_model_name(const ::std::string& value);
+  inline void set_model_name(const char* value);
+  inline void set_model_name(const char* value, size_t size);
+  inline ::std::string* mutable_model_name();
+  inline ::std::string* release_model_name();
+  inline void set_allocated_model_name(::std::string* model_name);
+
   // @@protoc_insertion_point(class_scope:proto.JoinResponse)
  private:
   inline void set_has_status();
@@ -671,6 +683,8 @@ class JoinResponse : public ::google::protobuf::Message {
   inline void clear_has_id();
   inline void set_has_obj_id();
   inline void clear_has_obj_id();
+  inline void set_has_model_name();
+  inline void clear_has_model_name();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -680,6 +694,7 @@ class JoinResponse : public ::google::protobuf::Message {
   ::google::protobuf::int32 num_players_;
   ::google::protobuf::int32 id_;
   ::google::protobuf::int32 obj_id_;
+  ::std::string* model_name_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -1022,6 +1037,18 @@ class GameObject : public ::google::protobuf::Message {
   inline bool enabled() const;
   inline void set_enabled(bool value);
 
+  // optional string model_name = 9;
+  inline bool has_model_name() const;
+  inline void clear_model_name();
+  static const int kModelNameFieldNumber = 9;
+  inline const ::std::string& model_name() const;
+  inline void set_model_name(const ::std::string& value);
+  inline void set_model_name(const char* value);
+  inline void set_model_name(const char* value, size_t size);
+  inline ::std::string* mutable_model_name();
+  inline ::std::string* release_model_name();
+  inline void set_allocated_model_name(::std::string* model_name);
+
   // @@protoc_insertion_point(class_scope:proto.GameObject)
  private:
   inline void set_has_id();
@@ -1040,6 +1067,8 @@ class GameObject : public ::google::protobuf::Message {
   inline void clear_has_client_id();
   inline void set_has_enabled();
   inline void clear_has_enabled();
+  inline void set_has_model_name();
+  inline void clear_has_model_name();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1053,6 +1082,7 @@ class GameObject : public ::google::protobuf::Message {
   float wz_;
   ::google::protobuf::int32 client_id_;
   bool enabled_;
+  ::std::string* model_name_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -2280,6 +2310,82 @@ inline void JoinResponse::set_obj_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto.JoinResponse.obj_id)
 }
 
+// optional string model_name = 5;
+inline bool JoinResponse::has_model_name() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void JoinResponse::set_has_model_name() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void JoinResponse::clear_has_model_name() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void JoinResponse::clear_model_name() {
+  if (model_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_->clear();
+  }
+  clear_has_model_name();
+}
+inline const ::std::string& JoinResponse::model_name() const {
+  // @@protoc_insertion_point(field_get:proto.JoinResponse.model_name)
+  return *model_name_;
+}
+inline void JoinResponse::set_model_name(const ::std::string& value) {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  model_name_->assign(value);
+  // @@protoc_insertion_point(field_set:proto.JoinResponse.model_name)
+}
+inline void JoinResponse::set_model_name(const char* value) {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  model_name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:proto.JoinResponse.model_name)
+}
+inline void JoinResponse::set_model_name(const char* value, size_t size) {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  model_name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:proto.JoinResponse.model_name)
+}
+inline ::std::string* JoinResponse::mutable_model_name() {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:proto.JoinResponse.model_name)
+  return model_name_;
+}
+inline ::std::string* JoinResponse::release_model_name() {
+  clear_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = model_name_;
+    model_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void JoinResponse::set_allocated_model_name(::std::string* model_name) {
+  if (model_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete model_name_;
+  }
+  if (model_name) {
+    set_has_model_name();
+    model_name_ = model_name;
+  } else {
+    clear_has_model_name();
+    model_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto.JoinResponse.model_name)
+}
+
 // -------------------------------------------------------------------
 
 // GameState
@@ -2621,6 +2727,82 @@ inline void GameObject::set_enabled(bool value) {
   set_has_enabled();
   enabled_ = value;
   // @@protoc_insertion_point(field_set:proto.GameObject.enabled)
+}
+
+// optional string model_name = 9;
+inline bool GameObject::has_model_name() const {
+  return (_has_bits_[0] & 0x00000100u) != 0;
+}
+inline void GameObject::set_has_model_name() {
+  _has_bits_[0] |= 0x00000100u;
+}
+inline void GameObject::clear_has_model_name() {
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline void GameObject::clear_model_name() {
+  if (model_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_->clear();
+  }
+  clear_has_model_name();
+}
+inline const ::std::string& GameObject::model_name() const {
+  // @@protoc_insertion_point(field_get:proto.GameObject.model_name)
+  return *model_name_;
+}
+inline void GameObject::set_model_name(const ::std::string& value) {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  model_name_->assign(value);
+  // @@protoc_insertion_point(field_set:proto.GameObject.model_name)
+}
+inline void GameObject::set_model_name(const char* value) {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  model_name_->assign(value);
+  // @@protoc_insertion_point(field_set_char:proto.GameObject.model_name)
+}
+inline void GameObject::set_model_name(const char* value, size_t size) {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  model_name_->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:proto.GameObject.model_name)
+}
+inline ::std::string* GameObject::mutable_model_name() {
+  set_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    model_name_ = new ::std::string;
+  }
+  // @@protoc_insertion_point(field_mutable:proto.GameObject.model_name)
+  return model_name_;
+}
+inline ::std::string* GameObject::release_model_name() {
+  clear_has_model_name();
+  if (model_name_ == &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    return NULL;
+  } else {
+    ::std::string* temp = model_name_;
+    model_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+    return temp;
+  }
+}
+inline void GameObject::set_allocated_model_name(::std::string* model_name) {
+  if (model_name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+    delete model_name_;
+  }
+  if (model_name) {
+    set_has_model_name();
+    model_name_ = model_name;
+  } else {
+    clear_has_model_name();
+    model_name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto.GameObject.model_name)
 }
 
 // -------------------------------------------------------------------

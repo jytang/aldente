@@ -60,16 +60,17 @@ void ServerNetworkManager::register_listeners() {
         for (auto & obj : context->updated_objects) {
             proto::GameObject* go = state->add_objects();
             go->set_id(obj->get_id());
-            if (dynamic_cast<Player*>(obj))
+            Player* player;
+
+            if ((player = dynamic_cast<Player*>(obj))) {
                 go->set_type(proto::GameObject::Type::GameObject_Type_PLAYER);
+                go->set_model_name(player->c_get_model_name());
+            }
             else if (dynamic_cast<Goal*>(obj))
                 go->set_type(proto::GameObject::Type::GameObject_Type_GOAL);
-            else if (dynamic_cast<Chest*>(obj))
-                go->set_type(proto::GameObject::Type::GameObject_Type_CHEST);
-            else if (dynamic_cast<Spikes*>(obj))
-                go->set_type(proto::GameObject::Type::GameObject_Type_SPIKE);
             else if (dynamic_cast<Essence*>(obj))
                 go->set_type(proto::GameObject::Type::GameObject_Type_ESSENCE);
+
             go->set_x(obj->transform.get_position().x);
             go->set_z(obj->transform.get_position().z);
             go->set_wx(obj->direction.x);
@@ -224,7 +225,7 @@ void ClientNetworkManager::update() {
             // If the server successfully added this client to the game, create a local Player object.
             if (resp.status()) {
                 client_id = resp.id();
-                GameState::c_add_player(resp.obj_id(), true)->c_set_client_player();
+                GameState::c_add_player(resp.obj_id(), std::string(resp.model_name()), true)->c_set_client_player();
             }
             break;
         }
@@ -235,7 +236,7 @@ void ClientNetworkManager::update() {
                 if (GameObject::game_objects.find(obj.id()) == GameObject::game_objects.end()) {
                     // Game object with that ID doesn't exist on this client yet; create it.
                     if (obj.type() == proto::GameObject::Type::GameObject_Type_PLAYER) {
-                        events::menu::spawn_existing_player_event(obj.id());
+                        events::menu::spawn_existing_player_event(obj.id(), std::string(obj.model_name()));
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_GOAL) {
                         events::dungeon::spawn_existing_goal_event(obj.x(), obj.z(), obj.id());
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_ESSENCE) {

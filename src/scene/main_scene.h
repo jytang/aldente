@@ -24,6 +24,8 @@ private:
     PulsePointLight *goal_light;
     std::mutex goal_mutex; // In case a new goal is created before old one is removed.
     int goal_z, goal_x;
+
+    static std::vector<std::string> player_models;
 public:
     MainScene();
     void s_update() override;
@@ -32,7 +34,7 @@ public:
     void c_setup() override;
 
     Player* s_spawn_player(int conn_id); // Server: spawn new Player, auto-assign id.
-    Player* c_spawn_player(int obj_id); // Client: spawn existing Player with id from server.
+    Player* c_spawn_player(int obj_id, std::string& model_name); // Client: spawn existing Player with id from server.
 
     void s_place_goal(glm::vec3 start, int min_dist);
     void c_place_goal(int x, int z, int id);

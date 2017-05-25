@@ -289,3 +289,11 @@ bool Player::can_afford(int cost) {
 void Player::c_set_client_player() {
     is_client = true;
 }
+
+void Player::s_set_model_name(std::string& name) {
+    model_name = name;
+}
+
+std::string Player::c_get_model_name() const {
+    return model_name;
+}

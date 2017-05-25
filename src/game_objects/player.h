@@ -35,6 +35,7 @@ private:
     btCapsuleShape *hit_capsule = new btCapsuleShape(0.2f, 1.0f);
 
     PlayerStats stats;
+    std::string model_name;
 public:
     Player(int id = 0);
 
@@ -91,4 +92,8 @@ public:
 
     // Client side. Whether or not this player is the client player.
     void c_set_client_player();
+
+    // Set the player's model name.
+    void s_set_model_name(std::string& name);
+    std::string c_get_model_name() const;
 };

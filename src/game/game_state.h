@@ -37,7 +37,7 @@ public:
     // Adds a player to the main scene. If server, add new player to auto-gen the id.
     // If client, add existing player with given id that the server sent.
     static Player* s_add_player(int conn_id);
-    static Player* c_add_player(int obj_id, bool is_client);
+    static Player* c_add_player(int obj_id, std::string& model_name, bool is_client);
 private:
     static void set_phase(Phase* phase);
     static MainScene testScene;

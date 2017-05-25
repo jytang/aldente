@@ -30,13 +30,14 @@ void GameState::setup(bool is_server) {
             resp.set_status(true);
             resp.set_id(conn_id);
 
+            Player* player;
             if (players.find(conn_id) != players.end()) {
                 // If this is a reconnection, reuse the existing player.
-                Player *player = players[conn_id];
+                player = players[conn_id];
                 resp.set_obj_id(player->get_id());
             } else {
                 // Need to create a new player for the client.
-                Player *player = s_add_player(conn_id);
+                player = s_add_player(conn_id);
                 resp.set_obj_id(player->get_id());
                 context.player_ids.push_back(player->get_id());
                 context.ready_flags[player->get_id()] = false;
@@ -44,14 +45,15 @@ void GameState::setup(bool is_server) {
                 num_players++;
             }
 
+            resp.set_model_name(player->c_get_model_name());
             events::menu::respond_join_event(conn_id, resp);
         });
     }
     else {
         scene_manager.get_current_scene()->c_setup();
 
-        events::menu::spawn_existing_player_event.connect([](int id) {
-            c_add_player(id, false);
+        events::menu::spawn_existing_player_event.connect([](int id, std::string& model_name) {
+            c_add_player(id, model_name, false);
         });
     }
 }
@@ -118,11 +120,11 @@ Player* GameState::s_add_player(int conn_id) {
     return testScene.s_spawn_player(conn_id);
 }
 
-Player* GameState::c_add_player(int obj_id, bool is_client) {    
+Player* GameState::c_add_player(int obj_id, std::string& model_name, bool is_client) {    
     // For now, only create players on the main scene.
     assert(scene_manager.get_current_scene() == &testScene);
 
     if (is_client)
         context.player_id = obj_id;
-    return testScene.c_spawn_player(obj_id);
+    return testScene.c_spawn_player(obj_id, model_name);
 }

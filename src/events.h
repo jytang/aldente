@@ -150,7 +150,7 @@ namespace events {
     namespace menu {
         extern signal<void(int)> request_join_event;
         extern signal<void(int, proto::JoinResponse &)> respond_join_event;
-        extern signal<void(int)> spawn_existing_player_event;
+        extern signal<void(int, std::string &)> spawn_existing_player_event;
     }
 
     namespace ui {

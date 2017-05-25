@@ -41,6 +41,7 @@ message JoinResponse {
   optional int32 num_players = 2;
   optional int32 id = 3;
   optional int32 obj_id = 4;
+  optional string model_name = 5;
 }
 
 message GameState {
@@ -71,6 +72,7 @@ message GameObject {
   optional float wz = 6;
   optional int32 client_id = 7;
   optional bool enabled = 8;
+  optional string model_name = 9; // only for Players
 }
 
 message Collision {
