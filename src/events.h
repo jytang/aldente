@@ -136,7 +136,7 @@ namespace events {
     extern signal<void(int)> player_finished_event;
 
     // Client-side. Called when the client player's gold amount has updated.
-    extern signal<void(int)> c_player_coins_update_event;
+    extern signal<void(const proto::PlayerStats &)> c_player_stats_updated;
 
     namespace server {
         extern signal<void(proto::ServerMessage &)> announce;

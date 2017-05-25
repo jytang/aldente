@@ -66,8 +66,8 @@ void Grid::setup_listeners() {
         update_selection();
     });
 
-    events::c_player_coins_update_event.connect([&](int balance) {
-        build_permissible = balance >= Constructs::CONSTRUCTS.at(selected).cost;
+    events::c_player_stats_updated.connect([&](const proto::PlayerStats &update) {
+        build_permissible = update.coins() >= Constructs::CONSTRUCTS.at(selected).cost;
         preview.set_valid(hover->buildable && build_permissible);
     });
 

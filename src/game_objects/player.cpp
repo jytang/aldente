@@ -260,11 +260,9 @@ void Player::s_modify_stats(std::function<void(PlayerStats &)> modifier) {
 
 void Player::c_update_stats(const proto::PlayerStats &update) {
     stats.set_coins(update.coins());
-    
-    std::cerr << "ID " << id << " COINS NOW @ " << stats.get_coins() << std::endl;
 
     if (is_client)
-        events::c_player_coins_update_event(update.coins());
+        events::c_player_stats_updated(update);
 }
 
 bool Player::can_afford(int cost) {

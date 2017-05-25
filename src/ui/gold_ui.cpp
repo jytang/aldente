@@ -30,8 +30,8 @@ GoldUI::GoldUI(float aspect)
     attach(total_gold);
     attach(gold_image);
 
-    events::ui::update_time.connect([&](int time) {
-        set_gold(time);
+    events::c_player_stats_updated.connect([&](const proto::PlayerStats &update) {
+        set_gold(update.coins());
     });
 }
 
