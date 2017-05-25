@@ -8,14 +8,15 @@ MobileTrap::MobileTrap(int x, int z, int id) : Trap(x, z, id) {
         events::RigidBodyData rigid;
         rigid.object = this;
         rigid.shape = hit_box;
-        rigid.is_ghost = false; // Should they be ghosts? Not sure
+        rigid.mass = 1;
+        rigid.is_ghost = true; // Should they be ghosts? Not sure
         rigid.position = { x, 0.0f, z };
         events::add_rigidbody_event(rigid);
 
         notify_on_collision = true;
 
         // Initial Direction
-        direction = { 0, 0, -1 };
+        direction = { 0, 0, 1 };
 
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
@@ -31,14 +32,15 @@ MobileTrap::MobileTrap(int x, int z, int id) : Trap(x, z, id) {
 // Moves forward
 void MobileTrap::s_update_this() {
 
+    check_wall();
+
     handle_movement();
 
     // Update transform with bullet's
     btTransform t;
     rigidbody->getMotionState()->getWorldTransform(t);
     btVector3 to_set = t.getOrigin();
-    transform.set_position(glm::vec3((float)to_set.getX(), (float)to_set.getY(),
-        (float)to_set.getZ()));
+    transform.set_position(util_bt::convert_vec3(to_set));
 }
 
 void MobileTrap::s_on_collision(GameObject *other) {
@@ -50,12 +52,6 @@ void MobileTrap::s_on_collision(GameObject *other) {
             events::dungeon::network_collision_event(player->get_id(), id);
         }
     }
-
-    WallTile *wall = dynamic_cast<WallTile*>(other);
-    if (wall) {
-        change_direction();
-    }
-
 }
 
 void MobileTrap::c_on_collision(GameObject *other) {
@@ -76,4 +72,16 @@ void MobileTrap::handle_movement() {
 void MobileTrap::change_direction() {
     // Just turning 90 degrees for now TODO
     direction = glm::vec3(glm::rotate(glm::mat4(1.f), (float) glm::radians(90.0f), glm::vec3(0, 1, 0)) * glm::vec4(direction, 0));
+}
+
+// If detects a wall in front, turns the monster
+void MobileTrap::check_wall() {
+    events::dungeon::request_raycast_event(
+        transform.get_position(), direction,
+        [&](GameObject *bt_hit) {
+        WallTile *wall = dynamic_cast<WallTile*>(bt_hit);
+        if (wall) {
+            change_direction();
+        }
+    });
 }

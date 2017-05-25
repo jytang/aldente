@@ -13,6 +13,7 @@ private:
 protected:
     float move_speed;
     virtual void handle_movement();
+    virtual void check_wall();
     virtual void change_direction();
 
 public:

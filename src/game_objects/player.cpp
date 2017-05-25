@@ -125,7 +125,7 @@ void Player::interact() {
     // Asks physics for a raycast to check if the player
     // is facing a construct.
     if (transform.get_forward().x != 0 || transform.get_forward().z != 0) {
-        events::dungeon::player_request_raycast_event(
+        events::dungeon::request_raycast_event(
             transform.get_position(), transform.get_forward(),
             [&](GameObject *bt_hit) {
             Construct *construct = dynamic_cast<Construct*>(bt_hit);

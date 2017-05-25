@@ -21,7 +21,7 @@ Physics::Physics() {
     // The world.
     scene = nullptr;
 
-    events::dungeon::player_request_raycast_event.connect([&](glm::vec3 position, glm::vec3 dir, std::function<void(GameObject *bt_hit)> callback) {
+    events::dungeon::request_raycast_event.connect([&](glm::vec3 position, glm::vec3 dir, std::function<void(GameObject *bt_hit)> callback) {
         callback(raycast(position, dir));
     });
 
@@ -152,7 +152,7 @@ void Physics::collision_detection() {
 }
 
 GameObject* Physics::raycast(glm::vec3 position, glm::vec3 dir) {
-    glm::vec3 out_end = glm::normalize(dir) * 0.6f;
+    glm::vec3 out_end = glm::normalize(dir) * 0.6f; // .6f is size of half square + little more
     position.y = 0.5f;
     out_end += position;
 
