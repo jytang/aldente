@@ -88,7 +88,7 @@ proto::Phase DungeonPhase::s_update() {
     // Send the position and orientation of the specified game objects.
     // Currently sending all Player objects and Constructs.
     for (auto const & o : GameObject::game_objects) {
-        if (dynamic_cast<Player*>(o.second) || dynamic_cast<Goal*>(o.second) || dynamic_cast<Essence*>(o.second) || dynamic_cast<MobileTrap*>(o.second))
+        if (!dynamic_cast<Tile*>(o.second) && !dynamic_cast<Grid*>(o.second))
             context.updated_objects.insert(o.second);
     }
     events::dungeon::update_state_event(&context);

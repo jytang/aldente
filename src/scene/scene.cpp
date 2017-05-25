@@ -32,6 +32,9 @@ void Scene::s_update() {
 
 void Scene::c_update() {
     info.update();
+    for (GameObject *gameObj : objs) {
+        gameObj->c_update();
+    }
 }
 
 void Scene::add_light(DirectionalLight *l) {

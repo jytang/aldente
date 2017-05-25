@@ -77,12 +77,22 @@ void GameObject::s_update() {
         obj->s_update();
 }
 
+void GameObject::c_update() {
+    if (!enabled) return;
+
+    c_update_this();
+
+    anim_player.update();
+
+    for (GameObject *obj : children)
+        obj->c_update();
+}
+
 void GameObject::c_update_state(float x, float z, float wx, float wz, bool enab) {
     enabled = enab;
     if (enabled) {
         transform.set_position(x, 0.0f, z);
-        transform.look_at({ wx, 0, wz });
-        anim_player.update();
+        transform.look_at({ wx, 0.0f, wz });
     }
 }
 
