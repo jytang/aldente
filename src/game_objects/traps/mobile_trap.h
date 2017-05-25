@@ -39,8 +39,6 @@ public:
 
     virtual void s_update_this() override;
 
-    virtual void setup_model() override {};
-
     virtual void s_on_collision(GameObject *other) override;
     virtual void c_on_collision(GameObject *other) override;
 };

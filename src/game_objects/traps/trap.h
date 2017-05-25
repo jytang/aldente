@@ -4,6 +4,7 @@
 
 /*
     For organizing "traps" into a shared base class
+    All constructs that do damage to a player is considered a trap. 
 */
 class Trap : public Construct {
 public:
