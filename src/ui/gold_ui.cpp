@@ -17,7 +17,7 @@ GoldUI::GoldUI(float aspect)
           gold_image(2.5f * aspect, -1.f,
                      5.f * aspect, 5.f * aspect,
                      AssetLoader::get_texture("essence.png")),
-          total_gold("500",
+          total_gold("100",
                      2.5f * aspect, 4.f * aspect,
                      5.f * aspect, 5.f,
                      Color::WHITE) {
