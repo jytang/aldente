@@ -50,17 +50,6 @@ void UIManager::setup_listeners() {
     events::debug::toggle_ui_event.connect([&](void) {
         all_enabled = !all_enabled;
     });
-
-    // Build UI disable/enable triggers.
-    // Enables Build UI on the start of the build phase
-    events::build::start_build_event.connect([&]() {
-        ui_map["build"]->enable(); // TODO: assert that ui_map["build"] exists?
-    });
-
-    // Disables Build UI at the end of the build phase
-    events::build::end_build_event.connect([&]() {
-        ui_map["build"]->disable();
-    });
 }
 
 void UIManager::draw() {
