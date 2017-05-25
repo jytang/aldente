@@ -31,10 +31,10 @@ void UIManager::setup_uis() {
             constructs.push_back(Constructs::CONSTRUCTS.at(ConstructType::SPIKES));
             break;
         case ConstructType::SLIME:
-            constructs.push_back(Constructs::SLIME);
+            constructs.push_back(Constructs::CONSTRUCTS.at(ConstructType::SLIME));
             break;
         default:
-            constructs.push_back(Constructs::REMOVE);
+            constructs.push_back(Constructs::CONSTRUCTS.at(ConstructType::REMOVE));
             break;
         }
     }

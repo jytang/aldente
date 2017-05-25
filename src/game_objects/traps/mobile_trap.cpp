@@ -1,38 +1,28 @@
 #include "mobile_trap.h"
 #include "game_objects/tile.h"
 #include "util/util_bt.h"
+#include "timer.h"
 
 MobileTrap::MobileTrap(int x, int z, int id) : Trap(x, z, id) {
     if (id == ON_SERVER) {
-        //Creates Rigid Body
-        events::RigidBodyData rigid;
-        rigid.object = this;
-        rigid.shape = hit_box;
-        rigid.mass = 1;
-        rigid.is_ghost = true; // Should they be ghosts? Not sure
-        rigid.position = { x, 0.0f, z };
-        events::add_rigidbody_event(rigid);
-
+        // We want collisions
         notify_on_collision = true;
 
         // Initial Direction
         direction = { 0, 0, 1 };
 
-        // Lock y-axis
-        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
-
-        //Lock angular rotation
-        rigidbody->setAngularFactor(0);
-
-        // Default MoveSpeed
-        move_speed = 1.0f;
+        // Resets Trap Position on Start of Build Phase
+        events::build::start_build_event.connect([&, x, z]() {
+            set_position({ x, 0.0f, z });
+        });
     }
 }
 
 // Moves forward
 void MobileTrap::s_update_this() {
 
-    check_wall();
+    if (move_type == MoveType::WALL)
+        check_wall();
 
     handle_movement();
 
@@ -69,12 +59,16 @@ void MobileTrap::handle_movement() {
     transform.look_at(direction * move_speed);
 }
 
+// Rotates a certain amount based. Needed since traps can only move forward. 
 void MobileTrap::change_direction() {
-    // Just turning 90 degrees for now TODO
-    direction = glm::vec3(glm::rotate(glm::mat4(1.f), (float) glm::radians(90.0f), glm::vec3(0, 1, 0)) * glm::vec4(direction, 0));
+
+    if (random_rotations_on)
+        rotation_amount = Util::random(10.0f, 350.0f);
+
+    direction = glm::vec3(glm::rotate(glm::mat4(1.f), (float) glm::radians(rotation_amount), glm::vec3(0, 1, 0)) * glm::vec4(direction, 0));
 }
 
-// If detects a wall in front, turns the monster
+// If detects a wall in front, changes direction
 void MobileTrap::check_wall() {
     events::dungeon::request_raycast_event(
         transform.get_position(), direction,
@@ -83,5 +77,19 @@ void MobileTrap::check_wall() {
         if (wall) {
             change_direction();
         }
+    });
+}
+
+// Changes direction every interval.
+void MobileTrap::setup_timer(long long time_interval_ms) {
+    // cancels any previous timer, if exists.
+    if (cancel_timer)
+        cancel_timer();
+
+    cancel_timer = Timer::get()->do_every(
+        std::chrono::milliseconds(time_interval_ms),
+        [&]() {
+
+        change_direction();
     });
 }

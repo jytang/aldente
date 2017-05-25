@@ -9,12 +9,30 @@
 */
 class MobileTrap : public Trap {
 private:
-    btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+    std::function<void()> cancel_timer;
 protected:
-    float move_speed;
-    virtual void handle_movement();
-    virtual void check_wall();
+    float move_speed = 1.0f;
+    float rotation_amount; // Amount to rotate when changing directions (Counterclockwise)
+    bool random_rotations_on; // Whether or not should use random rotations
+    
+    // Designated which type of movement monster uses
+    enum MoveType {
+        WALL, TIME, AI
+    };
+
+    MoveType move_type;
+
     virtual void change_direction();
+
+    void handle_movement();    
+
+    // Checks, based on Mobile Trap type.
+    void check_wall(); // Changes direction when it hits a wall
+    void setup_timer(long long time_interval_ms); // Changes direction every period
+    virtual void update_ai() {};   // Checks for player every frame and changes direction if needed
+
+    btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+    btBoxShape *hit_box_small = new btBoxShape(btVector3(0.3f, 0.3f, 0.3f));
 
 public:
     MobileTrap(int x, int z, int id = 0);

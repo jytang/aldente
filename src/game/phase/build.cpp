@@ -5,6 +5,8 @@
 bool BuildPhase::is_menu = true;
 
 void BuildPhase::s_setup() {
+    events::build::start_build_event();
+
     transition_after(60, proto::Phase::DUNGEON);
     ready_conn = events::build::player_ready_event.connect([&](int player_id) {
         context.ready_flags[player_id] = true;
@@ -196,6 +198,8 @@ void BuildPhase::s_teardown() {
     cancel_clock_every();
     ready_conn.disconnect();
     s_verify_and_build_conn.disconnect();
+
+    events::build::end_build_event();
 }
 
 void BuildPhase::c_teardown() {
