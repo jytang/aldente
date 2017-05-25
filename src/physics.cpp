@@ -2,6 +2,8 @@
 #include "scene/scene.h"
 #include "aldente_client.h"
 
+#define ALL_FILTER -1
+
 Physics::Physics() {
     // Initialize Bullet. This strictly follows http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World,
     // even though we won't use most of this stuff.
@@ -203,7 +205,7 @@ void Physics::add_rigid(events::RigidBodyData d) {
     if (d.is_ghost)
         rigidbody->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
-    dynamicsWorld->addRigidBody(rigidbody);
+    dynamicsWorld->addRigidBody(rigidbody, d.collision_group, ALL_FILTER ^ d.collision_mask);
 }
 
 void Physics::remove_rigid(GameObject *obj) {

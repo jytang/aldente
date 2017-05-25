@@ -7,6 +7,7 @@
 #include "game/direction.h"
 #include "game/context.h"
 #include "btBulletDynamicsCommon.h"
+#include "collision_groups.h"
 
 // Forward declaration to resolve circular dependency.
 class GameObject;
@@ -127,6 +128,9 @@ namespace events {
         float mass = 0.0f;
         glm::vec3 inertia = glm::vec3(0.0f);
         glm::vec3 position = glm::vec3(0.0f); // Initial position
+        short collision_group = COLLISION_DEFAULT;
+        short collision_mask = 0; // collides with everything by default.
+                                  // OR (| operator) with groups to not collide with them
     };
 
     extern signal<void(RigidBodyData d)> add_rigidbody_event;

@@ -8,6 +8,8 @@
 #include "game/collectibles/gold.h"
 #include "game/collectibles/nothing.h"
 
+#include "collision_groups.h"
+
 #include <iostream>
 
 Essence::Essence(int id) : GameObject(id){
@@ -22,6 +24,8 @@ Essence::Essence(int id) : GameObject(id){
         rigid.object = this;
         rigid.shape = hit_sphere;
         rigid.mass = 1;
+        rigid.collision_group = COLLISION_ESSENCE;
+        rigid.collision_mask |= COLLISION_ESSENCE; // don't collide with own kind
         events::add_rigidbody_event(rigid);
         notify_on_collision = true;
 
