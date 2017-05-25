@@ -3,11 +3,7 @@
 #include "util/color.h"
 
 Slime::Slime(int x, int z, int id) : MobileTrap(x, z, id) {
-}
-
-SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
-        
         //Creates Rigid Body
         events::RigidBodyData rigid;
         rigid.object = this;
@@ -19,7 +15,11 @@ SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
 
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+    }
+}
 
+SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
+    if (id == ON_SERVER) {
         // Move Speed
         move_speed = 2.0f;
 
@@ -29,9 +29,6 @@ SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
 
         rotation_amount = -90.0f;
     }
-    else {
-        set_filter_color(Color::BLUE);
-    }
 }
 
 
@@ -39,17 +36,7 @@ SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
 SlimeYellow::SlimeYellow(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
 
-        //Creates Rigid Body
-        events::RigidBodyData rigid;
-        rigid.object = this;
-        rigid.shape = hit_box_small;
-        rigid.mass = 1;
-        rigid.is_ghost = true;
-        rigid.position = { x, 0.0f, z };
-        events::add_rigidbody_event(rigid);
-
-        // Lock y-axis
-        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+        set_ghost(true);
 
         // Move Speed
         move_speed = 2.0f;
@@ -58,25 +45,12 @@ SlimeYellow::SlimeYellow(int x, int z, int id) : Slime(x, z, id) {
 
         random_rotations_on = true;
     }
-    else {
-        set_filter_color(Color::YELLOW);
-    }
 }
 
 SlimeRed::SlimeRed(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
 
-        //Creates Rigid Body
-        events::RigidBodyData rigid;
-        rigid.object = this;
-        rigid.shape = hit_box_small;
-        rigid.mass = 1;
-        rigid.is_ghost = true;
-        rigid.position = { x, 0.0f, z };
-        events::add_rigidbody_event(rigid);
-
-        // Lock y-axis
-        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+        set_ghost(true);
 
         // Move Speed
         move_speed = 4.0f;
@@ -84,26 +58,10 @@ SlimeRed::SlimeRed(int x, int z, int id) : Slime(x, z, id) {
         move_type = WALL;
         rotation_amount = 180.0f;
     }
-    else {
-        set_filter_color(Color::RED);
-    }
 }
 
 SlimeGreen::SlimeGreen(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
-
-        //Creates Rigid Body
-        events::RigidBodyData rigid;
-        rigid.object = this;
-        rigid.shape = hit_box_small;
-        rigid.mass = 1;
-        rigid.is_ghost = false;
-        rigid.position = { x, 0.0f, z };
-        events::add_rigidbody_event(rigid);
-
-        // Lock y-axis
-        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
-
         // Move Speed
         move_speed = 2.0f;
 
@@ -116,8 +74,24 @@ SlimeGreen::SlimeGreen(int x, int z, int id) : Slime(x, z, id) {
     }
 }
 
-void Slime::setup_model() {
-    Model *model = AssetLoader::get_model("slime");
+void SlimeBlue::setup_model() {
+    setup_slime_model(std::string("slime_blue"));
+}
+
+void SlimeYellow::setup_model() {
+    setup_slime_model(std::string("slime_yellow"));
+}
+
+void SlimeRed::setup_model() {
+    setup_slime_model(std::string("slime_red"));
+}
+
+void SlimeGreen::setup_model() {
+    setup_slime_model(std::string("slime_green"));
+}
+
+void Slime::setup_slime_model(std::string &slime_name) {
+    Model *model = AssetLoader::get_model(slime_name);
     attach_model(model);
     transform.set_scale({ 0.004f, 0.004f, 0.004f });
 
