@@ -1,5 +1,6 @@
 #include "construct_preview.h"
 #include "construct.h"
+#include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
 
 void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
@@ -15,8 +16,17 @@ void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
             case SPIKES:
                 cached_previews[type] = make_preview<Spikes>();
                 break;
-            case SLIME:
-                cached_previews[type] = make_preview<Slime>();
+            case SLIME_B:
+                cached_previews[type] = make_preview<SlimeBlue>();
+                break;
+            case SLIME_Y:
+                cached_previews[type] = make_preview<SlimeYellow>();
+                break;
+            case SLIME_R:
+                cached_previews[type] = make_preview<SlimeRed>();
+                break;
+            case SLIME_G:
+                cached_previews[type] = make_preview<SlimeGreen>();
                 break;
             default:
                 cached_previews[type] = make_preview<Chest>();

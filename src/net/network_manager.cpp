@@ -90,8 +90,6 @@ void ServerNetworkManager::register_listeners() {
                 go->set_type(proto::GameObject::Type::GameObject_Type_GOAL);
             else if (dynamic_cast<Essence*>(obj))
                 go->set_type(proto::GameObject::Type::GameObject_Type_ESSENCE);
-            else if (dynamic_cast<Slime*>(obj))
-                go->set_type(proto::GameObject::Type::GameObject_Type_SLIME);
             go->set_x(obj->transform.get_position().x);
             go->set_z(obj->transform.get_position().z);
             go->set_wx(obj->transform.get_forward().x);

@@ -4,6 +4,7 @@
 #include "game/phase/phase.h"
 #include "util/color.h"
 
+#include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
 
 #include <fstream>
@@ -143,8 +144,17 @@ Construct* Grid::build(ConstructType type, int col, int row, bool graphical, int
         case SPIKES:
             to_add = graphical ? new Spikes(col, row, id) : new Spikes(col, row);
             break;
-        case SLIME:
-            to_add = graphical ? new Slime(col, row, id) : new Slime(col, row);
+        case SLIME_B:
+            to_add = graphical ? new SlimeBlue(col, row, id) : new SlimeBlue(col, row);
+            break;
+        case SLIME_Y:
+            to_add = graphical ? new SlimeYellow(col, row, id) : new SlimeYellow(col, row);
+            break;
+        case SLIME_R:
+            to_add = graphical ? new SlimeRed(col, row, id) : new SlimeRed(col, row);
+            break;
+        case SLIME_G:
+            to_add = graphical ? new SlimeGreen(col, row, id) : new SlimeGreen(col, row);
             break;
         default:
             return nullptr;

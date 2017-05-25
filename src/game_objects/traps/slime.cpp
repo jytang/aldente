@@ -3,7 +3,11 @@
 #include "util/color.h"
 
 Slime::Slime(int x, int z, int id) : MobileTrap(x, z, id) {
+}
+
+SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
+        
         //Creates Rigid Body
         events::RigidBodyData rigid;
         rigid.object = this;
@@ -15,11 +19,7 @@ Slime::Slime(int x, int z, int id) : MobileTrap(x, z, id) {
 
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
-    }
-}
 
-SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
-    if (id == ON_SERVER) {
         // Move Speed
         move_speed = 2.0f;
 
@@ -38,6 +38,19 @@ SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
 
 SlimeYellow::SlimeYellow(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
+
+        //Creates Rigid Body
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_box_small;
+        rigid.mass = 1;
+        rigid.is_ghost = true;
+        rigid.position = { x, 0.0f, z };
+        events::add_rigidbody_event(rigid);
+
+        // Lock y-axis
+        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+
         // Move Speed
         move_speed = 2.0f;
 
@@ -52,6 +65,19 @@ SlimeYellow::SlimeYellow(int x, int z, int id) : Slime(x, z, id) {
 
 SlimeRed::SlimeRed(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
+
+        //Creates Rigid Body
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_box_small;
+        rigid.mass = 1;
+        rigid.is_ghost = true;
+        rigid.position = { x, 0.0f, z };
+        events::add_rigidbody_event(rigid);
+
+        // Lock y-axis
+        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+
         // Move Speed
         move_speed = 4.0f;
 
@@ -65,6 +91,19 @@ SlimeRed::SlimeRed(int x, int z, int id) : Slime(x, z, id) {
 
 SlimeGreen::SlimeGreen(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
+
+        //Creates Rigid Body
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_box_small;
+        rigid.mass = 1;
+        rigid.is_ghost = false;
+        rigid.position = { x, 0.0f, z };
+        events::add_rigidbody_event(rigid);
+
+        // Lock y-axis
+        rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
+
         // Move Speed
         move_speed = 2.0f;
 
