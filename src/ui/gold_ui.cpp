@@ -9,16 +9,16 @@
 
 GoldUI::GoldUI(float aspect)
         : UI(90.f * aspect, 0.f),
-          bg(0, 0, 10.f * aspect, 10.f * aspect, Color::BLACK, 0.5f),
+          bg(0, 0, 10.f * aspect, 7.f * aspect, Color::BLACK, 0.5f),
           gold_delta("+0g",
                      2.5f * aspect, 10.f, // starting coordinates
                      5.f * aspect, 5.f, // width and height
                      Color::WHITE),
-          gold_image(2.5f * aspect, 0.f,
+          gold_image(2.5f * aspect, -1.f,
                      5.f * aspect, 5.f * aspect,
-                     AssetLoader::get_texture("Tomato.jpg")),
+                     AssetLoader::get_texture("essence.png")),
           total_gold("500",
-                     2.5f * aspect, 5.f * aspect,
+                     2.5f * aspect, 4.f * aspect,
                      5.f * aspect, 5.f,
                      Color::WHITE) {
 
