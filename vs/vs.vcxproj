@@ -227,6 +227,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\transform.h" />
     <ClInclude Include="..\src\ui\build_ui.h" />
     <ClInclude Include="..\src\ui\clock_ui.h" />
+    <ClInclude Include="..\src\ui\gold_ui.h" />
     <ClInclude Include="..\src\ui\render2d.h" />
     <ClInclude Include="..\src\ui\ui.h" />
     <ClInclude Include="..\src\ui\ui_container.h" />
@@ -317,6 +318,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\transform.cpp" />
     <ClCompile Include="..\src\ui\build_ui.cpp" />
     <ClCompile Include="..\src\ui\clock_ui.cpp" />
+    <ClCompile Include="..\src\ui\gold_ui.cpp" />
     <ClCompile Include="..\src\ui\render2d.cpp" />
     <ClCompile Include="..\src\ui\ui.cpp" />
     <ClCompile Include="..\src\ui\ui_container.cpp" />

@@ -10,6 +10,7 @@ public:
 private:
     void set_gold(int gold);
 
+    UIRectangle bg;
     UITextBox gold_delta;
     UITextBox total_gold;
     UIImageNode gold_image;
