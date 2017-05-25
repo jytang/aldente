@@ -48,11 +48,25 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     // Display info of first element by default.
     update_info_panel(0);
 
-    events::ui_grid_movement_event.connect([&](int content_index) {
-        update_info_panel(content_index);
+    // Build UI disable/enable triggers.
+    // Enables Build UI on the start of the build phase
+    events::build::start_build_event.connect([&]() {
+        enable();
     });
 
-    events::ui_grid_selection_event.connect([&](int content_index) {
+    // Disables Build UI at the end of the build phase
+    events::build::end_build_event.connect([&]() {
+        disable();
+    });
+
+    events::build::select_grid_move_event.connect([&](Direction dir) {
+        ui_grid.move_selection(dir);
+        update_info_panel(ui_grid.get_selection_index());
+    });
+
+    events::build::select_grid_confirm_event.connect([&]() {
+        // Tell the dungeon grid what construct was selected.
+        int content_index = ui_grid.get_selection_index();
         events::build::c_check_funds_event(this->constructs[content_index].type);
     });
 
@@ -61,6 +75,8 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
         shop_panel.disable();
         player_panel.disable();
     });
+
+    // Show the grid.
     events::build::select_grid_return_event.connect([&]() {
         shop_panel.enable();
         player_panel.enable();

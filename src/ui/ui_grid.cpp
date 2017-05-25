@@ -61,16 +61,10 @@ UIGrid::UIGrid(float start_x, float start_y,
 
     // First item in grid is selected by default (0,0)
     toggle_current_selection_halo();
+}
 
-    // Set up callbacks.
-    events::build::select_grid_move_event.connect([&, columns](Direction dir) {
-        move_selection(dir);
-        events::ui_grid_movement_event(selection_row * columns + selection_col);
-    });
-
-    events::build::select_grid_confirm_event.connect([&, columns]() {
-        events::ui_grid_selection_event(selection_row * columns + selection_col);
-    });
+int UIGrid::get_selection_index() {
+    return selection_row * columns + selection_col;
 }
 
 void UIGrid::attach_at(int row, int col, UIElement &child) {

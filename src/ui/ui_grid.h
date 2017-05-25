@@ -24,8 +24,9 @@ public:
         float offset_x, float offset_y) override;
     void enable() override;
     void disable() override;
-private:
+    int get_selection_index(); // returns the grid index of the current selection
     void move_selection(Direction d);
+private:
     void toggle_current_selection_halo();
 
     float grid_width, grid_height; // size of entire grid rectangle
