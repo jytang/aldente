@@ -22,14 +22,17 @@ UIManager::UIManager(float aspect)
 void UIManager::setup_uis() {
     /* BUILD UI */
     std::vector<ConstructData> constructs;
-    for (int i = 0; i < 12; i++) {
-        int type = (i % 3) + 1;
+    for (int i = 0; i < 16; i++) {
+        int type = (i % 4) + 1;
         switch (type) {
         case ConstructType::CHEST:
             constructs.push_back(Constructs::CONSTRUCTS.at(ConstructType::CHEST));
             break;
         case ConstructType::SPIKES:
             constructs.push_back(Constructs::CONSTRUCTS.at(ConstructType::SPIKES));
+            break;
+        case ConstructType::SLIME:
+            constructs.push_back(Constructs::SLIME);
             break;
         case ConstructType::REMOVE:
             constructs.push_back(Constructs::CONSTRUCTS.at(ConstructType::REMOVE));
@@ -38,7 +41,7 @@ void UIManager::setup_uis() {
             break;
         }
     }
-    ui_map["build"] = new BuildUI(3, 4, aspect, constructs);
+    ui_map["build"] = new BuildUI(4, 4, aspect, constructs);
 
     /* CLOCK UI */
     ui_map["clock"] = new ClockUI(aspect);

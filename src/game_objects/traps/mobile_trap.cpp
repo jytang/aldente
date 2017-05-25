@@ -69,5 +69,5 @@ void MobileTrap::handle_movement() {
 
 void MobileTrap::change_direction() {
     // Just turning 90 degrees for now TODO
-    direction = glm::vec3(glm::rotate(glm::mat4(1.f), (float) glm::radians(90), glm::vec3(0, 1, 0)) * glm::vec4(direction, 0));
+    direction = glm::vec3(glm::rotate(glm::mat4(1.f), (float) glm::radians(90.0f), glm::vec3(0, 1, 0)) * glm::vec4(direction, 0));
 }

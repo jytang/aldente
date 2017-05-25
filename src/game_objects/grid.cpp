@@ -4,6 +4,8 @@
 #include "game/phase/phase.h"
 #include "util/color.h"
 
+#include "game_objects/traps/slime.h"
+
 #include <fstream>
 
 #define FLOOR_TILE 3
@@ -140,6 +142,9 @@ Construct* Grid::build(ConstructType type, int col, int row, bool graphical, int
             break;
         case SPIKES:
             to_add = graphical ? new Spikes(col, row, id) : new Spikes(col, row);
+            break;
+        case SLIME:
+            to_add = graphical ? new Slime(col, row, id) : new Slime(col, row);
             break;
         default:
             return nullptr;
