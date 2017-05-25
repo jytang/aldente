@@ -205,7 +205,9 @@ bool Player::s_take_damage() {
     // Player loses percentage essence
     const float percent_loss = .20f;
     int amount_loss = (int) stats.get_coins() * percent_loss;
-    stats.add_coins(-amount_loss);
+    s_modify_stats([&](PlayerStats & stats) {
+        stats.add_coins(-amount_loss);
+    });
 
     // Drop essence to total amount loss, rounded down. Assuming that each essence has 10 coin value. 
     const float essence_val = 10.0f; // Currently hardcoded
