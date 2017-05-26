@@ -14,6 +14,8 @@ class Collectible;
 // Note: Opengl has the x and z axis as its ground plane
 
 class Construct : public GameObject {
+protected:
+    int initial_x, initial_z;
 public:
     Construct(int x, int z, int id = 0);
 
@@ -35,6 +37,10 @@ public:
     void c_interact_trigger(GameObject *other) override;
 
     void disappear(); // Causes chest to fade away
+
+    void s_reset() override;
+    void c_reset() override;
+
 private:
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     std::unique_ptr<collectibles::Collectible> contents;

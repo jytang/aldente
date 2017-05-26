@@ -34,11 +34,9 @@ void BuildPhase::s_setup() {
         context.ready_flags[id] = false;
     }
 
-    // Re-enable chests on server side.
+    // Resets all game objects
     for (auto & kv : GameObject::game_objects) {
-        if (dynamic_cast<Chest*>(kv.second)) {
-            kv.second->enable();
-        }
+        kv.second->s_reset();
     }
 }
 
@@ -170,12 +168,9 @@ void BuildPhase::c_setup() {
     // Play music
     events::music_event(events::AudioData{ AudioManager::BUILD_MUSIC, 30, true });
 
-    // Make opened chests reappear at start of build phase.
+    // Resets game objects on client side
     for (auto & kv : GameObject::game_objects) {
-        if (dynamic_cast<Chest*>(kv.second)) {
-            kv.second->set_filter_alpha(1.f);
-            kv.second->enable();
-        }
+        kv.second->c_reset();
     }
 }
 

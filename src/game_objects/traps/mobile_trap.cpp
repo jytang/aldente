@@ -6,12 +6,7 @@
 MobileTrap::MobileTrap(int x, int z, int id) : CollisionTrap(x, z, id) {
     if (id == ON_SERVER) {
         // Initial Direction
-        direction = { 0, 0, 1 };
-
-        // Resets Trap Position on Start of Build Phase
-        events::build::start_build_event.connect([&, x, z]() {
-            set_position({ x, 0.0f, z });
-        });
+        direction = { 0, 0, 1 }; // TODO : Allow direction change in build phase
     }
 }
 
@@ -72,4 +67,16 @@ void MobileTrap::setup_timer(long long time_interval_ms) {
 
         change_direction();
     });
+}
+
+// Resets direction and position
+void MobileTrap::s_reset() {
+    direction = { 0, 0, 1 };
+    set_position({ initial_x, 0, initial_z });
+}
+
+// Resets rotations and position
+void MobileTrap::c_reset() {
+    transform.set_rotation({ 0.0f, 0.0f, 0.0f });
+    set_position({ initial_x, 0, initial_z });
 }

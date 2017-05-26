@@ -75,6 +75,11 @@ public:
     virtual void setup_instanced_model(int num_instances,
                                        std::vector<glm::mat4> instance_matrix = std::vector<glm::mat4>()) {};
 
+    // Resets to Initial Parameters
+    virtual void s_reset() {};
+    virtual void c_reset() {};
+
+    // Model Stuff
     Model* get_model() { return model; };
     void attach_model(Model *m);
 

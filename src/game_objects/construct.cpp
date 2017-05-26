@@ -85,6 +85,14 @@ void Chest::disappear() {
     });
 }
 
+void Chest::s_reset() {
+    enable();
+}
+
+void Chest::c_reset() {
+    set_filter_alpha(1.0f);
+    enable();
+}
 
 /************GOAL***************/
 Goal::Goal(int x, int z, int id) : Construct(x, z, id) {

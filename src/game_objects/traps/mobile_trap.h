@@ -42,4 +42,7 @@ public:
     MobileTrap(int x, int z, int id = 0);
 
     virtual void s_update_this() override;
+
+    virtual void s_reset() override;
+    virtual void c_reset() override;
 };
