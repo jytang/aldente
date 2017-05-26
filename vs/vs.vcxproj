@@ -112,7 +112,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -131,7 +131,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -228,6 +228,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\timer.h" />
     <ClInclude Include="..\src\ui\build_ui.h" />
     <ClInclude Include="..\src\ui\clock_ui.h" />
+    <ClInclude Include="..\src\ui\fps_ui.h" />
     <ClInclude Include="..\src\ui\gold_ui.h" />
     <ClInclude Include="..\src\ui\render2d.h" />
     <ClInclude Include="..\src\ui\ui.h" />
@@ -320,6 +321,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\timer.cpp" />
     <ClCompile Include="..\src\ui\build_ui.cpp" />
     <ClCompile Include="..\src\ui\clock_ui.cpp" />
+    <ClCompile Include="..\src\ui\fps_ui.cpp" />
     <ClCompile Include="..\src\ui\gold_ui.cpp" />
     <ClCompile Include="..\src\ui\render2d.cpp" />
     <ClCompile Include="..\src\ui\ui.cpp" />

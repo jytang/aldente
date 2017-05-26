@@ -23,6 +23,8 @@ namespace events {
         signal<void(Phase*)> client_set_phase_event;
         signal<void()> toggle_bt_debug_drawer_event;
         signal<void()> toggle_ui_text_box_background_event;
+        signal<void()> toggle_fps_event;
+        signal<void(int)> fps_count_event;
     }
 
     signal<void(RigidBodyData d)> add_rigidbody_event;

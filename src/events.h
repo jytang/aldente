@@ -116,6 +116,8 @@ namespace events {
         extern signal<void(Phase*)> client_set_phase_event;
         extern signal<void()> toggle_bt_debug_drawer_event;
         extern signal<void()> toggle_ui_text_box_background_event;
+        extern signal<void()> toggle_fps_event;
+        extern signal<void(int)> fps_count_event;
     }
 
     // Struct for parameters for rigidbody initialization

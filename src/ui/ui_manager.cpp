@@ -5,6 +5,7 @@
 #include "build_ui.h"
 #include "clock_ui.h"
 #include "gold_ui.h"
+#include "fps_ui.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -44,6 +45,9 @@ void UIManager::setup_uis() {
 
     /* GOLD UI */
     ui_map["gold"] = new GoldUI(aspect);
+
+    /* FPS UI */
+    ui_map["fps"] = new FPSUI(aspect);
 }
 
 void UIManager::setup_listeners() {
