@@ -3,7 +3,7 @@
 #include "events.h"
 #include "util/color.h"
 
-std::vector<std::string> MainScene::player_models = { "tomato", "cat", "boy_two" };
+std::vector<std::string> MainScene::player_models = { "boy_two", "lizard", "cat", "tomato" };
 
 const std::string map_test = "assets/maps/dungeon_test.txt"; // 20x30 First map we had
 const std::string map_wtf = "assets/maps/dungeon_wtf.txt"; // 60x60 Very big one with random stuff
