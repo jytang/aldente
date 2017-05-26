@@ -3,7 +3,8 @@
 #include "events.h"
 #include "util/color.h"
 
-<<<<<<< HEAD
+std::vector<std::string> MainScene::player_models = { "tomato", "cat", "boy_two" };
+
 MainScene::MainScene() : Scene(), goal(nullptr) {
     events::dungeon::s_prepare_dungeon_event.connect([&]() {
         remove_goal();
@@ -20,11 +21,6 @@ MainScene::MainScene() : Scene(), goal(nullptr) {
         }
         if (goal_light)
             remove_light(goal_light);
-=======
-std::vector<std::string> MainScene::player_models = { "tomato", "cat", "boy_two" };
-
-MainScene::MainScene() : Scene() {
->>>>>>> Initial assignment of model names based on client id
 
         c_place_goal(x, z, id);
     });
