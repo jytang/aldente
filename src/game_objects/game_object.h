@@ -32,6 +32,8 @@ protected:
     AnimationPlayer anim_player;
     btRigidBody *rigidbody;
 
+    Transform initial_transform; // Initial transform to reset to at beginning of build phase
+
     int id;
     bool enabled;
 
@@ -41,7 +43,6 @@ public:
     std::vector<GameObject *> children;
 
     Transform transform; // World matrix now controlled using the Transform Component
-    glm::vec3 direction; // Direction the object is facing
     std::string tag; // Identify this GameObject by a human-readable tag.
     bool notify_on_collision = false; // Physics engine will only call on_collision if this flag is set.
 
@@ -91,6 +92,9 @@ public:
 
     // Sets both transform and rigid body position at the same time
     void set_position(glm::vec3 pos);
+
+    // Sets only rigidbody's position
+    void set_rb_position(glm::vec3 pos);
 
     void set_ghost(bool b);
     void disable();

@@ -27,8 +27,6 @@ private:
 
     float move_speed;
 
-    glm::vec3 start_pos;
-
     bool exiting;
     bool is_client;
 

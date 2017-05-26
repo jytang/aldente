@@ -16,7 +16,6 @@ GameObject::GameObject(int id) : id(id) {
     model = new Model();
     rigidbody = nullptr;
     game_objects[this->id] = this;
-    direction = glm::vec3(0.0f);
     enabled = true;
 }
 
@@ -82,9 +81,7 @@ void GameObject::c_update_state(float x, float z, float wx, float wz, bool enab)
     enabled = enab;
     if (enabled) {
         transform.set_position(x, 0.0f, z);
-        direction = glm::vec3(wx, 0, wz);
-        transform.look_at(direction);
-
+        transform.look_at({ wx, 0, wz });
         anim_player.update();
     }
 }
@@ -143,7 +140,10 @@ void GameObject::set_shadows(bool enable) {
 void GameObject::set_position(glm::vec3 pos) {
     // Set for Transform
     transform.set_position(pos);
+    set_rb_position(pos);
+}
 
+void GameObject::set_rb_position(glm::vec3 pos) {
     // Set for Rigid Body
     btTransform initialTransform;
 

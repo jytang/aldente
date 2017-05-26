@@ -5,6 +5,8 @@
 #include "events.h"
 #include "timer.h"
 
+#include "util/util.h"
+
 #define ANIMATE_DELTA 0.001f
 #define STUN_LENGTH 500 // milliseconds
 #define INVULNERABLE_LENGTH 3000 // ms
@@ -117,17 +119,14 @@ void Player::do_movement() {
     rigidbody->setActivationState(true);
     rigidbody->setLinearVelocity(btVector3(to_moveX * move_speed, 0, to_moveZ * move_speed));
     transform.look_at(glm::vec3(to_moveX * move_speed, 0, to_moveZ * move_speed));
-    
-    if(to_moveX != 0 || to_moveZ != 0)
-        direction = glm::vec3(to_moveX * move_speed, 0, to_moveZ * move_speed);
 }
 
 void Player::interact() {
     // Asks physics for a raycast to check if the player
     // is facing a construct.
-    if (direction.x != 0 || direction.z != 0) {
+    if (transform.get_forward().x != 0 || transform.get_forward().z != 0) {
         events::dungeon::player_request_raycast_event(
-            transform.get_position(), direction,
+            transform.get_position(), transform.get_forward(),
             [&](GameObject *bt_hit) {
             Construct *construct = dynamic_cast<Construct*>(bt_hit);
 
@@ -163,17 +162,14 @@ void Player::c_on_collision(GameObject *other) {
 }
 
 void Player::set_start_position(glm::vec3 pos) {
-    start_pos = pos;
+    initial_transform.set_position(pos);
 }
 
 void Player::reset_position() {
-    set_position(start_pos);
+    transform = initial_transform;
+    set_rb_position(initial_transform.get_position());
     to_moveX = 0;
     to_moveZ = 0;
-
-    // Face south.
-    direction = glm::vec3(0, 0, 1);
-    transform.look_at(direction);
 }
 
 void Player::c_setup_player_model(int index) {
@@ -193,6 +189,8 @@ void Player::c_setup_player_model(int index) {
         transform.set_scale({ 0.0043f, 0.0043f, 0.0043f });
     else if (model_name == "tomato")
         transform.set_scale({ 0.0043f, 0.0043f, 0.0043f });
+
+    initial_transform.set_scale(transform.get_scale());
 }
 
 void Player::s_begin_warp(float x, float z) {

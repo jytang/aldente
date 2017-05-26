@@ -54,8 +54,8 @@ void ServerNetworkManager::register_listeners() {
             go->set_model_index(player->c_get_model_index());
             go->set_x(player->transform.get_position().x);
             go->set_z(player->transform.get_position().z);
-            go->set_wx(player->direction.x);
-            go->set_wz(player->direction.z);
+            go->set_wx(player->transform.get_forward().x);
+            go->set_wz(player->transform.get_forward().z);
             go->set_enabled(player->is_enabled());
         }
         
@@ -92,8 +92,8 @@ void ServerNetworkManager::register_listeners() {
 
             go->set_x(obj->transform.get_position().x);
             go->set_z(obj->transform.get_position().z);
-            go->set_wx(obj->direction.x);
-            go->set_wz(obj->direction.z);
+            go->set_wx(obj->transform.get_forward().x);
+            go->set_wz(obj->transform.get_forward().z);
             go->set_enabled(obj->is_enabled());
         }
 
