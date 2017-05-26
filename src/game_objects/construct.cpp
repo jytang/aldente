@@ -8,6 +8,7 @@
 Construct::Construct(int x, int z, int id) : GameObject(id) {
     tag = "CONSTRUCT";
     set_position({ x, 0.0f, z });
+    initial_transform.set_position({ x, 0.0f, z });
 }
 
 /************CHEST***************/
@@ -63,6 +64,7 @@ void Chest::c_interact_trigger(GameObject *other) {
 void Chest::setup_model() {
     attach_model(AssetLoader::get_model("chest_good"));
     transform.set_scale({ 0.006f, 0.006f, 0.006f });
+    initial_transform.set_scale(transform.get_scale());
 }
 
 // Causes chest to slowly fade away, Client
@@ -121,6 +123,7 @@ void Spikes::c_on_collision(GameObject *other) {
 void Spikes::setup_model() {
     attach_model(AssetLoader::get_model("spikes"));
     transform.set_scale({ 0.4f, 0.4f, 0.4f });
+    initial_transform.set_scale(transform.get_scale());
 }
 
 /************GOAL***************/
@@ -142,6 +145,7 @@ Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
 void Goal::setup_model() {
     attach_model(AssetLoader::get_model("warp"));
     transform.set_scale(0.006f, 0.006f, 0.006f);
+    initial_transform.set_scale(transform.get_scale());
     anim_player.set_speed(1.0f);
     anim_player.set_anim("spin");
     anim_player.set_loop(true);
