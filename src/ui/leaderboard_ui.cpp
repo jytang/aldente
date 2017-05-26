@@ -9,6 +9,11 @@ std::map<int, Color> LeaderboardEntry::ranking_to_color = {
         {4, Color::INDIAN_RED}};
 std::map<int, GLuint> LeaderboardEntry::ranking_to_image; // lazily populated (need assets loaded first)
 
+LeaderboardUI::~LeaderboardUI() {
+    for (LeaderboardEntry *entry : entries)
+        delete entry;
+}
+
 LeaderboardUI::LeaderboardUI(float aspect)
     : UI(0.f, 20.f),
       leaderboard_grid(0, 0,
@@ -20,17 +25,18 @@ LeaderboardUI::LeaderboardUI(float aspect)
                        Color::BLACK, // bg color
                        0.f, // padding between each element
                        0.f, // no selection halo
-                       0.5f), // semi-transparent background
-      entry1(0, 0, 24.f * aspect, 15.f, 1, AssetLoader::get_texture("dio.jpg"), 0),
-      entry2(0, 0, 24.f * aspect, 15.f, 2, AssetLoader::get_texture("Tomato.jpg"), 0),
-      entry3(0, 0, 24.f * aspect, 15.f, 3, AssetLoader::get_texture("test.png"), 0),
-      entry4(0, 0, 24.f * aspect, 15.f, 4, AssetLoader::get_texture("cloudwall.png"), 0) {
+                       0.5f) {
 
     attach(leaderboard_grid);
-    leaderboard_grid.attach_at(0, 0, entry1);
-    leaderboard_grid.attach_at(1, 0, entry2);
-    leaderboard_grid.attach_at(2, 0, entry3);
-    leaderboard_grid.attach_at(3, 0, entry4);
+
+    for (int i = 0; i < 4; ++i) {
+        LeaderboardEntry *entry = new LeaderboardEntry(0, 0, // starting coords
+                                                       24.f * aspect, 15.f, // dimensions
+                                                       i, // ranking
+                                                       AssetLoader::get_texture("dio.jpg"), 0);
+        entries.push_back(entry);
+        leaderboard_grid.attach_at(i, 0, *entry);
+    }
 
     // disabled by default
     disable();
@@ -52,11 +58,11 @@ LeaderboardUI::LeaderboardUI(float aspect)
 }
 
 void LeaderboardUI::populate_scores(int scores[4]) {
+    assert(entries.size() <= 4);
+
     // Sort by gold amount. Change only gold and portrait displays.
-    entry1.set_gold(scores[0]);
-    entry2.set_gold(scores[1]);
-    entry3.set_gold(scores[2]);
-    entry4.set_gold(scores[3]);
+    for (int i = 0; i < entries.size(); ++i)
+        entries[i]->set_gold(scores[i]);
 }
 
 LeaderboardEntry::LeaderboardEntry(float start_x, float start_y,

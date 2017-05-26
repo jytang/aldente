@@ -7,6 +7,7 @@
 #include "util/color.h"
 
 #include <map>
+#include <vector>
 
 // Entry for a player on the leaderboard: ranking, portrait and amount of gold
 class LeaderboardEntry : public UIContainer {
@@ -30,9 +31,11 @@ private:
 class LeaderboardUI : public UI {
 public:
     LeaderboardUI(float aspect);
+    ~LeaderboardUI();
 
     void populate_scores(int scores[4]);
 private:
     UIGrid leaderboard_grid;
-    LeaderboardEntry entry1, entry2, entry3, entry4;
+    std::vector<LeaderboardEntry *> entries;
+    LeaderboardEntry entry1;
 };
