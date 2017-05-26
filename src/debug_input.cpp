@@ -33,6 +33,9 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     // Close the window. This causes the program to also terminate.
                     d.window->close();
                     break;
+                case GLFW_KEY_TAB:
+                    events::ui::display_leaderboard();
+                    break;
                 case GLFW_KEY_Q:
                     events::debug::toggle_debug_shadows_event();
                     break;
@@ -74,6 +77,13 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
             }
         } else if (d.action == GLFW_RELEASE) {
             keys[d.key] = false;
+            switch (d.key) {
+                case GLFW_KEY_TAB:
+                    events::ui::hide_leaderboard();
+                    break;
+                default:
+                    break;
+            }
         }
 
         if (debug_input_on)

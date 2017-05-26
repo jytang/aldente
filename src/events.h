@@ -175,6 +175,8 @@ namespace events {
     namespace ui {
         // Update the UI timer.
         extern signal<void(int)> update_time;
+        extern signal<void()> display_leaderboard;
+        extern signal<void()> hide_leaderboard;
     }
 
     namespace build {

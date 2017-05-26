@@ -37,5 +37,4 @@ public:
 private:
     UIGrid leaderboard_grid;
     std::vector<LeaderboardEntry *> entries;
-    LeaderboardEntry entry1;
 };

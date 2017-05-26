@@ -54,6 +54,8 @@ namespace events {
 
     namespace ui {
         signal<void(int)> update_time;
+        signal<void()> display_leaderboard;
+        signal<void()> hide_leaderboard;
     }
 
     namespace build {

@@ -1,5 +1,6 @@
 #include "leaderboard_ui.h"
 
+#include "util/color.h"
 #include "events.h"
 
 std::map<int, Color> LeaderboardEntry::ranking_to_color = {

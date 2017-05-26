@@ -29,6 +29,10 @@ Color Color::LOZ_DARK_GREEN     (14, 81, 53);
 Color Color::LOZ_GREEN          (13, 146, 99);
 Color Color::LOZ_LIGHT_GREEN    (74, 186, 145);
 
+Color Color::GOLD               (255, 215, 10);
+Color Color::SILVER             (192, 192, 192);
+Color Color::BRONZE             (205, 127, 50);
+
 Color::Color(float red, float green, float blue) {
     r = red;
     g = green;
