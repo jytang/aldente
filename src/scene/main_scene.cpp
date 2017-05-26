@@ -5,6 +5,15 @@
 
 std::vector<std::string> MainScene::player_models = { "tomato", "cat", "boy_two" };
 
+const std::string map_test = "assets/maps/dungeon_test.txt"; // 20x30 First map we had
+const std::string map_wtf = "assets/maps/dungeon_wtf.txt"; // 60x60 Very big one with random stuff
+const std::string map_1 = "assets/maps/dungeon_1.txt"; // 40x40, Starting in center with various ideas
+const std::string map_2 = "assets/maps/dungeon_2.txt"; // 40x40, Most normal map, big spaces and narrow spaces
+const std::string map_3 = "assets/maps/dungeon_3.txt"; // 40x40, Chaos Map
+const std::string map_4 = "assets/maps/dungeon_4.txt"; // 30x30, Smaller rendition of a part of Map_2
+
+std::string chosen_map = map_4; // Choose Map here
+
 MainScene::MainScene() : Scene(), goal(nullptr) {
     events::dungeon::s_prepare_dungeon_event.connect([&]() {
         remove_goal();
@@ -43,13 +52,13 @@ void MainScene::c_update() {
 
 void MainScene::s_setup() {
     //Setting up map
-    grid = new Grid("assets/maps/dungeon_test.txt");
+    grid = new Grid(chosen_map.c_str());
     objs.push_back(grid);
 }
 
 void MainScene::c_setup() {
     //Setting up map
-    grid = new Grid("assets/maps/dungeon_test.txt");
+    grid = new Grid(chosen_map.c_str());
     objs.push_back(grid);
 
     // Setup lights.
