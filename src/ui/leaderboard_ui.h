@@ -14,10 +14,13 @@ public:
     LeaderboardEntry(float start_x, float start_y,
                      float width, float height,
                      int ranking, GLuint portrait, int gold);
+    void set_gold(int gold);
+    void set_portrait(GLuint portrait);
 private:
     UIRectangle bg;
     UIImageNode ranking_image;
     UIImageNode portrait_image;
+    UITextBox gold_amount;
     UIImageNode gold_image;
 
     static map<int, Color> ranking_to_color; // static mapping from {1,2,3,4} to colors
@@ -27,8 +30,9 @@ private:
 class LeaderboardUI : public UI {
 public:
     LeaderboardUI(float aspect);
+
+    void populate_scores(int scores[4]);
 private:
     UIGrid leaderboard_grid;
     LeaderboardEntry entry1, entry2, entry3, entry4;
-
 };
