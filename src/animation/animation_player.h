@@ -38,9 +38,8 @@ private:
     
     void reset_model();
 
-    void process_animation(float anim_time, const aiAnimation *anim, const aiNode *node, glm::mat4 parent_mat);
+    void process_animation(float anim_time, Animation *anim, const aiNode *node, glm::mat4 parent_mat);
 
-    const aiNodeAnim *find_node_anim(const aiAnimation *anim, const std::string node_name);
     glm::mat4 convert_ai_matrix(aiMatrix4x4 ai_mat);
 
     // Math Calculation stuff taken from Assimp Tutorial

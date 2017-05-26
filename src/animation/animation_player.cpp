@@ -35,7 +35,7 @@ void AnimationPlayer::update() {
 
         float animation_time = fmod(time_in_ticks, (float)animation->get_anim()->mDuration);
 
-        process_animation(animation_time, animation->get_anim(), animation->get_root(), glm::mat4(1.0f));
+        process_animation(animation_time, animation, animation->get_root(), glm::mat4(1.0f));
     }
 
     last_time = glfwGetTime();
@@ -104,7 +104,7 @@ void AnimationPlayer::reset_model() {
 }
 
 // Processes Animation Node using Assimp's node structure
-void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim, const aiNode *node, glm::mat4 parent_mat) {
+void AnimationPlayer::process_animation(float anim_time, Animation *anim, const aiNode *node, glm::mat4 parent_mat) {
 
     if (!anim)
         return;
@@ -113,7 +113,7 @@ void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim
 
     glm::mat4 node_trans = convert_ai_matrix(node->mTransformation);
 
-    const aiNodeAnim *node_anim = find_node_anim(anim, node_name);
+    const aiNodeAnim *node_anim = anim->get_anim_node(node_name);
 
     if (node_anim) {
         // Interpolate scaling and generate scaling transformation matrix
@@ -150,21 +150,6 @@ void AnimationPlayer::process_animation(float anim_time, const aiAnimation *anim
     for (unsigned int i = 0; i < node->mNumChildren; i++) {
         process_animation(anim_time, anim, node->mChildren[i], global_trans);
     }
-}
-
-const aiNodeAnim* AnimationPlayer::find_node_anim(const aiAnimation *anim, const std::string node_name) {
-
-    // std::cerr << "Finding Node Animtion " << anim->mNumChannels << std::endl;
-
-    for (unsigned int i = 0; i < anim->mNumChannels; i++) {
-        const aiNodeAnim* node_anim = anim->mChannels[i];
-
-        if (std::string(node_anim->mNodeName.data) == node_name) {
-            return node_anim;
-        }
-    }
-
-    return NULL;
 }
 
 unsigned int AnimationPlayer::find_position(float anim_time, const aiNodeAnim *node_anim) {
