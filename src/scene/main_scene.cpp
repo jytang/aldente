@@ -52,13 +52,13 @@ void MainScene::c_update() {
 
 void MainScene::s_setup() {
     //Setting up map
-    grid = new Grid(chosen_map.c_str());
+    grid = new Grid(chosen_map);
     objs.push_back(grid);
 }
 
 void MainScene::c_setup() {
     //Setting up map
-    grid = new Grid(chosen_map.c_str());
+    grid = new Grid(chosen_map);
     objs.push_back(grid);
 
     // Setup lights.

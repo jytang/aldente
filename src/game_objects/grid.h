@@ -32,11 +32,11 @@ private:
     void setup_listeners();
 
     // For loading and creating map
-    void load_map(const char *map_loc);
+    void load_map(std::string map_loc);
     Tile *make_tile(int tile_id, int col, int row);
 
 public:
-    Grid(const char *map_loc);
+    Grid(std::string map_loc);
 
     int get_width() { return width; };
     int get_height() { return height; };

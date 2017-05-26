@@ -9,7 +9,7 @@
 #define FLOOR_TILE 3
 #define WALL_TILE 5
 
-Grid::Grid(const char *map_loc) :
+Grid::Grid(std::string map_loc) :
         hover(nullptr), hover_col(0), hover_row(0),
         width(0), height(0) {
 
@@ -185,7 +185,7 @@ void Grid::update_selection() {
     preview.set_valid(hover->buildable && build_permissible);
 }
 
-void Grid::load_map(const char *map_loc) {
+void Grid::load_map(std::string map_loc) {
     // Loads map from file
     std::ifstream fin;
     fin.open(map_loc);
