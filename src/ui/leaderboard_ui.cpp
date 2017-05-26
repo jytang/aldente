@@ -4,10 +4,10 @@
 #include "events.h"
 
 std::map<int, Color> LeaderboardEntry::ranking_to_color = {
-        {1, Color::GOLD},
-        {2, Color::SILVER},
-        {3, Color::BRONZE},
-        {4, Color::INDIAN_RED}};
+        {0, Color::GOLD},
+        {1, Color::SILVER},
+        {2, Color::BRONZE},
+        {3, Color::INDIAN_RED}};
 std::map<int, GLuint> LeaderboardEntry::ranking_to_image; // lazily populated (need assets loaded first)
 
 LeaderboardUI::~LeaderboardUI() {
