@@ -72,7 +72,7 @@ void Essence::s_update_this() {
 
 void Essence::s_on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
-    if (player && !player->is_invulnerable()) {
+    if (player && !player->is_stunned()) {
         value->collected_by(player); // Award player
         value = std::make_unique<collectibles::Nothing>();
 

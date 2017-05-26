@@ -8,7 +8,7 @@
 #include "util/util.h"
 
 #define ANIMATE_DELTA 0.001f
-#define STUN_LENGTH 500 // milliseconds
+#define STUN_LENGTH 1000 // milliseconds
 #define INVULNERABLE_LENGTH 3000 // ms
 
 std::vector<std::string> Player::PLAYER_MODELS = { "boy_two", "lizard", "cat", "tomato" };
@@ -122,6 +122,9 @@ void Player::do_movement() {
 }
 
 void Player::interact() {
+    if (stunned)
+        return;
+
     // Asks physics for a raycast to check if the player
     // is facing a construct.
     if (transform.get_forward().x != 0 || transform.get_forward().z != 0) {
