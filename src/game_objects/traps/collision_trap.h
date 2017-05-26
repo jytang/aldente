@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game_objects/traps/trap.h"
+#include "trap.h"
 
 /*
     Collision-based traps, which damages players when the player collide's with the
