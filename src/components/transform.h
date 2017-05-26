@@ -33,6 +33,10 @@ public:
     glm::vec3 get_rotation();
     glm::vec3 get_scale();
 
+    glm::vec3 get_forward();
+    glm::vec3 get_up();
+    glm::vec3 get_right();
+
 private:
     glm::mat4 world_mat;
 
