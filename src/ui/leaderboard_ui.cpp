@@ -103,6 +103,9 @@ void LeaderboardUI::sort_leaderboard() {
             ranking_to_entry[best_index] = tmp;
         }
 
+        // Update ranking visuals
+        ranking_to_entry[i]->set_ranking(i);
+
         leaderboard_grid.attach_at(i, 0, *ranking_to_entry[i]);
     }
 }
