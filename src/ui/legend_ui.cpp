@@ -3,10 +3,14 @@
 
 // Legend presets
 static const LegendUI::str_pair BUILD_MENU_LEGEND = {
-        {"xboxControllerLeftThumbstick.png", "Select"},
+        {"xboxControllerDPad.png", "Move selection"},
+        {"xboxControllerButtonA.png", "Choose"},
+        {"xboxControllerStart.png", "Ready up"},
+};
+static const LegendUI::str_pair BUILD_SELECTED_LEGEND = {
+        {"xboxControllerLeftThumbstick.png", "Select location"},
         {"xboxControllerButtonA.png", "Build"},
-        {"xboxControllerButtonB.png", "Build"},
-        {"xboxControllerButtonX.png", "Build"},
+        {"xboxControllerButtonB.png", "Cancel"},
 };
 
 LegendUI::LegendUI(float aspect, float legend_width_, float entry_height_, float padding_) :
@@ -15,16 +19,20 @@ LegendUI::LegendUI(float aspect, float legend_width_, float entry_height_, float
         entry_height(entry_height_),
         padding(padding_) {
 
-    set_legend(BUILD_MENU_LEGEND);
+    disable(); // Disable by default.
 
-    // For now, only show legends during build.
-//    events::build::start_build_event.connect([&]() {
-//        set_legend(BUILD_MENU_LEGEND);
-//        enable();
-//    });
-//    events::build::end_build_event.connect([&]() {
-//        disable();
-//    });
+    // Show the build menu legends when relevant.
+    events::build::select_grid_return_event.connect([&]() {
+        set_legend(BUILD_MENU_LEGEND);
+        enable();
+    });
+    events::build::select_grid_confirm_event.connect([&]() {
+        set_legend(BUILD_SELECTED_LEGEND);
+        enable();
+    });
+    events::build::end_build_event.connect([&]() {
+        disable();
+    });
 }
 
 void LegendUI::set_legend(str_pair legend_spec) {

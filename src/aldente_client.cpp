@@ -84,6 +84,9 @@ void AldenteClient::start() {
     Timer timer(GAME_TICK);
     Timer::provide(&timer);
 
+    // Has logic based on phase change, so set ui up before GameState
+    UIManager ui_manager((float) width / (float) height);
+
     // Game logic. Temporarily start game with build phase.
     GameState::setup(false);
     GameState::set_phase(proto::Phase::BUILD);
@@ -92,8 +95,6 @@ void AldenteClient::start() {
 
     // Debug Drawer for Bullet
     btDebug bt_debug(&GameState::physics);
-
-    UIManager ui_manager((float) width / (float) height);
 
     DebugInput debug_input(window, GameState::scene_manager, GameState::physics);
 
