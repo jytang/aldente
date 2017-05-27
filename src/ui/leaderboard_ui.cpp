@@ -146,4 +146,5 @@ void LeaderboardEntry::set_portrait(GLuint portrait) {
 
 void LeaderboardEntry::set_ranking(int ranking) {
     ranking_image.set_image(AssetLoader::get_texture(ranking_to_image[ranking]));
+    bg.set_color(ranking_to_color[ranking]);
 }
