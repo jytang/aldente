@@ -5,9 +5,9 @@
 #include "ui_text_box.h"
 #include "ui_image_node.h"
 
-class UIControllerLegend : public UIContainer {
+class UILegend : public UIContainer {
 public:
-    UIControllerLegend(std::string texture, std::string text,
+    UILegend(std::string texture, std::string text,
                        float start_x, float start_y,
                        float width, float height,
                        float padding,

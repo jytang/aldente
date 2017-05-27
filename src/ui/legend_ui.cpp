@@ -50,7 +50,7 @@ void LegendUI::set_legend(str_pair legend_spec) {
     for (int i = 0; i < legend_spec.size(); ++i) {
         const auto &legend = legend_spec[i];
         legends.push_back(
-                std::make_unique<UIControllerLegend>(
+                std::make_unique<UILegend>(
                         legend.first, legend.second,
                         0, legend_y,
                         legend_width, entry_height, padding,

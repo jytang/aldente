@@ -1,9 +1,9 @@
-#include "ui_controller_legend.h"
+#include "ui_legend.h"
 #include "events.h"
 
 static const float IMAGE_PADDING = 0.5f;
 
-UIControllerLegend::UIControllerLegend(std::string texture, std::string text,
+UILegend::UILegend(std::string texture, std::string text,
                                        float start_x, float start_y,
                                        float width, float height,
                                        float padding,
