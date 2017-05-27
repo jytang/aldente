@@ -191,6 +191,10 @@ void Player::c_setup_player_model(int index) {
         transform.set_scale({ 0.0043f, 0.0043f, 0.0043f });
 
     initial_transform.set_scale(transform.get_scale());
+
+    // Update leaderboard with player id and starting gold.
+    // NOTE: THIS IS HERE BECAUSE LEADERBOARD WANTS TO KNOW WHICH MODEL TO ASSOCIATE.
+    events::ui::leaderboard_update(id, 0, model_name);
 }
 
 void Player::s_begin_warp(float x, float z) {
@@ -305,6 +309,9 @@ void Player::c_update_stats(const proto::PlayerStats &update) {
 
     if (is_client)
         events::c_player_stats_updated(update);
+
+    // update leaderboard ui
+    events::ui::leaderboard_update(id, update.coins(), PLAYER_MODELS[model_index]);
 }
 
 bool Player::can_afford(int cost) {

@@ -8,6 +8,7 @@
 
 #include <map>
 #include <vector>
+#include <string>
 
 // Entry for a player on the leaderboard: ranking, portrait and amount of gold
 class LeaderboardEntry : public UIContainer {
@@ -16,7 +17,9 @@ public:
                      float width, float height,
                      int ranking, GLuint portrait, int gold);
     void set_gold(int gold);
+    int get_gold() { return gold; }
     void set_portrait(GLuint portrait);
+    void set_ranking(int ranking);
 private:
     UIRectangle bg;
     UIImageNode ranking_image;
@@ -24,17 +27,22 @@ private:
     UITextBox gold_amount;
     UIImageNode gold_image;
 
+    int gold;
+
     static map<int, Color> ranking_to_color; // static mapping from {1,2,3,4} to colors
-    static map<int, GLuint> ranking_to_image; // {1,2,3,4} to their images
+    static map<int, std::string> ranking_to_image; // {1,2,3,4} to their images
 };
 
 class LeaderboardUI : public UI {
 public:
     LeaderboardUI(float aspect);
     ~LeaderboardUI();
-
-    void populate_scores(int scores[4]);
 private:
+    void sort_leaderboard(); // helper function to sort the entries by gold amount
+
     UIGrid leaderboard_grid;
-    std::vector<LeaderboardEntry *> entries;
+    std::map<int, LeaderboardEntry *> ranking_to_entry; // maps rank to an entry
+    std::map<int, LeaderboardEntry *> id_to_entry; // maps player ids to leaderboard entries
+    static std::map<std::string, std::string> model_to_portrait; // maps model names to respective 2D portraits
+    int next_entry_idx = 0;
 };

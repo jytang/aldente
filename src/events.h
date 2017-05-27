@@ -177,6 +177,7 @@ namespace events {
         extern signal<void(int)> update_time;
         extern signal<void()> display_leaderboard;
         extern signal<void()> hide_leaderboard;
+        extern signal<void(int, int, std::string)> leaderboard_update;
     }
 
     namespace build {
