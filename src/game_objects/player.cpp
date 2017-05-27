@@ -238,8 +238,8 @@ bool Player::s_take_damage() {
     // Player loses percentage essence
     const float percent_loss = .20f; // Hardcoded. Should change later to make it variable based on traps?
     int amount_loss = (int) stats.get_coins() * percent_loss;
-    amount_loss = amount_loss - (amount_loss % 10); // Round downt to nearest tenth
-    amount_loss = (amount_loss <= 0) ? 10 : amount_loss; // Loses a minimum of 10 essence
+    amount_loss = amount_loss - (amount_loss % 10); // Round down to nearest tenth
+    amount_loss = (amount_loss <= 0 && stats.get_coins() > 0) ? 10 : amount_loss; // Loses a minimum of 10 essence
     s_modify_stats([&](PlayerStats & stats) {
         if (stats.get_coins() > 0)
             stats.add_coins(-amount_loss);
