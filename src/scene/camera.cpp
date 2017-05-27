@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "scene/scene.h"
 #include "events.h"
+#include "timer.h"
 
 const float PAN_SPEED = 0.1f;
 
