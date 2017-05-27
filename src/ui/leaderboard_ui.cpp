@@ -54,14 +54,9 @@ LeaderboardUI::LeaderboardUI(float aspect)
     // disabled by default
     disable();
 
-    // Setup listener to activate.
-    events::ui::display_leaderboard.connect([&](){
-        enable();
-    });
-
     // Deactivate.
-    events::ui::hide_leaderboard.connect([&](){
-        disable();
+    events::ui::toggle_leaderboard.connect([&](){
+        toggle();
     });
 
     events::ui::leaderboard_update.connect([&](int player_id, int gold, std::string model) {

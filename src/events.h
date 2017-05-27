@@ -175,8 +175,7 @@ namespace events {
     namespace ui {
         // Update the UI timer.
         extern signal<void(int)> update_time;
-        extern signal<void()> display_leaderboard;
-        extern signal<void()> hide_leaderboard;
+        extern signal<void()> toggle_leaderboard;
         extern signal<void(int, int, std::string)> leaderboard_update;
     }
 

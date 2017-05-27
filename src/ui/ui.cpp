@@ -35,3 +35,7 @@ void UI::disable_all() {
     enabled = false;
     root.disable();
 }
+
+void UI::toggle() {
+    enabled = !enabled;
+}

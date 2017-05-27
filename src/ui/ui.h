@@ -13,6 +13,7 @@ public:
     void disable(); // Disables visibliity
     void enable_all();  // Enables visibility of all contained UI elts.
     void disable_all(); // Disables visibliity.
+    void toggle();
 protected:
     bool enabled = true;    // by default, UI elements are shown.
 private:

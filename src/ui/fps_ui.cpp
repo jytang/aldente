@@ -15,7 +15,7 @@ FPSUI::FPSUI(float aspect)
     disable();
 
     events::debug::toggle_fps_event.connect([&]() {
-        enabled = !enabled;
+        toggle();
     });
 
     events::debug::fps_count_event.connect([&](int fps) {

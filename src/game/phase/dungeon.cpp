@@ -56,9 +56,18 @@ void DungeonPhase::c_setup() {
     });
 
     button_conn = events::button_event.connect([&](events::ButtonData d) {
-        // A button pressed.
-        if (d.input == events::BTN_A && d.state == 1) {
-            events::dungeon::player_interact_event();
+        if (d.state == 0) return;
+        switch (d.input) {
+            case events::BTN_A:
+                // A button pressed.
+                events::dungeon::player_interact_event();
+                break;
+            case events::BTN_BACK:
+                // Toggle leaderboard
+                events::ui::toggle_leaderboard();
+            break;
+            default:
+                break;
         }
     });
 
