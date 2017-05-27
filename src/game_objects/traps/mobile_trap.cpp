@@ -4,10 +4,6 @@
 #include "timer.h"
 
 MobileTrap::MobileTrap(int x, int z, int id) : CollisionTrap(x, z, id) {
-    if (id == ON_SERVER) {
-        // Initial Direction
-        direction = { 0, 0, 1 }; // TODO : Allow direction change in build phase
-    }
 }
 
 // Moves forward
@@ -30,8 +26,7 @@ void MobileTrap::s_update_this() {
 // Moves object forward
 void MobileTrap::handle_movement() {
     rigidbody->setActivationState(true);
-    rigidbody->setLinearVelocity(util_bt::convert_vec3(direction * move_speed));
-    transform.look_at(direction * move_speed);
+    rigidbody->setLinearVelocity(util_bt::convert_vec3(transform.get_forward() * move_speed));
 }
 
 // Rotates a certain amount based. Needed since traps can only move forward. 
@@ -40,13 +35,13 @@ void MobileTrap::change_direction() {
     if (random_rotations_on)
         rotation_amount = Util::random(10.0f, 350.0f);
 
-    direction = glm::vec3(glm::rotate(glm::mat4(1.f), (float) glm::radians(rotation_amount), glm::vec3(0, 1, 0)) * glm::vec4(direction, 0));
+    transform.rotate({ 0.0f, rotation_amount, 0.0f }, false);
 }
 
 // If detects a wall in front, changes direction
 void MobileTrap::check_wall() {
     events::dungeon::request_raycast_event(
-        transform.get_position(), direction,
+        transform.get_position(), transform.get_forward(),
         [&](GameObject *bt_hit) {
         WallTile *wall = dynamic_cast<WallTile*>(bt_hit);
         if (wall) {
@@ -71,12 +66,11 @@ void MobileTrap::setup_timer(long long time_interval_ms) {
 
 // Resets direction and position
 void MobileTrap::s_reset() {
-    direction = { 0, 0, 1 };
-    set_position({ initial_x, 0, initial_z });
+    transform = initial_transform;
+    set_rb_position(initial_transform.get_rotation());
 }
 
 // Resets rotations and position
 void MobileTrap::c_reset() {
-    transform.set_rotation({ 0.0f, 0.0f, 0.0f });
-    set_position({ initial_x, 0, initial_z });
+    transform = initial_transform;
 }
