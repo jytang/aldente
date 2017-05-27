@@ -22,6 +22,7 @@ public:
     void set_uni(const char *uniform, float val) { glUniform1f(get_uni(uniform), val); }
     void set_uni(const char *uniform, glm::mat4 mat) { glUniformMatrix4fv(get_uni(uniform), 1, GL_FALSE, glm::value_ptr(mat)); }
     void set_uni(const char *uniform, glm::vec3 v) { glUniform3f(get_uni(uniform), v.x, v.y, v.z); }
+    void set_uni(const char *uniform, bool b) { glUniform1i(get_uni(uniform), b); }
 
     // Set GL state to use this shader program.
     void use() { glUseProgram(shader_id); }

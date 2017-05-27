@@ -3,10 +3,13 @@
 #include "shadows.h"
 #include "window.h"
 #include "scene_manager.h"
+#include "render/hdr.h"
 
 class Render {
 private:
     Shadows shadows;
+
+    HDR hdr;
 
     Window &window;
 

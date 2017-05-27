@@ -7,6 +7,7 @@
 #include "text_shader.h"
 #include "debug_shadow_shader.h"
 #include "ui_shader.h"
+#include "hdr_shader.h"
 
 class ShaderManager {
 public:
@@ -20,6 +21,7 @@ public:
     static BasicShader unlit;
     static BasicShader anim_basic;
     static BasicShader anim_unlit;
+    static HDRShader hdr;
 
     // Utility shader function to load and compile shader program from file.
     // Returns program ID assigned to the shader program.
@@ -45,5 +47,7 @@ public:
         anim_basic.init();
         anim_unlit.set_id(create_shader_program("anim_unlit"));
         anim_unlit.init();
+        hdr.set_id(create_shader_program("hdr"));
+        hdr.init();
     }
 };
