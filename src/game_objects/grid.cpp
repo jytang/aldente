@@ -6,6 +6,7 @@
 
 #include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
+#include "game_objects/traps/arrow_trap.h"
 
 #include <fstream>
 
@@ -165,6 +166,9 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
             break;
         case SLIME_G:
             to_add = new SlimeGreen(col, row, id);
+            break;
+        case ARROW:
+            to_add = graphical ? new ArrowTrap(col, row, id) : new ArrowTrap(col, row);
             break;
         default:
             return nullptr;

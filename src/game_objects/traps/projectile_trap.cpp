@@ -3,6 +3,7 @@
 ProjectileTrap::ProjectileTrap(int x, int z, int id) : Trap(x, z, id) {
 }
 
+// Setup to shoot every interval
 void ProjectileTrap::setup_timer(long long time_interval_ms) {
     // cancels any previous timer, if exists.
     if (cancel_timer)

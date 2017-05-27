@@ -2,6 +2,7 @@
 #include "construct.h"
 #include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
+#include "game_objects/traps/arrow_trap.h"
 
 void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
     // Remove visibility of previous preview, if any
@@ -27,6 +28,9 @@ void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
                 break;
             case SLIME_G:
                 cached_previews[type] = make_preview<SlimeGreen>();
+                break;
+            case ARROW:
+                cached_previews[type] = make_preview<ArrowTrap>();
                 break;
             default:
                 cached_previews[type] = make_preview<Chest>();
