@@ -7,7 +7,7 @@ void HDRShader::init() {
     glGenFramebuffers(1, &FBO);
 
     // Create floating point color buffer
-    glGenTextures(1, &color_buffer);
+    glGenTextures(2, color_buffers);
 
     // Create depth buffer (renderbuffer)
     glGenRenderbuffers(1, &rbo_depth);
@@ -17,8 +17,15 @@ void HDRShader::init() {
 
     // Attach buffers
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, color_buffer, 0);
+    for (int i = 0; i < 2; ++i)
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, color_buffers[i], 0);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rbo_depth);
+
+    // Tell OpenGL which color attachments we'll use (of this framebuffer) for rendering
+    GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+    glDrawBuffers(2, attachments);
+
+    // Finalize framebuffer stuff.
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         std::cerr << "HDR framebuffer status is incomplete!" << std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -61,10 +68,14 @@ void HDRShader::init() {
 }
 
 void HDRShader::bind_buffers() {
-    glBindTexture(GL_TEXTURE_2D, color_buffer);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, screen_width, screen_height, 0, GL_RGBA, GL_FLOAT, NULL);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    for (int i = 0; i < 2; ++i) {
+        glBindTexture(GL_TEXTURE_2D, color_buffers[i]);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, screen_width, screen_height, 0, GL_RGBA, GL_FLOAT, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    }
 
     glBindRenderbuffer(GL_RENDERBUFFER, rbo_depth);
     glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, screen_width, screen_height);
