@@ -194,7 +194,7 @@ void Player::c_setup_player_model(int index) {
 
     // Update leaderboard with player id and starting gold.
     // NOTE: THIS IS HERE BECAUSE LEADERBOARD WANTS TO KNOW WHICH MODEL TO ASSOCIATE.
-    events::ui::leaderboard_update(id, 0, model_name);
+    events::ui::leaderboard_update(id, stats.get_coins(), model_name);
 }
 
 void Player::s_begin_warp(float x, float z) {
