@@ -89,7 +89,7 @@ void Player::c_update_state(float x, float z, float wx, float wz, bool enab) {
     float dz = std::fabs(z - transform.get_position().z);
     bool animate = dx > ANIMATE_DELTA || dz > ANIMATE_DELTA;
 
-    if (!animate && !exiting) {
+    if (!animate && !exiting && !stunned) {
         if (!anim_player.check_paused()) {
             events::stop_sound_effects_event(AudioManager::FOOTSTEPS_SOUND);
 
@@ -110,6 +110,7 @@ void Player::c_update_state(float x, float z, float wx, float wz, bool enab) {
 void Player::do_movement() {
 
     if (stunned) {
+        rigidbody->setLinearVelocity(btVector3(0, 0, 0));
         rigidbody->setActivationState(false);
         return;
     }
@@ -254,7 +255,7 @@ bool Player::s_take_damage() {
     int number_essence_loss = (int)floor(amount_loss / essence_val);
     for (int i = 0; i < number_essence_loss; i++)
         events::dungeon::s_spawn_essence_event(transform.get_position().x, transform.get_position().z);
-
+    
     // End Stunned
     Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
         [&]() {
@@ -288,6 +289,22 @@ void Player::c_take_damage() {
             disable_filter();
 
         count++;
+    });
+
+    // Change to the hurt animation
+    stunned = true;
+    anim_player.set_anim("damage");
+    anim_player.set_loop(false);
+    anim_player.set_speed(1.0f);
+    anim_player.play();
+
+    // End hurt animation
+    Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
+        [&]() {
+        stunned = false;
+        anim_player.set_speed(3.0f);
+        anim_player.set_anim("walk");
+        anim_player.set_loop(true);
     });
 
     // End
