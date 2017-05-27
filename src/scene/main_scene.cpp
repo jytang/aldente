@@ -13,24 +13,6 @@ const std::string map_4 = "assets/maps/dungeon_4.txt"; // 30x30, Smaller renditi
 std::string chosen_map = map_4; // Choose Map here
 
 MainScene::MainScene() : Scene(), goal(nullptr) {
-    events::dungeon::s_prepare_dungeon_event.connect([&]() {
-        remove_goal();
-        s_place_goal(glm::vec3(0.0f), 20);
-    });
-
-    events::dungeon::spawn_existing_goal_event.connect([&](int x, int z, int id) {
-        std::unique_lock<std::mutex> lock(goal_mutex);
-        if (goal) {
-            auto position = std::find(objs.begin(), objs.end(), goal);
-            if (position != objs.end())
-                objs.erase(position);
-            goal = nullptr;
-        }
-        if (goal_light)
-            remove_light(goal_light);
-
-        c_place_goal(x, z, id);
-    });
 }
 
 void MainScene::s_update() {
@@ -72,6 +54,32 @@ void MainScene::c_setup() {
     for (GameObject *obj : objs) {
         obj->setup_model();
     }
+}
+
+void MainScene::connect_listeners() {
+    dungeon_conn = events::dungeon::s_prepare_dungeon_event.connect([&]() {
+        remove_goal();
+        s_place_goal(glm::vec3(0.0f), 20);
+    });
+
+    goal_conn = events::dungeon::spawn_existing_goal_event.connect([&](int x, int z, int id) {
+        std::unique_lock<std::mutex> lock(goal_mutex);
+        if (goal) {
+            auto position = std::find(objs.begin(), objs.end(), goal);
+            if (position != objs.end())
+                objs.erase(position);
+            goal = nullptr;
+        }
+        if (goal_light)
+            remove_light(goal_light);
+
+        c_place_goal(x, z, id);
+    });
+}
+
+void MainScene::disconnect_listeners() {
+    dungeon_conn.disconnect();
+    goal_conn.disconnect();
 }
 
 Player* MainScene::s_spawn_player(int conn_id) {

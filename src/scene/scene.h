@@ -47,4 +47,8 @@ public:
 
     // Sets up scene's models (please call after s_setup) on client only
     virtual void c_setup() = 0;
+
+    // To be used for scene switching. Connects/disconnects the scene's events
+    virtual void connect_listeners() {};
+    virtual void disconnect_listeners() {};
 };

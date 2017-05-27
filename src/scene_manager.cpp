@@ -42,6 +42,10 @@ void SceneManager::set_current_scene(Scene* scene) {
     if (std::find(scenes.begin(), scenes.end(), scene) == scenes.end()) {
         add_scene(scene);
     }
+    
+    if(current_scene)
+        current_scene->disconnect_listeners();
     current_scene = scene;
     camera = &scene->get_cam();
+    current_scene->connect_listeners();
 }
