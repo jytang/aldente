@@ -64,18 +64,7 @@ void Player::s_update_this() {
     if(!exiting)
         do_movement();
 
-    btTransform t;
-
-    // Get the transform from Bullet and into 't'
-    rigidbody->getMotionState()->getWorldTransform(t);
-    btVector3 to_set = t.getOrigin();
-
-    // If asserts fail, please inform Kavin
-    assert(!std::isnan(to_set.getX()));
-    assert(!std::isnan(to_set.getZ()));
-
-    transform.set_position(glm::vec3((float)to_set.getX(), (float)to_set.getY(),
-        (float)to_set.getZ()));
+    sync_position();
 }
 
 void Player::prepare_movement(int inX, int inZ) {

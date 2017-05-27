@@ -92,6 +92,7 @@ public:
     void set_alpha(float alpha);
     void set_shadows(bool enable);
 
+    // Rigid Body
     btRigidBody *get_rigid() { return rigidbody; };
     void set_rigid(btRigidBody *to_add) { rigidbody = to_add; };
 
@@ -102,6 +103,9 @@ public:
 
     // Sets only rigidbody's position
     void set_rb_position(glm::vec3 pos);
+
+    // Updates Transform using Rigid Body's Position
+    void sync_position();
 
     void set_ghost(bool b);
     void disable();

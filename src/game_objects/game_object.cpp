@@ -165,6 +165,20 @@ void GameObject::set_rb_position(glm::vec3 pos) {
     }
 }
 
+void GameObject::sync_position() {
+    // Update transform with bullet's
+    btTransform t;
+    rigidbody->getMotionState()->getWorldTransform(t);
+    btVector3 to_set = t.getOrigin();
+
+    // If asserts fails, then some bullet vector/transform somewhere
+    // isn't being initialized properly. (probably)
+    assert(!std::isnan(to_set.getX()));
+    assert(!std::isnan(to_set.getZ()));
+
+    transform.set_position(util_bt::convert_vec3(to_set));
+}
+
 void GameObject::set_ghost(bool b) {
     if (!rigidbody)
         return;
