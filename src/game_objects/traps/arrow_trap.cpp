@@ -22,7 +22,7 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
 void ArrowTrap::setup_model() {
     Model *model = AssetLoader::get_model("arrow_trap");
     attach_model(model);
-    transform.set_scale({ 0.004f, 0.004f, 0.004f });
+    transform.set_scale({ 0.008f, 0.008f, 0.008f });
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("spin");

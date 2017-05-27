@@ -15,7 +15,7 @@ class Projectile : public GameObject {
 private:
     std::function<void()> cancel_timer;
 protected:
-    float speed = 1.0f;
+    float speed = 5.0f;
     ProjectileTypes projectile_type;
     int parent_id;
 public:

@@ -5,19 +5,19 @@
 Arrow::Arrow(int id) : Projectile(id) {
     projectile_type = ProjectileTypes::ARROW;
 
-    // Creates Rigid Body
-    events::RigidBodyData rigid;
-    rigid.object = this;
-    rigid.shape = hit_box;
-    rigid.mass = 1;
-    events::add_rigidbody_event(rigid);
-
     if (id == ON_SERVER) {
+        // Creates Rigid Body
+        events::RigidBodyData rigid;
+        rigid.object = this;
+        rigid.shape = hit_box;
+        rigid.mass = 1;
+        rigid.is_ghost = true;
+        events::add_rigidbody_event(rigid);
 
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
 
-        speed = 1.0f;
+        speed = 10.0f;
     }
 }
 
@@ -30,7 +30,7 @@ void Arrow::play_trigger_animation() {
 void Arrow::setup_model() {
     Model *model = AssetLoader::get_model("arrow");
     attach_model(model);
-    transform.set_scale({ 0.4f, 0.4f, 0.4f });
+    transform.set_scale({ 0.01f, 0.01, 0.01f });
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("spin");

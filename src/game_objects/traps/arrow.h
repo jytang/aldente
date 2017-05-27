@@ -7,7 +7,8 @@
 */
 class Arrow : public Projectile {
 private:
-    btBoxShape *hit_box = new btBoxShape(btVector3(0.4f, 0.4f, 0.4f));
+    // TODO : Properly adjust hit box
+    btBoxShape *hit_box = new btBoxShape(btVector3(0.2f, 0.2f, 0.4f));
 public:
     Arrow(int id = 0);
 

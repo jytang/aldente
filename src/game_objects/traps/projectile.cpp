@@ -1,8 +1,10 @@
 #include "projectile.h"
 #include "util/util_bt.h"
 #include "game_objects/player.h"
+#include "game_objects/tile.h"
 #include "events.h"
 
+#include "util/util.h"
 #include <iostream>
 
 Projectile::Projectile(int id) : GameObject(id) {
@@ -16,7 +18,7 @@ void Projectile::fire(Transform spawn_location) {
     
     enable();
 
-    transform.set_position(spawn_location.get_position());
+    set_position(spawn_location.get_position() + glm::vec3(0, 0.5f, 0));
     transform.set_rotation(spawn_location.get_rotation());
 
     setup_timer(2000); // Set-up Time-Out. Currently default to 2 seconds. 
@@ -34,6 +36,10 @@ void Projectile::s_on_collision(GameObject *other) {
             // Send signal to client that this player was hit
             events::dungeon::network_collision_event(player->get_id(), id);
         }
+    }
+
+    if (dynamic_cast<WallTile*>(other)) {
+        disable();
     }
 }
 
