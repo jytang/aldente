@@ -10,9 +10,11 @@ public:
     UIControllerLegend(std::string texture, std::string text,
                        float start_x, float start_y,
                        float width, float height,
+                       float padding,
                        Color text_color, Color bg_color,
                        float alpha);
 private:
+    UIRectangle button_bg;
     UIImageNode button_img;
     UITextBox text_box;
 };

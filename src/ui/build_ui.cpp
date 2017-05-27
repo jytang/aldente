@@ -6,13 +6,6 @@
 
 #include "timer.h"
 
-// Hard-coded controller legend stuff
-static const std::vector<std::pair<std::string, std::string>> LEGENDS = {
-        {"dio.jpg", "test"}
-};
-static const float LEGEND_ENTRY_HEIGHT = 10.f;
-static const float LEGEND_WIDTH = 30.f;
-
 BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
     : UI(), // explicit call base class dflt constructor
       constructs(constructs),
@@ -51,21 +44,6 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     player_panel.attach(player_rect);
     player_panel.attach(balance_label);
     attach(player_panel);
-
-    // Draw legend at top right
-    const float legend_width = LEGEND_WIDTH * aspect;
-    const float legend_x = aspect - legend_width;
-    for (int i = 0; i < LEGENDS.size(); ++i) {
-        const float legend_y = LEGEND_ENTRY_HEIGHT * i;
-        const auto &legend = LEGENDS[i];
-        legends.push_back(
-                std::make_unique<UIControllerLegend>(
-                        legend.first, legend.second,
-                        legend_x, legend_y,
-                        legend_width, LEGEND_ENTRY_HEIGHT,
-                        Color::WHITE, Color::BLACK, 0.5f));
-        attach(*legends.back());
-    }
 
     // Display info of first element by default.
     update_info_panel(0);

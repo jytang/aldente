@@ -7,7 +7,6 @@
 #include "ui_text_box.h"
 #include "ui_image_node.h"
 #include "game/construct_types.h"
-#include "ui_controller_legend.h"
 
 class BuildUI : public UI {
 public:
@@ -25,7 +24,4 @@ private:
     UITextBox title_label, description_label, cost_label, balance_label;
 
     std::vector<UIImageNode*> images;
-
-    // Controller legend
-    std::vector<std::unique_ptr<UIControllerLegend>> legends;
 };

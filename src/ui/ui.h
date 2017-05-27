@@ -16,7 +16,7 @@ public:
     void toggle();
 protected:
     bool enabled = true;    // by default, UI elements are shown.
+    UIContainer root;
 private:
     Render2D renderer_2d;
-    UIContainer root;
 };
