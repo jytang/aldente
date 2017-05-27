@@ -3,6 +3,7 @@
 #include "events.h"
 
 void HDRShader::init() {
+    /* GENERATE FRAMEBUFFERS, RENDERBUFFERS, AND TEXTURES */
     // Set up floating point framebuffer to render scene to
     glGenFramebuffers(1, &FBO);
 
@@ -15,7 +16,8 @@ void HDRShader::init() {
     // Bind buffers.
     bind_buffers();
 
-    // Attach buffers
+    /* SET UP FRAMEBUFFER OBJECTS */
+    // Attach buffers to HDR FBO
     glBindFramebuffer(GL_FRAMEBUFFER, FBO);
     for (int i = 0; i < 2; ++i)
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, color_buffers[i], 0);
@@ -30,7 +32,7 @@ void HDRShader::init() {
         std::cerr << "HDR framebuffer status is incomplete!" << std::endl;
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-    // Setup quad for render.
+    /* SETUP QUAD */
     GLfloat quad_vertices[] = {
             // Positions        // Texture Coords
             -1.0f, 1.0f, 0.0f,  0.0f, 1.0f,
@@ -48,6 +50,7 @@ void HDRShader::init() {
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid *) (3 * sizeof(GLfloat)));
 
+    /* SETUP EVENT LISTENERS */
     // Setup listeners to adapt to screen width and height changing.
     events::window_buffer_resize_event.connect([&](events::WindowSizeData d) {
         screen_width = d.width;
@@ -64,6 +67,9 @@ void HDRShader::init() {
     });
     events::debug::toggle_hdr_event.connect([&]() {
        hdr_on = !hdr_on;
+    });
+    events::debug::toggle_bloom_event.connect([&]() {
+       bloom_on = !bloom_on;
     });
 }
 
@@ -90,11 +96,14 @@ void HDRShader::post_draw() {
 }
 
 void HDRShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
-    // Set texture to be shadow map texture.
+    // Now render floating point color buffer to 2D quad and tonemap HDR colors to default framebuffer's (clamped) color range
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, color_buffer);
+    glBindTexture(GL_TEXTURE_2D, color_buffers[0]);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, ShaderManager::blur.pingpong_color_buffers[0]);
 
     set_uni("hdr", hdr_on);
+    set_uni("bloom", bloom_on);
     set_uni("exposure", hdr_exposure);
 
     // Draw quad.

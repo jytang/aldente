@@ -227,6 +227,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\scene\start_scene.h" />
     <ClInclude Include="..\src\scene_manager.h" />
     <ClInclude Include="..\src\shaders\basic_shader.h" />
+    <ClInclude Include="..\src\shaders\blur_shader.h" />
     <ClInclude Include="..\src\shaders\debug_shadow_shader.h" />
     <ClInclude Include="..\src\shaders\hdr_shader.h" />
     <ClInclude Include="..\src\shaders\shader.h" />
@@ -332,6 +333,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\scene\start_scene.cpp" />
     <ClCompile Include="..\src\scene_manager.cpp" />
     <ClCompile Include="..\src\shaders\basic_shader.cpp" />
+    <ClCompile Include="..\src\shaders\blur_shader.cpp" />
     <ClCompile Include="..\src\shaders\debug_shadow_shader.cpp" />
     <ClCompile Include="..\src\shaders\hdr_shader.cpp" />
     <ClCompile Include="..\src\shaders\shader.cpp" />

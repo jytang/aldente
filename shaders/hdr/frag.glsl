@@ -4,13 +4,20 @@ out vec4 color;
 in vec2 frag_tex_coords;
 
 uniform sampler2D hdr_buffer;
+uniform sampler2D bloom_blur;
 uniform float exposure;
 uniform bool hdr;
+uniform bool bloom;
 
 void main()
 {
     const float gamma = 2.2;
     vec3 hdr_color = texture(hdr_buffer, frag_tex_coords).rgb;
+    vec3 bloom_color = texture(bloom_blur, frag_tex_coords).rgb;
+
+    if (bloom) {
+        hdr_color += bloom_color; // additive blending
+    }
 
     vec3 result = hdr_color;
 

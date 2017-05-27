@@ -64,6 +64,9 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_F8:
                     events::debug::toggle_hdr_event();
                     break;
+                case GLFW_KEY_F9:
+                    events::debug::toggle_bloom_event();
+                    break;
                 case GLFW_KEY_0:
                     events::debug::client_set_phase_event(&GameState::menu_phase);
                     break;
