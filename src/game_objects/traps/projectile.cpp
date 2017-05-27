@@ -46,7 +46,7 @@ void Projectile::handle_movement() {
     rigidbody->setLinearVelocity(util_bt::convert_vec3(transform.get_forward() * speed));
 }
 
-void Projectile::setup_timer() {
+void Projectile::setup_timer(long long time_out_ms) {
     // cancels any previous timer, if exists.
     if (cancel_timer)
         cancel_timer();

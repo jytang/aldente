@@ -11,8 +11,7 @@ class Projectile : public GameObject {
 private:
     std::function<void()> cancel_timer;
 protected:
-    float speed;
-    long long time_out_ms; // In Milliseconds
+    float speed = 1.0f;
 public:
     Projectile(int id = 0);
 
@@ -23,7 +22,7 @@ public:
     void handle_movement();
 
     // Sets up timer for when this object is timed out
-    void setup_timer();
+    void setup_timer(long long time_out_ms);
 
     virtual void s_update_this();
 
