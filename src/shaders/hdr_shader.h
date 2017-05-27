@@ -16,5 +16,7 @@ public:
 
 private:
     GLuint VAO, VBO; // for quad rendering
+    bool hdr_on = true;
+    float hdr_exposure = 1.f;
     void bind_buffers();
 };

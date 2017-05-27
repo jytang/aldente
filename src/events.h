@@ -119,6 +119,9 @@ namespace events {
         extern signal<void()> toggle_ui_text_box_background_event;
         extern signal<void()> toggle_fps_event;
         extern signal<void(int)> fps_count_event;
+        extern signal<void()> increase_hdr_exposure_event;
+        extern signal<void()> decrease_hdr_exposure_event;
+        extern signal<void()> toggle_hdr_event;
     }
 
     // Struct for parameters for rigidbody initialization

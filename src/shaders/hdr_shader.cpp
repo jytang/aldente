@@ -47,6 +47,17 @@ void HDRShader::init() {
         screen_height = d.height;
         bind_buffers();
     });
+
+    // Debug hdr uniforms
+    events::debug::increase_hdr_exposure_event.connect([&]() {
+        hdr_exposure += 0.1f;
+    });
+    events::debug::decrease_hdr_exposure_event.connect([&]() {
+        hdr_exposure -= 0.1f;
+    });
+    events::debug::toggle_hdr_event.connect([&]() {
+       hdr_on = !hdr_on;
+    });
 }
 
 void HDRShader::bind_buffers() {
@@ -72,9 +83,8 @@ void HDRShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, color_buffer);
 
-    // Hard coded hdr always on + exposure = 1
-    set_uni("hdr", true);
-    set_uni("exposure", 1.f);
+    set_uni("hdr", hdr_on);
+    set_uni("exposure", hdr_exposure);
 
     // Draw quad.
     glBindVertexArray(VAO);

@@ -25,6 +25,9 @@ namespace events {
         signal<void()> toggle_ui_text_box_background_event;
         signal<void()> toggle_fps_event;
         signal<void(int)> fps_count_event;
+        signal<void()> increase_hdr_exposure_event;
+        signal<void()> decrease_hdr_exposure_event;
+        signal<void()> toggle_hdr_event;
     }
 
     signal<void(RigidBodyData d)> add_rigidbody_event;

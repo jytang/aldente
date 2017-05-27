@@ -55,6 +55,15 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_M:
                     events::toggle_mute_event();
                     break;
+                case GLFW_KEY_F6:
+                    events::debug::decrease_hdr_exposure_event();
+                    break;
+                case GLFW_KEY_F7:
+                    events::debug::increase_hdr_exposure_event();
+                    break;
+                case GLFW_KEY_F8:
+                    events::debug::toggle_hdr_event();
+                    break;
                 case GLFW_KEY_0:
                     events::debug::client_set_phase_event(&GameState::menu_phase);
                     break;
