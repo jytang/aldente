@@ -30,9 +30,9 @@ void Transform::set_rotation(glm::vec3 angles) {
 // Starting from the object's original orientatin, rotates around the x-axis,
 // then y-axis, then z-axis.
 void Transform::set_rotation(float x, float y, float z) {
-    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), x, glm::vec3(1.f, 0.f, 0.f));
-    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), y, glm::vec3(0.f, 1.f, 0.f));
-    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), z, glm::vec3(0.f, 0.f, 1.f));
+    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), glm::radians(x), glm::vec3(1.f, 0.f, 0.f));
+    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), glm::radians(y), glm::vec3(0.f, 1.f, 0.f));
+    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), glm::radians(z), glm::vec3(0.f, 0.f, 1.f));
 
     glm::mat4 rotation = rotate_z * rotate_y * rotate_x;
 
@@ -76,9 +76,9 @@ void Transform::rotate(float x, float y, float z, bool local) {
     if (local)
         translate(-current_pos);
 
-    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), x, glm::vec3(1.f, 0.f, 0.f));
-    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), y, glm::vec3(0.f, 1.f, 0.f));
-    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), z, glm::vec3(0.f, 0.f, 1.f));
+    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), glm::radians(x), glm::vec3(1.f, 0.f, 0.f));
+    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), glm::radians(y), glm::vec3(0.f, 1.f, 0.f));
+    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), glm::radians(z), glm::vec3(0.f, 0.f, 1.f));
     glm::mat4 rotation = rotate_z * rotate_y * rotate_x;
 
     world_mat = rotation * world_mat;
