@@ -18,8 +18,8 @@ void ProjectileTrap::setup_timer(long long time_interval_ms) {
 
 void ProjectileTrap::attach_projectile(Projectile *projectile) {
     this->projectile = projectile;
+    projectile->set_parent(id);
     projectile->disable();
-    children.push_back(projectile);
 }
 
 void ProjectileTrap::shoot() {

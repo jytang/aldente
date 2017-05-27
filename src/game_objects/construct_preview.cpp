@@ -29,7 +29,7 @@ void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
             case SLIME_G:
                 cached_previews[type] = make_preview<SlimeGreen>();
                 break;
-            case ARROW:
+            case ARROW_TRAP:
                 cached_previews[type] = make_preview<ArrowTrap>();
                 break;
             default:

@@ -167,7 +167,7 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
         case SLIME_G:
             to_add = new SlimeGreen(col, row, id);
             break;
-        case ARROW:
+        case ARROW_TRAP:
             to_add = graphical ? new ArrowTrap(col, row, id) : new ArrowTrap(col, row);
             break;
         default:

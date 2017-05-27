@@ -11,8 +11,8 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
         rigid.position = { x, 0.0f, z };
         events::add_rigidbody_event(rigid);
 
-        //Arrow *arrow = new Arrow();
-        //attach_projectile(arrow);
+        Arrow *arrow = new Arrow();
+        attach_projectile(arrow);
 
         // Fires arrow every two seconds
         setup_timer(2000);

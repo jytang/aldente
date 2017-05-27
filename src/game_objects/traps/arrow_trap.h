@@ -8,7 +8,7 @@
 */
 class ArrowTrap : public ProjectileTrap {
 private:
-    btBoxShape *hit_box = new btBoxShape(btVector3(0.4f, 0.4f, 0.4f));
+    btBoxShape *hit_box = new btBoxShape(btVector3(0.2f, 0.2f, 0.2f));
 public:
     ArrowTrap(int x, int z, int id = 0);
 

@@ -3,6 +3,8 @@
 #include "game_objects/player.h"
 #include "events.h"
 
+#include <iostream>
+
 Projectile::Projectile(int id) : GameObject(id) {
     if (id == ON_SERVER) {
         notify_on_collision = true;
@@ -11,10 +13,13 @@ Projectile::Projectile(int id) : GameObject(id) {
 
 // Enables and orients projectile to spawn at spawn_location and go forward.
 void Projectile::fire(Transform spawn_location) {
+    
     enable();
 
     transform.set_position(spawn_location.get_position());
     transform.set_rotation(spawn_location.get_rotation());
+
+    setup_timer(2000); // Set-up Time-Out. Currently default to 2 seconds. 
 }
 
 void Projectile::s_update_this() {
@@ -57,4 +62,11 @@ void Projectile::setup_timer(long long time_out_ms) {
         [&]() {
         disable();
     });
+}
+
+// For properly attaching parent
+void Projectile::set_parent(int p_id) {
+    if(GameObject::game_objects[p_id])
+        GameObject::game_objects[p_id]->add_child(this);
+    set_parent_id(p_id);
 }

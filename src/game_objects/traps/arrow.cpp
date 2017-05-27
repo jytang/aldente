@@ -3,20 +3,21 @@
 #include "asset_loader.h"
 
 Arrow::Arrow(int id) : Projectile(id) {
-    if (id == ON_SERVER) {
+    projectile_type = ProjectileTypes::ARROW;
 
-        // Creates Rigid Body
-        events::RigidBodyData rigid;
-        rigid.object = this;
-        rigid.shape = hit_box;
-        rigid.mass = 1;
-        events::add_rigidbody_event(rigid);
+    // Creates Rigid Body
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = hit_box;
+    rigid.mass = 1;
+    events::add_rigidbody_event(rigid);
+
+    if (id == ON_SERVER) {
 
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
 
         speed = 1.0f;
-        setup_timer(2000); // Set-up Time-Out
     }
 }
 
@@ -29,7 +30,7 @@ void Arrow::play_trigger_animation() {
 void Arrow::setup_model() {
     Model *model = AssetLoader::get_model("arrow");
     attach_model(model);
-    transform.set_scale({ 0.004f, 0.004f, 0.004f });
+    transform.set_scale({ 0.4f, 0.4f, 0.4f });
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("spin");

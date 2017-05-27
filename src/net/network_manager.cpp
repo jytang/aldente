@@ -2,6 +2,8 @@
 #include "util/config.h"
 #include "game_objects/player.h"
 #include "game_objects/essence.h"
+#include "game_objects/traps/projectile.h"
+#include "game_objects/traps/arrow.h"
 #include "game/game_state.h"
 #include <GLFW/glfw3.h>
 #include <unordered_set>
@@ -93,6 +95,12 @@ void ServerNetworkManager::register_listeners() {
                 go->set_type(proto::GameObject::Type::GameObject_Type_GOAL);
             else if (dynamic_cast<Essence*>(obj))
                 go->set_type(proto::GameObject::Type::GameObject_Type_ESSENCE);
+            else if (dynamic_cast<Projectile*>(obj)) {
+                Projectile *projectile = dynamic_cast<Projectile*>(obj);
+                go->set_type(proto::GameObject::Type::GameObject_Type_PROJECTILE);
+                go->set_parent_id(projectile->get_parent_id());
+                go->set_subtype(projectile->get_type());
+            }
 
             glm::mat4 mat = obj->transform.get_world_mat();
             for (int i = 0; i < 4; i++) {
@@ -330,6 +338,13 @@ void ClientNetworkManager::update() {
                         events::dungeon::spawn_existing_goal_event(obj_x, obj_z, obj.id());
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_ESSENCE) {
                         events::dungeon::c_spawn_essence_event(obj_x, obj_z, obj.id());
+                    } else if (obj.type() == proto::GameObject::Type::GameObject_Type_PROJECTILE) {
+                        if (obj.subtype() == ProjectileTypes::ARROW) {
+                            Arrow *arrow = new Arrow(obj.id());
+                            arrow->set_parent(obj.parent_id());
+                            arrow->setup_model();
+                            GameState::scene_manager.get_current_scene()->objs.push_back(arrow);
+                        }
                     } else {
                         std::cerr << "Unrecognized game obj type; could not create client copy.\n";
                     }

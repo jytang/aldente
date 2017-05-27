@@ -3,6 +3,10 @@
 #include "game_objects/game_object.h"
 #include "timer.h"
 
+enum ProjectileTypes {
+    ARROW,
+};
+
 /*
     Projectiles that continuousl moves forward until it either collides
     with an object, or times out. Usually carried around by a game object.
@@ -12,6 +16,8 @@ private:
     std::function<void()> cancel_timer;
 protected:
     float speed = 1.0f;
+    ProjectileTypes projectile_type;
+    int parent_id;
 public:
     Projectile(int id = 0);
 
@@ -30,4 +36,14 @@ public:
     virtual void c_on_collision(GameObject *other) override;
 
     virtual void play_trigger_animation() {};
+
+    // Type of Projectile
+    int get_type() { return projectile_type; };
+
+    // Parent Id for properly attaching Trap to Projectile
+    void set_parent_id(int p_id) { parent_id = p_id; };
+    int get_parent_id() { return parent_id; };
+
+    // For attaching the projectile as a child to the given parent id
+    void set_parent(int p_id);
 };
