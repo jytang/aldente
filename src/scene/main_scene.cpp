@@ -43,7 +43,7 @@ void MainScene::c_setup() {
 
     // Setup lights.
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
-                                                 Color::WHITE, 0.5f);
+                                                 Color::WHITE, 0.1f);
     add_light(sun);
 
     // Setup light debug callback.
