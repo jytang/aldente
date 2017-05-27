@@ -35,7 +35,7 @@ void MobileTrap::change_direction() {
     if (random_rotations_on)
         rotation_amount = Util::random(10.0f, 350.0f);
 
-    transform.rotate({ 0.0f, rotation_amount, 0.0f }, false);
+    transform.rotate({ 0.0f, rotation_amount, 0.0f });
 }
 
 // If detects a wall in front, changes direction
@@ -67,7 +67,7 @@ void MobileTrap::setup_timer(long long time_interval_ms) {
 // Resets direction and position
 void MobileTrap::s_reset() {
     transform = initial_transform;
-    set_rb_position(initial_transform.get_rotation());
+    set_rb_position(initial_transform.get_position());
 }
 
 // Resets rotations and position
