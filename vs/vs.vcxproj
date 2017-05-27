@@ -183,8 +183,12 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game_objects\grid.h" />
     <ClInclude Include="..\src\game_objects\player.h" />
     <ClInclude Include="..\src\game_objects\tile.h" />
+    <ClInclude Include="..\src\game_objects\traps\arrow.h" />
+    <ClInclude Include="..\src\game_objects\traps\arrow_trap.h" />
     <ClInclude Include="..\src\game_objects\traps\collision_trap.h" />
     <ClInclude Include="..\src\game_objects\traps\mobile_trap.h" />
+    <ClInclude Include="..\src\game_objects\traps\projectile.h" />
+    <ClInclude Include="..\src\game_objects\traps\projectile_trap.h" />
     <ClInclude Include="..\src\game_objects\traps\slime.h" />
     <ClInclude Include="..\src\game_objects\traps\spikes.h" />
     <ClInclude Include="..\src\game_objects\traps\trap.h" />
@@ -291,8 +295,12 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\game_objects\grid.cpp" />
     <ClCompile Include="..\src\game_objects\player.cpp" />
     <ClCompile Include="..\src\game_objects\tile.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\arrow.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\arrow_trap.cpp" />
     <ClCompile Include="..\src\game_objects\traps\collision_trap.cpp" />
     <ClCompile Include="..\src\game_objects\traps\mobile_trap.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\projectile.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\projectile_trap.cpp" />
     <ClCompile Include="..\src\game_objects\traps\slime.cpp" />
     <ClCompile Include="..\src\game_objects\traps\spikes.cpp" />
     <ClCompile Include="..\src\input\axis_combiner.cpp" />

@@ -16,11 +16,7 @@ void MobileTrap::s_update_this() {
 
     handle_movement();
 
-    // Update transform with bullet's
-    btTransform t;
-    rigidbody->getMotionState()->getWorldTransform(t);
-    btVector3 to_set = t.getOrigin();
-    transform.set_position(util_bt::convert_vec3(to_set));
+    sync_position();
 }
 
 // Moves object forward

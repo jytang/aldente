@@ -17,7 +17,7 @@ public:
     Projectile(int id = 0);
 
     // Fires Projectile towards given direction
-    void fire(int x, int z, int dir_x, int dir_z);
+    void fire(Transform spawn_location);
 
     // Moves forward
     void handle_movement();
