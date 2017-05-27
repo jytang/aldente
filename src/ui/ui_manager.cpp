@@ -23,7 +23,7 @@ void UIManager::setup_uis() {
     /* BUILD UI */
     std::vector<ConstructData> constructs;
     for (int i = 1; i <= 12; i++) {
-        int num_available_constructs = 7; // Need better way than hardcoding this number
+        int num_available_constructs = Constructs::CONSTRUCTS.size();
         if (i < num_available_constructs)
             constructs.push_back(Constructs::CONSTRUCTS.at((ConstructType) i));
         else

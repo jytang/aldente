@@ -2,7 +2,6 @@
 #include "util/config.h"
 #include "game_objects/player.h"
 #include "game_objects/essence.h"
-#include "game_objects/traps/slime.h"
 #include "game/game_state.h"
 #include <GLFW/glfw3.h>
 #include <unordered_set>
