@@ -11,7 +11,7 @@ class ProjectileTrap : public Trap {
 private:
     std::function<void()> cancel_timer;
 protected:
-    Projectile *projectile;
+    std::vector<Projectile> projectile_pool; // Poolable amount of projectiles to grab objects from
 
     // How the trap will be activated
     enum ActivationType {
@@ -23,7 +23,8 @@ protected:
     //void raycast_check();
     void setup_timer(long long time_interval_ms);
 
-    void attach_projectile(Projectile *projectile);
+    // Makes copies of the given projectile to fill the projectil_pool with
+    void fill_projectile_pool(Projectile projectile);
 
     // Fires game object
     void shoot();

@@ -13,6 +13,7 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
 
         Arrow *arrow = new Arrow();
         attach_projectile(arrow);
+        arrow->enable();
 
         // Fires arrow every two seconds
         setup_timer(2000);
