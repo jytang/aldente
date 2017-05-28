@@ -1,4 +1,7 @@
 #version 330 core
+layout (location = 0) out vec4 FragColor;
+layout (location = 1) out vec4 BrightColor;
+
 struct Material {
     vec3 diffuse;
     vec3 specular;
@@ -40,8 +43,6 @@ in vec3 frag_pos;
 in vec3 frag_normal;
 in vec4 frag_pos_light;
 in vec2 frag_tex_coord;
-
-out vec4 color;
 
 uniform vec3 cam_pos;
 uniform Material material;
@@ -93,7 +94,11 @@ void main()
         result += calc_spot_light(spot_lights[i], mat, normal, view_dir, false);
     }
 
-    color = vec4(result, material.alpha);
+    // Check whether the resulting color is brighter than a threshold -- if so, output as a bloom threshold color
+    float brightness = dot(result, vec3(0.2126, 0.7152, 0.0722)); // human eye more sensitive to green colors than blue
+    if (brightness > 1.0)
+        BrightColor = vec4(result, material.alpha);
+    FragColor = vec4(result, material.alpha);
 }
 
 vec3 calc_dir_light(DirLight light, Material mat,

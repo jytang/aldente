@@ -46,9 +46,6 @@ void MainScene::c_setup() {
                                                  Color::WHITE, 0.1f);
     add_light(sun);
 
-    PointLight *bulb = new PointLight(glm::vec3(5.f, 5.f, 1.f), Color::WINDWAKER_GREEN, 10.f);
-    add_light(bulb);
-
     // Setup light debug callback.
     events::debug::toggle_light_rotation_event.connect([&](void) {
         lights_debug_on = !lights_debug_on;
