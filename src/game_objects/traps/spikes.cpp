@@ -24,4 +24,5 @@ void Spikes::play_trigger_animation() {
 void Spikes::setup_model() {
     attach_model(AssetLoader::get_model("spikes"));
     transform.set_scale({ 0.5f, 2.0f, 0.5f });
+    initial_transform.set_scale(transform.get_scale());
 }
