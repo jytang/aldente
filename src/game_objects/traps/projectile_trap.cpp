@@ -1,6 +1,8 @@
 #include "projectile_trap.h"
 #include "arrow.h"
 
+#include <iostream>
+
 #define MAX_PROJECTILES 5
 
 ProjectileTrap::ProjectileTrap(int x, int z, int id) : Trap(x, z, id) {
@@ -51,9 +53,12 @@ void ProjectileTrap::shoot() {
 
     Projectile *to_shoot = nullptr;
 
-    for (Projectile *proj : projectile_pool)
-        if (!proj->is_enabled())
-            to_shoot = proj;
+    for (int i = 0; i < projectile_pool.size(); i++) {
+        if (!projectile_pool[i]->is_enabled()) {
+            to_shoot = projectile_pool[i];
+            break;
+        }
+    }
 
     if (to_shoot)
         to_shoot->fire(transform);

@@ -12,8 +12,8 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
 
         fill_projectile_pool(ProjectileTypes::ARROW);
 
-        // Fires arrow every two seconds
-        setup_timer(2000);
+        // Fires arrow every ...
+        setup_timer(500);
     }
 }
 

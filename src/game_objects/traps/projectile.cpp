@@ -15,7 +15,6 @@ Projectile::Projectile(int id) : GameObject(id) {
 
 // Enables and orients projectile to spawn at spawn_location and go forward.
 void Projectile::fire(Transform spawn_location) {
-    
     enable();
 
     glm::vec3 offset = glm::vec3(0, 0.5f, 0.5f);
@@ -36,6 +35,9 @@ void Projectile::s_on_collision(GameObject *other) {
         if (player->s_take_damage()) {
             // Send signal to client that this player was hit
             events::dungeon::network_collision_event(player->get_id(), id);
+
+            // Timer may be needed if want animation
+            disable();
         }
     }
 
