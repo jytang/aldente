@@ -1,5 +1,4 @@
 #include "arrow_trap.h"
-#include "arrow.h"
 #include "asset_loader.h"
 
 ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
@@ -11,9 +10,7 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
         rigid.position = { x, 0.0f, z };
         events::add_rigidbody_event(rigid);
 
-        Arrow *arrow = new Arrow();
-        attach_projectile(arrow);
-        arrow->enable();
+        fill_projectile_pool(ProjectileTypes::ARROW);
 
         // Fires arrow every two seconds
         setup_timer(2000);
