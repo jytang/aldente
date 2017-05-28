@@ -96,8 +96,10 @@ void main()
 
     // Check whether the resulting color is brighter than a threshold -- if so, output as a bloom threshold color
     float brightness = dot(result, vec3(0.2126, 0.7152, 0.0722)); // human eye more sensitive to green colors than blue
-    if (brightness > 1.0)
-        BrightColor = vec4(result, material.alpha);
+    if (brightness > 1.0f)
+        BrightColor = vec4(result, 1.0f);
+    else
+        BrightColor = vec4(0.0f, 0.0f, 0.0f, 1.0f);
     FragColor = vec4(result, material.alpha);
 }
 

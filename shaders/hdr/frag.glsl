@@ -11,8 +11,9 @@ uniform bool bloom;
 
 void main()
 {
-    const float gamma = 2.2;
-    vec3 hdr_color = texture(hdr_buffer, frag_tex_coords).rgb;
+    const float gamma = 2.2f;
+    vec4 hdr_color_alpha = texture(hdr_buffer, frag_tex_coords).rgba;
+    vec3 hdr_color = hdr_color_alpha.rgb;
     vec3 bloom_color = texture(bloom_blur, frag_tex_coords).rgb;
 
     if (bloom) {
@@ -22,13 +23,10 @@ void main()
     vec3 result = hdr_color;
 
     if (hdr) {
-        // reinhard
-        // vec3 result = hdrColor / (hdrColor + vec3(1.0));
-        // exposure
         result = vec3(1.0) - exp(-hdr_color * exposure);
         // also gamma correct while we're at it
-        //result = pow(result, vec3(1.0 / gamma));
+        result = pow(result, vec3(1.0 / gamma));
     }
 
-    color = vec4(result, 1.0f);
+    color = vec4(result, hdr_color_alpha.a);
 }

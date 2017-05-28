@@ -96,7 +96,6 @@ void Render2D::render_text(std::string text,
                            Color color) {
     // Always render UI regardless of depth.
     glDisable(GL_DEPTH_TEST);
-    glDisable(GL_FRAMEBUFFER_SRGB);
 
     // Activate corresponding render state
     ShaderManager::text.use();
@@ -142,7 +141,6 @@ void Render2D::render_text(std::string text,
     glBindTexture(GL_TEXTURE_2D, 0);
 
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_FRAMEBUFFER_SRGB);
 }
 
 void Render2D::render_rect(GLfloat x, GLfloat y,
@@ -151,7 +149,6 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
                            GLfloat alpha) {
     // Always render UI regardless of depth.
     glDisable(GL_DEPTH_TEST);
-    glDisable(GL_FRAMEBUFFER_SRGB);
 
     // Send uniforms to the text shader
     ShaderManager::ui.use();
@@ -194,7 +191,6 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
     glBindTexture(GL_TEXTURE_2D, 0);
 
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_FRAMEBUFFER_SRGB);
 }
 
 // Render rectangle in terms of percentages of screen width and height.
