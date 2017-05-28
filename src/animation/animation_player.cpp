@@ -58,6 +58,12 @@ void AnimationPlayer::set_anim(std::string anim_name) {
     stop();
 }
 
+void AnimationPlayer::set_anim(std::string anim_name, float speed, bool will_loop) {
+    set_anim(anim_name);
+    set_speed(speed);
+    set_loop(will_loop);
+}
+
 void AnimationPlayer::play() {
     is_paused = false;
     last_time = glfwGetTime();

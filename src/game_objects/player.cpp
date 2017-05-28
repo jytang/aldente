@@ -148,9 +148,7 @@ void Player::stop_walk() {
 }
 
 void Player::start_walk() {
-    anim_player.set_speed(3.0f);
-    anim_player.set_anim("walk");
-    anim_player.set_loop(true);
+    anim_player.set_anim("walk", 3.0f, true);
 }
 
 // Server collision
@@ -214,16 +212,12 @@ void Player::s_begin_warp(float x, float z) {
 
 void Player::c_begin_warp() {
     // Set up warp animation
-    anim_player.set_speed(1.0f);
-    anim_player.set_anim("exit");
-    anim_player.set_loop(true);
+    anim_player.set_anim("exit", 1.0f, true);
     anim_player.play();
     exiting = true;
 
     Timer::get()->do_after(std::chrono::seconds(1), [&]() {
-        anim_player.set_speed(3.0f);
-        anim_player.set_anim("walk");
-        anim_player.set_loop(true);
+        start_walk();
         exiting = false;
     });
 }
@@ -255,7 +249,7 @@ bool Player::s_take_damage() {
     int number_essence_loss = (int)floor(amount_loss / essence_val);
     for (int i = 0; i < number_essence_loss; i++)
         events::dungeon::s_spawn_essence_event(transform.get_position().x, transform.get_position().z);
-    
+
     // End Stunned
     Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
         [&]() {
@@ -293,18 +287,14 @@ void Player::c_take_damage() {
 
     // Change to the hurt animation
     stunned = true;
-    anim_player.set_anim("damage");
-    anim_player.set_loop(false);
-    anim_player.set_speed(1.0f);
+    anim_player.set_anim("damage", 1.0f, false);
     anim_player.play();
 
     // End hurt animation
     Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
         [&]() {
         stunned = false;
-        anim_player.set_speed(3.0f);
-        anim_player.set_anim("walk");
-        anim_player.set_loop(true);
+        start_walk();
     });
 
     // End

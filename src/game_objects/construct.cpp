@@ -114,9 +114,7 @@ void Goal::setup_model() {
     attach_model(AssetLoader::get_model("warp"));
     transform.set_scale(0.006f, 0.006f, 0.006f);
     initial_transform.set_scale(transform.get_scale());
-    anim_player.set_speed(1.0f);
-    anim_player.set_anim("spin");
-    anim_player.set_loop(true);
+    anim_player.set_anim("spin", 1.0f, true);
     anim_player.play();
 }
 
