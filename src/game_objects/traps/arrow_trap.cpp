@@ -19,8 +19,6 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
         setup_timer(500);
         activation_type = TIME;
     }
-
-    transform.rotate(0, 90.0f, 0);
 }
 
 void ArrowTrap::setup_model() {
@@ -29,7 +27,11 @@ void ArrowTrap::setup_model() {
     transform.set_scale({ 0.008f, 0.008f, 0.008f });
     initial_transform.set_scale(transform.get_scale());
 
-    anim_player.set_anim("spin");
+    anim_player.set_anim("shoot");
     anim_player.set_loop(true);
+    anim_player.set_speed(1.0f);
+}
+
+void ArrowTrap::play_trigger_animation() {
     anim_player.play();
 }

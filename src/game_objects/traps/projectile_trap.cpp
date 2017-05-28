@@ -76,6 +76,13 @@ void ProjectileTrap::shoot() {
         }
     }
 
-    if (to_shoot)
+    if (to_shoot) {
         to_shoot->fire(transform);
+        // Send signal to client that this player was hit. TEMP WILL CHANGE
+        events::dungeon::network_collision_event(id, id);
+    }
+}
+
+void ProjectileTrap::c_on_collision(GameObject*) {
+    play_trigger_animation();
 }

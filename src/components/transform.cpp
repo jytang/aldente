@@ -169,11 +169,11 @@ glm::mat4 Transform::get_scale_mat() {
 
 // Get basis vectors from world matrix
 glm::vec3 Transform::get_forward() {
-    return glm::vec3(world_mat[2][0], world_mat[2][1], world_mat[2][2]);
+    return glm::normalize(glm::vec3(world_mat[2][0], world_mat[2][1], world_mat[2][2]));
 }
 glm::vec3 Transform::get_up() {
-    return glm::vec3(world_mat[1][0], world_mat[1][1], world_mat[1][2]);
+    return glm::normalize(glm::vec3(world_mat[1][0], world_mat[1][1], world_mat[1][2]));
 }
 glm::vec3 Transform::get_right() {
-    return glm::vec3(world_mat[0][0], world_mat[0][1], world_mat[0][2]);
+    return glm::normalize(glm::vec3(world_mat[0][0], world_mat[0][1], world_mat[0][2]));
 }

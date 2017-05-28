@@ -13,4 +13,6 @@ public:
     ArrowTrap(int x, int z, int id = 0);
 
     void setup_model() override;
+
+    void play_trigger_animation() override;
 };
