@@ -259,7 +259,7 @@ namespace events {
 
     namespace dungeon {
         // Player class asks physics for a raycast check
-        extern signal<void(glm::vec3, glm::vec3,std::function<void(GameObject *bt_hit)>)> request_raycast_event;
+        extern signal<void(glm::vec3 pos, glm::vec3 dir, float dist, std::function<void(GameObject *bt_hit)>)> request_raycast_event;
 
         // Sends out signal for player's position. Used for camera to follow player
         extern signal<void(glm::vec3)> player_position_updated_event;

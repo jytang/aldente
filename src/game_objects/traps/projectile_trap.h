@@ -19,8 +19,9 @@ protected:
     };
 
     ActivationType activation_type = TIME;
+    float raycast_range = 5.0f;
 
-    //void raycast_check();
+    void raycast_check();
     void setup_timer(long long time_interval_ms);
 
     // Makes copies of the given projectile to fill the projectil_pool with
@@ -31,4 +32,6 @@ protected:
 
 public:
     ProjectileTrap(int x, int z, int id = 0);
+
+    virtual void s_update_this() override;
 };

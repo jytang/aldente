@@ -35,7 +35,7 @@ public:
 
     void collision_detection();
 
-    GameObject *raycast(glm::vec3 position, glm::vec3 dir);
+    GameObject *raycast(glm::vec3 position, glm::vec3 dir, float dist);
 
     void add_rigid(events::RigidBodyData d);
 
