@@ -250,7 +250,7 @@ namespace events {
         extern signal<void()> s_prepare_dungeon_event;
 
         // Client requests the server to move player, passing its input stick data.
-        extern signal<void(StickData &)> network_player_move_event;
+        extern signal<void(const StickData &)> network_player_move_event;
 
         // Server sends context containing position, collisions, and interactions of game objects to all clients.
         extern signal<void(Context*)> update_state_event;
