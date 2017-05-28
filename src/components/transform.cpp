@@ -28,7 +28,7 @@ void Transform::set_rotation(glm::vec3 angles) {
 }
 
 // Starting from the object's original orientatin, rotates around the x-axis,
-// then y-axis, then z-axis.
+// then y-axis, then z-axis. (x, y, z in degrees)
 void Transform::set_rotation(float x, float y, float z) {
     glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), glm::radians(x), glm::vec3(1.f, 0.f, 0.f));
     glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), glm::radians(y), glm::vec3(0.f, 1.f, 0.f));
@@ -67,7 +67,7 @@ void Transform::rotate(glm::vec3 angles, bool local) {
 }
 
 // Rotates first around x-axis, then y-axis, then z-axis,
-// starting from current orientation.
+// starting from current orientation. (x, y, z in degrees)
 void Transform::rotate(float x, float y, float z, bool local) {
 
     glm::vec3 current_pos = get_position();
@@ -112,7 +112,7 @@ glm::vec3 Transform::get_position() {
 }
 
 // Rotation obtained by dividing 3x3 top left matrix by scale, and
-// then converting rotation matrix to Euler angles.
+// then converting rotation matrix to Euler angles in degrees.
 glm::vec3 Transform::get_rotation() {
 
     glm::vec3 col_0 = glm::vec3(world_mat[0][0], world_mat[0][1], world_mat[0][2]);

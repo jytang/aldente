@@ -15,13 +15,13 @@ Projectile::Projectile(int id) : GameObject(id) {
 
 // Enables and orients projectile to spawn at spawn_location and go forward.
 void Projectile::fire(Transform spawn_location) {
-    enable();
-
-    glm::vec3 offset = glm::vec3(0, 0.5f, 0.5f);
+    glm::vec3 offset = (spawn_location.get_forward() + spawn_location.get_up()) * 0.5f;
     set_position(spawn_location.get_position() + offset);
     transform.set_rotation(spawn_location.get_rotation());
 
     setup_timer(); // Set-up Time-Out. 
+
+    enable();
 }
 
 void Projectile::s_update_this() {
