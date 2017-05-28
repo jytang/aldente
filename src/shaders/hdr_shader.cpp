@@ -3,6 +3,11 @@
 #include "events.h"
 
 void HDRShader::init() {
+    use();
+    // Set samplers. FIXES DEFAULT VALUES BUG.
+    set_uni("hdr_buffer", 0);
+    set_uni("bloom_blur", 1);
+
     /* GENERATE FRAMEBUFFERS, RENDERBUFFERS, AND TEXTURES */
     // Set up floating point framebuffer to render scene to
     glGenFramebuffers(1, &FBO);
