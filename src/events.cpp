@@ -55,6 +55,8 @@ namespace events {
     namespace ui {
         signal<void(int)> update_time;
         signal<void()> toggle_leaderboard;
+        signal<void()> disable_leaderboard;
+        signal<void()> enable_leaderboard;
         signal<void(int, int, std::string)> leaderboard_update;
     }
 
