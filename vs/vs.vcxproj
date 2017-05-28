@@ -188,6 +188,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game_objects\traps\trap.h" />
     <ClInclude Include="..\src\input\axis_combiner.h" />
     <ClInclude Include="..\src\input\conceptual_translator.h" />
+    <ClInclude Include="..\src\input\modal_input.h" />
     <ClInclude Include="..\src\input\raw_maps\debug.h" />
     <ClInclude Include="..\src\input\raw_maps\matricom.h" />
     <ClInclude Include="..\src\input\raw_maps\raw_map.h" />
@@ -288,6 +289,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\input\axis_combiner.cpp" />
     <ClCompile Include="..\src\input\conceptual_translator.cpp" />
     <ClCompile Include="..\src\input\conceptual_translator_test.cpp" />
+    <ClCompile Include="..\src\input\modal_input.cpp" />
     <ClCompile Include="..\src\input\raw_maps\raw_map.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\model\geometry.cpp" />
