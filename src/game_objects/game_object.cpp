@@ -88,11 +88,11 @@ void GameObject::c_update() {
         obj->c_update();
 }
 
-void GameObject::c_update_state(float x, float z, float wx, float wz, bool enab) {
+void GameObject::c_update_state(glm::mat4 mat, bool enab) {
     enabled = enab;
     if (enabled) {
-        transform.set_position(x, 0.0f, z);
-        transform.look_at({ wx, 0.0f, wz });
+        transform.set_world_mat(mat);
+        transform.set_scale(initial_transform.get_scale());
     }
 }
 

@@ -40,7 +40,7 @@ public:
     Player(int id = 0);
 
     void s_update_this() override;
-    void c_update_state(float x, float z, float wx, float wz, bool enab) override;
+    void c_update_state(glm::mat4 mat, bool enab) override;
     void s_on_collision(GameObject *other) override;
     void c_on_collision(GameObject *other) override;
 

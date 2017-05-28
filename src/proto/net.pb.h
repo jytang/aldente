@@ -1045,52 +1045,36 @@ class GameObject : public ::google::protobuf::Message {
   inline ::proto::GameObject_Type type() const;
   inline void set_type(::proto::GameObject_Type value);
 
-  // optional float x = 3;
-  inline bool has_x() const;
-  inline void clear_x();
-  static const int kXFieldNumber = 3;
-  inline float x() const;
-  inline void set_x(float value);
+  // repeated float transform = 3;
+  inline int transform_size() const;
+  inline void clear_transform();
+  static const int kTransformFieldNumber = 3;
+  inline float transform(int index) const;
+  inline void set_transform(int index, float value);
+  inline void add_transform(float value);
+  inline const ::google::protobuf::RepeatedField< float >&
+      transform() const;
+  inline ::google::protobuf::RepeatedField< float >*
+      mutable_transform();
 
-  // optional float z = 4;
-  inline bool has_z() const;
-  inline void clear_z();
-  static const int kZFieldNumber = 4;
-  inline float z() const;
-  inline void set_z(float value);
-
-  // optional float wx = 5;
-  inline bool has_wx() const;
-  inline void clear_wx();
-  static const int kWxFieldNumber = 5;
-  inline float wx() const;
-  inline void set_wx(float value);
-
-  // optional float wz = 6;
-  inline bool has_wz() const;
-  inline void clear_wz();
-  static const int kWzFieldNumber = 6;
-  inline float wz() const;
-  inline void set_wz(float value);
-
-  // optional int32 client_id = 7;
+  // optional int32 client_id = 4;
   inline bool has_client_id() const;
   inline void clear_client_id();
-  static const int kClientIdFieldNumber = 7;
+  static const int kClientIdFieldNumber = 4;
   inline ::google::protobuf::int32 client_id() const;
   inline void set_client_id(::google::protobuf::int32 value);
 
-  // optional bool enabled = 8;
+  // optional bool enabled = 5;
   inline bool has_enabled() const;
   inline void clear_enabled();
-  static const int kEnabledFieldNumber = 8;
+  static const int kEnabledFieldNumber = 5;
   inline bool enabled() const;
   inline void set_enabled(bool value);
 
-  // optional int32 model_index = 9;
+  // optional int32 model_index = 6;
   inline bool has_model_index() const;
   inline void clear_model_index();
-  static const int kModelIndexFieldNumber = 9;
+  static const int kModelIndexFieldNumber = 6;
   inline ::google::protobuf::int32 model_index() const;
   inline void set_model_index(::google::protobuf::int32 value);
 
@@ -1100,14 +1084,6 @@ class GameObject : public ::google::protobuf::Message {
   inline void clear_has_id();
   inline void set_has_type();
   inline void clear_has_type();
-  inline void set_has_x();
-  inline void clear_has_x();
-  inline void set_has_z();
-  inline void clear_has_z();
-  inline void set_has_wx();
-  inline void clear_has_wx();
-  inline void set_has_wz();
-  inline void clear_has_wz();
   inline void set_has_client_id();
   inline void clear_has_client_id();
   inline void set_has_enabled();
@@ -1121,10 +1097,7 @@ class GameObject : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::int32 id_;
   int type_;
-  float x_;
-  float z_;
-  float wx_;
-  float wz_;
+  ::google::protobuf::RepeatedField< float > transform_;
   ::google::protobuf::int32 client_id_;
   bool enabled_;
   ::google::protobuf::int32 model_index_;
@@ -2825,111 +2798,45 @@ inline void GameObject::set_type(::proto::GameObject_Type value) {
   // @@protoc_insertion_point(field_set:proto.GameObject.type)
 }
 
-// optional float x = 3;
-inline bool GameObject::has_x() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+// repeated float transform = 3;
+inline int GameObject::transform_size() const {
+  return transform_.size();
 }
-inline void GameObject::set_has_x() {
-  _has_bits_[0] |= 0x00000004u;
+inline void GameObject::clear_transform() {
+  transform_.Clear();
 }
-inline void GameObject::clear_has_x() {
-  _has_bits_[0] &= ~0x00000004u;
+inline float GameObject::transform(int index) const {
+  // @@protoc_insertion_point(field_get:proto.GameObject.transform)
+  return transform_.Get(index);
 }
-inline void GameObject::clear_x() {
-  x_ = 0;
-  clear_has_x();
+inline void GameObject::set_transform(int index, float value) {
+  transform_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto.GameObject.transform)
 }
-inline float GameObject::x() const {
-  // @@protoc_insertion_point(field_get:proto.GameObject.x)
-  return x_;
+inline void GameObject::add_transform(float value) {
+  transform_.Add(value);
+  // @@protoc_insertion_point(field_add:proto.GameObject.transform)
 }
-inline void GameObject::set_x(float value) {
-  set_has_x();
-  x_ = value;
-  // @@protoc_insertion_point(field_set:proto.GameObject.x)
+inline const ::google::protobuf::RepeatedField< float >&
+GameObject::transform() const {
+  // @@protoc_insertion_point(field_list:proto.GameObject.transform)
+  return transform_;
+}
+inline ::google::protobuf::RepeatedField< float >*
+GameObject::mutable_transform() {
+  // @@protoc_insertion_point(field_mutable_list:proto.GameObject.transform)
+  return &transform_;
 }
 
-// optional float z = 4;
-inline bool GameObject::has_z() const {
+// optional int32 client_id = 4;
+inline bool GameObject::has_client_id() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void GameObject::set_has_z() {
+inline void GameObject::set_has_client_id() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void GameObject::clear_has_z() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void GameObject::clear_z() {
-  z_ = 0;
-  clear_has_z();
-}
-inline float GameObject::z() const {
-  // @@protoc_insertion_point(field_get:proto.GameObject.z)
-  return z_;
-}
-inline void GameObject::set_z(float value) {
-  set_has_z();
-  z_ = value;
-  // @@protoc_insertion_point(field_set:proto.GameObject.z)
-}
-
-// optional float wx = 5;
-inline bool GameObject::has_wx() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void GameObject::set_has_wx() {
-  _has_bits_[0] |= 0x00000010u;
-}
-inline void GameObject::clear_has_wx() {
-  _has_bits_[0] &= ~0x00000010u;
-}
-inline void GameObject::clear_wx() {
-  wx_ = 0;
-  clear_has_wx();
-}
-inline float GameObject::wx() const {
-  // @@protoc_insertion_point(field_get:proto.GameObject.wx)
-  return wx_;
-}
-inline void GameObject::set_wx(float value) {
-  set_has_wx();
-  wx_ = value;
-  // @@protoc_insertion_point(field_set:proto.GameObject.wx)
-}
-
-// optional float wz = 6;
-inline bool GameObject::has_wz() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
-}
-inline void GameObject::set_has_wz() {
-  _has_bits_[0] |= 0x00000020u;
-}
-inline void GameObject::clear_has_wz() {
-  _has_bits_[0] &= ~0x00000020u;
-}
-inline void GameObject::clear_wz() {
-  wz_ = 0;
-  clear_has_wz();
-}
-inline float GameObject::wz() const {
-  // @@protoc_insertion_point(field_get:proto.GameObject.wz)
-  return wz_;
-}
-inline void GameObject::set_wz(float value) {
-  set_has_wz();
-  wz_ = value;
-  // @@protoc_insertion_point(field_set:proto.GameObject.wz)
-}
-
-// optional int32 client_id = 7;
-inline bool GameObject::has_client_id() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
-}
-inline void GameObject::set_has_client_id() {
-  _has_bits_[0] |= 0x00000040u;
-}
 inline void GameObject::clear_has_client_id() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void GameObject::clear_client_id() {
   client_id_ = 0;
@@ -2945,15 +2852,15 @@ inline void GameObject::set_client_id(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto.GameObject.client_id)
 }
 
-// optional bool enabled = 8;
+// optional bool enabled = 5;
 inline bool GameObject::has_enabled() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void GameObject::set_has_enabled() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void GameObject::clear_has_enabled() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void GameObject::clear_enabled() {
   enabled_ = false;
@@ -2969,15 +2876,15 @@ inline void GameObject::set_enabled(bool value) {
   // @@protoc_insertion_point(field_set:proto.GameObject.enabled)
 }
 
-// optional int32 model_index = 9;
+// optional int32 model_index = 6;
 inline bool GameObject::has_model_index() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void GameObject::set_has_model_index() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void GameObject::clear_has_model_index() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void GameObject::clear_model_index() {
   model_index_ = 0;

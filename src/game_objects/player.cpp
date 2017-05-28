@@ -83,10 +83,12 @@ void Player::prepare_movement(int inX, int inZ) {
     to_moveZ = inZ;
 }
 
-void Player::c_update_state(float x, float z, float wx, float wz, bool enab) {
+void Player::c_update_state(glm::mat4 mat, bool enab) {
     anim_player.update();
-    float dx = std::fabs(x - transform.get_position().x);
-    float dz = std::fabs(z - transform.get_position().z);
+
+    // Find difference in x and z positions for animating.
+    float dx = std::fabs(mat[3][0] - transform.get_position().x);
+    float dz = std::fabs(mat[3][2] - transform.get_position().z);
     bool animate = dx > ANIMATE_DELTA || dz > ANIMATE_DELTA;
 
     if (!animate && !exiting && !stunned) {
@@ -104,7 +106,7 @@ void Player::c_update_state(float x, float z, float wx, float wz, bool enab) {
         }
     }
 
-    GameObject::c_update_state(x, z, wx, wz, enab);
+    GameObject::c_update_state(mat, enab);
 }
 
 void Player::do_movement() {

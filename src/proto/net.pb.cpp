@@ -214,13 +214,10 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(IdPair));
   GameObject_descriptor_ = file->message_type(6);
-  static const int GameObject_offsets_[9] = {
+  static const int GameObject_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, z_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, wx_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, wz_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, transform_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, client_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, enabled_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, model_index_),
@@ -404,21 +401,21 @@ void protobuf_AddDesc_net_2eproto() {
     "\n\007objects\030\001 \003(\0132\021.proto.GameObject\022!\n\nco"
     "llisions\030\002 \003(\0132\r.proto.IdPair\022 \n\tinterac"
     "ts\030\003 \003(\0132\r.proto.IdPair\"*\n\006IdPair\022\021\n\tini"
-    "tiator\030\001 \001(\005\022\r\n\005other\030\002 \001(\005\"\346\001\n\nGameObje"
+    "tiator\030\001 \001(\005\022\r\n\005other\030\002 \001(\005\"\313\001\n\nGameObje"
     "ct\022\n\n\002id\030\001 \001(\005\022$\n\004type\030\002 \001(\0162\026.proto.Gam"
-    "eObject.Type\022\t\n\001x\030\003 \001(\002\022\t\n\001z\030\004 \001(\002\022\n\n\002wx"
-    "\030\005 \001(\002\022\n\n\002wz\030\006 \001(\002\022\021\n\tclient_id\030\007 \001(\005\022\017\n"
-    "\007enabled\030\010 \001(\010\022\023\n\013model_index\030\t \001(\005\"\?\n\004T"
-    "ype\022\n\n\006PLAYER\020\000\022\010\n\004GOAL\020\001\022\t\n\005CHEST\020\002\022\t\n\005"
-    "SPIKE\020\003\022\013\n\007ESSENCE\020\004\"%\n\tCollision\022\n\n\002id\030"
-    "\001 \001(\005\022\014\n\004type\030\002 \001(\005\"~\n\tStickData\022%\n\005inpu"
-    "t\030\001 \001(\0162\026.proto.StickData.Stick\022\t\n\001x\030\002 \001"
-    "(\005\022\t\n\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nST"
-    "ICK_LEFT\020\000\022\017\n\013STICK_RIGHT\020\001\"(\n\013PlayerSta"
-    "ts\022\n\n\002id\030\001 \001(\005\022\r\n\005coins\030\002 \001(\005\"6\n\014AvatarC"
-    "hange\022\021\n\tplayer_id\030\001 \001(\005\022\023\n\013model_index\030"
-    "\002 \001(\005*A\n\005Phase\022\010\n\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BU"
-    "ILD\020\001\022\013\n\007DUNGEON\020\002\022\014\n\010MINIGAME\020\003", 1672);
+    "eObject.Type\022\021\n\ttransform\030\003 \003(\002\022\021\n\tclien"
+    "t_id\030\004 \001(\005\022\017\n\007enabled\030\005 \001(\010\022\023\n\013model_ind"
+    "ex\030\006 \001(\005\"\?\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL\020\001\022\t"
+    "\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\022\013\n\007ESSENCE\020\004\"%\n\tCol"
+    "lision\022\n\n\002id\030\001 \001(\005\022\014\n\004type\030\002 \001(\005\"~\n\tStic"
+    "kData\022%\n\005input\030\001 \001(\0162\026.proto.StickData.S"
+    "tick\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"("
+    "\n\005Stick\022\016\n\nSTICK_LEFT\020\000\022\017\n\013STICK_RIGHT\020\001"
+    "\"(\n\013PlayerStats\022\n\n\002id\030\001 \001(\005\022\r\n\005coins\030\002 \001"
+    "(\005\"6\n\014AvatarChange\022\021\n\tplayer_id\030\001 \001(\005\022\023\n"
+    "\013model_index\030\002 \001(\005*A\n\005Phase\022\010\n\004NOOP\020\004\022\010\n"
+    "\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020\002\022\014\n\010MINIG"
+    "AME\020\003", 1645);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -3193,10 +3190,7 @@ const int GameObject::Type_ARRAYSIZE;
 #ifndef _MSC_VER
 const int GameObject::kIdFieldNumber;
 const int GameObject::kTypeFieldNumber;
-const int GameObject::kXFieldNumber;
-const int GameObject::kZFieldNumber;
-const int GameObject::kWxFieldNumber;
-const int GameObject::kWzFieldNumber;
+const int GameObject::kTransformFieldNumber;
 const int GameObject::kClientIdFieldNumber;
 const int GameObject::kEnabledFieldNumber;
 const int GameObject::kModelIndexFieldNumber;
@@ -3222,10 +3216,6 @@ void GameObject::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0;
   type_ = 0;
-  x_ = 0;
-  z_ = 0;
-  wx_ = 0;
-  wz_ = 0;
   client_id_ = 0;
   enabled_ = false;
   model_index_ = 0;
@@ -3274,14 +3264,15 @@ void GameObject::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(id_, enabled_);
+  if (_has_bits_[0 / 32] & 59) {
+    ZR_(id_, type_);
+    ZR_(client_id_, model_index_);
   }
-  model_index_ = 0;
 
 #undef OFFSET_OF_FIELD_
 #undef ZR_
 
+  transform_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
@@ -3326,73 +3317,32 @@ bool GameObject::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(29)) goto parse_x;
+        if (input->ExpectTag(29)) goto parse_transform;
         break;
       }
 
-      // optional float x = 3;
+      // repeated float transform = 3;
       case 3: {
         if (tag == 29) {
-         parse_x:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+         parse_transform:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &x_)));
-          set_has_x();
+                 1, 29, input, this->mutable_transform())));
+        } else if (tag == 26) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
+                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
+                 input, this->mutable_transform())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(37)) goto parse_z;
+        if (input->ExpectTag(29)) goto parse_transform;
+        if (input->ExpectTag(32)) goto parse_client_id;
         break;
       }
 
-      // optional float z = 4;
+      // optional int32 client_id = 4;
       case 4: {
-        if (tag == 37) {
-         parse_z:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &z_)));
-          set_has_z();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(45)) goto parse_wx;
-        break;
-      }
-
-      // optional float wx = 5;
-      case 5: {
-        if (tag == 45) {
-         parse_wx:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &wx_)));
-          set_has_wx();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(53)) goto parse_wz;
-        break;
-      }
-
-      // optional float wz = 6;
-      case 6: {
-        if (tag == 53) {
-         parse_wz:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &wz_)));
-          set_has_wz();
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(56)) goto parse_client_id;
-        break;
-      }
-
-      // optional int32 client_id = 7;
-      case 7: {
-        if (tag == 56) {
+        if (tag == 32) {
          parse_client_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -3401,13 +3351,13 @@ bool GameObject::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_enabled;
+        if (input->ExpectTag(40)) goto parse_enabled;
         break;
       }
 
-      // optional bool enabled = 8;
-      case 8: {
-        if (tag == 64) {
+      // optional bool enabled = 5;
+      case 5: {
+        if (tag == 40) {
          parse_enabled:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
@@ -3416,13 +3366,13 @@ bool GameObject::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_model_index;
+        if (input->ExpectTag(48)) goto parse_model_index;
         break;
       }
 
-      // optional int32 model_index = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional int32 model_index = 6;
+      case 6: {
+        if (tag == 48) {
          parse_model_index:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -3471,39 +3421,25 @@ void GameObject::SerializeWithCachedSizes(
       2, this->type(), output);
   }
 
-  // optional float x = 3;
-  if (has_x()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->x(), output);
+  // repeated float transform = 3;
+  for (int i = 0; i < this->transform_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteFloat(
+      3, this->transform(i), output);
   }
 
-  // optional float z = 4;
-  if (has_z()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(4, this->z(), output);
-  }
-
-  // optional float wx = 5;
-  if (has_wx()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(5, this->wx(), output);
-  }
-
-  // optional float wz = 6;
-  if (has_wz()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->wz(), output);
-  }
-
-  // optional int32 client_id = 7;
+  // optional int32 client_id = 4;
   if (has_client_id()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->client_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->client_id(), output);
   }
 
-  // optional bool enabled = 8;
+  // optional bool enabled = 5;
   if (has_enabled()) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->enabled(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->enabled(), output);
   }
 
-  // optional int32 model_index = 9;
+  // optional int32 model_index = 6;
   if (has_model_index()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->model_index(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->model_index(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -3527,39 +3463,25 @@ void GameObject::SerializeWithCachedSizes(
       2, this->type(), target);
   }
 
-  // optional float x = 3;
-  if (has_x()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->x(), target);
+  // repeated float transform = 3;
+  for (int i = 0; i < this->transform_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteFloatToArray(3, this->transform(i), target);
   }
 
-  // optional float z = 4;
-  if (has_z()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(4, this->z(), target);
-  }
-
-  // optional float wx = 5;
-  if (has_wx()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(5, this->wx(), target);
-  }
-
-  // optional float wz = 6;
-  if (has_wz()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->wz(), target);
-  }
-
-  // optional int32 client_id = 7;
+  // optional int32 client_id = 4;
   if (has_client_id()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->client_id(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->client_id(), target);
   }
 
-  // optional bool enabled = 8;
+  // optional bool enabled = 5;
   if (has_enabled()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->enabled(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->enabled(), target);
   }
 
-  // optional int32 model_index = 9;
+  // optional int32 model_index = 6;
   if (has_model_index()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->model_index(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->model_index(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3587,41 +3509,19 @@ int GameObject::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
-    // optional float x = 3;
-    if (has_x()) {
-      total_size += 1 + 4;
-    }
-
-    // optional float z = 4;
-    if (has_z()) {
-      total_size += 1 + 4;
-    }
-
-    // optional float wx = 5;
-    if (has_wx()) {
-      total_size += 1 + 4;
-    }
-
-    // optional float wz = 6;
-    if (has_wz()) {
-      total_size += 1 + 4;
-    }
-
-    // optional int32 client_id = 7;
+    // optional int32 client_id = 4;
     if (has_client_id()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->client_id());
     }
 
-    // optional bool enabled = 8;
+    // optional bool enabled = 5;
     if (has_enabled()) {
       total_size += 1 + 1;
     }
 
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 model_index = 9;
+    // optional int32 model_index = 6;
     if (has_model_index()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -3629,6 +3529,13 @@ int GameObject::ByteSize() const {
     }
 
   }
+  // repeated float transform = 3;
+  {
+    int data_size = 0;
+    data_size = 4 * this->transform_size();
+    total_size += 1 * this->transform_size() + data_size;
+  }
+
   if (!unknown_fields().empty()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
@@ -3654,6 +3561,7 @@ void GameObject::MergeFrom(const ::google::protobuf::Message& from) {
 
 void GameObject::MergeFrom(const GameObject& from) {
   GOOGLE_CHECK_NE(&from, this);
+  transform_.MergeFrom(from.transform_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_id()) {
       set_id(from.id());
@@ -3661,26 +3569,12 @@ void GameObject::MergeFrom(const GameObject& from) {
     if (from.has_type()) {
       set_type(from.type());
     }
-    if (from.has_x()) {
-      set_x(from.x());
-    }
-    if (from.has_z()) {
-      set_z(from.z());
-    }
-    if (from.has_wx()) {
-      set_wx(from.wx());
-    }
-    if (from.has_wz()) {
-      set_wz(from.wz());
-    }
     if (from.has_client_id()) {
       set_client_id(from.client_id());
     }
     if (from.has_enabled()) {
       set_enabled(from.enabled());
     }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from.has_model_index()) {
       set_model_index(from.model_index());
     }
@@ -3709,10 +3603,7 @@ void GameObject::Swap(GameObject* other) {
   if (other != this) {
     std::swap(id_, other->id_);
     std::swap(type_, other->type_);
-    std::swap(x_, other->x_);
-    std::swap(z_, other->z_);
-    std::swap(wx_, other->wx_);
-    std::swap(wz_, other->wz_);
+    transform_.Swap(&other->transform_);
     std::swap(client_id_, other->client_id_);
     std::swap(enabled_, other->enabled_);
     std::swap(model_index_, other->model_index_);

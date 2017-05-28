@@ -52,10 +52,14 @@ void ServerNetworkManager::register_listeners() {
             go->set_id(player->get_id());
             go->set_type(proto::GameObject::Type::GameObject_Type_PLAYER);
             go->set_model_index(player->c_get_model_index());
-            go->set_x(player->transform.get_position().x);
-            go->set_z(player->transform.get_position().z);
-            go->set_wx(player->transform.get_forward().x);
-            go->set_wz(player->transform.get_forward().z);
+
+            glm::mat4 mat = player->transform.get_world_mat();
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    go->add_transform(mat[i][j]);
+                }
+            }
+
             go->set_enabled(player->is_enabled());
         }
         
@@ -89,10 +93,14 @@ void ServerNetworkManager::register_listeners() {
                 go->set_type(proto::GameObject::Type::GameObject_Type_GOAL);
             else if (dynamic_cast<Essence*>(obj))
                 go->set_type(proto::GameObject::Type::GameObject_Type_ESSENCE);
-            go->set_x(obj->transform.get_position().x);
-            go->set_z(obj->transform.get_position().z);
-            go->set_wx(obj->transform.get_forward().x);
-            go->set_wz(obj->transform.get_forward().z);
+
+            glm::mat4 mat = obj->transform.get_world_mat();
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    go->add_transform(mat[i][j]);
+                }
+            }
+
             go->set_enabled(obj->is_enabled());
         }
 
@@ -263,19 +271,28 @@ void ClientNetworkManager::update() {
             proto::GameState state = msg.state_update();
 
             for (auto obj : state.objects()) {
+                glm::mat4 world_mat = glm::mat4(1.0f);
+                for (int i = 0; i < 0; i++) {
+                    for (int j = 0; j < 0; j++) {
+                        world_mat[i][j] = obj.transform().Get(i * 4 + j);
+                    }
+                }
+                int obj_x = world_mat[3][0];
+                int obj_z = world_mat[3][2];
+
                 if (GameObject::game_objects.find(obj.id()) == GameObject::game_objects.end()) {
                     // Game object with that ID doesn't exist on this client yet; create it.
                     if (obj.type() == proto::GameObject::Type::GameObject_Type_PLAYER) {
                         events::menu::spawn_existing_player_event(obj.id(), obj.model_index());
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_GOAL) {
-                        events::dungeon::spawn_existing_goal_event(obj.x(), obj.z(), obj.id());
+                        events::dungeon::spawn_existing_goal_event(obj_x, obj_z, obj.id());
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_ESSENCE) {
-                        events::dungeon::c_spawn_essence_event(obj.x(), obj.z(), obj.id());
+                        events::dungeon::c_spawn_essence_event(obj_x, obj_z, obj.id());
                     } else {
                         std::cerr << "Unrecognized game obj type; could not create client copy.\n";
                     }
                 } else {
-                    GameObject::game_objects[obj.id()]->c_update_state(obj.x(), obj.z(), obj.wx(), obj.wz(), obj.enabled());
+                    GameObject::game_objects[obj.id()]->c_update_state(world_mat, obj.enabled());
                 }
             }
 

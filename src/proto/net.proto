@@ -71,13 +71,10 @@ message GameObject {
 
   optional int32 id = 1;
   optional Type type = 2;
-  optional float x = 3;
-  optional float z = 4;
-  optional float wx = 5;
-  optional float wz = 6;
-  optional int32 client_id = 7;
-  optional bool enabled = 8;
-  optional int32 model_index = 9; // only for Players
+  repeated float transform = 3;
+  optional int32 client_id = 4;
+  optional bool enabled = 5;
+  optional int32 model_index = 6; // only for Players
 }
 
 message Collision {
