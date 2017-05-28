@@ -272,8 +272,8 @@ void ClientNetworkManager::update() {
 
             for (auto obj : state.objects()) {
                 glm::mat4 world_mat = glm::mat4(1.0f);
-                for (int i = 0; i < 0; i++) {
-                    for (int j = 0; j < 0; j++) {
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < 4; j++) {
                         world_mat[i][j] = obj.transform().Get(i * 4 + j);
                     }
                 }
