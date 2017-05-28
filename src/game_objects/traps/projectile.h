@@ -16,6 +16,7 @@ private:
     std::function<void()> cancel_timer;
 protected:
     float speed = 5.0f;
+    long long time_out_ms = 2000; // Time it takes before projectile disappears, in ms
     ProjectileTypes projectile_type;
     int parent_id;
 public:
@@ -28,7 +29,7 @@ public:
     void handle_movement();
 
     // Sets up timer for when this object is timed out
-    void setup_timer(long long time_out_ms);
+    void setup_timer();
 
     virtual void s_update_this();
 

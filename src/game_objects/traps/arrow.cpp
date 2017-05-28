@@ -17,7 +17,11 @@ Arrow::Arrow(int id) : Projectile(id) {
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
 
+        // Fast speed
         speed = 10.0f;
+
+        // 5 Seconds time out
+        time_out_ms = 5000;
     }
 }
 

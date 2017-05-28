@@ -18,10 +18,11 @@ void Projectile::fire(Transform spawn_location) {
     
     enable();
 
-    set_position(spawn_location.get_position() + glm::vec3(0, 0.5f, 0));
+    glm::vec3 offset = glm::vec3(0, 0.5f, 0.5f);
+    set_position(spawn_location.get_position() + offset);
     transform.set_rotation(spawn_location.get_rotation());
 
-    setup_timer(2000); // Set-up Time-Out. Currently default to 2 seconds. 
+    setup_timer(); // Set-up Time-Out. 
 }
 
 void Projectile::s_update_this() {
@@ -57,7 +58,7 @@ void Projectile::handle_movement() {
     rigidbody->setLinearVelocity(util_bt::convert_vec3(transform.get_forward() * speed));
 }
 
-void Projectile::setup_timer(long long time_out_ms) {
+void Projectile::setup_timer() {
     // cancels any previous timer, if exists.
     if (cancel_timer)
         cancel_timer();
