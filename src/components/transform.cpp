@@ -128,9 +128,9 @@ glm::vec3 Transform::get_rotation() {
     col_2 = (1 / scale.z) * col_2;
 
     // Below equations are not tested, got it from some site online.
-    float angle_x = glm::atan(col_1.z, col_2.z);
-    float angle_y = glm::atan(-col_0.z, sqrtf((col_1.z * col_1.z) + (col_2.z * col_2.z)));
-    float angle_z = glm::atan(col_1.x, col_0.x);
+    float angle_x = glm::degrees(glm::atan(col_1.z, col_2.z));
+    float angle_y = glm::degrees(glm::atan(-col_0.z, sqrtf((col_1.z * col_1.z) + (col_2.z * col_2.z))));
+    float angle_z = glm::degrees(glm::atan(col_1.x, col_0.x));
 
     return glm::vec3(angle_x, angle_y, angle_z);
 }
@@ -156,9 +156,9 @@ glm::mat4 Transform::get_translation_mat() {
 // Helper fucntion for easily getting rotation matrix
 glm::mat4 Transform::get_rotation_mat() {
     glm::vec3 rot_angles = get_rotation();
-    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), rot_angles.x, glm::vec3(1.f, 0.f, 0.f));
-    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), rot_angles.x, glm::vec3(0.f, 1.f, 0.f));
-    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), rot_angles.x, glm::vec3(0.f, 0.f, 1.f));
+    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), glm::radians(rot_angles.x), glm::vec3(1.f, 0.f, 0.f));
+    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), glm::radians(rot_angles.y), glm::vec3(0.f, 1.f, 0.f));
+    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), glm::radians(rot_angles.z), glm::vec3(0.f, 0.f, 1.f));
     return rotate_z * rotate_y * rotate_x;
 }
 
