@@ -2,9 +2,9 @@
 
 namespace events {
     using boost::signals2::signal;
-    signal<void(JoystickData &)> joystick_event;
-    signal<void(ButtonData &)> button_event;
-    signal<void(StickData &)> stick_event;
+    signal<void(const JoystickData &)> joystick_event;
+    signal<void(const ButtonData &)> button_event;
+    signal<void(const StickData &)> stick_event;
     signal<void(const AudioData &)> music_event;
     signal<void(const AudioData &)> sound_effects_event;
     signal<void(std::string)> stop_sound_effects_event;

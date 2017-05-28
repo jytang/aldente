@@ -1,4 +1,5 @@
 #include <game/game_state.h>
+#include <input/modal_input.h>
 #include "build.h"
 #include "audio/audio_manager.h"
 
@@ -45,7 +46,7 @@ void BuildPhase::c_setup() {
     events::build::select_grid_return_event();
     is_menu = true;
 
-    joystick_conn = events::stick_event.connect([&](events::StickData d) {
+    joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](events::StickData d) {
 
         // Left stick for UI Grid Movement
         if (d.input == events::STICK_LEFT) {
@@ -76,7 +77,7 @@ void BuildPhase::c_setup() {
         }
     });
 
-    button_conn = events::button_event.connect([&](events::ButtonData d) {
+    button_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).buttons.connect([&](events::ButtonData d) {
         Direction dir;
         bool d_pad = false;
 

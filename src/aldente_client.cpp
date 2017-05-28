@@ -1,3 +1,4 @@
+#include <input/modal_input.h>
 #include "aldente_client.h"
 
 #include "window.h"
@@ -65,6 +66,7 @@ void AldenteClient::start() {
             input::BTN_MAP_XBOX;
     input::ConceptualTranslator translator(control_mapping, input::KBD_MAP_DEBUG);
     input::AxisCombiner stick_handler(translator, input::STICKS_DEFAULT);
+    input::ModalInput::provide(std::make_shared<input::ModalInput>());
 
     // Setup subsystems after window creation.
     glSetup();

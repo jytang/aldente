@@ -28,7 +28,7 @@ namespace events {
         int state; // If button, zero is not pressed, nonzero is pressed.
         // Otherwise, is axis analog level.
     };
-    extern signal<void(JoystickData &)> joystick_event;
+    extern signal<void(const JoystickData &)> joystick_event;
 
     // Conceptual button input
     enum ConceptualButton {
@@ -47,7 +47,7 @@ namespace events {
         int state; // If button, zero is not pressed, nonzero is pressed.
         // Otherwise, is axis analog level.
     };
-    extern signal<void(ButtonData &)> button_event;
+    extern signal<void(const ButtonData &)> button_event;
 
     // Stick
     enum Stick {
@@ -58,7 +58,7 @@ namespace events {
         Stick input;
         std::pair<int, int> state;
     };
-    extern signal<void(StickData &)> stick_event;
+    extern signal<void(const StickData &)> stick_event;
 
     // Audio
     struct AudioData {

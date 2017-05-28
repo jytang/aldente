@@ -1,4 +1,5 @@
 #include <game/game_state.h>
+#include <input/modal_input.h>
 #include "dungeon.h"
 #include "game_objects/player.h"
 #include "game_objects/essence.h"
@@ -48,14 +49,14 @@ void DungeonPhase::s_setup() {
 
 void DungeonPhase::c_setup() {
     context.player_finished = false;
-    joystick_conn = events::stick_event.connect([&](events::StickData d) {
+    joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](events::StickData d) {
         // Left stick
         if (d.input == events::STICK_LEFT) {
             events::dungeon::network_player_move_event(d);
         }
     });
 
-    button_conn = events::button_event.connect([&](events::ButtonData d) {
+    button_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).buttons.connect([&](events::ButtonData d) {
         if (d.state == 0) return;
         switch (d.input) {
             case events::BTN_A:
