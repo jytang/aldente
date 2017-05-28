@@ -29,6 +29,9 @@ void DebugShadowShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 model_
     // Set texture to be shadow map texture.
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, ShaderManager::shadow.shadow_map_tex);
+
+    set_uni("depth_shadow", true);
+
     // Draw quad.
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
