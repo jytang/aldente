@@ -17,6 +17,8 @@ class Player : public GameObject {
 private:
 
     std::function<void()> cancel_flicker; // Callback function to cancel damage flicker.
+    std::function<void()> cancel_stun;
+    std::function<void()> cancel_invulnerable;
     bool end_flicker; // Whether we should stop player flickering.
     bool invulnerable; // Can't lose coins or collide with other harmful traps.
     bool stunned; // Can't move.

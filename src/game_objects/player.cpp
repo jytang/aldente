@@ -270,6 +270,14 @@ void Player::c_take_damage() {
     int count = 0;
     end_flicker = false;
 
+    // Make sure all animations from previous cycle has ended
+    if (cancel_flicker)
+        cancel_flicker();
+    if (cancel_stun)
+        cancel_stun();
+    if (cancel_invulnerable)
+        cancel_invulnerable();
+
     // Flicker
     cancel_flicker = Timer::get()->do_every(
         std::chrono::milliseconds(100),
@@ -291,14 +299,14 @@ void Player::c_take_damage() {
     anim_player.play();
 
     // End hurt animation
-    Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
+    cancel_stun = Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
         [&]() {
         stunned = false;
         start_walk();
     });
 
     // End
-    Timer::get()->do_after(std::chrono::milliseconds(INVULNERABLE_LENGTH),
+    cancel_invulnerable = Timer::get()->do_after(std::chrono::milliseconds(INVULNERABLE_LENGTH),
         [&]() {
         end_flicker = true;
         cancel_flicker();
