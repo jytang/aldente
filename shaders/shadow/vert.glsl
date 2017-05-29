@@ -16,7 +16,9 @@ void main()
 {
     vec4 new_pos = vec4(position, 1.0);
 
-    if (has_bones){
+    bool weighted_bones = dot(weights, vec4(1)) > 0;
+
+    if (has_bones && weighted_bones){
         // Handles all bone transformations if has bone weights
         // Any vertex can only be influenced by up to four bones
         mat4 bone_trans = bones[bone_ids[0]] * weights[0];

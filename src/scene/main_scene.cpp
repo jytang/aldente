@@ -42,7 +42,7 @@ void MainScene::c_setup() {
     objs.push_back(grid);
 
     // Setup lights.
-    DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
+    DirectionalLight *sun = new DirectionalLight(glm::vec3(-0.3f, -1.f, -1.f),
                                                  Color::WHITE, 0.1f);
     add_light(sun);
 
