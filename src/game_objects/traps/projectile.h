@@ -19,6 +19,8 @@ protected:
     long long time_out_ms = 2000; // Time it takes before projectile disappears, in ms
     ProjectileTypes projectile_type;
     int parent_id;
+
+    float height_offset = 0.5f;
 public:
     Projectile(int id = 0);
 

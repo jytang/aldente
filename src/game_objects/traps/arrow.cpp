@@ -20,6 +20,9 @@ Arrow::Arrow(int id) : Projectile(id) {
         // Fast speed
         speed = 10.0f;
 
+        // Adjust height so that it rests on top of trap
+        height_offset = 0.8f;
+
         // 5 Seconds time out
         time_out_ms = 5000;
     }

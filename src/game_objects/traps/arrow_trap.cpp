@@ -16,7 +16,7 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
         //raycast_range = 10.f;
 
         // Fires arrow every ...
-        setup_timer(500);
+        setup_timer(1000);
         activation_type = TIME;
     }
 }
@@ -24,12 +24,12 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
 void ArrowTrap::setup_model() {
     Model *model = AssetLoader::get_model("arrow_trap");
     attach_model(model);
-    transform.set_scale({ 0.008f, 0.008f, 0.008f });
+    transform.set_scale({ 0.0095f, 0.0095f, 0.0095f });
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("shoot");
-    anim_player.set_loop(true);
-    anim_player.set_speed(1.0f);
+    anim_player.set_loop(false);
+    anim_player.set_speed(5.0f);
 }
 
 void ArrowTrap::play_trigger_animation() {
