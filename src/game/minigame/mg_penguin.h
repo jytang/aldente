@@ -24,5 +24,5 @@ private:
     boost::signals2::connection collision_conn;
     boost::signals2::connection flag_conn;
 
-    std::vector<Player*, bool> dead_player_flags;
+    std::map<int, bool> dead_player_flags;
 };
