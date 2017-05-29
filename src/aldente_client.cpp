@@ -16,7 +16,7 @@
 #include "events.h"
 #include "timer.h"
 #include "ui/ui_manager.h"
-#include "render.h"
+#include "render/render.h"
 #include "game/game_state.h"
 #include "net/network_manager.h"
 #include "shaders/shader_manager.h"

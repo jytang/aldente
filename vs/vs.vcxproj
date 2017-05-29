@@ -213,8 +213,9 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\poll\input_poller.h" />
     <ClInclude Include="..\src\poll\poller.h" />
     <ClInclude Include="..\src\proto\net.pb.h" />
-    <ClInclude Include="..\src\render.h" />
     <ClInclude Include="..\src\render\hdr.h" />
+    <ClInclude Include="..\src\render\render.h" />
+    <ClInclude Include="..\src\render\shadows.h" />
     <ClInclude Include="..\src\scene\camera.h" />
     <ClInclude Include="..\src\scene\light\directional_light.h" />
     <ClInclude Include="..\src\scene\light\light.h" />
@@ -236,7 +237,6 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\shaders\skybox_shader.h" />
     <ClInclude Include="..\src\shaders\text_shader.h" />
     <ClInclude Include="..\src\shaders\ui_shader.h" />
-    <ClInclude Include="..\src\shadows.h" />
     <ClInclude Include="..\src\timer.h" />
     <ClInclude Include="..\src\ui\build_ui.h" />
     <ClInclude Include="..\src\ui\clock_ui.h" />
@@ -324,8 +324,9 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
       <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ForcedIncludeFiles>
     </ClCompile>
-    <ClCompile Include="..\src\render.cpp" />
     <ClCompile Include="..\src\render\hdr.cpp" />
+    <ClCompile Include="..\src\render\render.cpp" />
+    <ClCompile Include="..\src\render\shadows.cpp" />
     <ClCompile Include="..\src\scene\camera.cpp" />
     <ClCompile Include="..\src\scene\main_scene.cpp" />
     <ClCompile Include="..\src\scene\scene.cpp" />
@@ -342,7 +343,6 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\shaders\skybox_shader.cpp" />
     <ClCompile Include="..\src\shaders\text_shader.cpp" />
     <ClCompile Include="..\src\shaders\ui_shader.cpp" />
-    <ClCompile Include="..\src\shadows.cpp" />
     <ClCompile Include="..\src\timer.cpp" />
     <ClCompile Include="..\src\ui\build_ui.cpp" />
     <ClCompile Include="..\src\ui\clock_ui.cpp" />
