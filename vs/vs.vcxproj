@@ -171,6 +171,8 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game\context.h" />
     <ClInclude Include="..\src\game\direction.h" />
     <ClInclude Include="..\src\game\game_state.h" />
+    <ClInclude Include="..\src\game\minigame\mg_penguin.h" />
+    <ClInclude Include="..\src\game\minigame\minigame.h" />
     <ClInclude Include="..\src\game\phase\build.h" />
     <ClInclude Include="..\src\game\phase\dungeon.h" />
     <ClInclude Include="..\src\game\phase\menu.h" />
@@ -181,6 +183,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game_objects\essence.h" />
     <ClInclude Include="..\src\game_objects\game_object.h" />
     <ClInclude Include="..\src\game_objects\grid.h" />
+    <ClInclude Include="..\src\game_objects\minigame\penguin.h" />
     <ClInclude Include="..\src\game_objects\player.h" />
     <ClInclude Include="..\src\game_objects\tile.h" />
     <ClInclude Include="..\src\game_objects\traps\arrow.h" />
@@ -228,6 +231,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\scene\light\pulse_point_light.h" />
     <ClInclude Include="..\src\scene\light\spot_light.h" />
     <ClInclude Include="..\src\scene\main_scene.h" />
+    <ClInclude Include="..\src\scene\minigame_scenes\mgscene_penguin.h" />
     <ClInclude Include="..\src\scene\scene.h" />
     <ClInclude Include="..\src\scene\scene_info.h" />
     <ClInclude Include="..\src\scene\start_scene.h" />
@@ -288,6 +292,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\example_test.cpp" />
     <ClCompile Include="..\src\game\collectibles\gold.cpp" />
     <ClCompile Include="..\src\game\game_state.cpp" />
+    <ClCompile Include="..\src\game\minigame\mg_penguin.cpp" />
     <ClCompile Include="..\src\game\phase\build.cpp" />
     <ClCompile Include="..\src\game\phase\dungeon.cpp" />
     <ClCompile Include="..\src\game\phase\menu.cpp" />
@@ -298,6 +303,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\game_objects\essence.cpp" />
     <ClCompile Include="..\src\game_objects\game_object.cpp" />
     <ClCompile Include="..\src\game_objects\grid.cpp" />
+    <ClCompile Include="..\src\game_objects\minigame\penguin.cpp" />
     <ClCompile Include="..\src\game_objects\player.cpp" />
     <ClCompile Include="..\src\game_objects\tile.cpp" />
     <ClCompile Include="..\src\game_objects\traps\arrow.cpp" />
@@ -345,6 +351,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\render\shadows.cpp" />
     <ClCompile Include="..\src\scene\camera.cpp" />
     <ClCompile Include="..\src\scene\main_scene.cpp" />
+    <ClCompile Include="..\src\scene\minigame_scenes\mgscene_penguin.cpp" />
     <ClCompile Include="..\src\scene\scene.cpp" />
     <ClCompile Include="..\src\scene\scene_info.cpp" />
     <ClCompile Include="..\src\scene\start_scene.cpp" />

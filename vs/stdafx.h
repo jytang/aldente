@@ -42,6 +42,7 @@
 #include "game_objects/grid.h"
 #include "game_objects/player.h"
 #include "game_objects/tile.h"
+#include "game_objects/minigame/penguin.h"
 
 #include "input/axis_combiner.h"
 #include "input/conceptual_translator.h"
@@ -81,6 +82,8 @@
 #include "scene/light/point_light.h"
 #include "scene/light/pulse_point_light.h"
 #include "scene/light/spot_light.h"
+#include "scene/minigame_scenes/mgscene_penguin.h"
+#include "scene/minigame_scenes/mgscene_penguin.cpp"
 
 #include "shaders/basic_shader.h"
 #include "shaders/debug_shadow_shader.h"
