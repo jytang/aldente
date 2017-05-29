@@ -29,6 +29,7 @@ void BasicShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
         sprintf(buf, "bones[%d]", i);
         set_uni(buf, bones[i]);
     }
+    set_uni("has_bones", bones.size() != 0);
 
     /* MESH UNIFORMS */
     // Send mesh local transformation matrix.

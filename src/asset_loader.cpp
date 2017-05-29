@@ -89,7 +89,6 @@ void AssetLoader::load(std::string file_loc, std::string file_name) {
             //std::cerr << "Adding Animation : " << scene->mAnimations[0]->mName.data << std::endl;
             Animation *animation = new Animation(import.GetOrphanedScene(), scene->mAnimations[0]);
             model->initial_skeleton.animations[anim_name] = animation;
-            model->set_shader(&ShaderManager::anim_basic);
         }
     } else {
         // File is only a model

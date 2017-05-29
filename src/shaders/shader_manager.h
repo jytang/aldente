@@ -20,8 +20,6 @@ public:
     static DebugShadowShader debug_shadow;
     static UIShader ui;
     static BasicShader unlit;
-    static BasicShader anim_basic;
-    static BasicShader anim_unlit;
     static HDRShader hdr;
     static BlurShader blur;
 
@@ -45,10 +43,6 @@ public:
         ui.init();
         unlit.set_id(create_shader_program("unlit"));
         unlit.init();
-        anim_basic.set_id(create_shader_program("anim_basic"));
-        anim_basic.init();
-        anim_unlit.set_id(create_shader_program("anim_unlit"));
-        anim_unlit.init();
         hdr.set_id(create_shader_program("hdr"));
         hdr.init();
         blur.set_id(create_shader_program("blur"));

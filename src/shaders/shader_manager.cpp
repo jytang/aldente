@@ -17,8 +17,6 @@ TextShader ShaderManager::text;
 DebugShadowShader ShaderManager::debug_shadow;
 UIShader ShaderManager::ui;
 BasicShader ShaderManager::unlit;
-BasicShader ShaderManager::anim_basic;
-BasicShader ShaderManager::anim_unlit;
 HDRShader ShaderManager::hdr;
 BlurShader ShaderManager::blur;
 

@@ -179,7 +179,7 @@ void Player::c_setup_player_model(int index) {
     model_index = index;
     std::string model_name = PLAYER_MODELS[model_index];
     Model *player_model = AssetLoader::get_model(model_name);
-    player_model->set_shader(&ShaderManager::anim_unlit);
+    player_model->set_shader(&ShaderManager::unlit);
     attach_model(player_model);
     start_walk();
 
