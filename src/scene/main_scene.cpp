@@ -108,7 +108,7 @@ void MainScene::c_place_goal(int x, int z, int id) {
     goal = new Goal(x, z, id);
 
     goal_light = 
-        new PulsePointLight(glm::vec3(x, 0.5f, z), Color::OCEAN_BLUE, 0, 0.5f, 0.02f, 0.1f);
+        new PulsePointLight(glm::vec3(x, 0.5f, z), Color::OCEAN_BLUE, 0, 0.15f, 0.0055f, 0.1f);
     add_light(goal_light);
 
     goal->setup_model();
