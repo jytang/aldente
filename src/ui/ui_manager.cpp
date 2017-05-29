@@ -8,6 +8,7 @@
 #include "fps_ui.h"
 #include "leaderboard_ui.h"
 #include "legend_ui.h"
+#include "dialog_ui.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -47,6 +48,9 @@ void UIManager::setup_uis() {
 
     /* LEGEND UI */
     ui_map["legend"] = new LegendUI(aspect, 15.f, 5.f, 1.f);
+
+    /* DIALOG UI (should have high z-index) */
+    ui_map["z100-dialog"] = new DialogUI(aspect, 50.f, 30.f, 2.f);
 }
 
 void UIManager::setup_listeners() {
