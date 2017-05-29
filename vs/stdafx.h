@@ -33,6 +33,8 @@
 #include "game/phase/dungeon.h"
 #include "game/phase/menu.h"
 #include "game/phase/phase.h"
+#include "game/minigame/minigame.h"
+#include "game/minigame/mg_penguin.h"
 
 #include "game_objects/construct.h"
 #include "game_objects/construct_preview.h"
