@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ui.h"
-#include "ui_text_box2.h"
+#include "ui_unstretched_text_box.h"
 
 // Fully modal, so covers the screen. Should have highest z-index, except for like a pausse menu.
 class DialogUI : public UI {
@@ -13,5 +13,5 @@ public:
 
 private:
     UIRectangle bg;
-    UITextBox2 textbox;
+    UIUnstretchedTextBox textbox;
 };

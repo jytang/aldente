@@ -1,12 +1,12 @@
 #include <iostream>
-#include "ui_text_box2.h"
+#include "ui_unstretched_text_box.h"
 
 // Some magic constants for properly spacing the text
 #define X_SCALE_FACTOR 4.8f
 #define Y_SCALE_FACTOR 4.8f
 #define Y_OFFSET_FACTOR 10.f
 
-UITextBox2::UITextBox2(float char_width, float char_height,
+UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        float start_x, float start_y,
                        float width, float height, float padding,
                        Alignment h_align, Alignment v_align,
@@ -27,7 +27,7 @@ UITextBox2::UITextBox2(float char_width, float char_height,
     attach(bg);
 }
 
-void UITextBox2::set_text(const std::string &text) {
+void UIUnstretchedTextBox::set_text(const std::string &text) {
     // Detach old text
     for (auto &node : texts)
         detach(*node);
@@ -57,7 +57,7 @@ void UITextBox2::set_text(const std::string &text) {
     }
 }
 
-std::pair<std::string, std::string> UITextBox2::break_before(std::string text) {
+std::pair<std::string, std::string> UIUnstretchedTextBox::break_before(std::string text) {
     size_t cut_at = text.find_last_of(" ", static_cast<unsigned long>(chars_per_line));
     std::string line;
 
@@ -77,7 +77,7 @@ std::pair<std::string, std::string> UITextBox2::break_before(std::string text) {
     return std::make_pair(line, text);
 }
 
-float UITextBox2::calc_pad(Alignment align, float space) {
+float UIUnstretchedTextBox::calc_pad(Alignment align, float space) {
     switch (align) {
         case END:
             return space;
@@ -89,7 +89,7 @@ float UITextBox2::calc_pad(Alignment align, float space) {
     }
 }
 
-float UITextBox2::hpad(const std::string &line) {
+float UIUnstretchedTextBox::hpad(const std::string &line) {
     float space = inner_width - (line.length() * char_width);
     return calc_pad(h_align, space);
 }

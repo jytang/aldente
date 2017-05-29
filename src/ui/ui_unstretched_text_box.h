@@ -9,12 +9,12 @@
 // Uses this text box if you don't want the text to stretch to width.
 // If text will overflow the box, it won't be displayed.
 // Newlines are curently unsupported.
-class UITextBox2 : public UIContainer {
+class UIUnstretchedTextBox : public UIContainer {
 public:
     enum Alignment {
         START, MIDDLE, END,
     };
-    UITextBox2(float char_width, float char_height,
+    UIUnstretchedTextBox(float char_width, float char_height,
                float start_x, float start_y,
                float width, float height,
                float padding,
