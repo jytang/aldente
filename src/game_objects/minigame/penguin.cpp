@@ -48,3 +48,9 @@ void Penguin::c_update_state(glm::mat4 mat, bool enab) {
 void Penguin::reset_position() {
     set_position(glm::vec3(5, 0, rand() % 3 - 6));
 }
+
+void Penguin::setup_model() {
+    attach_model(AssetLoader::get_model("slime_blue"));
+    transform.set_scale({ 0.004f, 0.004f, 0.004f });
+    initial_transform.set_scale(transform.get_scale());
+}

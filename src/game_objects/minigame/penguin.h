@@ -20,8 +20,6 @@ public:
 
     void s_update_this() override;
     void c_update_state(glm::mat4 mat, bool enab) override;
-    void s_on_collision(GameObject *other) override;
-    void c_on_collision(GameObject *other) override;
 
     void setup_model() override;
 
