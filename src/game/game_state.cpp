@@ -12,6 +12,7 @@ Physics GameState::physics;
 SceneManager GameState::scene_manager;
 MainScene GameState::main_scene;
 StartScene GameState::start_scene;
+MGScenePenguin GameState::penguin_scene;
 int GameState::num_players = 0;
 bool GameState::is_server = true;
 
@@ -19,6 +20,7 @@ void GameState::setup(bool is_server) {
     GameState::is_server = is_server;
     scene_manager.add_scene(&start_scene);
     scene_manager.add_scene(&main_scene);
+    scene_manager.add_scene(&penguin_scene);
 
     if (is_server) {
         // Setup the main scene first, since we want the grid/tiles to be created first.
@@ -26,6 +28,8 @@ void GameState::setup(bool is_server) {
         main_scene.s_setup();
         physics.set_scene(&start_scene);
         start_scene.s_setup();
+        physics.set_scene(&penguin_scene);
+        penguin_scene.s_setup();
 
         // Client of given connection id wishes to join the game.
         // For now, allow more than 4 players to join the game.
@@ -59,6 +63,8 @@ void GameState::setup(bool is_server) {
         main_scene.c_setup();
         physics.set_scene(&start_scene);
         start_scene.c_setup();
+        physics.set_scene(&penguin_scene);
+        penguin_scene.c_setup();
 
         events::menu::spawn_existing_player_event.connect([](int id, int model_index) {
             c_add_player(id, model_index, false);
@@ -66,21 +72,10 @@ void GameState::setup(bool is_server) {
     }
 
     events::menu::end_menu_event.connect([&]() {
-        // Disable rigid bodies on the previous scene.
-        for (auto & kv : players) {
-            events::disable_rigidbody_event(kv.second);
-        }
-
-        physics.set_scene(&main_scene);
-        scene_manager.set_current_scene(&main_scene);
-
-        // Enable rigid bodies on the next scene.
-        for (auto & kv : players) {
-            events::enable_rigidbody_event(kv.second);
-        }
+        set_scene(&main_scene);
     });
 
-    scene_manager.set_current_scene(&start_scene);
+    scene_manager.set_current_scene(&penguin_scene);
 }
 
 void GameState::s_update() {
@@ -139,6 +134,21 @@ void GameState::set_phase(proto::Phase phase) {
     }
 }
 
+void GameState::set_scene(Scene* scene) {
+    // Disable rigid bodies on the previous scene.
+    for (auto & kv : players) {
+        events::disable_rigidbody_event(kv.second);
+    }
+
+    physics.set_scene(scene);
+    scene_manager.set_current_scene(scene);
+
+    // Enable rigid bodies on the next scene.
+    for (auto & kv : players) {
+        events::enable_rigidbody_event(kv.second);
+    }
+}
+
 Player* GameState::s_add_player(int conn_id) {
     Player *player = new Player();
 
@@ -149,6 +159,7 @@ Player* GameState::s_add_player(int conn_id) {
 
     start_scene.objs.push_back(player);
     main_scene.objs.push_back(player);
+    penguin_scene.objs.push_back(player);
 
     return player;
 }
@@ -159,6 +170,7 @@ Player* GameState::c_add_player(int obj_id, int model_index, bool is_client) {
     
     start_scene.objs.push_back(player);
     main_scene.objs.push_back(player);
+    penguin_scene.objs.push_back(player);
 
     if (is_client) {
         context.player_id = obj_id;

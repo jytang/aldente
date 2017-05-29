@@ -5,6 +5,7 @@
 #include "scene_manager.h"
 #include "scene/main_scene.h"
 #include "scene/start_scene.h"
+#include "scene/minigame_scenes/mgscene_penguin.h"
 #include "context.h"
 #include "phase/phase.h"
 #include "phase/menu.h"
@@ -36,7 +37,6 @@ public:
     // Force a phase change to the specified phase.
     // If server, dispatch the change to clients.
     static void set_phase(proto::Phase phase);
-    static void set_client_phase(proto::Phase phase);
 
     // Adds a player to the main scene. If server, add new player to auto-gen the id.
     // If client, add existing player with given id that the server sent.
@@ -44,8 +44,10 @@ public:
     static Player* c_add_player(int obj_id, int model_index, bool is_client);
 private:
     static void set_phase(Phase* phase);
+    static void set_scene(Scene* scene);
     static MainScene main_scene;
     static StartScene start_scene;
+    static MGScenePenguin penguin_scene;
     static int num_players;
     static bool is_server;
 };

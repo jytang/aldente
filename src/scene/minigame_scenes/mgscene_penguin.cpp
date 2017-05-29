@@ -18,8 +18,8 @@ void MGScenePenguin::s_setup() {
     }
 
     // Set up the platform
-    GameObject* platform = new GameObject();
-    platform->attach_model(AssetLoader::get_model("cube"));
+    GameObject* platform = new GameObject(-1);
+    //platform->attach_model(AssetLoader::get_model("cube"));
 
     events::RigidBodyData platform_rigid;
     platform_rigid.object = platform;
@@ -32,6 +32,14 @@ void MGScenePenguin::s_setup() {
 }
 
 void MGScenePenguin::c_setup() {
+
+    // Set up the platform
+    GameObject* platform = new GameObject(-1);
+    platform->attach_model(AssetLoader::get_model("cube"));
+    platform->transform.set_scale(glm::vec3(10, 1, 5));
+    platform->set_position(glm::vec3(0, -0.5f, 0));
+    objs.push_back(platform);
+
     // Setup lights.
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
         Color::WHITE, 0.5f);
