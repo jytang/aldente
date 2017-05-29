@@ -45,6 +45,8 @@ private:
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     std::unique_ptr<collectibles::Collectible> contents;
 
+    bool opened = false; // Has this chest been opened this round?
+
     std::function<void()> cancel_fade; // Callback function to cancel fading away.
     std::function<void()> cancel_disappear;
 };

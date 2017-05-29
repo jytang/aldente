@@ -32,6 +32,10 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
 }
 
 void Chest::s_interact_trigger(GameObject *other) {
+
+    if (opened)
+        return;
+
     // Check if other is a player, than grant some money
     Player *player = dynamic_cast<Player*>(other);
     if (player) {
@@ -48,11 +52,13 @@ void Chest::s_interact_trigger(GameObject *other) {
 
     // Send signal to client to tell that this chest is opened
     events::dungeon::network_interact_event(other->get_id(), id);
+
+    opened = true;
 }
 
 // Activated when a player presses A on it, graphical
 void Chest::c_interact_trigger(GameObject *other) {
-    anim_player.play_if_paused("open", 1.5f);
+    anim_player.play();
 
     cancel_disappear = Timer::get()->do_after(std::chrono::milliseconds(1000),
         [&]() {
@@ -64,6 +70,7 @@ void Chest::setup_model() {
     attach_model(AssetLoader::get_model("chest_good"));
     transform.set_scale({ 0.006f, 0.006f, 0.006f });
     initial_transform.set_scale(transform.get_scale());
+    anim_player.set_anim("open", 1.5f, false);
 }
 
 // Causes chest to slowly fade away, Client
@@ -87,6 +94,7 @@ void Chest::disappear() {
 void Chest::s_reset() {
     if (cancel_disappear)
         cancel_disappear();
+    opened = false;
     enable();
 }
 
