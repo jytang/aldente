@@ -1,9 +1,6 @@
 #pragma once
 
 #include "scene/scene.h"
-#include "asset_loader.h"
-#include "game_objects/grid.h"
-#include "game_objects/player.h"
 
 /*
 Scene for penguin minigame

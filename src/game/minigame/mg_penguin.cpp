@@ -41,6 +41,9 @@ void PenguinMG::s_setup() {
     }
 }
 
+void PenguinMG::s_teardown() {
+}
+
 void PenguinMG::c_setup() {
     joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](const events::StickData &d) {
         // Left stick
@@ -49,4 +52,18 @@ void PenguinMG::c_setup() {
             events::dungeon::network_player_move_event(d);
         }
     });
+}
+
+void PenguinMG::c_teardown() {
+    joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](const events::StickData &d) {
+        // Left stick
+        if (d.input == events::STICK_LEFT) {
+            // Should move this event out of dungeon namespace
+            events::dungeon::network_player_move_event(d);
+        }
+    });
+}
+
+bool PenguinMG::is_finished() {
+    return true;
 }

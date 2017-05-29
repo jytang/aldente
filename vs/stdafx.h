@@ -83,7 +83,6 @@
 #include "scene/light/pulse_point_light.h"
 #include "scene/light/spot_light.h"
 #include "scene/minigame_scenes/mgscene_penguin.h"
-#include "scene/minigame_scenes/mgscene_penguin.cpp"
 
 #include "shaders/basic_shader.h"
 #include "shaders/debug_shadow_shader.h"
