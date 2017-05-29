@@ -109,4 +109,8 @@ namespace events {
         signal<void(float, float)> s_spawn_essence_event;
         signal<void(float, float, int)> c_spawn_essence_event;
     }
+
+    namespace minigame {
+        signal<void(int)> player_died_event;
+    }
 }

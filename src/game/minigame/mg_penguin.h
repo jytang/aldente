@@ -13,12 +13,11 @@ class PenguinMG : public Minigame {
 public:
     PenguinMG(Context& to_set);
 
-    // Used to control listeners of the minigame
-    void setup() override;
-    void teardown() override;
+    void s_setup() override;
+    void s_teardown() override;
+    void c_setup() override;
+    void c_teardown() override;
 
-    // To be called by minigame phase to determine
-    // if the minigame should be terminated early
     bool is_finished() override;
 private: 
     boost::signals2::connection joystick_conn;

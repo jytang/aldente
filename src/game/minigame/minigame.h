@@ -18,8 +18,10 @@ Contains all the information for a single minigame
 class Minigame {
 public:
     // Used to setup/teardown the minigame's events and various other things
-    virtual void setup() {};
-    virtual void teardown() {};
+    virtual void s_setup() {};
+    virtual void s_teardown() {};
+    virtual void c_setup() {};
+    virtual void c_teardown() {};
 
     // To be called by minigame phase to determine
     // if the minigame should be terminated early

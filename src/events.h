@@ -301,4 +301,9 @@ namespace events {
         extern signal<void(float, float)> s_spawn_essence_event; // Server
         extern signal<void(float, float, int)> c_spawn_essence_event; // Client
     }
+
+    namespace minigame {
+        // Signals that the player has died
+        extern signal<void(int)> player_died_event;
+    }
 }
