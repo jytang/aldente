@@ -46,6 +46,7 @@ private:
     std::unique_ptr<collectibles::Collectible> contents;
 
     std::function<void()> cancel_fade; // Callback function to cancel fading away.
+    std::function<void()> cancel_disappear;
 };
 
 class Goal : public Construct {

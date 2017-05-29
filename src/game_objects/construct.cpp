@@ -41,9 +41,8 @@ void Chest::s_interact_trigger(GameObject *other) {
         contents = std::make_unique<collectibles::Nothing>();
     }
 
-    // Chest will fade away, no longer needs rigid body
-    // TODO : Change to Disable() once Client Animation Finishes
-    Timer::get()->do_after(std::chrono::milliseconds(1500), [&]() {
+    // Disables objects once animation finishes
+    cancel_disappear = Timer::get()->do_after(std::chrono::milliseconds(1500), [&]() {
         disable();
     });
 
@@ -55,7 +54,7 @@ void Chest::s_interact_trigger(GameObject *other) {
 void Chest::c_interact_trigger(GameObject *other) {
     anim_player.play_if_paused("open", 1.5f);
 
-    Timer::get()->do_after(std::chrono::milliseconds(1000),
+    cancel_disappear = Timer::get()->do_after(std::chrono::milliseconds(1000),
         [&]() {
         disappear();
     });
@@ -86,10 +85,14 @@ void Chest::disappear() {
 }
 
 void Chest::s_reset() {
+    if (cancel_disappear)
+        cancel_disappear();
     enable();
 }
 
 void Chest::c_reset() {
+    if (cancel_disappear)
+        cancel_disappear();
     if(cancel_fade)
         cancel_fade();
     anim_player.stop();
