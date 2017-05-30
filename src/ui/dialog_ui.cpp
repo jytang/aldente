@@ -8,6 +8,7 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
               padding, aspect * width - height, height, padding,
               UIUnstretchedTextBox::START, UIUnstretchedTextBox::START, Color::WHITE, Color::BLACK, 0.5f)
     , portrait(aspect * (100.f - width) / 2, padding, height, height, AssetLoader::get_texture("dio.jpg")) {
+    disable();
     attach(bg);
     attach(portrait);
     attach(textbox);
