@@ -5,19 +5,6 @@
 #define ALL_FILTER -1
 
 Physics::Physics() {
-    // Initialize Bullet. This strictly follows http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World,
-    // even though we won't use most of this stuff.
-
-    // Build the broadphase
-    broadphase = new btDbvtBroadphase();
-
-    // Set up the collision configuration and dispatcher
-    collisionConfiguration = new btDefaultCollisionConfiguration();
-    dispatcher = new btCollisionDispatcher(collisionConfiguration);
-
-    // The actual physics solver
-    solver = new btSequentialImpulseConstraintSolver;
-
     // The world.
     scene = nullptr;
 
@@ -54,6 +41,19 @@ void Physics::set_scene(Scene *s) {
 
     //Make a new dynamicsWorld if scene was not previously used
     if (scene_worlds.count(s) == 0) {
+        // Initialize Bullet. This strictly follows http://bulletphysics.org/mediawiki-1.5.8/index.php/Hello_World,
+        // even though we won't use most of this stuff.
+
+        // Build the broadphase
+        btBroadphaseInterface *broadphase = new btDbvtBroadphase();
+
+        // Set up the collision configuration and dispatcher
+        btDefaultCollisionConfiguration *collisionConfiguration = new btDefaultCollisionConfiguration();
+        btCollisionDispatcher *dispatcher = new btCollisionDispatcher(collisionConfiguration);
+
+        // The actual physics solver
+        btSequentialImpulseConstraintSolver *solver = new btSequentialImpulseConstraintSolver;
+
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
         dynamicsWorld->setGravity(btVector3(0, -9.81f, 0));
         scene_worlds[s] = dynamicsWorld;

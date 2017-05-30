@@ -81,6 +81,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;assimp-vc140-mtd.lib;opengl32.lib;glu32.lib;soil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -96,6 +97,7 @@
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>BulletDynamics.lib;BulletCollision.lib;LinearMath.lib;assimp-vc140-mtd.lib;opengl32.lib;glu32.lib;soil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -176,6 +178,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game\phase\build.h" />
     <ClInclude Include="..\src\game\phase\dungeon.h" />
     <ClInclude Include="..\src\game\phase\menu.h" />
+    <ClInclude Include="..\src\game\phase\minigame_phase.h" />
     <ClInclude Include="..\src\game\phase\phase.h" />
     <ClInclude Include="..\src\game\player_stats.h" />
     <ClInclude Include="..\src\game_objects\construct.h" />
@@ -296,6 +299,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\game\phase\build.cpp" />
     <ClCompile Include="..\src\game\phase\dungeon.cpp" />
     <ClCompile Include="..\src\game\phase\menu.cpp" />
+    <ClCompile Include="..\src\game\phase\minigame_phase.cpp" />
     <ClCompile Include="..\src\game\phase\phase.cpp" />
     <ClCompile Include="..\src\game\player_stats.cpp" />
     <ClCompile Include="..\src\game_objects\construct.cpp" />

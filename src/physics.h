@@ -12,11 +12,11 @@ class Physics {
 private:
     Scene *scene;
 
-    //Bullet varaibles
+    /*//Bullet varaibles
     btBroadphaseInterface *broadphase;
     btDefaultCollisionConfiguration *collisionConfiguration;
     btCollisionDispatcher *dispatcher;
-    btSequentialImpulseConstraintSolver *solver;
+    btSequentialImpulseConstraintSolver *solver;*/
     std::map<Scene*, btDiscreteDynamicsWorld*> scene_worlds;
 public:
     Physics();

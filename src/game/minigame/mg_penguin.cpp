@@ -9,7 +9,7 @@ PenguinMG::PenguinMG(Context& to_set) {
         {
             { "xboxControllerLeftThumbStick.png", "Move" },
         }, // input legend
-        std::string("Survive until time runs out"), // Objective
+        std::string("Don't get pushed off!"), // Objective
     };
     context = to_set;
 }

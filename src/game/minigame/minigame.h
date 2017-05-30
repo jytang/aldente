@@ -25,7 +25,7 @@ public:
 
     // To be called by minigame phase to determine
     // if the minigame should be terminated early
-    virtual bool is_finished() {};
+    virtual bool is_finished() { return false; };
 
     // Used to determine the timer for minigame phase
     std::chrono::seconds get_time() { return time; };

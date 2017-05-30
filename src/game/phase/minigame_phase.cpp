@@ -1,12 +1,10 @@
-#include <game/game_state.h>
-#include <input/modal_input.h>
-#include "dungeon.h"
-#include "game_objects/player.h"
-#include "game_objects/essence.h"
-#include "game_objects/traps/mobile_trap.h"
-#include "audio/audio_manager.h"
+/*#include <game/game_state.h>
+#include "minigame_phase.h"
 
-void DungeonPhase::s_setup() {
+MinigamePhase(Context& context) : TimedPhase(context) {
+}
+
+void MinigamePhase::s_setup() {
     transition_after(60, proto::Phase::BUILD);
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int dispatcher, int other) {
@@ -59,16 +57,16 @@ void DungeonPhase::c_setup() {
     button_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).buttons.connect([&](const events::ButtonData &d) {
         if (d.state == 0) return;
         switch (d.input) {
-            case events::BTN_A:
-                // A button pressed.
-                events::dungeon::player_interact_event();
-                break;
-            case events::BTN_BACK:
-                // Toggle leaderboard
-                events::ui::toggle_leaderboard();
+        case events::BTN_A:
+            // A button pressed.
+            events::dungeon::player_interact_event();
             break;
-            default:
-                break;
+        case events::BTN_BACK:
+            // Toggle leaderboard
+            events::ui::toggle_leaderboard();
+            break;
+        default:
+            break;
         }
     });
 
@@ -76,8 +74,9 @@ void DungeonPhase::c_setup() {
         if (player_id == context.player_id) {
             context.player_finished = true;
             events::dungeon::post_dungeon_camera_event();
-        } else {
-            events::ui::show_notification("Someone reached the goal!");
+        }
+        else {
+            // TODO: can do client-side notification here, e.g. "Player X has reached the goal!"
         }
     });
 
@@ -120,7 +119,7 @@ proto::Phase DungeonPhase::s_update() {
 
 void DungeonPhase::c_update() {
     GameObject* player_obj = GameObject::game_objects[context.player_id];
-    
+
     // Only apply camera update if player is still exploring
     if (!context.player_finished)
         events::dungeon::player_position_updated_event(player_obj->transform.get_position());
@@ -148,4 +147,4 @@ void DungeonPhase::c_teardown() {
     joystick_conn.disconnect();
     button_conn.disconnect();
     essence_conn.disconnect();
-}
+}*/
