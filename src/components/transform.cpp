@@ -127,10 +127,16 @@ glm::vec3 Transform::get_rotation() {
     col_1 = (1 / scale.y) * col_1;
     col_2 = (1 / scale.z) * col_2;
 
-    // Below equations are not tested, got it from some site online.
-    float angle_x = glm::degrees(glm::atan(col_1.z, col_2.z));
-    float angle_y = glm::degrees(glm::atan(-col_0.z, sqrtf((col_1.z * col_1.z) + (col_2.z * col_2.z))));
-    float angle_z = glm::degrees(glm::atan(col_1.x, col_0.x));
+    // Matrix math is hard
+    float angle_x = glm::degrees(std::atan2f(col_1.z, col_2.z));
+    float angle_y = glm::degrees(std::atan2f(-col_0.z, sqrtf((col_1.z * col_1.z) + (col_2.z * col_2.z))));
+    float angle_z = glm::degrees(std::atan2f(col_1.x, col_0.x));
+
+    // At exactly +-90 degrees for y rotation, above equation breaks. Need to adjust.
+    if (glm::abs(angle_y) == 90.0f) {
+        angle_x = 180.0f;
+        angle_z = glm::degrees(std::atan2f(col_1.x, -col_1.y));
+    }
 
     return glm::vec3(angle_x, angle_y, angle_z);
 }
