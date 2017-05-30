@@ -5,6 +5,7 @@
 #define X_SCALE_FACTOR 4.8f
 #define Y_SCALE_FACTOR 4.8f
 #define Y_OFFSET_FACTOR 10.f
+#define LINE_SPACE_FACTOR .2f
 
 UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        float start_x, float start_y,
@@ -14,11 +15,10 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        float alpha) :
     UIContainer(start_x, start_y),
     char_width(char_width), char_height(char_height),
-    real_char_width(char_width / X_SCALE_FACTOR), real_char_height(char_height / Y_SCALE_FACTOR),
     width(width), inner_width(width - 2 * padding),
     height(height), inner_height(height - 2 * padding),
     padding(padding),
-    chars_per_line(static_cast<int>(inner_width / char_width)),
+    chars_per_line(static_cast<unsigned long>(inner_width / char_width)),
     max_lines(static_cast<int>(height / char_height)),
     h_align(h_align), v_align(v_align),
     text_color(text_color),
@@ -50,29 +50,36 @@ void UIUnstretchedTextBox::set_text(const std::string &text) {
         std::tie(line, remaining) = break_before(remaining);
         texts.push_back(
                 std::make_unique<UITextNode>(line, x_off + hpad(line), y_off,
-                                             real_char_width, real_char_height,
+                                             char_width / X_SCALE_FACTOR, char_height / Y_SCALE_FACTOR,
                                              text_color));
         attach(*texts.back());
-        y_off -= char_height;
+        y_off -= char_height + LINE_SPACE_FACTOR * char_height;
     }
 }
 
 std::pair<std::string, std::string> UIUnstretchedTextBox::break_before(std::string text) {
-    size_t cut_at = text.find_last_of(" ", static_cast<unsigned long>(chars_per_line));
+    // If line is short enough, just chomp all of it
+    if (text.length() <= chars_per_line) {
+        return std::make_pair(text, "");
+    }
+
+    // Find a space to cut at
+    size_t cut_at = text.find_last_of(" ", chars_per_line);
     std::string line;
 
-    if (cut_at != std::string::npos) {
-        line = text.substr(0, cut_at);
-        text = text.substr(cut_at);
-
-        // Cut out the extra space at the next start of line
-        size_t first_nonspace = text.find_first_not_of(" ");
-        if (first_nonspace != std::string::npos)
-            text = text.substr(first_nonspace);
-    } else {
-        line = text;
-        text = "";
+    // If we couldn't find a suitable breakpoint, we need to hyphenate
+    if (cut_at == std::string::npos) {
+        return std::make_pair(text.substr(0, chars_per_line - 1) + "-", text.substr(chars_per_line - 1));
     }
+
+    // Otherwise, cut at the space we found
+    line = text.substr(0, cut_at);
+    text = text.substr(cut_at);
+
+    // Cut out the extra space at the next start of line
+    size_t first_nonspace = text.find_first_not_of(" ");
+    if (first_nonspace != std::string::npos)
+        text = text.substr(first_nonspace);
 
     return std::make_pair(line, text);
 }

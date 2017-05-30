@@ -22,12 +22,12 @@ public:
                Color text_color, Color bg_color,
                float alpha);
     void set_text(const std::string &text);
-    int get_max_chars() { return chars_per_line * max_lines; }
+    unsigned long get_max_chars() { return chars_per_line * max_lines; }
 
 private:
-    float char_width, char_height, real_char_width, real_char_height;
+    float char_width, char_height;
     float width, inner_width, height, inner_height, padding;
-    int chars_per_line;
+    unsigned long chars_per_line;
     int max_lines;
     Alignment h_align, v_align;
     Color text_color;

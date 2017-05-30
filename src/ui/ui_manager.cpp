@@ -50,7 +50,7 @@ void UIManager::setup_uis() {
     ui_map["legend"] = new LegendUI(aspect, 15.f, 5.f, 1.f);
 
     /* DIALOG UI (should have high z-index) */
-    ui_map["z100-dialog"] = new DialogUI(aspect, 50.f, 30.f, 2.f);
+    ui_map["z100-dialog"] = new DialogUI(aspect, 80.f, 30.f, 2.f);
 }
 
 void UIManager::setup_listeners() {
