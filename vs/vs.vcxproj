@@ -247,6 +247,11 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\ui\legend_ui.h" />
     <ClInclude Include="..\src\ui\render2d.h" />
     <ClInclude Include="..\src\ui\ui.h" />
+    <ClInclude Include="..\src\ui\gold_ui.h" />
+    <ClInclude Include="..\src\ui\leaderboard_ui.h" />
+    <ClInclude Include="..\src\ui\legend_ui.h" />
+    <ClInclude Include="..\src\ui\render2d.h" />
+    <ClInclude Include="..\src\ui\ui.h" />
     <ClInclude Include="..\src\ui\ui_container.h" />
     <ClInclude Include="..\src\ui\ui_element.h" />
     <ClInclude Include="..\src\ui\ui_grid.h" />
@@ -350,6 +355,11 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\ui\clock_ui.cpp" />
     <ClCompile Include="..\src\ui\debug_ui.cpp" />
     <ClCompile Include="..\src\ui\dialog_ui.cpp" />
+    <ClCompile Include="..\src\ui\gold_ui.cpp" />
+    <ClCompile Include="..\src\ui\leaderboard_ui.cpp" />
+    <ClCompile Include="..\src\ui\legend_ui.cpp" />
+    <ClCompile Include="..\src\ui\render2d.cpp" />
+    <ClCompile Include="..\src\ui\ui.cpp" />
     <ClCompile Include="..\src\ui\gold_ui.cpp" />
     <ClCompile Include="..\src\ui\leaderboard_ui.cpp" />
     <ClCompile Include="..\src\ui\legend_ui.cpp" />
