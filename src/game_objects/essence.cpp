@@ -50,11 +50,11 @@ Essence::Essence(int id) : GameObject(id){
                 i = num_steps * 2 - count;
 
             // Adjust rgb values based on frequencies, the last number dictates the 'balance' (0 - 255)
-            r = sinf(frequency * i + 0) * 127 + 200;
-            g = sinf(frequency * i + 2) * 127 + 200;
-            b = sinf(frequency * i + 4) * 127 + 200;
+            r = sinf(frequency * i + 0) * 1100 + 1600; // These numbers were eyeballed visually
+            g = sinf(frequency * i + 2) * 1100 + 1600;
+            b = sinf(frequency * i + 4) * 1100 + 1600;
 
-            set_filter_color({ r, g, b });
+            set_filter_color({ r, g, b});
 
             count = (count < num_steps * 2) ? count + 1 : 0;
         });
