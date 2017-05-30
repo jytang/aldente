@@ -13,13 +13,16 @@ void MGScenePenguin::c_update() {
 }
 
 void MGScenePenguin::s_setup() {
+    // Set up penguins. Initially disabled.
     for (int i = 0; i < MAX_PENGUINS; i++) {
-        // init dem penguins
+        Penguin* to_add = new Penguin();
+        to_add->disable();
+        penguins.push_back(to_add);
+        objs.push_back(to_add);
     }
 
     // Set up the platform
     GameObject* platform = new GameObject(-1);
-    //platform->attach_model(AssetLoader::get_model("cube"));
 
     events::RigidBodyData platform_rigid;
     platform_rigid.object = platform;
@@ -27,11 +30,19 @@ void MGScenePenguin::s_setup() {
     platform_rigid.mass = 0;
     events::add_rigidbody_event(platform_rigid);
 
-    platform->transform.set_scale(glm::vec3(10, 1, 5));
+    platform->transform.set_scale(glm::vec3(2, 1, 0.5f));
     platform->set_position(glm::vec3(0, -0.5f, 0));
 }
 
 void MGScenePenguin::c_setup() {
+    // Set up penguins. Initially disabled.
+    for (int i = 0; i < MAX_PENGUINS; i++) {
+        Penguin* to_add = new Penguin();
+        to_add->disable();
+        to_add->setup_model();
+        penguins.push_back(to_add);
+        objs.push_back(to_add);
+    }
 
     // Set up the platform
     GameObject* platform = new GameObject(-1);
@@ -48,6 +59,9 @@ void MGScenePenguin::c_setup() {
     for (GameObject *obj : objs) {
         obj->setup_model();
     }
+    
+    info.camera.cam_pos = glm::vec3(0, 12, 5);
+    info.camera.rotate_cam(glm::vec3(1, 0, 0), -70.0f);
 }
 
 void MGScenePenguin::connect_listeners() {

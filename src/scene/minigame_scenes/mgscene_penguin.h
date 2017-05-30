@@ -1,6 +1,7 @@
 #pragma once
 
 #include "scene/scene.h"
+#include "game_objects/minigame/penguin.h"
 
 /*
 Scene for penguin minigame
@@ -10,6 +11,7 @@ const auto MAX_PENGUINS = 40;
 
 class MGScenePenguin : public Scene {
 private:
+    std::vector<Penguin*> penguins;
 public:
     MGScenePenguin() {};
     void s_update() override;
