@@ -241,6 +241,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\ui\build_ui.h" />
     <ClInclude Include="..\src\ui\clock_ui.h" />
     <ClInclude Include="..\src\ui\debug_ui.h" />
+    <ClInclude Include="..\src\ui\dialog_ui.h" />
     <ClInclude Include="..\src\ui\gold_ui.h" />
     <ClInclude Include="..\src\ui\leaderboard_ui.h" />
     <ClInclude Include="..\src\ui\legend_ui.h" />
@@ -256,6 +257,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\ui\ui_rectangle.h" />
     <ClInclude Include="..\src\ui\ui_text_box.h" />
     <ClInclude Include="..\src\ui\ui_text_node.h" />
+    <ClInclude Include="..\src\ui\ui_unstretched_text_box.h" />
     <ClInclude Include="..\src\util\color.h" />
     <ClInclude Include="..\src\util\config.h" />
     <ClInclude Include="..\src\util\util.h" />
@@ -347,6 +349,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\ui\build_ui.cpp" />
     <ClCompile Include="..\src\ui\clock_ui.cpp" />
     <ClCompile Include="..\src\ui\debug_ui.cpp" />
+    <ClCompile Include="..\src\ui\dialog_ui.cpp" />
     <ClCompile Include="..\src\ui\gold_ui.cpp" />
     <ClCompile Include="..\src\ui\leaderboard_ui.cpp" />
     <ClCompile Include="..\src\ui\legend_ui.cpp" />
@@ -361,6 +364,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\ui\ui_rectangle.cpp" />
     <ClCompile Include="..\src\ui\ui_text_box.cpp" />
     <ClCompile Include="..\src\ui\ui_text_node.cpp" />
+    <ClCompile Include="..\src\ui\ui_unstretched_text_box.cpp" />
     <ClCompile Include="..\src\util\color.cpp" />
     <ClCompile Include="..\src\util\config.cpp" />
     <ClCompile Include="..\src\util\util.cpp" />
