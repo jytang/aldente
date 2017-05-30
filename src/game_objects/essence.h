@@ -32,4 +32,7 @@ private:
     std::function<void()> cancel_rainbow; // Cancels the constant rainbow color changing
 
 	bool disappearing;
+
+	void pickup_anim();
+	void setup_timeout();
 };

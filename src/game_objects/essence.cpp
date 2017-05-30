@@ -12,6 +12,8 @@
 
 #include <iostream>
 
+#define ESSENCE_TIME_OUT 6000 // Milliseconds
+
 Essence::Essence(int id) : GameObject(id){
     tag = "ESSENCE";
 
@@ -33,6 +35,8 @@ Essence::Essence(int id) : GameObject(id){
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
 
         random_push();
+
+		setup_timeout();
     }
     else {
         // Make the essence change colors continuously
@@ -96,6 +100,8 @@ void Essence::s_on_collision(GameObject *other) {
 }
 
 void Essence::c_on_collision(GameObject *other) {
+	if (dynamic_cast<Player*>(other))
+		pickup_anim();
     disappear();
 }
 
@@ -112,14 +118,6 @@ void Essence::setup_model() {
 }
 
 void Essence::disappear() {
-
-    // Add "pick up" animation
-
-    anim_player.set_anim("up");
-    anim_player.set_speed(3.0f);
-    anim_player.set_loop(false);
-    anim_player.play();
-
     int count = 0;
     // Slowly fade away
     cancel_fade = Timer::get()->do_every(
@@ -146,4 +144,30 @@ void Essence::random_push() {
     rigidbody->setActivationState(true);
     rigidbody->applyForce(btVector3(vel.x, 0, vel.y), btVector3(0, 0, 0));
     rigidbody->setDamping(0.9, 0);
+}
+
+void Essence::pickup_anim() {
+	// Add "pick up" animation
+
+	anim_player.set_anim("up");
+	anim_player.set_speed(3.0f);
+	anim_player.set_loop(false);
+	anim_player.play();
+}
+
+void Essence::setup_timeout() {
+	// Make essence disappear after a while.
+	int time_out = ESSENCE_TIME_OUT + (int)Util::random(-1000, 1000); // Slightly diff time outs
+	Timer::get()->do_after(
+		std::chrono::milliseconds(time_out),
+		[&]() mutable {
+		events::dungeon::network_collision_event(id, id);
+
+		// Call disable() once client side animation ends
+		Timer::get()->do_after(
+			std::chrono::milliseconds(500),
+			[&]() {
+			disable();
+		});
+	});
 }
