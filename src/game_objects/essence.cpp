@@ -71,10 +71,15 @@ void Essence::s_update_this() {
 }
 
 void Essence::s_on_collision(GameObject *other) {
+	if (disappearing)
+		return;
+
     Player *player = dynamic_cast<Player*>(other);
     if (player && !player->is_stunned()) {
         value->collected_by(player); // Award player
         value = std::make_unique<collectibles::Nothing>();
+
+		disappearing = true;
 
         events::dungeon::network_collision_event(player->get_id(), id);
 

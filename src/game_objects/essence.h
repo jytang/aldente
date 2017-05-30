@@ -30,4 +30,6 @@ private:
 
     std::function<void()> cancel_fade;
     std::function<void()> cancel_rainbow; // Cancels the constant rainbow color changing
+
+	bool disappearing;
 };
