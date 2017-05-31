@@ -66,6 +66,7 @@ namespace events {
         signal<void()> disable_leaderboard;
         signal<void()> enable_leaderboard;
         signal<void(int, int, std::string)> leaderboard_update;
+        signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
     }
 
     namespace build {

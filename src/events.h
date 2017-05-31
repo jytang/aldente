@@ -191,6 +191,9 @@ namespace events {
         extern signal<void()> disable_leaderboard;
         extern signal<void()> enable_leaderboard;
         extern signal<void(int, int, std::string)> leaderboard_update;
+
+        // Request some dialog to be shown
+        extern signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
     }
 
     namespace build {

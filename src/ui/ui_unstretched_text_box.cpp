@@ -15,16 +15,22 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        float alpha) :
     UIContainer(start_x, start_y),
     char_width(char_width), char_height(char_height),
+    line_height((1 + LINE_SPACE_FACTOR) * char_height),
     width(width), inner_width(width - 2 * padding),
     height(height), inner_height(height - 2 * padding),
     padding(padding),
     chars_per_line(static_cast<unsigned long>(inner_width / char_width)),
-    max_lines(static_cast<int>(height / char_height)),
+    max_lines(static_cast<int>(height / line_height) - 1),
     h_align(h_align), v_align(v_align),
     text_color(text_color),
     bg(0, 0, width, height, bg_color, alpha) {
 
     attach(bg);
+}
+
+unsigned long UIUnstretchedTextBox::get_max_chars() {
+    // For each line, we trim a space, so calculate `chars_per_line * max_lines - max_lines`.
+    return (chars_per_line - 1) * max_lines;
 }
 
 void UIUnstretchedTextBox::set_text(const std::string &text) {
@@ -53,7 +59,7 @@ void UIUnstretchedTextBox::set_text(const std::string &text) {
                                              char_width / X_SCALE_FACTOR, char_height / Y_SCALE_FACTOR,
                                              text_color));
         attach(*texts.back());
-        y_off -= char_height + LINE_SPACE_FACTOR * char_height;
+        y_off -= line_height;
     }
 }
 
