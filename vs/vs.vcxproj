@@ -356,6 +356,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\ui\render2d.cpp" />
     <ClCompile Include="..\src\ui\ui.cpp" />
     <ClCompile Include="..\src\ui\ui_container.cpp" />
+    <ClCompile Include="..\src\ui\ui_element.cpp" />
     <ClCompile Include="..\src\ui\ui_grid.cpp" />
     <ClCompile Include="..\src\ui\ui_halo_container.cpp" />
     <ClCompile Include="..\src\ui\ui_image_node.cpp" />
