@@ -44,8 +44,6 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
 }
 
 void DialogUI::display_next() {
-    size_t max = textbox.get_max_chars();
-
     // Reset the text box
     display = "";
 
@@ -68,7 +66,7 @@ void DialogUI::display_next() {
     }
 
     // Chomp the next window-full of text
-    std::tie(current, remaining) = Util::wordbreak_text(remaining, max);
+    std::tie(current, remaining) = Util::wordbreak_text(remaining, textbox.get_max_chars());
 
     // Start a text animation
     animating = true;
