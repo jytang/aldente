@@ -193,6 +193,7 @@ namespace events {
         extern signal<void(int, int, std::string)> leaderboard_update;
 
         // Request some dialog to be shown
+        // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).
         extern signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
     }
 
