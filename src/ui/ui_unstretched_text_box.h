@@ -34,9 +34,6 @@ private:
     UIRectangle bg;
     std::vector<std::unique_ptr<UITextNode>> texts;
 
-    // Chomp off as much as we can until a space, but beore EOL
-    std::pair<std::string, std::string> break_before(std::string text);
-
     // Padding calculations
     float calc_pad(Alignment align, float space);
     float hpad(const std::string &line);

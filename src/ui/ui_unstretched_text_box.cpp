@@ -1,4 +1,5 @@
 #include <iostream>
+#include <util/util.h>
 #include "ui_unstretched_text_box.h"
 
 // Some magic constants for properly spacing the text
@@ -53,7 +54,7 @@ void UIUnstretchedTextBox::set_text(const std::string &text) {
     for (unsigned long i = 0; i < max_lines; ++i) {
         if (remaining.empty()) break;
 
-        std::tie(line, remaining) = break_before(remaining);
+        std::tie(line, remaining) = Util::wordbreak_text(remaining, chars_per_line);
         texts.push_back(
                 std::make_unique<UITextNode>(line, x_off + hpad(line), y_off,
                                              char_width / X_SCALE_FACTOR, char_height / Y_SCALE_FACTOR,
@@ -61,33 +62,6 @@ void UIUnstretchedTextBox::set_text(const std::string &text) {
         attach(*texts.back());
         y_off -= line_height;
     }
-}
-
-std::pair<std::string, std::string> UIUnstretchedTextBox::break_before(std::string text) {
-    // If line is short enough, just chomp all of it
-    if (text.length() <= chars_per_line) {
-        return std::make_pair(text, "");
-    }
-
-    // Find a space to cut at
-    size_t cut_at = text.find_last_of(" ", chars_per_line);
-    std::string line;
-
-    // If we couldn't find a suitable breakpoint, we need to hyphenate
-    if (cut_at == std::string::npos) {
-        return std::make_pair(text.substr(0, chars_per_line - 1) + "-", text.substr(chars_per_line - 1));
-    }
-
-    // Otherwise, cut at the space we found
-    line = text.substr(0, cut_at);
-    text = text.substr(cut_at);
-
-    // Cut out the extra space at the next start of line
-    size_t first_nonspace = text.find_first_not_of(" ");
-    if (first_nonspace != std::string::npos)
-        text = text.substr(first_nonspace);
-
-    return std::make_pair(line, text);
 }
 
 float UIUnstretchedTextBox::calc_pad(Alignment align, float space) {

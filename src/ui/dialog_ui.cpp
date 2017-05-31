@@ -1,4 +1,5 @@
 #include <asset_loader.h>
+#include <util/util.h>
 #include "dialog_ui.h"
 #include "timer.h"
 #include "events.h"
@@ -48,8 +49,8 @@ void DialogUI::display_next() {
     // Reset the text box
     display = "";
 
-    // If we had no overflow from before, bring in the next dialogue
-    if (overflow.empty()) {
+    // If we had nothing remaining from before, bring in the next dialogue
+    if (remaining.empty()) {
         // If no next, just stop
         if (current_dialog.empty()) {
             stop_display();
@@ -58,45 +59,27 @@ void DialogUI::display_next() {
 
         // Grab the next portrait and text
         std::string portrait_str;
-        std::tie(portrait_str, remain) = current_dialog.back();
+        std::tie(portrait_str, remaining) = current_dialog.back();
         current_dialog.pop_back();
 
         // Set the portrait
         portrait.set_image(AssetLoader::get_texture(portrait_str));
 
-        // If we exceed the textbox capacity, break it up
-        if (remain.length() > max) {
-            overflow = remain.substr(max - 1);
-            remain = remain.substr(0, max - 1) + "-";
-        }
-    } else {
-        // Make room for possible hyphenation
-        remain = overflow.substr(0, max - 1);
-
-        // If we have no more text, unset overflow
-        if (overflow.length() <= max) {
-            overflow = "";
-
-            // If we're right at the max, add the last character in
-            if (overflow.length() == max)
-                remain += overflow[max - 1];
-        // Otherwise, we should adjust overflow and hyphenate
-        } else {
-            overflow = overflow.substr(max - 1);
-            remain += "-";
-        }
     }
+
+    // Chomp the next window-full of text
+    std::tie(current, remaining) = Util::wordbreak_text(remaining, max);
 
     // Start a text animation
     animating = true;
     cancel_text_animation();
     cancel_text_animation = Timer::get()->do_every(std::chrono::milliseconds(50), [&]() {
-        display += remain.substr(0, 1);
-        remain = remain.substr(1);
+        display += current.substr(0, 1);
+        current = current.substr(1);
 
         textbox.set_text(display);
 
-        if (remain.empty()) {
+        if (current.empty()) {
             animating = false;
             cancel_text_animation();
         }
@@ -106,7 +89,7 @@ void DialogUI::display_next() {
 void DialogUI::skip_animation() {
     animating = false;
     cancel_text_animation();
-    textbox.set_text(display + remain);
+    textbox.set_text(display + current);
 }
 
 void DialogUI::stop_display() {

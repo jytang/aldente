@@ -117,3 +117,30 @@ bool Util::within_rect(glm::vec2 pos, glm::vec2 bottom_left, glm::vec2 top_right
     }
     return false;
 }
+
+std::pair<std::string, std::string> Util::wordbreak_text(std::string text, unsigned long chars_per_line) {
+    // If line is short enough, just chomp all of it
+    if (text.length() <= chars_per_line) {
+        return std::make_pair(text, "");
+    }
+
+    // Find a space to cut at
+    size_t cut_at = text.find_last_of(" ", chars_per_line);
+    std::string line;
+
+    // If we couldn't find a suitable breakpoint, we need to hyphenate
+    if (cut_at == std::string::npos) {
+        return std::make_pair(text.substr(0, chars_per_line - 1) + "-", text.substr(chars_per_line - 1));
+    }
+
+    // Otherwise, cut at the space we found
+    line = text.substr(0, cut_at);
+    text = text.substr(cut_at);
+
+    // Cut out the extra space at the next start of line
+    size_t first_nonspace = text.find_first_not_of(" ");
+    if (first_nonspace != std::string::npos)
+        text = text.substr(first_nonspace);
+
+    return std::make_pair(line, text);
+};

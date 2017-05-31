@@ -30,4 +30,8 @@ public:
     static float random(float min, float max);
 
     static bool within_rect(glm::vec2 pos, glm::vec2 bottom_left, glm::vec2 top_right);
+
+    // Chomp off as much as we can until a space, but beore EOL
+    // Returns (line, remaining text)
+    static std::pair<std::string, std::string> wordbreak_text(std::string text, unsigned long chars_per_line);
 };

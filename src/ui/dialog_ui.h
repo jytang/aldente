@@ -22,7 +22,7 @@ private:
     // Current textbox variables
     boost::signals2::connection button_conn;
     std::vector<str_pair> current_dialog;
-    std::string display, remain, overflow;
+    std::string display, current, remaining;
     bool animating;
     std::function<void()> cancel_text_animation;
 
