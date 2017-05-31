@@ -62,6 +62,6 @@ void UIManager::setup_listeners() {
 void UIManager::draw() {
     if (!all_enabled) return; // don't draw anything if ui is completely disabled
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
-        it->second->draw();
+        it->second->draw(renderer_2d);
     }
 }

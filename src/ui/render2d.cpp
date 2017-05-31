@@ -5,10 +5,8 @@
 #include "render2d.h"
 
 #include <iostream>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include "events.h"
-#include "shaders/shader_manager.h"
 
 Render2D::Render2D() {
     // Setup callbacks for window size.
@@ -54,7 +52,7 @@ void Render2D::setup_glyphs() {
 
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1); // Disable byte-alignment restriction
 
-    for (GLubyte c = 0; c < 128; c++) {
+    for (GLubyte c = 32; c < 128; c++) {
         // Load character glyph
         assert(!FT_Load_Char(face, c, FT_LOAD_RENDER));
         // Generate texture
@@ -155,7 +153,6 @@ void Render2D::render_rect(GLfloat x, GLfloat y,
 
     ShaderManager::ui.set_uni("baseColor", color.to_vec());
     ShaderManager::ui.set_uni("projection", projection);
-    ShaderManager::ui.set_uni("hasTexture", true);
     ShaderManager::ui.set_uni("alpha", alpha);
 
     if (texture_ID == 0)

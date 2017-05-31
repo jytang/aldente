@@ -2,6 +2,8 @@
 
 #include "ui.h"
 
+#include "render2d.h"
+
 #include <string>
 #include <map>
 
@@ -17,4 +19,5 @@ private:
     std::map<std::string, UI *> ui_map; // cached uis
     bool all_enabled = true;
     float aspect;
+    Render2D renderer_2d;
 };

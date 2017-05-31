@@ -1,12 +1,10 @@
 #include "ui.h"
 
-#include "ui_grid.h"
-
 UI::UI(float start_x, float start_y)  {
     root = UIContainer(start_x, start_y);
 }
 
-void UI::draw() {
+void UI::draw(Render2D &renderer_2d) {
     if (enabled) root.draw(renderer_2d, 0, 0);
 }
 
