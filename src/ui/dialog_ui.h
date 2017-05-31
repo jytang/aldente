@@ -9,7 +9,6 @@
 // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).
 class DialogUI : public UI {
 public:
-    // TODO(metakirby5) use this to set portrait and text
     typedef std::pair<std::string, std::string> str_pair;
 
     DialogUI(float aspect, float width, float height, float padding);
@@ -19,13 +18,14 @@ private:
     UIUnstretchedTextBox textbox;
     UIImageNode portrait;
 
-    // Current textbox variables
+    // Variables related to current dialog
     boost::signals2::connection button_conn;
     std::vector<str_pair> current_dialog;
     std::string display, current, remaining;
     bool animating;
     std::function<void()> cancel_text_animation;
 
+    // Helper functions
     void display_next();
     void skip_animation();
     void stop_display();
