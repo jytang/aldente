@@ -8,6 +8,8 @@
 class MinigamePhase : public TimedPhase {
 public:
     MinigamePhase(Context& context);
+    ~MinigamePhase();
+
     void s_setup() override;
     proto::Phase s_update() override;
     void s_teardown() override;
@@ -15,6 +17,6 @@ public:
     void c_update() override;
     void c_teardown() override;
 private:
-    std::vector<Minigame> minigames;
+    std::vector<Minigame*> minigames;
     Minigame* curr_mg;
 };

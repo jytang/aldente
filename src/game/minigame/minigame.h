@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../scene/scene.h"
-#include "../context.h"
+#include "scene/scene.h"
+#include "game/context.h"
 
 struct MinigameInfo {
     // <button image, text for control>
@@ -17,11 +17,13 @@ Contains all the information for a single minigame
 */
 class Minigame {
 public:
+    Minigame(Context& context) : context(context) {};
+
     // Used to setup/teardown the minigame's events and various other things
-    virtual void s_setup() {};
-    virtual void s_teardown() {};
-    virtual void c_setup() {};
-    virtual void c_teardown() {};
+    virtual void s_setup() = 0;
+    virtual void s_teardown() = 0;
+    virtual void c_setup() = 0;
+    virtual void c_teardown() = 0;
 
     // To be called by minigame phase to determine
     // if the minigame should be terminated early
@@ -36,5 +38,5 @@ protected:
     Scene *scene;
     std::chrono::seconds time;
     MinigameInfo info;
-    Context context;
+    Context& context;
 };

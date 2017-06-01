@@ -1,17 +1,18 @@
 #include <input/modal_input.h>
 #include "mg_penguin.h"
-#include "../../events.h"
+#include "events.h"
+#include "game_objects/player.h"
+#include <iostream>
 
-PenguinMG::PenguinMG(Context& to_set) {
+PenguinMG::PenguinMG(Context& to_set) : Minigame(to_set) {
     time = PENGUINMG_TIME;
     scene = nullptr;
-    info = MinigameInfo{
+    info = MinigameInfo {
         {
             { "xboxControllerLeftThumbStick.png", "Move" },
         }, // input legend
         std::string("Don't get pushed off!"), // Objective
     };
-    context = to_set;
 }
 
 void PenguinMG::s_setup() {
@@ -42,6 +43,8 @@ void PenguinMG::s_setup() {
 }
 
 void PenguinMG::s_teardown() {
+    collision_conn.disconnect();
+    flag_conn.disconnect();
 }
 
 void PenguinMG::c_setup() {
@@ -55,13 +58,7 @@ void PenguinMG::c_setup() {
 }
 
 void PenguinMG::c_teardown() {
-    joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](const events::StickData &d) {
-        // Left stick
-        if (d.input == events::STICK_LEFT) {
-            // Should move this event out of dungeon namespace
-            events::dungeon::network_player_move_event(d);
-        }
-    });
+    joystick_conn.disconnect();
 }
 
 bool PenguinMG::is_finished() {

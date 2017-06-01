@@ -113,7 +113,7 @@ proto::Phase DungeonPhase::s_update() {
     }
 
     if (all_players_done)
-        return proto::Phase::BUILD;
+        return proto::Phase::MINIGAME;
     else
         return next;
 }
