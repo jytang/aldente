@@ -9,6 +9,7 @@
 #include "leaderboard_ui.h"
 #include "legend_ui.h"
 #include "dialog_ui.h"
+#include "score_ui.h"
 #include "notification_ui.h"
 
 UIManager::~UIManager() {
@@ -54,6 +55,9 @@ void UIManager::setup_uis() {
     ui_map["z9-dialog"] = new DialogUI(aspect, 80.f, 30.f, 2.f);
 
     ui_map["z5-notifs"] = new NotificationUI(aspect, 30.f, 15.f);
+
+    /* SCORE SCREEN UI */
+    ui_map["score-screen"] = new ScoreUI(aspect);
 }
 
 void UIManager::setup_listeners() {

@@ -42,8 +42,8 @@ UIGrid::UIGrid(float start_x, float start_y,
                           grid_bg_color, grid_bg_alpha);
 
     // Build empty attachment points across the grid.
-    float elt_start_x = start_x + h_border_padding;
-    float elt_start_y = start_y + grid_height - v_border_padding - element_height;
+    float elt_start_x = h_border_padding;
+    float elt_start_y = grid_height - v_border_padding - element_height;
     int curr_elt = 0;
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < columns; ++col) {

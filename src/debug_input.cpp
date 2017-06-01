@@ -55,16 +55,27 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_M:
                     events::toggle_mute_event();
                     break;
-                case GLFW_KEY_F6:
+                case GLFW_KEY_F3:
+                    events::ui::enable_scoreboard(
+                            {{"boy_two", 123},
+                             {"lizard", 456},
+                             {"cat", 999},
+                             {"tomato", 1}
+                            });
+                    break;
+                case GLFW_KEY_F4:
+                    events::ui::disable_scoreboard();
+                    break;
+                case GLFW_KEY_F5:
                     events::debug::decrease_hdr_exposure_event();
                     break;
-                case GLFW_KEY_F7:
+                case GLFW_KEY_F6:
                     events::debug::increase_hdr_exposure_event();
                     break;
-                case GLFW_KEY_F8:
+                case GLFW_KEY_F7:
                     events::debug::toggle_hdr_event();
                     break;
-                case GLFW_KEY_F9:
+                case GLFW_KEY_F8:
                     events::debug::toggle_bloom_event();
                     break;
                 case GLFW_KEY_0:

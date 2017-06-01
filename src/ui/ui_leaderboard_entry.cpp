@@ -13,10 +13,10 @@ std::map<int, Color> UILeaderboardEntry::ranking_to_color = {
         {2, Color::BRONZE},
         {3, Color::INDIAN_RED}};
 std::map<int, std::string> UILeaderboardEntry::ranking_to_image = {
-        {0, "cobblestone.png"},
-        {1, "wall.png"},
-        {2, "cloudwall.png"},
-        {3, "grass.png"}};
+        {0, "1st.png"},
+        {1, "2nd.png"},
+        {2, "3rd.png"},
+        {3, "4th.png"}};
 
 UILeaderboardEntry::UILeaderboardEntry(float start_x, float start_y,
                                    float width, float height,
@@ -31,10 +31,12 @@ UILeaderboardEntry::UILeaderboardEntry(float start_x, float start_y,
                          0.8f * height, 0.8f * height,
                          portrait),
           gold_amount("0",
-                      1.6f * height, 0.25f * height,
+                      glm::max(1.6f * height, width - 1.2f * height),
+                      0.25f * height,
                       0.8f * height, 0.5f * height,
                       Color::WHITE),
-          gold_image(2.4f * height, 0.3f * height, // vertically centered
+          gold_image(glm::max(1.6f * height, width - 1.2f * height) + 0.8f * height,
+                     0.3f * height, // vertically centered
                      0.4f * height, 0.4f * height,
                      AssetLoader::get_texture("essence.png")) {
 
