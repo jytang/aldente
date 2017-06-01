@@ -11,4 +11,6 @@ public:
     static glm::vec3 find_path(glm::vec3 start_pos, glm::vec3 end_pos);
 private:
     static std::vector<std::vector<Tile *>> grid; // Uses grid[row][column], copy of grid
+
+    static int heuristic(std::pair<int, int> loc_a, std::pair<int, int> loc_b);
 };

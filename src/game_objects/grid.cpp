@@ -3,6 +3,7 @@
 #include "events.h"
 #include "game/phase/phase.h"
 #include "util/color.h"
+#include "util/path_finding.h"
 
 #include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
@@ -267,6 +268,9 @@ void Grid::load_map(std::string map_loc) {
     }
 
     fin.close();
+
+    // Setup Grid for Path Planning
+    PathFinding::set_grid(grid);
 }
 
 Tile *Grid::make_tile(int tile_id, int x, int z) {
