@@ -21,8 +21,10 @@ Penguin::Penguin(int id) : GameObject(id) {
 
         // Set spawn position
         //row = rand() % 3 - 6;
-        set_position(glm::vec3(5, 5, rand() % 6 - 3));
+        set_position(glm::vec3(5, 1, rand() % 10 - 5));
         transform.set_rotation(glm::vec3(0, -90, 0));
+
+        move_speed = -(rand() % 3 + 1);
     }
 }
 
@@ -42,7 +44,9 @@ void Penguin::s_update_this() {
 
     // Forever moving left
     btVector3 vel = rigidbody->getLinearVelocity();
-    rigidbody->setLinearVelocity(btVector3(-3, vel.getY(), 0));
+    rigidbody->setLinearVelocity(btVector3(move_speed, vel.getY(), 0));
+
+    //events::dungeon::request_raycast_event()
 }
 
 void Penguin::c_update_state(glm::mat4 mat, bool enab) {
@@ -51,12 +55,12 @@ void Penguin::c_update_state(glm::mat4 mat, bool enab) {
 }
 
 void Penguin::reset_position() {
-    set_position(glm::vec3(5, 0, rand() % 3 - 6));
+    set_position(glm::vec3(5, 1, rand() % 10 - 5));
 }
 
 void Penguin::setup_model() {
     attach_model(AssetLoader::get_model("slime_blue"));
-    transform.set_scale({ 0.004f, 0.004f, 0.004f });
+    transform.set_scale({ 0.006f, 0.006f, 0.006f });
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("walk");

@@ -13,9 +13,9 @@
 class Penguin : public GameObject {
 private:
     float move_speed;
-    int row;
+    //int row;
 
-    btCapsuleShape *hit_capsule = new btCapsuleShape(0.5f, 1.0f);
+    btCapsuleShape *hit_capsule = new btCapsuleShape(0.5f, 0.2f);
 public:
     Penguin(int id = 0);
 
