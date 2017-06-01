@@ -67,8 +67,8 @@ namespace events {
         signal<void()> disable_leaderboard;
         signal<void()> enable_leaderboard;
         signal<void(int, int, std::string)> leaderboard_update;
-        signal<void(const std::vector<std::pair<std::string, int>> &)> enable_scoreboard;
-		signal<void()> disable_scoreboard;
+        signal<void(const std::vector<std::tuple<std::string, int, int>> &)> scoreboard_sequence;
+        signal<void()> disable_scoreboard;
         signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
         signal<void(const std::string &)> show_notification;
     }

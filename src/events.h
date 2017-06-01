@@ -189,8 +189,8 @@ namespace events {
         extern signal<void()> disable_leaderboard;
         extern signal<void()> enable_leaderboard;
         extern signal<void(int, int, std::string)> leaderboard_update;
-        // Display scoreboard with vector of <model_name, gold>
-        extern signal<void(const std::vector<std::pair<std::string, int>> &)> enable_scoreboard;
+        // Display scoreboard with vector of <model_name, gold, gold_delta>
+        extern signal<void(const std::vector<std::tuple<std::string, int, int>> &)> scoreboard_sequence;
         extern signal<void()> disable_scoreboard;
 
         // Request some dialog to be shown

@@ -2,14 +2,15 @@
 
 #include "events.h"
 #include "asset_loader.h"
+#include "timer.h"
 
 #include <algorithm> // std::sort
 
 #define LEADERBOARD_ENTRIES 4
 
 // For score sorting purposes
-bool comparison_func(std::pair<std::string, int> i, std::pair<std::string, int> j) {
-    return i.second > j.second;
+bool comparison_func(std::tuple<std::string, int, int> i, std::tuple<std::string, int, int> j) {
+    return std::get<1>(i) > std::get<1>(j);
 }
 
 ScoreUI::~ScoreUI() {
@@ -42,37 +43,67 @@ ScoreUI::ScoreUI(float aspect)
                                        40.f * aspect, 70.f / LEADERBOARD_ENTRIES, // dimensions
                                        i, // ranking
                                        AssetLoader::get_texture("no_player.png"), 0);
+        UITextBox *delta_entry =
+                new UITextBox("+0", 40.f * aspect, 0.25f * 70.f / LEADERBOARD_ENTRIES,
+                              5.f * aspect, 5.f, Color::WHITE);
+        delta_entry->text_node.set_alpha(1.f); // nothing shows by default
         entries.push_back(entry);
+        deltas.push_back(delta_entry);
         score_grid.attach_at(i, 0, *entry);
+        score_grid.attach_at(i, 0, *delta_entry);
     }
 
     // disabled by default
     disable();
 
     /* EVENT LISTENERS */
-    events::ui::enable_scoreboard.connect([&](const auto &data) {
-        std::vector<std::pair<std::string, int>> sorted_data = data;
+    events::ui::scoreboard_sequence.connect([&](const auto &data) {
+        sorted_data = data;
         std::sort(sorted_data.begin(), sorted_data.end(), comparison_func);
 
-        int rank = 0;
-        for (auto it = sorted_data.begin(); it != sorted_data.end(); ++it) {
-            std::string model_name;
-            int gold;
-            std::tie(model_name, gold) = *it;
-
-            if (rank < entries.size()) {  // minor validation
-                entries[rank]->set_ranking(rank);
-                entries[rank]->set_portrait(model_name);
-                entries[rank]->set_gold(gold);
-            }
-            rank++;
-        }
-
-        // finally, enable the ui
+        populate_scores();
         enable();
+
+        // Do gold delta sequence.
+        animate_deltas();
     });
 
     events::ui::disable_scoreboard.connect([&]() {
         disable();
     });
+}
+
+void ScoreUI::animate_deltas() {
+    int rank = 0;
+    for (auto it = sorted_data.begin(); it != sorted_data.end(); ++it) {
+        if (rank < deltas.size()) {
+            int gold_delta = std::get<2>(*it);
+            deltas[rank]->set_text("+" + std::to_string(gold_delta));
+
+            // animate alpha channel
+            /*deltas[rank]->text_node.animate_alpha(1.f, 1.f); /*, [&, rank]() {
+                Timer::get()->do_after(std::chrono::milliseconds(500), [&, rank]() {
+                    deltas[rank]->text_node.animate_alpha(0.f, 1.f);
+                });
+            }); */
+        }
+        rank++;
+    }
+}
+
+void ScoreUI::populate_scores() {
+    int rank = 0;
+    for (auto it = sorted_data.begin(); it != sorted_data.end(); ++it) {
+        std::string model_name;
+        int gold;
+        int gold_delta;
+        std::tie(model_name, gold, gold_delta) = *it;
+
+        if (rank < entries.size()) {  // minor validation
+            entries[rank]->set_ranking(rank);
+            entries[rank]->set_portrait(model_name);
+            entries[rank]->set_gold(gold);
+        }
+        rank++;
+    }
 }
