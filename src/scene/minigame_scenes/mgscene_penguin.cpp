@@ -31,7 +31,7 @@ void MGScenePenguin::s_setup() {
     platform_rigid.mass = 0;
     events::add_rigidbody_event(platform_rigid);
 
-    platform->set_position(glm::vec3(0, -0.5f, 0));
+    platform->set_position(glm::vec3(0, -0.5f, -0.5f));
 
     // Set up the collider below the platform to detect things falling off.
     EmptyCollider* collider = new EmptyCollider();
@@ -52,8 +52,6 @@ void MGScenePenguin::c_setup() {
     platform->attach_model(AssetLoader::get_model("cube"));
     platform->initial_transform.set_scale(glm::vec3(10, 1, 5));
     objs.push_back(platform);
-
-    platform->set_position(glm::vec3(0, -0.5f, 0));
 
     // Setup lights.
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
