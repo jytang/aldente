@@ -35,4 +35,6 @@ private:
 
     void pickup_anim();
     void setup_timeout();
+
+    void disable_after_disappear();
 };

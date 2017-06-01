@@ -170,8 +170,8 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
             return nullptr;
             break;
         }
-	
-	    if (id != ON_SERVER)
+    
+        if (id != ON_SERVER)
             to_add->setup_model();
 
         to_add->set_initial_direction(glm::vec3(fx, fy, fz));

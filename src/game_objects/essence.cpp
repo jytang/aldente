@@ -13,6 +13,7 @@
 #include <iostream>
 
 #define ESSENCE_TIME_OUT 6000 // Milliseconds
+#define DISAPPEAR_ANIM_LENGTH 500 // Time it takes for disappearing animation to finish
 
 Essence::Essence(int id) : GameObject(id){
     tag = "ESSENCE";
@@ -90,12 +91,7 @@ void Essence::s_on_collision(GameObject *other) {
         // Object becomes a ghost, so not moved while disappearing.
         set_ghost(true);
 
-        // Call disable() once client side animation ends
-        Timer::get()->do_after(
-            std::chrono::milliseconds(500),
-            [&]() {
-            disable();
-        });
+        disable_after_disappear();
     }
 }
 
@@ -148,7 +144,6 @@ void Essence::random_push() {
 
 void Essence::pickup_anim() {
     // Add "pick up" animation
-
     anim_player.set_anim("up");
     anim_player.set_speed(3.0f);
     anim_player.set_loop(false);
@@ -161,13 +156,18 @@ void Essence::setup_timeout() {
     Timer::get()->do_after(
         std::chrono::milliseconds(time_out),
         [&]() mutable {
+        // Tells client to start disappearing animation. This is the easiest way to send animation commands to client atm.
         events::dungeon::network_collision_event(id, id);
+        disable_after_disappear();
+    });
+}
 
-        // Call disable() once client side animation ends
-        Timer::get()->do_after(
-            std::chrono::milliseconds(500),
-            [&]() {
-            disable();
-        });
+// Server side function that times the disable to happen as soon as the client side animation ends.
+void Essence::disable_after_disappear() {
+    // Call disable() once client side disappearing animation ends
+    Timer::get()->do_after(
+        std::chrono::milliseconds(DISAPPEAR_ANIM_LENGTH),
+        [&]() {
+        disable();
     });
 }
