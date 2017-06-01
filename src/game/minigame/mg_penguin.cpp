@@ -28,9 +28,9 @@ void PenguinMG::s_setup() {
         player->disable();
         dead_player_flags[player_id] = true;
 
-        /*proto::ServerMessage msg;
+        proto::ServerMessage msg;
         msg.set_player_finished(player_id);
-        events::server::announce(msg);*/
+        events::server::announce(msg);
     });
 
     for (int id : context.player_ids) {
