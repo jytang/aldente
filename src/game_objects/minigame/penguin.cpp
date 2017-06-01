@@ -15,13 +15,14 @@ Penguin::Penguin(int id) : GameObject(id) {
         events::add_rigidbody_event(rigid);
 
         // Lock z-axis
-        rigidbody->setLinearFactor(btVector3(1, 1, 0.0f));
+        //rigidbody->setLinearFactor(btVector3(1, 1, 0.0f));
 
-        //Lock angular rotation
-        rigidbody->setAngularFactor(0);
+        rigidbody->setActivationState(true);
 
         // Set spawn position
-        set_position(glm::vec3(5, 1, rand() % 3 - 6));
+        //row = rand() % 3 - 6;
+        set_position(glm::vec3(5, 1, rand() % 6 - 3));
+        transform.set_rotation(glm::vec3(0, -90, 0));
     }
 }
 
@@ -53,4 +54,8 @@ void Penguin::setup_model() {
     attach_model(AssetLoader::get_model("slime_blue"));
     transform.set_scale({ 0.004f, 0.004f, 0.004f });
     initial_transform.set_scale(transform.get_scale());
+
+    anim_player.set_anim("walk");
+    anim_player.set_loop(true);
+    anim_player.play();
 }

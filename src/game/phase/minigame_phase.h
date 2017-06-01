@@ -1,4 +1,4 @@
-/*#pragma once
+#pragma once
 
 #include "phase.h"
 #include "game/minigame/minigame.h"
@@ -15,6 +15,5 @@ public:
     void c_update() override;
     void c_teardown() override;
 private:
-
     std::vector<Minigame> minigames;
-};*/
+};
