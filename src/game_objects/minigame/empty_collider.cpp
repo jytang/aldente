@@ -13,8 +13,10 @@ EmptyCollider::EmptyCollider(int id) : GameObject(id) {
         events::add_rigidbody_event(rigid);
 
         // Set position
-        set_position(glm::vec3(0,-3,0));
+        set_position(glm::vec3(0,-1,0));
     }
+
+    notify_on_collision = true;
 }
 
 void EmptyCollider::s_on_collision(GameObject *other) {

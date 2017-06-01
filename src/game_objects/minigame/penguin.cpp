@@ -15,13 +15,13 @@ Penguin::Penguin(int id) : GameObject(id) {
         events::add_rigidbody_event(rigid);
 
         // Lock z-axis
-        //rigidbody->setLinearFactor(btVector3(1, 1, 0.0f));
+        rigidbody->setLinearFactor(btVector3(1, 1, 0.0f));
 
         rigidbody->setActivationState(true);
 
         // Set spawn position
         //row = rand() % 3 - 6;
-        set_position(glm::vec3(5, 1, rand() % 6 - 3));
+        set_position(glm::vec3(5, 5, rand() % 6 - 3));
         transform.set_rotation(glm::vec3(0, -90, 0));
     }
 }
@@ -39,6 +39,10 @@ void Penguin::s_update_this() {
 
     transform.set_position(glm::vec3((float)to_set.getX(), (float)to_set.getY(),
         (float)to_set.getZ()));
+
+    // Forever moving left
+    btVector3 vel = rigidbody->getLinearVelocity();
+    rigidbody->setLinearVelocity(btVector3(-3, vel.getY(), 0));
 }
 
 void Penguin::c_update_state(glm::mat4 mat, bool enab) {

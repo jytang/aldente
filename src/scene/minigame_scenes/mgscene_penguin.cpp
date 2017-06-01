@@ -36,7 +36,7 @@ void MGScenePenguin::s_setup() {
 
     // Set up the collider below the platform to detect things falling off.
     EmptyCollider* collider = new EmptyCollider(-1);
-
+    objs.push_back(collider);
 }
 
 void MGScenePenguin::c_setup() {
@@ -51,8 +51,8 @@ void MGScenePenguin::c_setup() {
     // Set up the platform
     GameObject* platform = new GameObject(-1);
     platform->attach_model(AssetLoader::get_model("cube"));
-    platform->transform.set_scale(glm::vec3(10, 1, 5));
-    platform->set_position(glm::vec3(0, -0.5f, 0));
+    platform->transform.set_scale(glm::vec3(2, 1, 0.5f));
+    platform->transform.set_position(glm::vec3(0, -0.5f, 0));
     objs.push_back(platform);
 
     // Setup lights.
@@ -63,6 +63,8 @@ void MGScenePenguin::c_setup() {
     for (GameObject *obj : objs) {
         obj->setup_model();
     }
+    EmptyCollider* collider = new EmptyCollider(-1);
+    objs.push_back(collider);
     
     info.camera.cam_pos = glm::vec3(0, 12, 5);
     info.camera.rotate_cam(glm::vec3(1, 0, 0), -70.0f);

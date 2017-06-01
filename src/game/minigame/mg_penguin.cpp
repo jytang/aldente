@@ -65,5 +65,9 @@ void PenguinMG::c_teardown() {
 }
 
 bool PenguinMG::is_finished() {
+    for (auto const &kv : dead_player_flags) {
+        if (!kv.second)
+            return false;
+    }
     return true;
 }
