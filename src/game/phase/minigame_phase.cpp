@@ -1,18 +1,19 @@
-/*#include <game/game_state.h>
+#include <game/game_state.h>
 #include "minigame_phase.h"
 
-MinigamePhase(Context& context) : TimedPhase(context) {
+MinigamePhase::MinigamePhase(Context& context) : TimedPhase(context) {
 }
 
 void MinigamePhase::s_setup() {
     // Pick minigame and set up timer/connections
-    //transition_after(X, proto::Phase::BUILD);
+    transition_after(5, proto::Phase::BUILD);
     //x.s_setup
-    
+    std::cerr << "[s] setup minigame\n";
 }
 
 void MinigamePhase::c_setup() {
     //x.c_setup
+    std::cerr << "[c] setup minigame\n";
 }
 
 proto::Phase MinigamePhase::s_update() {
@@ -27,11 +28,11 @@ proto::Phase MinigamePhase::s_update() {
     events::dungeon::update_state_event(&context);
 
     // Ask minigame if early termination is needed
-    /*bool finished = x.is_finished;
+    //bool finished = x.is_finished;
 
-    if (all_players_done)
+    /*if (all_players_done)
         return proto::Phase::BUILD;
-    else
+    else*/
     return next;
 }
 
@@ -43,16 +44,17 @@ void MinigamePhase::s_teardown() {
     // x.disconnect
 
     // Assigns rewards depending on player's ranking
-    Player *curr_player;
+    /*Player *curr_player;
+    
     for (auto const &kv : goal_reached_flags) {
         curr_player = dynamic_cast<Player*>(GameObject::game_objects[kv.first]);
         assert(curr_player);
         curr_player->s_modify_stats([&, kv](PlayerStats &stats) {
             stats.add_coins(rewards[kv.second]);
         });
-    }
+    }*/
 }
 
 void MinigamePhase::c_teardown() {
     // x. disconnect
-}*/
+}

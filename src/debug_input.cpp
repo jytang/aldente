@@ -88,7 +88,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::debug::client_set_phase_event(&GameState::dungeon_phase);
                     break;
                 case GLFW_KEY_3:
-                    // FIXME(metakirby5)
+                    events::debug::client_set_phase_event(&GameState::minigame_phase);
                     break;
                 case GLFW_KEY_4:
                     // Camera animation debug. Feel free to remove if needed

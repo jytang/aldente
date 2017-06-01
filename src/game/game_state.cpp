@@ -4,6 +4,7 @@ Context GameState::context;
 MenuPhase GameState::menu_phase(context);
 BuildPhase GameState::build_phase(context);
 DungeonPhase GameState::dungeon_phase(context);
+MinigamePhase GameState::minigame_phase(context);
 
 Phase* GameState::curr_phase;
 std::map<int, Player*> GameState::players;
@@ -122,7 +123,7 @@ void GameState::set_phase(proto::Phase phase) {
         GameState::set_phase(&GameState::dungeon_phase);
         break;
     case proto::Phase::MINIGAME:
-        // FIXME(metakirby5)
+        GameState::set_phase(&GameState::minigame_phase);
         break;
     }
 

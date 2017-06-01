@@ -11,6 +11,7 @@
 #include "phase/menu.h"
 #include "phase/build.h"
 #include "phase/dungeon.h"
+#include "phase/minigame_phase.h"
 #include <map>
 #include <unordered_set>
 
@@ -20,6 +21,7 @@ public:
     static MenuPhase menu_phase;
     static BuildPhase build_phase;
     static DungeonPhase dungeon_phase;
+    static MinigamePhase minigame_phase;
 
     static Phase* curr_phase;
     static SceneManager scene_manager;
