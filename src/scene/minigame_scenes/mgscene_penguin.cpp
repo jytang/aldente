@@ -53,12 +53,6 @@ void MGScenePenguin::c_setup() {
     platform->initial_transform.set_scale(glm::vec3(10, 1, 5));
     objs.push_back(platform);
 
-    events::RigidBodyData platform_rigid;
-    platform_rigid.object = platform;
-    platform_rigid.shape = new btBoxShape(btVector3(10, 0.5f, 5));
-    platform_rigid.mass = 0;
-    events::add_rigidbody_event(platform_rigid);
-
     platform->set_position(glm::vec3(0, -0.5f, 0));
 
     // Setup lights.

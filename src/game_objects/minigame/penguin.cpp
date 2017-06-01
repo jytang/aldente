@@ -24,7 +24,7 @@ Penguin::Penguin(int id) : GameObject(id) {
         set_position(glm::vec3(5, 1, rand() % 10 - 5));
         transform.set_rotation(glm::vec3(0, -90, 0));
 
-        move_speed = -(rand() % 3 + 1);
+        move_speed = -(rand() % 3 + 3);
     }
 }
 
@@ -44,9 +44,18 @@ void Penguin::s_update_this() {
 
     // Forever moving left
     btVector3 vel = rigidbody->getLinearVelocity();
-    rigidbody->setLinearVelocity(btVector3(move_speed, vel.getY(), 0));
+    float to_move = min(move_speed, vel.getX());
+    rigidbody->setLinearVelocity(btVector3(to_move, vel.getY(), 0));
 
-    //events::dungeon::request_raycast_event()
+    events::dungeon::request_raycast_event(
+        transform.get_position(), transform.get_forward(), 0.6f,
+        [&](GameObject *bt_hit) {
+
+        // If there's another penguin in front of it, give it a push
+        if (bt_hit && bt_hit->tag == "PENGUIN") {
+            bt_hit->get_rigid()->applyForce(btVector3(-1000, 0, 0), btVector3(0, 0, 0));
+        }
+    });
 }
 
 void Penguin::c_update_state(glm::mat4 mat, bool enab) {
