@@ -5,12 +5,11 @@
 
 #define LEADERBOARD_ENTRIES 4
 
-std::map<std::string, std::string> LeaderboardUI::model_to_portrait = {
+std::map<std::string, std::string> LeaderboardEntry::model_to_portrait = {
         {"boy_two", "dio.jpg"},
         {"lizard", "grass.png"},
         {"cat", "test.png"},
         {"tomato", "Tomato.jpg"}};
-
 std::map<int, Color> LeaderboardEntry::ranking_to_color = {
         {0, Color::GOLD},
         {1, Color::SILVER},
@@ -46,7 +45,7 @@ LeaderboardUI::LeaderboardUI(float aspect)
         LeaderboardEntry *entry = new LeaderboardEntry(0, 0, // starting coords
                                                        24.f * aspect, 60.f / LEADERBOARD_ENTRIES, // dimensions
                                                        i, // ranking
-                                                       AssetLoader::get_texture("dio.jpg"), 0);
+                                                       AssetLoader::get_texture("no_player.png"), 0);
         ranking_to_entry[i] = entry;
         leaderboard_grid.attach_at(i, 0, *entry);
     }
@@ -79,8 +78,7 @@ LeaderboardUI::LeaderboardUI(float aspect)
 
         // Update gold amount and reflow leaderboard ui.
         id_to_entry[player_id]->set_gold(gold);
-        GLuint portrait_id = AssetLoader::get_texture(model_to_portrait[model]);
-        id_to_entry[player_id]->set_portrait(portrait_id);
+        id_to_entry[player_id]->set_portrait(model);
         sort_leaderboard();
     });
 }
@@ -148,8 +146,8 @@ void LeaderboardEntry::set_gold(int gold) {
     gold_amount.set_text(std::to_string(gold));
 }
 
-void LeaderboardEntry::set_portrait(GLuint portrait) {
-    portrait_image.set_image(portrait);
+void LeaderboardEntry::set_portrait(std::string model) {
+    portrait_image.set_image(AssetLoader::get_texture(model_to_portrait[model]));
 }
 
 void LeaderboardEntry::set_ranking(int ranking) {
