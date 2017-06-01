@@ -39,7 +39,7 @@ protected:
 
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     btBoxShape *hit_box_small = new btBoxShape(btVector3(0.3f, 0.5f, 0.3f));
-    btCapsuleShape *hit_capsule = new btCapsuleShape(0.3f, 1.0f);
+    btCapsuleShape *hit_capsule = new btCapsuleShape(0.4f, 1.0f);
 
 public:
     MobileTrap(int x, int z, int id = 0);

@@ -52,6 +52,7 @@ void Mimic::s_interact_trigger(GameObject *other) {
         curr_target = player;
         stop_moving = false;
         notify_on_collision = true; // Can now damage player on collision
+        set_ghost(true);
 
         // Send signal to client to tell that this chest is opened
         events::dungeon::network_interact_event(other->get_id(), id);
@@ -75,6 +76,7 @@ void Mimic::s_reset() {
     curr_target = NULL;
     stop_moving = true;
     notify_on_collision = false;
+    set_ghost(false);
 }
 
 void Mimic::c_reset() {
