@@ -26,7 +26,7 @@ void MGScenePenguin::s_setup() {
 
     events::RigidBodyData platform_rigid;
     platform_rigid.object = platform;
-    platform_rigid.shape = new btBoxShape(btVector3(5,0.5f,2.5f));
+    platform_rigid.shape = new btBoxShape(btVector3(10,0.5f,5));
     platform_rigid.mass = 0;
     events::add_rigidbody_event(platform_rigid);
 
@@ -50,6 +50,12 @@ void MGScenePenguin::c_setup() {
     platform->transform.set_scale(glm::vec3(10, 1, 5));
     platform->set_position(glm::vec3(0, -0.5f, 0));
     objs.push_back(platform);
+
+    events::RigidBodyData platform_rigid;
+    platform_rigid.object = platform;
+    platform_rigid.shape = new btBoxShape(btVector3(10, 0.5f, 5));
+    platform_rigid.mass = 0;
+    events::add_rigidbody_event(platform_rigid);
 
     // Setup lights.
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),

@@ -14,14 +14,14 @@ Penguin::Penguin(int id) : GameObject(id) {
         rigid.mass = 10;
         events::add_rigidbody_event(rigid);
 
-        // Lock y-axis and z-axis
-        rigidbody->setLinearFactor(btVector3(1, 0.0f, 0.0f));
+        // Lock z-axis
+        rigidbody->setLinearFactor(btVector3(1, 1, 0.0f));
 
         //Lock angular rotation
         rigidbody->setAngularFactor(0);
 
         // Set spawn position
-        set_position(glm::vec3(5, 0, rand() % 3 - 6));
+        set_position(glm::vec3(5, 1, rand() % 3 - 6));
     }
 }
 
