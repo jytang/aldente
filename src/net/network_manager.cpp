@@ -341,7 +341,7 @@ void ClientNetworkManager::update() {
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_PROJECTILE) {
                         if (obj.subtype() == ProjectileTypes::ARROW) {
                             Arrow *arrow = new Arrow(obj.id());
-                            //arrow->set_parent(obj.parent_id());
+                            arrow->set_parent(obj.parent_id());
                             arrow->setup_model();
                             GameState::scene_manager.get_current_scene()->objs.push_back(arrow);
                         }
