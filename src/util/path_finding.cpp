@@ -9,10 +9,10 @@ std::vector<std::vector<Tile *>> PathFinding::grid;
 // to find the shortest path. (using A*)
 glm::vec3 PathFinding::find_path(glm::vec3 start_pos, glm::vec3 end_pos) {
     // Start and End Position
-    int start_x = (int)start_pos.x;
-    int start_z = (int)start_pos.z;
-    int end_x = (int)end_pos.x;
-    int end_z = (int)end_pos.z;
+    int start_x = (int)std::round(start_pos.x);
+    int start_z = (int)std::round(start_pos.z);
+    int end_x = (int)std::round(end_pos.x);
+    int end_z = (int)std::round(end_pos.z);
 
     // Setting up Priority Queue
     // First two numbers of tuple represent X and Z coord of tile, and last number is Cost to go there./
@@ -39,20 +39,36 @@ glm::vec3 PathFinding::find_path(glm::vec3 start_pos, glm::vec3 end_pos) {
 
     // Run through A* Algorithm
     while (!to_explore.empty()) {
+        // Get next possible location from priority queue
         std::tuple<int, int, int> current = to_explore.top();
         to_explore.pop();
 
         std::pair<int, int> current_loc = std::pair<int, int>(std::get<0>(current), std::get<1>(current));
         int current_cost = std::get<2>(current);
 
-        if (current_loc.first == end_x && current_loc.second == end_z) {
+        // Check if already reached goal
+        if (current_loc.first == goal.first && current_loc.second == goal.second) {
             break;
         }
 
+        // Check for all neighbors
         for (int i = 0; i < 4; i++) {
+            
+            // Get neighbor
             std::pair<int, int> next = std::make_pair(current_loc.first + next_x[i], current_loc.second + next_z[i]);
+
+            // Bounds checking
+            if (next.first < 0 || next.second < 0 || next.second > grid.size() || next.first > grid[0].size())
+                continue;
+
+            // Check if neighboring tile is blocked
+            if (!grid[next.second][next.first]->traversable)
+                continue;
+
+            // Update cost
             int new_cost = cost_so_far[current_loc] + 1;
 
+            // Check if it is a potential path
             if (!cost_so_far.count(next) || new_cost < cost_so_far[next]) {
                 cost_so_far[next] = new_cost;
                 int priority = new_cost + heuristic(next, goal);

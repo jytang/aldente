@@ -7,8 +7,8 @@ Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
         // Creates Rigid Body
         events::RigidBodyData rigid;
         rigid.object = this;
-        rigid.shape = hit_box;
-        rigid.mass = 1;
+        rigid.shape = hit_capsule; // To avoid getting stuck at edges
+        rigid.mass = 1000; // Cannot push around
         rigid.is_ghost = false;
         rigid.position = { x, 0.0f, z };
         events::add_rigidbody_event(rigid);
@@ -16,7 +16,7 @@ Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
         // Lock y-axis
         rigidbody->setLinearFactor(btVector3(1, 0.0f, 1));
 
-        move_speed = 2.0f;
+        move_speed = 4.0f;
         move_type = AI;
 
         stop_moving = true;
@@ -24,26 +24,24 @@ Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
     }
 }
 
-// Play moving animation if it moves past a minimum amount for delta
-void Mimic::c_update_state(glm::mat4 mat, bool enab) {
-    // Find difference in x and z positions for animating.
-    float dx = std::fabs(mat[3][0] - transform.get_position().x);
-    float dz = std::fabs(mat[3][2] - transform.get_position().z);
-    bool animate = dx > 0.001f || dz > 0.001f;
-
-    if (!animate && !anim_player.check_paused())
-            anim_player.stop();
-    else if (anim_player.check_paused())
-            anim_player.play();
-
-    GameObject::c_update_state(mat, enab);
-}
-
 // Handles logic for whether the AI is still in range of the target
 void Mimic::update_ai() {
     if (curr_target) {
-        glm::vec3 dir = PathFinding::find_path(transform.get_position(), curr_target->transform.get_position());
-        transform.look_at(dir);
+        // First check if can go straight to target
+        glm::vec3 dir = glm::normalize(curr_target->transform.get_position() - transform.get_position());
+        events::dungeon::request_raycast_event(
+            transform.get_position(), dir, 100.0f,
+            [&](GameObject *bt_hit) {
+            Player *player = dynamic_cast<Player*>(bt_hit);
+
+            // If something blocking path to player, use path finding.
+            if (!player)
+                dir = PathFinding::find_path(transform.get_position(), curr_target->transform.get_position());
+
+            transform.look_at(dir);
+            std::cerr << "Direction :";
+            Util::print_vec3(dir);
+        });
     }
 }
 
@@ -53,8 +51,15 @@ void Mimic::s_interact_trigger(GameObject *other) {
     if (player && !curr_target) {
         curr_target = player;
         stop_moving = false;
-        notify_on_collision = true;
+        notify_on_collision = true; // Can now damage player on collision
+
+        // Send signal to client to tell that this chest is opened
+        events::dungeon::network_interact_event(other->get_id(), id);
     }
+}
+
+void Mimic::c_interact_trigger(GameObject *other) {
+    anim_player.play();
 }
 
 void Mimic::setup_model() {
@@ -64,6 +69,12 @@ void Mimic::setup_model() {
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("open", 3.0f, true);
+}
+
+void Mimic::s_reset() {
+    curr_target = NULL;
+    stop_moving = true;
+    notify_on_collision = false;
 }
 
 void Mimic::c_reset() {

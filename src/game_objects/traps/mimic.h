@@ -18,11 +18,11 @@ protected:
 public:
     Mimic(int x, int z, int id = 0);
 
-    void c_update_state(glm::mat4 mat, bool enab);
-
     void s_interact_trigger(GameObject *other) override;
+    void c_interact_trigger(GameObject *other) override;
 
     void setup_model() override;
 
+    void s_reset() override;
     void c_reset() override;
 };
