@@ -18,6 +18,8 @@ protected:
     float move_speed = 1.0f;
     float rotation_amount = 90.0f; // Amount to rotate when changing directions (Counterclockwise)
     bool random_rotations_on = false; // Whether or not should use random rotations
+
+    bool stop_moving = false; // Tells mobile trap to stop moving
     
     // Designated which type of movement monster uses
     enum MoveType {

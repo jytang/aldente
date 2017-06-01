@@ -14,7 +14,8 @@ void MobileTrap::s_update_this() {
     else if (move_type == MoveType::AI)
         update_ai();
 
-    handle_movement();
+    if (!stop_moving)
+        handle_movement();
 
     sync_position();
 }
