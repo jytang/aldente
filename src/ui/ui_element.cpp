@@ -5,7 +5,7 @@
 #include <cmath> // std::abs
 #include <iostream>
 
-#define UI_ANIMATION_STEP_MS 10
+#define UI_ANIMATION_STEP_MS 17 // 60fps
 
 // Helper to determine if the next destination is farther away from the target
 bool UIElement::moving_away(float current, float delta, float target) {
@@ -33,6 +33,8 @@ void UIElement::animate_to(float target_x, float target_y, float seconds, std::f
                 // Cancel animation once we are moving away from target.
                 if (moving_away(start_x, step_x, target_x) &&
                         moving_away(start_y, step_y, target_y)) {
+                    start_x = target_x;
+                    start_y = target_y;
                     cancel_animation();
                     do_after();
                 }
