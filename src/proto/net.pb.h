@@ -52,11 +52,12 @@ enum GameObject_Type {
   GameObject_Type_GOAL = 1,
   GameObject_Type_CHEST = 2,
   GameObject_Type_SPIKE = 3,
-  GameObject_Type_ESSENCE = 4
+  GameObject_Type_ESSENCE = 4,
+  GameObject_Type_PROJECTILE = 5
 };
 bool GameObject_Type_IsValid(int value);
 const GameObject_Type GameObject_Type_Type_MIN = GameObject_Type_PLAYER;
-const GameObject_Type GameObject_Type_Type_MAX = GameObject_Type_ESSENCE;
+const GameObject_Type GameObject_Type_Type_MAX = GameObject_Type_PROJECTILE;
 const int GameObject_Type_Type_ARRAYSIZE = GameObject_Type_Type_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* GameObject_Type_descriptor();
@@ -1090,6 +1091,7 @@ class GameObject : public ::google::protobuf::Message {
   static const Type CHEST = GameObject_Type_CHEST;
   static const Type SPIKE = GameObject_Type_SPIKE;
   static const Type ESSENCE = GameObject_Type_ESSENCE;
+  static const Type PROJECTILE = GameObject_Type_PROJECTILE;
   static inline bool Type_IsValid(int value) {
     return GameObject_Type_IsValid(value);
   }
@@ -1160,6 +1162,20 @@ class GameObject : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 model_index() const;
   inline void set_model_index(::google::protobuf::int32 value);
 
+  // optional int32 parent_id = 7;
+  inline bool has_parent_id() const;
+  inline void clear_parent_id();
+  static const int kParentIdFieldNumber = 7;
+  inline ::google::protobuf::int32 parent_id() const;
+  inline void set_parent_id(::google::protobuf::int32 value);
+
+  // optional int32 subtype = 8;
+  inline bool has_subtype() const;
+  inline void clear_subtype();
+  static const int kSubtypeFieldNumber = 8;
+  inline ::google::protobuf::int32 subtype() const;
+  inline void set_subtype(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:proto.GameObject)
  private:
   inline void set_has_id();
@@ -1172,6 +1188,10 @@ class GameObject : public ::google::protobuf::Message {
   inline void clear_has_enabled();
   inline void set_has_model_index();
   inline void clear_has_model_index();
+  inline void set_has_parent_id();
+  inline void clear_has_parent_id();
+  inline void set_has_subtype();
+  inline void clear_has_subtype();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -1183,6 +1203,8 @@ class GameObject : public ::google::protobuf::Message {
   ::google::protobuf::int32 client_id_;
   bool enabled_;
   ::google::protobuf::int32 model_index_;
+  ::google::protobuf::int32 parent_id_;
+  ::google::protobuf::int32 subtype_;
   friend void  protobuf_AddDesc_net_2eproto();
   friend void protobuf_AssignDesc_net_2eproto();
   friend void protobuf_ShutdownFile_net_2eproto();
@@ -2962,6 +2984,54 @@ inline void GameObject::set_model_index(::google::protobuf::int32 value) {
   set_has_model_index();
   model_index_ = value;
   // @@protoc_insertion_point(field_set:proto.GameObject.model_index)
+}
+
+// optional int32 parent_id = 7;
+inline bool GameObject::has_parent_id() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void GameObject::set_has_parent_id() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void GameObject::clear_has_parent_id() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void GameObject::clear_parent_id() {
+  parent_id_ = 0;
+  clear_has_parent_id();
+}
+inline ::google::protobuf::int32 GameObject::parent_id() const {
+  // @@protoc_insertion_point(field_get:proto.GameObject.parent_id)
+  return parent_id_;
+}
+inline void GameObject::set_parent_id(::google::protobuf::int32 value) {
+  set_has_parent_id();
+  parent_id_ = value;
+  // @@protoc_insertion_point(field_set:proto.GameObject.parent_id)
+}
+
+// optional int32 subtype = 8;
+inline bool GameObject::has_subtype() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void GameObject::set_has_subtype() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void GameObject::clear_has_subtype() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline void GameObject::clear_subtype() {
+  subtype_ = 0;
+  clear_has_subtype();
+}
+inline ::google::protobuf::int32 GameObject::subtype() const {
+  // @@protoc_insertion_point(field_get:proto.GameObject.subtype)
+  return subtype_;
+}
+inline void GameObject::set_subtype(::google::protobuf::int32 value) {
+  set_has_subtype();
+  subtype_ = value;
+  // @@protoc_insertion_point(field_set:proto.GameObject.subtype)
 }
 
 // -------------------------------------------------------------------

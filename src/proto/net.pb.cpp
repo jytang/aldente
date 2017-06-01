@@ -233,13 +233,15 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(IdPair));
   GameObject_descriptor_ = file->message_type(7);
-  static const int GameObject_offsets_[6] = {
+  static const int GameObject_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, transform_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, client_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, enabled_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, model_index_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, parent_id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GameObject, subtype_),
   };
   GameObject_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -425,21 +427,22 @@ void protobuf_AddDesc_net_2eproto() {
     "eState\022\"\n\007objects\030\001 \003(\0132\021.proto.GameObje"
     "ct\022!\n\ncollisions\030\002 \003(\0132\r.proto.IdPair\022 \n"
     "\tinteracts\030\003 \003(\0132\r.proto.IdPair\"*\n\006IdPai"
-    "r\022\021\n\tinitiator\030\001 \001(\005\022\r\n\005other\030\002 \001(\005\"\313\001\n\n"
+    "r\022\021\n\tinitiator\030\001 \001(\005\022\r\n\005other\030\002 \001(\005\"\377\001\n\n"
     "GameObject\022\n\n\002id\030\001 \001(\005\022$\n\004type\030\002 \001(\0162\026.p"
     "roto.GameObject.Type\022\021\n\ttransform\030\003 \003(\002\022"
     "\021\n\tclient_id\030\004 \001(\005\022\017\n\007enabled\030\005 \001(\010\022\023\n\013m"
-    "odel_index\030\006 \001(\005\"\?\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004"
-    "GOAL\020\001\022\t\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\022\013\n\007ESSENCE\020"
-    "\004\"%\n\tCollision\022\n\n\002id\030\001 \001(\005\022\014\n\004type\030\002 \001(\005"
-    "\"~\n\tStickData\022%\n\005input\030\001 \001(\0162\026.proto.Sti"
-    "ckData.Stick\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001(\005\022\n\n\002id"
-    "\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK_LEFT\020\000\022\017\n\013STICK"
-    "_RIGHT\020\001\"(\n\013PlayerStats\022\n\n\002id\030\001 \001(\005\022\r\n\005c"
-    "oins\030\002 \001(\005\"6\n\014AvatarChange\022\021\n\tplayer_id\030"
-    "\001 \001(\005\022\023\n\013model_index\030\002 \001(\005*A\n\005Phase\022\010\n\004N"
-    "OOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007DUNGEON\020\002\022"
-    "\014\n\010MINIGAME\020\003", 1693);
+    "odel_index\030\006 \001(\005\022\021\n\tparent_id\030\007 \001(\005\022\017\n\007s"
+    "ubtype\030\010 \001(\005\"O\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL"
+    "\020\001\022\t\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\022\013\n\007ESSENCE\020\004\022\016\n"
+    "\nPROJECTILE\020\005\"%\n\tCollision\022\n\n\002id\030\001 \001(\005\022\014"
+    "\n\004type\030\002 \001(\005\"~\n\tStickData\022%\n\005input\030\001 \001(\016"
+    "2\026.proto.StickData.Stick\022\t\n\001x\030\002 \001(\005\022\t\n\001y"
+    "\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK_LEF"
+    "T\020\000\022\017\n\013STICK_RIGHT\020\001\"(\n\013PlayerStats\022\n\n\002i"
+    "d\030\001 \001(\005\022\r\n\005coins\030\002 \001(\005\"6\n\014AvatarChange\022\021"
+    "\n\tplayer_id\030\001 \001(\005\022\023\n\013model_index\030\002 \001(\005*A"
+    "\n\005Phase\022\010\n\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013"
+    "\n\007DUNGEON\020\002\022\014\n\010MINIGAME\020\003", 1745);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -3446,6 +3449,7 @@ bool GameObject_Type_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -3458,6 +3462,7 @@ const GameObject_Type GameObject::GOAL;
 const GameObject_Type GameObject::CHEST;
 const GameObject_Type GameObject::SPIKE;
 const GameObject_Type GameObject::ESSENCE;
+const GameObject_Type GameObject::PROJECTILE;
 const GameObject_Type GameObject::Type_MIN;
 const GameObject_Type GameObject::Type_MAX;
 const int GameObject::Type_ARRAYSIZE;
@@ -3469,6 +3474,8 @@ const int GameObject::kTransformFieldNumber;
 const int GameObject::kClientIdFieldNumber;
 const int GameObject::kEnabledFieldNumber;
 const int GameObject::kModelIndexFieldNumber;
+const int GameObject::kParentIdFieldNumber;
+const int GameObject::kSubtypeFieldNumber;
 #endif  // !_MSC_VER
 
 GameObject::GameObject()
@@ -3494,6 +3501,8 @@ void GameObject::SharedCtor() {
   client_id_ = 0;
   enabled_ = false;
   model_index_ = 0;
+  parent_id_ = 0;
+  subtype_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -3539,9 +3548,9 @@ void GameObject::Clear() {
     ::memset(&first, 0, n);                                \
   } while (0)
 
-  if (_has_bits_[0 / 32] & 59) {
+  if (_has_bits_[0 / 32] & 251) {
     ZR_(id_, type_);
-    ZR_(client_id_, model_index_);
+    ZR_(client_id_, subtype_);
   }
 
 #undef OFFSET_OF_FIELD_
@@ -3656,6 +3665,36 @@ bool GameObject::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(56)) goto parse_parent_id;
+        break;
+      }
+
+      // optional int32 parent_id = 7;
+      case 7: {
+        if (tag == 56) {
+         parse_parent_id:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &parent_id_)));
+          set_has_parent_id();
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(64)) goto parse_subtype;
+        break;
+      }
+
+      // optional int32 subtype = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_subtype:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &subtype_)));
+          set_has_subtype();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3717,6 +3756,16 @@ void GameObject::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->model_index(), output);
   }
 
+  // optional int32 parent_id = 7;
+  if (has_parent_id()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->parent_id(), output);
+  }
+
+  // optional int32 subtype = 8;
+  if (has_subtype()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->subtype(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -3757,6 +3806,16 @@ void GameObject::SerializeWithCachedSizes(
   // optional int32 model_index = 6;
   if (has_model_index()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->model_index(), target);
+  }
+
+  // optional int32 parent_id = 7;
+  if (has_parent_id()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->parent_id(), target);
+  }
+
+  // optional int32 subtype = 8;
+  if (has_subtype()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->subtype(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -3801,6 +3860,20 @@ int GameObject::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->model_index());
+    }
+
+    // optional int32 parent_id = 7;
+    if (has_parent_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->parent_id());
+    }
+
+    // optional int32 subtype = 8;
+    if (has_subtype()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->subtype());
     }
 
   }
@@ -3853,6 +3926,12 @@ void GameObject::MergeFrom(const GameObject& from) {
     if (from.has_model_index()) {
       set_model_index(from.model_index());
     }
+    if (from.has_parent_id()) {
+      set_parent_id(from.parent_id());
+    }
+    if (from.has_subtype()) {
+      set_subtype(from.subtype());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -3882,6 +3961,8 @@ void GameObject::Swap(GameObject* other) {
     std::swap(client_id_, other->client_id_);
     std::swap(enabled_, other->enabled_);
     std::swap(model_index_, other->model_index_);
+    std::swap(parent_id_, other->parent_id_);
+    std::swap(subtype_, other->subtype_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
