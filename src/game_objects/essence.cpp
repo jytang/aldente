@@ -36,7 +36,7 @@ Essence::Essence(int id) : GameObject(id){
 
         random_push();
 
-		setup_timeout();
+        setup_timeout();
     }
     else {
         // Make the essence change colors continuously
@@ -75,15 +75,15 @@ void Essence::s_update_this() {
 }
 
 void Essence::s_on_collision(GameObject *other) {
-	if (disappearing)
-		return;
+    if (disappearing)
+        return;
 
     Player *player = dynamic_cast<Player*>(other);
     if (player && !player->is_stunned()) {
         value->collected_by(player); // Award player
         value = std::make_unique<collectibles::Nothing>();
 
-		disappearing = true;
+        disappearing = true;
 
         events::dungeon::network_collision_event(player->get_id(), id);
 
@@ -100,8 +100,8 @@ void Essence::s_on_collision(GameObject *other) {
 }
 
 void Essence::c_on_collision(GameObject *other) {
-	if (dynamic_cast<Player*>(other))
-		pickup_anim();
+    if (dynamic_cast<Player*>(other))
+        pickup_anim();
     disappear();
 }
 
@@ -147,27 +147,27 @@ void Essence::random_push() {
 }
 
 void Essence::pickup_anim() {
-	// Add "pick up" animation
+    // Add "pick up" animation
 
-	anim_player.set_anim("up");
-	anim_player.set_speed(3.0f);
-	anim_player.set_loop(false);
-	anim_player.play();
+    anim_player.set_anim("up");
+    anim_player.set_speed(3.0f);
+    anim_player.set_loop(false);
+    anim_player.play();
 }
 
 void Essence::setup_timeout() {
-	// Make essence disappear after a while.
-	int time_out = ESSENCE_TIME_OUT + (int)Util::random(-1000, 1000); // Slightly diff time outs
-	Timer::get()->do_after(
-		std::chrono::milliseconds(time_out),
-		[&]() mutable {
-		events::dungeon::network_collision_event(id, id);
+    // Make essence disappear after a while.
+    int time_out = ESSENCE_TIME_OUT + (int)Util::random(-1000, 1000); // Slightly diff time outs
+    Timer::get()->do_after(
+        std::chrono::milliseconds(time_out),
+        [&]() mutable {
+        events::dungeon::network_collision_event(id, id);
 
-		// Call disable() once client side animation ends
-		Timer::get()->do_after(
-			std::chrono::milliseconds(500),
-			[&]() {
-			disable();
-		});
-	});
+        // Call disable() once client side animation ends
+        Timer::get()->do_after(
+            std::chrono::milliseconds(500),
+            [&]() {
+            disable();
+        });
+    });
 }

@@ -21,7 +21,7 @@ protected:
 
 class TimedPhase : public Phase {
 public:
-	TimedPhase(Context& context)
+    TimedPhase(Context& context)
             : Phase(context)
             , cancel_clock_every([]{})
             , remaining_seconds(0) {}

@@ -31,8 +31,8 @@ private:
     std::function<void()> cancel_fade;
     std::function<void()> cancel_rainbow; // Cancels the constant rainbow color changing
 
-	bool disappearing;
+    bool disappearing;
 
-	void pickup_anim();
-	void setup_timeout();
+    void pickup_anim();
+    void setup_timeout();
 };

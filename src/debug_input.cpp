@@ -141,8 +141,8 @@ void DebugInput::debug_movement_keys() {
 }
 
 void DebugInput::debug_movement_mouse(events::WindowCursorData d) {
-	if (keys[GLFW_KEY_LEFT_CONTROL])
-		return;
+    if (keys[GLFW_KEY_LEFT_CONTROL])
+        return;
     int width, height;
     std::tie(width, height) = d.window->get_size();
 
