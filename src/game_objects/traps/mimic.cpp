@@ -1,5 +1,6 @@
 #include "mimic.h"
 #include "asset_loader.h"
+#include "util/path_finding.h"
 
 Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
     if (id == ON_SERVER) {
@@ -41,14 +42,9 @@ void Mimic::c_update_state(glm::mat4 mat, bool enab) {
 // Handles logic for whether the AI is still in range of the target
 void Mimic::update_ai() {
     if (curr_target) {
-        change_direction();
+        glm::vec3 dir = PathFinding::find_path(transform.get_position(), curr_target->transform.get_position());
+        transform.look_at(dir);
     }
-}
-
-// Looks at current target if available
-void Mimic::change_direction() {
-    if (curr_target)
-        transform.look_at(curr_target->transform.get_position() - transform.get_position());
 }
 
 // Check if other is a player, than targets them to follow them

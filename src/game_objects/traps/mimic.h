@@ -14,7 +14,6 @@ protected:
     Player *curr_target;
 
     void update_ai() override;
-    void change_direction() override;
 
 public:
     Mimic(int x, int z, int id = 0);

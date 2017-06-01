@@ -265,6 +265,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\ui\ui_unstretched_text_box.h" />
     <ClInclude Include="..\src\util\color.h" />
     <ClInclude Include="..\src\util\config.h" />
+    <ClInclude Include="..\src\util\path_finding.h" />
     <ClInclude Include="..\src\util\util.h" />
     <ClInclude Include="..\src\util\util_bt.h" />
     <ClInclude Include="..\src\window.h" />
@@ -378,6 +379,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\ui\ui_unstretched_text_box.cpp" />
     <ClCompile Include="..\src\util\color.cpp" />
     <ClCompile Include="..\src\util\config.cpp" />
+    <ClCompile Include="..\src\util\path_finding.cpp" />
     <ClCompile Include="..\src\util\util.cpp" />
     <ClCompile Include="..\src\util\util_bt.cpp" />
     <ClCompile Include="..\src\window.cpp" />
