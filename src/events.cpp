@@ -111,6 +111,8 @@ namespace events {
     }
 
     namespace minigame {
+        signal<void()> start_minigame_event;
+        signal<void()> end_minigame_event;
         signal<void(int)> player_died_event;
     }
 }

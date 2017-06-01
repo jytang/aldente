@@ -2,18 +2,32 @@
 #include "minigame_phase.h"
 
 MinigamePhase::MinigamePhase(Context& context) : TimedPhase(context) {
+    minigames = {
+        PenguinMG(context)
+    };
+    curr_mg = nullptr;
 }
 
 void MinigamePhase::s_setup() {
-    // Pick minigame and set up timer/connections
     transition_after(5, proto::Phase::BUILD);
+
+    // Pick minigame and set up timer/connections
+    // For now, just choose first one
+    curr_mg = &(minigames[0]);
+
     //x.s_setup
     std::cerr << "[s] setup minigame\n";
+    events::minigame::start_minigame_event();
 }
 
 void MinigamePhase::c_setup() {
+    // TODO: client needs to know what minigame was chosen!!
+    // For now, choose first one
+    curr_mg = &(minigames[0]);
+
     //x.c_setup
     std::cerr << "[c] setup minigame\n";
+    events::minigame::start_minigame_event();
 }
 
 proto::Phase MinigamePhase::s_update() {
@@ -53,8 +67,12 @@ void MinigamePhase::s_teardown() {
             stats.add_coins(rewards[kv.second]);
         });
     }*/
+
+    events::minigame::end_minigame_event();
 }
 
 void MinigamePhase::c_teardown() {
     // x. disconnect
+
+    events::minigame::end_minigame_event();
 }

@@ -16,4 +16,5 @@ public:
     void c_teardown() override;
 private:
     std::vector<Minigame> minigames;
+    Minigame* curr_mg;
 };

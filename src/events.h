@@ -303,6 +303,12 @@ namespace events {
     }
 
     namespace minigame {
+        // Signals the start of the minigame phase, on both server and client.
+        extern signal<void()> start_minigame_event;
+
+        // Signals the end of the minigame phase, on both server and client.
+        extern signal<void()> end_minigame_event;
+
         // Signals that the player has died
         extern signal<void(int)> player_died_event;
     }

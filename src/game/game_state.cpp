@@ -76,7 +76,15 @@ void GameState::setup(bool is_server) {
         set_scene(&main_scene);
     });
 
-    scene_manager.set_current_scene(&penguin_scene);
+    events::minigame::start_minigame_event.connect([&]() {
+        set_scene(&penguin_scene);
+    });
+
+    events::minigame::end_minigame_event.connect([&]() {
+        set_scene(&main_scene);
+    });
+
+    scene_manager.set_current_scene(&start_scene);
 }
 
 void GameState::s_update() {
