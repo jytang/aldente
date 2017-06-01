@@ -61,13 +61,17 @@ void MGScenePenguin::c_setup() {
     for (GameObject *obj : objs) {
         obj->setup_model();
     }
-    
-    info.camera.cam_pos = glm::vec3(0, 12, 5);
-    info.camera.rotate_cam(glm::vec3(1, 0, 0), -70.0f);
 }
 
 void MGScenePenguin::connect_listeners() {
 }
 
 void MGScenePenguin::disconnect_listeners() {
+}
+
+void MGScenePenguin::reset_camera() {
+    info.camera.reset();
+    info.camera.rotate_cam(glm::vec3(1, 0, 0), -70.0f);
+    info.camera.cam_pos = glm::vec3(0, 12, 5);
+    info.camera.recalculate();
 }

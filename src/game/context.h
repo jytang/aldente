@@ -11,6 +11,7 @@ class Context {
 public:
     // Common
     std::vector<int> player_ids;
+    std::map<std::string, Scene*> minigame_scenes;
 
     // Server
     std::set<GameObject*> updated_objects;

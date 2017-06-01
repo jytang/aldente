@@ -7,7 +7,7 @@
 #include "audio/audio_manager.h"
 
 void DungeonPhase::s_setup() {
-    transition_after(60, proto::Phase::BUILD);
+    transition_after(60, proto::Phase::MINIGAME);
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int dispatcher, int other) {
         context.collisions.emplace(dispatcher, other);

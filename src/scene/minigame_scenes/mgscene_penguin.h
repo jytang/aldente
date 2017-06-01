@@ -20,4 +20,5 @@ public:
     void c_setup() override;
     void connect_listeners() override;
     void disconnect_listeners() override;
+    void reset_camera() override;
 };

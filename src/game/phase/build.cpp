@@ -6,6 +6,8 @@
 bool BuildPhase::is_menu = true;
 
 void BuildPhase::s_setup() {
+    GameState::set_scene(&GameState::main_scene);
+
     transition_after(60, proto::Phase::DUNGEON);
     ready_conn = events::player_ready_event.connect([&](int player_id) {
         context.ready_flags[player_id] = true;
@@ -46,6 +48,8 @@ void BuildPhase::s_setup() {
 }
 
 void BuildPhase::c_setup() {
+    GameState::set_scene(&GameState::main_scene);
+
     events::build::start_build_event();
     events::build::select_grid_return_event();
     is_menu = true;

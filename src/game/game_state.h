@@ -25,6 +25,9 @@ public:
 
     static Phase* curr_phase;
     static SceneManager scene_manager;
+    static MainScene main_scene;
+    static StartScene start_scene;
+    static MGScenePenguin penguin_scene;
     static Physics physics;
 
     static std::map<int, Player*> players;
@@ -44,12 +47,12 @@ public:
     // If client, add existing player with given id that the server sent.
     static Player* s_add_player(int conn_id);
     static Player* c_add_player(int obj_id, int model_index, bool is_client);
+
+    // Changes the current scene.
+    static void set_scene(Scene* scene);
+
 private:
     static void set_phase(Phase* phase);
-    static void set_scene(Scene* scene);
-    static MainScene main_scene;
-    static StartScene start_scene;
-    static MGScenePenguin penguin_scene;
     static int num_players;
     static bool is_server;
 };

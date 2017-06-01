@@ -1,12 +1,12 @@
 #include <input/modal_input.h>
 #include "mg_penguin.h"
 #include "events.h"
+#include "game/game_state.h"
 #include "game_objects/player.h"
 #include <iostream>
 
 PenguinMG::PenguinMG(Context& to_set) : Minigame(to_set) {
     time = PENGUINMG_TIME;
-    scene = nullptr;
     info = MinigameInfo {
         {
             { "xboxControllerLeftThumbStick.png", "Move" },
@@ -39,8 +39,8 @@ void PenguinMG::s_setup() {
         assert(player);
         
         // Set player start location here
-        //player->reset_position();
-        //player->enable();
+        player->set_position({ 0, 0, 0 });
+        player->enable();
     }
 
     // Enable gravity on players
@@ -52,6 +52,8 @@ void PenguinMG::s_setup() {
         pos.y = 5.f;
         player->set_position(pos);
     }
+
+    GameState::set_scene(context.minigame_scenes["penguin"]);
 }
 
 void PenguinMG::s_teardown() {
@@ -73,6 +75,8 @@ void PenguinMG::c_setup() {
             events::dungeon::network_player_move_event(d);
         }
     });
+
+    GameState::set_scene(context.minigame_scenes["penguin"]);
 }
 
 void PenguinMG::c_teardown() {

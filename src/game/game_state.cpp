@@ -19,6 +19,10 @@ bool GameState::is_server = true;
 
 void GameState::setup(bool is_server) {
     GameState::is_server = is_server;
+
+    // Adds minigame scenes.
+    context.minigame_scenes["penguin"] = &penguin_scene;
+
     scene_manager.add_scene(&start_scene);
     scene_manager.add_scene(&main_scene);
     scene_manager.add_scene(&penguin_scene);
@@ -72,18 +76,6 @@ void GameState::setup(bool is_server) {
             c_add_player(id, model_index, false);
         });
     }
-
-    events::menu::end_menu_event.connect([&]() {
-        set_scene(&main_scene);
-    });
-
-    events::minigame::start_minigame_event.connect([&]() {
-        set_scene(&penguin_scene);
-    });
-
-    events::minigame::end_minigame_event.connect([&]() {
-        set_scene(&main_scene);
-    });
 
     scene_manager.set_current_scene(&start_scene);
 }
@@ -152,6 +144,7 @@ void GameState::set_scene(Scene* scene) {
 
     physics.set_scene(scene);
     scene_manager.set_current_scene(scene);
+    scene->reset_camera();
 
     // Enable rigid bodies on the next scene.
     for (auto & kv : players) {
