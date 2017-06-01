@@ -34,7 +34,7 @@ void MGScenePenguin::s_setup() {
     platform->set_position(glm::vec3(0, -0.5f, -0.5f));
 
     // Set up the collider below the platform to detect things falling off.
-    EmptyCollider* collider = new EmptyCollider();
+    EmptyCollider* collider = new EmptyCollider(-1);
     objs.push_back(collider);
 }
 
