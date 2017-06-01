@@ -1,6 +1,7 @@
 #include "ui_container.h"
 
 #include <algorithm>
+#include "timer.h"
 
 void UIContainer::attach(UIElement &child) {
     children.push_back(&child);
@@ -35,3 +36,9 @@ void UIContainer::draw(Render2D &renderer_2d,
     }
 }
 
+void UIContainer::set_alpha(float alpha) {
+    UIElement::set_alpha(alpha);
+    for (auto it = children.begin(); it != children.end(); ++it) {
+        (*it)->set_alpha(alpha);
+    }
+}

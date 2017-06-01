@@ -9,7 +9,7 @@ UILegend::UILegend(std::string texture, std::string text,
                                        float padding,
                                        Color text_color, Color bg_color,
                                        float alpha) :
-        UIContainer(start_x, start_y),
+        UIContainer(start_x, start_y, alpha),
         // Icon shall be a square at the left.
         button_bg(0, 0,
                   height + padding, height, // Square + padding

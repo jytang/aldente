@@ -75,9 +75,10 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
 
     // Show or hide the grid.
     events::build::construct_selected_event.connect([&, aspect](ConstructType type) {
-        shop_panel.animate_to(0, -70.f, 0.1f, [&]() {
+        shop_panel.animate_to(0, -70.f, 0.2f, [&]() {
             shop_panel.disable();
         });
+        shop_panel.animate_alpha(0.f, 0.2f);
         player_panel.animate_to(-30.f * aspect, 0, 0.1f, [&]() {
             player_panel.disable();
         });
@@ -87,7 +88,8 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     events::build::select_grid_return_event.connect([&, aspect]() {
         shop_panel.enable();
         player_panel.enable();
-        shop_panel.animate_to(0, 10.f, 0.1f);
+        shop_panel.animate_to(0, 10.f, 0.2f);
+        shop_panel.animate_alpha(1.f, 0.2f);
         player_panel.animate_to(0, 0, 0.1f);
     });
 

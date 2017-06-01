@@ -14,7 +14,7 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        Alignment h_align, Alignment v_align,
                        Color text_color, Color bg_color,
                        float alpha) :
-    UIContainer(start_x, start_y),
+    UIContainer(start_x, start_y, alpha),
     char_width(char_width), char_height(char_height),
     line_height((1 + LINE_SPACE_FACTOR) * char_height),
     width(width), inner_width(width - 2 * padding),

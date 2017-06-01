@@ -7,5 +7,5 @@ void UITextNode::draw(Render2D &renderer_2d,
                              offset_x + start_x,
                              offset_y + start_y,
                              x_scale, y_scale,
-                             color);
+                             color, alpha);
 }

@@ -10,6 +10,6 @@ void UIImageNode::draw(Render2D &renderer_2d,
                              width, height,
                              Color::WHITE, // color goes unused in shader
                              texture_id,
-                             1.0f); // image nodes no transparency
+                             alpha); // image nodes no transparency
 }
 

@@ -91,13 +91,14 @@ void Render2D::setup_glyphs() {
 void Render2D::render_text(std::string text,
                            GLfloat x, GLfloat y,
                            GLfloat x_scale, GLfloat y_scale,
-                           Color color) {
+                           Color color, GLfloat alpha) {
     // Always render UI regardless of depth.
     glDisable(GL_DEPTH_TEST);
 
     // Activate corresponding render state
     ShaderManager::text.use();
     ShaderManager::text.set_uni("baseColor", color.to_vec());
+    ShaderManager::text.set_uni("alpha", alpha);
     glUniformMatrix4fv(ShaderManager::text.get_uni("projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
     glActiveTexture(GL_TEXTURE0);
@@ -206,10 +207,10 @@ void Render2D::render_rectP(GLfloat x, GLfloat y,
 void Render2D::render_textP(std::string text,
                             GLfloat x, GLfloat y,
                             GLfloat x_scale, GLfloat y_scale,
-                            Color color) {
+                            Color color, GLfloat alpha) {
     GLfloat adj_x        = x        * UNIT_TO_PERCENT * screen_height;
     GLfloat adj_y        = y        * UNIT_TO_PERCENT * screen_height;
     GLfloat adj_x_scale  = x_scale  * UNIT_TO_PERCENT * GLYPH_UNIT * screen_height;
     GLfloat adj_y_scale  = y_scale  * UNIT_TO_PERCENT * GLYPH_UNIT * screen_height;
-    render_text(text, adj_x, adj_y, adj_x_scale, adj_y_scale, color);
+    render_text(text, adj_x, adj_y, adj_x_scale, adj_y_scale, color, alpha);
 }

@@ -12,9 +12,9 @@ UITextBox::UITextBox(std::string text,
                      float width, float height,
                      Color text_color, Color bg_color,
                      float alpha) :
-    UIContainer(start_x, start_y),
+    UIContainer(start_x, start_y, alpha),
     width(width), height(height),
-    alpha(alpha), initial_alpha(alpha) {
+    initial_alpha(alpha) {
 
     bg = UIRectangle(0, 0, width, height, bg_color, alpha);
     attach(bg);
@@ -58,10 +58,6 @@ void UITextBox::set_text_color(Color text_color) {
 
 void UITextBox::set_bg_color(Color bg_color) {
     bg.set_color(bg_color);
-}
-
-void UITextBox::set_alpha(float alpha) {
-    bg.set_alpha(alpha);
 }
 
 float UITextBox::calc_text_width(std::string s) {

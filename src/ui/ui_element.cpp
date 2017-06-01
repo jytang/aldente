@@ -44,3 +44,26 @@ void UIElement::animate_to(float target_x, float target_y, float seconds, std::f
 void UIElement::animate_relative(float delta_x, float delta_y, float seconds, std::function<void()> do_after) {
     animate_to(start_x + delta_x, start_y + delta_y, seconds, do_after);
 }
+
+void UIElement::animate_alpha(float target_alpha, float seconds, std::function<void()> do_after) {
+    // Calculate the amount to step by per UI_ANIMATION_STEP_MS.
+    float milliseconds = seconds * 1000;
+    float step = (target_alpha - alpha) / milliseconds * UI_ANIMATION_STEP_MS;
+
+    // Cancel existing animation if any.
+    cancel_alpha_animation();
+
+    // Do animation every UI_ANIMATION_STEP_MS
+    cancel_alpha_animation = Timer::get()->do_every(
+            std::chrono::milliseconds(UI_ANIMATION_STEP_MS),
+            [&, step, target_alpha, do_after]() {
+                set_alpha(alpha + step); // set alpha of all children
+
+                // Cancel animation once we are moving away from target.
+                if (moving_away(alpha, step, target_alpha)) {
+                    alpha = target_alpha;
+                    cancel_alpha_animation();
+                    do_after();
+                }
+            });
+}

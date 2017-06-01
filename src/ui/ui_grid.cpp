@@ -101,6 +101,11 @@ void UIGrid::disable() {
     UIContainer::disable();
 }
 
+void UIGrid::set_alpha(float alpha) {
+    grid_bg.set_alpha(alpha);
+    UIContainer::set_alpha(alpha);
+}
+
 void UIGrid::toggle_current_selection_halo() {
     children[selection_row * columns + selection_col]->do_selection();
 }
