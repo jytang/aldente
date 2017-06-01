@@ -56,11 +56,11 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::toggle_mute_event();
                     break;
                 case GLFW_KEY_F3:
-                    events::ui::enable_scoreboard(
-                            {{"boy_two", 123},
-                             {"lizard", 456},
-                             {"cat", 999},
-                             {"tomato", 1}
+                    events::ui::scoreboard_sequence(
+                            {{"boy_two", 123, 10},
+                             {"lizard", 456, 7},
+                             {"cat", 999, 5},
+                             {"tomato", 1, 3}
                             });
                     break;
                 case GLFW_KEY_F4:

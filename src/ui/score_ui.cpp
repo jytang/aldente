@@ -46,7 +46,7 @@ ScoreUI::ScoreUI(float aspect)
         UITextBox *delta_entry =
                 new UITextBox("+0", 40.f * aspect, 0.25f * 70.f / LEADERBOARD_ENTRIES,
                               5.f * aspect, 5.f, Color::WHITE);
-        delta_entry->text_node.set_alpha(1.f); // nothing shows by default
+        delta_entry->text_node.set_alpha(0.f); // nothing shows by default
         entries.push_back(entry);
         deltas.push_back(delta_entry);
         score_grid.attach_at(i, 0, *entry);
@@ -81,11 +81,11 @@ void ScoreUI::animate_deltas() {
             deltas[rank]->set_text("+" + std::to_string(gold_delta));
 
             // animate alpha channel
-            /*deltas[rank]->text_node.animate_alpha(1.f, 1.f); /*, [&, rank]() {
-                Timer::get()->do_after(std::chrono::milliseconds(500), [&, rank]() {
+            deltas[rank]->text_node.animate_alpha(1.f, 1.f, [&, rank]() {
+                Timer::get()->do_after(std::chrono::milliseconds(1000), [&, rank]() {
                     deltas[rank]->text_node.animate_alpha(0.f, 1.f);
                 });
-            }); */
+            });
         }
         rank++;
     }
