@@ -1,7 +1,6 @@
 #include "ui_container.h"
 
 #include <algorithm>
-#include "timer.h"
 
 void UIContainer::attach(UIElement &child) {
     children.push_back(&child);
