@@ -2,7 +2,7 @@
 
 // Type of construct built on tile.
 enum ConstructType {
-    NONE, CHEST, SPIKES, SLIME_B, SLIME_Y, SLIME_R, SLIME_G, ARROW_TRAP, REMOVE
+    NONE, CHEST, MIMIC, SPIKES, SLIME_B, SLIME_Y, SLIME_R, SLIME_G, ARROW_TRAP, REMOVE
 };
 
 struct ConstructData {
@@ -16,6 +16,7 @@ struct ConstructData {
 namespace Constructs {
     const static std::map<ConstructType, ConstructData> CONSTRUCTS = {
         { ConstructType::CHEST, { ConstructType::CHEST, 50, "Chest", "A treasure chest full of gold.", "test.png" } },
+        { ConstructType::MIMIC, { ConstructType::MIMIC, 50, "Mimic", "A treasure chest with the urge to kill.", "no.png" } },
         { ConstructType::SPIKES, { ConstructType::SPIKES, 50, "Spikes", "It was me, spikes.", "dio.jpg" } },
         { ConstructType::SLIME_B, { ConstructType::SLIME_B, 10, "Blue Slime", "Likes to loop", "slime_blue.png" } },
         { ConstructType::SLIME_Y,{ ConstructType::SLIME_Y, 10, "Yellow Slime", "Bounces off walls", "slime_yellow.png" } },

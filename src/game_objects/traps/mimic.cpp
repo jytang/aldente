@@ -1,9 +1,7 @@
 #include "mimic.h"
 #include "asset_loader.h"
 
-#define ANIMATE_DELTA 0.001f // Amount needed to play moving animation
-
-Mimic::Mimic(int x, int z, int id) : Mimic(x, z, id) {
+Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
     if (id == ON_SERVER) {
         // Creates Rigid Body
         events::RigidBodyData rigid;
@@ -19,6 +17,9 @@ Mimic::Mimic(int x, int z, int id) : Mimic(x, z, id) {
 
         move_speed = 2.0f;
         move_type = AI;
+
+        stop_moving = true;
+        notify_on_collision = false;
     }
 }
 
@@ -27,18 +28,12 @@ void Mimic::c_update_state(glm::mat4 mat, bool enab) {
     // Find difference in x and z positions for animating.
     float dx = std::fabs(mat[3][0] - transform.get_position().x);
     float dz = std::fabs(mat[3][2] - transform.get_position().z);
-    bool animate = dx > ANIMATE_DELTA || dz > ANIMATE_DELTA;
+    bool animate = dx > 0.001f || dz > 0.001f;
 
-    if (!animate) {
-        if (!anim_player.check_paused()) {
+    if (!animate && !anim_player.check_paused())
             anim_player.stop();
-        }
-    }
-    else {
-        if (anim_player.check_paused()) {
+    else if (anim_player.check_paused())
             anim_player.play();
-        }
-    }
 
     GameObject::c_update_state(mat, enab);
 }
@@ -61,17 +56,18 @@ void Mimic::s_interact_trigger(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player && !curr_target) {
         curr_target = player;
+        stop_moving = false;
+        notify_on_collision = true;
     }
 }
 
 void Mimic::setup_model() {
     Model *model = AssetLoader::get_model("chest_bad");
     attach_model(model);
-    transform.set_scale({ 0.004f, 0.004f, 0.004f });
+    transform.set_scale({ 0.006f, 0.006f, 0.006f });
     initial_transform.set_scale(transform.get_scale());
 
-    anim_player.set_anim("open");
-    anim_player.set_loop(true);
+    anim_player.set_anim("open", 3.0f, true);
 }
 
 void Mimic::c_reset() {

@@ -7,6 +7,7 @@
 #include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
 #include "game_objects/traps/arrow_trap.h"
+#include "game_objects/traps/mimic.h"
 
 #include <fstream>
 
@@ -151,6 +152,9 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
         switch (type) {
         case CHEST:
             to_add = new Chest(col, row, id);
+            break;
+        case MIMIC:
+            to_add = new Mimic(col, row, id);
             break;
         case SPIKES:
             to_add = new Spikes(col, row, id);
