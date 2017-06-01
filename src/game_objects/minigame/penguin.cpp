@@ -11,7 +11,7 @@ Penguin::Penguin(int id) : GameObject(id) {
         events::RigidBodyData rigid;
         rigid.object = this;
         rigid.shape = hit_capsule;
-        rigid.mass = 10;
+        rigid.mass = 100;
         events::add_rigidbody_event(rigid);
 
         // Lock z-axis

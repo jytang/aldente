@@ -32,16 +32,6 @@ void MenuPhase::c_setup() {
 }
 
 proto::Phase MenuPhase::s_update() {
-    GameState::physics.update();
-
-    // Send the position and orientation of the specified game objects.
-    // Currently sending all Player objects and Constructs.
-    for (auto const & o : GameObject::game_objects) {
-        if (!dynamic_cast<Tile*>(o.second) && !dynamic_cast<Grid*>(o.second))
-            context.updated_objects.insert(o.second);
-    }
-    events::dungeon::update_state_event(&context);
-
     bool all_ready = true;
     for (auto const &kv : context.ready_flags) {
         if (!kv.second) {

@@ -13,6 +13,8 @@ PenguinMG::PenguinMG(Context& to_set) : Minigame(to_set) {
         }, // input legend
         std::string("Don't get pushed off!"), // Objective
     };
+
+    context = to_set;
 }
 
 void PenguinMG::s_setup() {
@@ -40,11 +42,27 @@ void PenguinMG::s_setup() {
         //player->reset_position();
         //player->enable();
     }
+
+    // Enable gravity on players
+    for (int id : context.player_ids) {
+        Player *player = dynamic_cast<Player*>(GameObject::game_objects[id]);
+        assert(player);
+        player->get_rigid()->setLinearFactor(btVector3(1, 1, 1));
+        glm::vec3 pos = player->transform.get_position();
+        pos.y = 5.f;
+        player->set_position(pos);
+    }
 }
 
 void PenguinMG::s_teardown() {
     collision_conn.disconnect();
     flag_conn.disconnect();
+
+    for (int id : context.player_ids) {
+        assert(dynamic_cast<Player*>(GameObject::game_objects[id]));
+        GameObject::game_objects[id]->get_rigid()->setLinearFactor(btVector3(1, 0, 1));
+        GameObject::game_objects[id]->get_rigid()->setLinearVelocity(btVector3(0, 0, 0));
+    }
 }
 
 void PenguinMG::c_setup() {

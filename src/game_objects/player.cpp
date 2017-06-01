@@ -110,7 +110,8 @@ void Player::do_movement() {
     // Should account for deltatime so movement is
     // framerate independent? Unsure how Bullet handles framerate.
     rigidbody->setActivationState(true);
-    rigidbody->setLinearVelocity(btVector3(to_moveX * move_speed, 0, to_moveZ * move_speed));
+    btVector3 vel = rigidbody->getLinearVelocity();
+    rigidbody->setLinearVelocity(btVector3(to_moveX * move_speed, vel.getY(), to_moveZ * move_speed));
     transform.look_at(glm::vec3(to_moveX * move_speed, 0, to_moveZ * move_speed));
 }
 
