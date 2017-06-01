@@ -5,22 +5,6 @@
 
 #define LEADERBOARD_ENTRIES 4
 
-std::map<std::string, std::string> LeaderboardEntry::model_to_portrait = {
-        {"boy_two", "dio.jpg"},
-        {"lizard", "grass.png"},
-        {"cat", "test.png"},
-        {"tomato", "Tomato.jpg"}};
-std::map<int, Color> LeaderboardEntry::ranking_to_color = {
-        {0, Color::GOLD},
-        {1, Color::SILVER},
-        {2, Color::BRONZE},
-        {3, Color::INDIAN_RED}};
-std::map<int, std::string> LeaderboardEntry::ranking_to_image = {
-        {0, "cobblestone.png"},
-        {1, "wall.png"},
-        {2, "cloudwall.png"},
-        {3, "grass.png"}};
-
 LeaderboardUI::~LeaderboardUI() {
     for (auto &pair : ranking_to_entry)
         delete pair.second;
@@ -42,7 +26,7 @@ LeaderboardUI::LeaderboardUI(float aspect)
     attach(leaderboard_grid);
 
     for (int i = 0; i < LEADERBOARD_ENTRIES; ++i) {
-        LeaderboardEntry *entry = new LeaderboardEntry(0, 0, // starting coords
+        UILeaderboardEntry *entry = new UILeaderboardEntry(0, 0, // starting coords
                                                        24.f * aspect, 60.f / LEADERBOARD_ENTRIES, // dimensions
                                                        i, // ranking
                                                        AssetLoader::get_texture("no_player.png"), 0);
@@ -90,7 +74,7 @@ void LeaderboardUI::sort_leaderboard() {
 
         // TODO: Deal with ties
         // Use inefficient sorting because LEADERBOARD_ENTRIES is small.
-        LeaderboardEntry *best = ranking_to_entry[i];
+        UILeaderboardEntry *best = ranking_to_entry[i];
         int best_index = i;
         for (int j = i+1; j < LEADERBOARD_ENTRIES; ++j) {
             if (ranking_to_entry[j]->get_gold() > best->get_gold()) {
@@ -101,7 +85,7 @@ void LeaderboardUI::sort_leaderboard() {
 
         // Swap if necessary.
         if (best_index != i) {
-            LeaderboardEntry *tmp = ranking_to_entry[i];
+            UILeaderboardEntry *tmp = ranking_to_entry[i];
             ranking_to_entry[i] = ranking_to_entry[best_index];
             ranking_to_entry[best_index] = tmp;
         }
@@ -111,46 +95,4 @@ void LeaderboardUI::sort_leaderboard() {
 
         leaderboard_grid.attach_at(i, 0, *ranking_to_entry[i]);
     }
-}
-
-LeaderboardEntry::LeaderboardEntry(float start_x, float start_y,
-                                   float width, float height,
-                                   int ranking, GLuint portrait, int gold)
-    : UIContainer(start_x, start_y),
-      gold(gold),
-      bg(start_x, start_y, width, height, ranking_to_color[ranking], 1.f),
-      ranking_image(0, 0.1f * height, // starting coordinates
-                    0.8f * height, 0.8f * height,
-                    AssetLoader::get_texture(ranking_to_image[ranking])),
-      portrait_image(0.8f * height, 0.1f * height,
-                     0.8f * height, 0.8f * height,
-                     portrait),
-      gold_amount("0",
-                  1.6f * height, 0.25f * height,
-                  0.8f * height, 0.5f * height,
-                  Color::WHITE),
-      gold_image(2.4f * height, 0.3f * height, // vertically centered
-                 0.4f * height, 0.4f * height,
-                 AssetLoader::get_texture("essence.png")) {
-
-    attach(bg);
-
-    attach(ranking_image);
-    attach(portrait_image);
-    attach(gold_amount);
-    attach(gold_image);
-}
-
-void LeaderboardEntry::set_gold(int gold) {
-    this->gold = gold;
-    gold_amount.set_text(std::to_string(gold));
-}
-
-void LeaderboardEntry::set_portrait(std::string model) {
-    portrait_image.set_image(AssetLoader::get_texture(model_to_portrait[model]));
-}
-
-void LeaderboardEntry::set_ranking(int ranking) {
-    ranking_image.set_image(AssetLoader::get_texture(ranking_to_image[ranking]));
-    bg.set_color(ranking_to_color[ranking]);
 }

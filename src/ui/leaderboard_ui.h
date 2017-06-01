@@ -6,34 +6,11 @@
 #include "ui_grid.h"
 #include "util/color.h"
 #include "asset_loader.h"
+#include "ui_leaderboard_entry.h"
 
 #include <map>
 #include <vector>
 #include <string>
-
-// Entry for a player on the leaderboard: ranking, portrait and amount of gold
-class LeaderboardEntry : public UIContainer {
-public:
-    LeaderboardEntry(float start_x, float start_y,
-                     float width, float height,
-                     int ranking, GLuint portrait, int gold);
-    void set_gold(int gold);
-    int get_gold() { return gold; }
-    void set_portrait(std::string model);
-    void set_ranking(int ranking);
-private:
-    UIRectangle bg;
-    UIImageNode ranking_image;
-    UIImageNode portrait_image;
-    UITextBox gold_amount;
-    UIImageNode gold_image;
-
-    int gold;
-
-    static std::map<int, Color> ranking_to_color; // static mapping from {1,2,3,4} to colors
-    static std::map<int, std::string> ranking_to_image; // {1,2,3,4} to their images
-    static std::map<std::string, std::string> model_to_portrait; // maps model names to respective 2D portraits
-};
 
 class LeaderboardUI : public UI {
 public:
@@ -43,7 +20,7 @@ private:
     void sort_leaderboard(); // helper function to sort the entries by gold amount
 
     UIGrid leaderboard_grid;
-    std::map<int, LeaderboardEntry *> ranking_to_entry; // maps rank to an entry
-    std::map<int, LeaderboardEntry *> id_to_entry; // maps player ids to leaderboard entries
+    std::map<int, UILeaderboardEntry *> ranking_to_entry; // maps rank to an entry
+    std::map<int, UILeaderboardEntry *> id_to_entry; // maps player ids to leaderboard entries
     int next_entry_idx = 0;
 };
