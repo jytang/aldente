@@ -15,6 +15,7 @@ FloorTile::FloorTile(int x, int z) : Tile::Tile() {
     this->x = x;
     this->z = z;
     buildable = true;
+    traversable = true;
 
     set_position({ x, 0.0f, z });
 }
@@ -37,6 +38,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     this->x = x;
     this->z = z;
     buildable = false;
+    traversable = false;
 
     events::RigidBodyData rigid;
     rigid.object = this;

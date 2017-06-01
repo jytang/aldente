@@ -20,7 +20,6 @@
 class Tile : public GameObject {
 protected:
     int x, z;
-    bool traversable;
 
     Construct *construct;
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
@@ -32,6 +31,7 @@ public:
 
     // Whether a construct buildable on this tile.
     bool buildable;
+    bool traversable;
 
     int getX() { return x; };
     int getZ() { return z; };
