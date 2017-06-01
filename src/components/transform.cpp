@@ -111,36 +111,6 @@ glm::vec3 Transform::get_position() {
     return glm::vec3(x, y, z);
 }
 
-// Rotation obtained by dividing 3x3 top left matrix by scale, and
-// then converting rotation matrix to Euler angles in degrees.
-glm::vec3 Transform::get_rotation() {
-
-    glm::vec3 col_0 = glm::vec3(world_mat[0][0], world_mat[0][1], world_mat[0][2]);
-    glm::vec3 col_1 = glm::vec3(world_mat[1][0], world_mat[1][1], world_mat[1][2]);
-    glm::vec3 col_2 = glm::vec3(world_mat[2][0], world_mat[2][1], world_mat[2][2]);
-    glm::vec3 scale = glm::vec3(glm::length(col_0), glm::length(col_1), glm::length(col_2));
-    if (scale.x == 0 || scale.y == 0 || scale.z == 0) {
-        std::cerr << "Error : Scale is 0, cannot get rotation" << std::endl;
-        return glm::vec3(1.0f);
-    }
-    col_0 = (1 / scale.x) * col_0;
-    col_1 = (1 / scale.y) * col_1;
-    col_2 = (1 / scale.z) * col_2;
-
-    // Matrix math is hard
-    float angle_x = glm::degrees(std::atan2f(col_1.z, col_2.z));
-    float angle_y = glm::degrees(std::atan2f(-col_0.z, sqrtf((col_1.z * col_1.z) + (col_2.z * col_2.z))));
-    float angle_z = glm::degrees(std::atan2f(col_1.x, col_0.x));
-
-    // At exactly +-90 degrees for y rotation, above equation breaks. Need to adjust.
-    if (glm::abs(angle_y) == 90.0f) {
-        angle_x = 180.0f;
-        angle_z = glm::degrees(std::atan2f(col_1.x, -col_1.y));
-    }
-
-    return glm::vec3(angle_x, angle_y, angle_z);
-}
-
 // Scale is obtained by taking the length of the first three column vectors
 glm::vec3 Transform::get_scale() {
     glm::vec3 col_0 = glm::vec3(world_mat[0][0], world_mat[0][1], world_mat[0][2]);
@@ -161,11 +131,19 @@ glm::mat4 Transform::get_translation_mat() {
 
 // Helper fucntion for easily getting rotation matrix
 glm::mat4 Transform::get_rotation_mat() {
-    glm::vec3 rot_angles = get_rotation();
-    glm::mat4 rotate_x = glm::rotate(glm::mat4(1.0f), glm::radians(rot_angles.x), glm::vec3(1.f, 0.f, 0.f));
-    glm::mat4 rotate_y = glm::rotate(glm::mat4(1.0f), glm::radians(rot_angles.y), glm::vec3(0.f, 1.f, 0.f));
-    glm::mat4 rotate_z = glm::rotate(glm::mat4(1.0f), glm::radians(rot_angles.z), glm::vec3(0.f, 0.f, 1.f));
-    return rotate_z * rotate_y * rotate_x;
+    glm::vec3 col_0 = glm::vec3(world_mat[0][0], world_mat[0][1], world_mat[0][2]);
+    glm::vec3 col_1 = glm::vec3(world_mat[1][0], world_mat[1][1], world_mat[1][2]);
+    glm::vec3 col_2 = glm::vec3(world_mat[2][0], world_mat[2][1], world_mat[2][2]);
+    glm::vec3 scale = glm::vec3(glm::length(col_0), glm::length(col_1), glm::length(col_2));
+    if (scale.x == 0 || scale.y == 0 || scale.z == 0) {
+        std::cerr << "Error : Scale is 0, cannot get rotation" << std::endl;
+        return glm::mat4(1.0f);
+    }
+    col_0 = (1 / scale.x) * col_0;
+    col_1 = (1 / scale.y) * col_1;
+    col_2 = (1 / scale.z) * col_2;
+
+    return glm::mat4(glm::mat3(col_0, col_1, col_2));
 }
 
 // Helper function for easily getting scale matrix

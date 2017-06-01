@@ -30,7 +30,6 @@ public:
 
     glm::mat4 get_world_mat();
     glm::vec3 get_position();
-    glm::vec3 get_rotation();
     glm::vec3 get_scale();
 
     glm::vec3 get_forward();
