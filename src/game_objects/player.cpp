@@ -317,8 +317,6 @@ bool Player::s_slow() {
     if (slowed)
         return false;
 
-    std::cerr << "Actually Slowing Player" << std::endl;
-
     // Cannot be slowed forever
     slowed = true;
 
@@ -345,8 +343,6 @@ bool Player::s_slow() {
 void Player::c_slow() {
     if (cancel_slow)
         cancel_slow();
-
-    std::cerr << "Actually Slowing Player" << std::endl;
 
     set_filter_color(Color::OCEAN_BLUE);
     set_filter_alpha(0.98f);
