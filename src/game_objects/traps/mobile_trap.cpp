@@ -13,7 +13,7 @@ void MobileTrap::s_update_this() {
         check_wall();
     else if (move_type == MoveType::AI)
         update_ai();
-    
+
     handle_movement();
 
     sync_position();
