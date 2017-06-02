@@ -19,9 +19,11 @@ private:
     std::function<void()> cancel_flicker; // Callback function to cancel damage flicker.
     std::function<void()> cancel_stun;
     std::function<void()> cancel_invulnerable;
+    std::function<void()> cancel_slow;
     bool end_flicker; // Whether we should stop player flickering.
     bool invulnerable; // Can't lose coins or collide with other harmful traps.
     bool stunned; // Can't move.
+    bool slowed; // Is Slowed
 
     // to_move is for saving the joystick input in each frame.
     int to_moveX;
@@ -74,6 +76,10 @@ public:
     bool s_take_damage(); // Set invulnerability, drop coins, lose gold (true if took damage)
     void c_take_damage(); // Graphical : Flickers player to show they've been hit
 
+    // Get Slowed
+    bool s_slow(); // Hit by slow trap. Get frozen, and then slowly regain movespeed
+    void c_slow(); // Turn bluish to indicate frozen. Can later change to a UI effect
+
     // Used for checking if player has been hit and in the period of invulnerability, 
     // where they can't be hit by traps again.
     bool is_invulnerable() { return invulnerable; };
@@ -81,6 +87,9 @@ public:
     // Used for checking if player has been stunned
     // since they cannot pick up essence during this time or interact w objects.
     bool is_stunned() { return stunned; };
+
+    // Checks if player is already slowed
+    bool is_slowed() { return slowed; };
 
     // Allows manipulation of stats through callback.
     // This is done so that the clients can receive any associated updates.

@@ -10,6 +10,9 @@
 #define ANIMATE_DELTA 0.001f
 #define STUN_LENGTH 1000 // milliseconds
 #define INVULNERABLE_LENGTH 3000 // ms
+#define SLOW_LENGTH 5000
+
+#define BASE_MOVE_SPEED 2.0f
 
 std::vector<std::string> Player::PLAYER_MODELS = { "boy_two", "lizard", "cat", "tomato" };
 
@@ -19,7 +22,7 @@ Player::Player(int id) : GameObject(id), is_client(false) {
     if (id == ON_SERVER) {
         to_moveX = 0;
         to_moveZ = 0;
-        move_speed = 2.0f;
+        move_speed = BASE_MOVE_SPEED;
         exiting = false;
 
         events::RigidBodyData rigid;
@@ -307,6 +310,44 @@ void Player::c_take_damage() {
         [&]() {
         end_flicker = true;
         cancel_flicker();
+    });
+}
+
+bool Player::s_slow() {
+    if (slowed)
+        return false;
+
+    // Cannot be slowed forever
+    slowed = true;
+
+    // Start off unable to move, then slowly regain movespeed
+    // Takes 5 seconds to completely regain movespeed
+    move_speed = 0;
+    cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(250),
+        [&]() {
+        move_speed += 0.1f;
+
+        if (move_speed >= BASE_MOVE_SPEED) {
+            move_speed = BASE_MOVE_SPEED;
+            cancel_slow();
+        }
+    });
+
+    return true;
+}
+
+void Player::c_slow() {
+    if (cancel_slow)
+        cancel_slow();
+
+    set_filter_color(Color::OCEAN_BLUE);
+    set_filter_alpha(0.8f);
+
+    // Turn player blue
+    cancel_slow = Timer::get()->do_after(
+        std::chrono::milliseconds(100),
+        [&]() mutable {
+        disable_filter();
     });
 }
 
