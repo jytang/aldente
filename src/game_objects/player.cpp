@@ -224,6 +224,10 @@ bool Player::s_take_damage() {
     // Period of stunned
     stunned = true;
 
+    // Cannot collide with traps when invulnerable
+    collision_mask |= COLLISION_TRAPS;
+    events::update_collision_mask_event(this);
+
     // Player loses percentage essence
     const float percent_loss = .20f; // Hardcoded. Should change later to make it variable based on traps?
     int amount_loss = (int) stats.get_coins() * percent_loss;
@@ -250,6 +254,10 @@ bool Player::s_take_damage() {
     Timer::get()->do_after(std::chrono::milliseconds(INVULNERABLE_LENGTH),
         [&]() {
         invulnerable = false;
+
+        // Can collide with traps again
+        collision_mask = 0;
+        events::update_collision_mask_event(this);
     });
 
     return true;
