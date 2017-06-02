@@ -224,8 +224,6 @@ bool Player::s_take_damage() {
     // Period of stunned
     stunned = true;
 
-    std::cerr << "Player is hit: " << id << std::endl;
-
     // Player loses percentage essence
     const float percent_loss = .20f; // Hardcoded. Should change later to make it variable based on traps?
     int amount_loss = (int) stats.get_coins() * percent_loss;
