@@ -82,6 +82,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
         player_panel.animate_to(-30.f * aspect, 0, 0.1f, [&]() {
             player_panel.disable();
         });
+        player_panel.animate_alpha(0.f, 0.1f);
     });
 
     // Show the grid.
@@ -91,6 +92,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
         shop_panel.animate_to(0, 10.f, 0.2f);
         shop_panel.animate_alpha(1.f, 0.2f);
         player_panel.animate_to(0, 0, 0.1f);
+        player_panel.animate_alpha(1.f, 0.1f);
     });
 
     // Update the player's current gold balance.
