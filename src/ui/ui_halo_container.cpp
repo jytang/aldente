@@ -12,7 +12,8 @@ UIHaloContainer::UIHaloContainer(float start_x, float start_y,
                         element_height + selection_halo_padding * 2,
                         Color::WINDWAKER_SAND);
     halo.disable(); // disabled by default
-    children.push_back(&halo);
+    if (selection_halo_padding != 0)
+        children.push_back(&halo);
 }
 
 void UIHaloContainer::do_selection() {

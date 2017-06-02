@@ -45,8 +45,8 @@ ScoreUI::ScoreUI(float aspect)
                                        AssetLoader::get_texture("no_player.png"), 0);
         UITextBox *delta_entry =
                 new UITextBox("+0", 40.f * aspect, 0.25f * 70.f / LEADERBOARD_ENTRIES,
-                              5.f * aspect, 5.f, Color::WHITE);
-        delta_entry->text_node.set_alpha(0.f); // nothing shows by default
+                              5.f * aspect, 5.f, Color::GOLD);
+        delta_entry->set_alpha(0.f); // nothing shows by default
         entries.push_back(entry);
         deltas.push_back(delta_entry);
         score_grid.attach_at(i, 0, *entry);
@@ -59,8 +59,6 @@ ScoreUI::ScoreUI(float aspect)
     /* EVENT LISTENERS */
     events::ui::scoreboard_sequence.connect([&](const auto &data) {
         sorted_data = data;
-        std::sort(sorted_data.begin(), sorted_data.end(), comparison_func);
-
         populate_scores();
         enable();
 
@@ -73,17 +71,40 @@ ScoreUI::ScoreUI(float aspect)
     });
 }
 
+void ScoreUI::animate_add_scores() {
+    // Animate out scores, populate, then animate in.
+    for (int i = 0; i < entries.size(); ++i) {
+        // Have the first entry callback populate_scores
+        if (i == 0) {
+            entries[i]->animate_alpha(0.f, 0.5f, [&, i]() {
+                populate_scores();
+                entries[i]->animate_alpha(1.f, 0.5f);
+            });
+        } else {
+            entries[i]->animate_alpha(0.f, 0.5f, [&, i]() {
+                entries[i]->animate_alpha(1.f, 0.5f);
+            });
+        }
+    }
+}
+
 void ScoreUI::animate_deltas() {
     int rank = 0;
     for (auto it = sorted_data.begin(); it != sorted_data.end(); ++it) {
         if (rank < deltas.size()) {
             int gold_delta = std::get<2>(*it);
+            // display
             deltas[rank]->set_text("+" + std::to_string(gold_delta));
+            // add to gold amount
+            std::get<1>(*it) = std::get<1>(*it) + gold_delta;
 
             // animate alpha channel
-            deltas[rank]->text_node.animate_alpha(1.f, 1.f, [&, rank]() {
+            // 3 nested lambdas, pretty good
+            deltas[rank]->animate_alpha(1.f, 0.5f, [&, rank]() {
                 Timer::get()->do_after(std::chrono::milliseconds(1000), [&, rank]() {
-                    deltas[rank]->text_node.animate_alpha(0.f, 1.f);
+                    deltas[rank]->animate_alpha(0.f, 0.5f, [&](){
+                        animate_add_scores();
+                    });
                 });
             });
         }
@@ -92,6 +113,8 @@ void ScoreUI::animate_deltas() {
 }
 
 void ScoreUI::populate_scores() {
+    std::sort(sorted_data.begin(), sorted_data.end(), comparison_func);
+
     int rank = 0;
     for (auto it = sorted_data.begin(); it != sorted_data.end(); ++it) {
         std::string model_name;

@@ -18,12 +18,13 @@ public:
     void set_height(float height);
     void set_text_color(Color text_color);
     void set_bg_color(Color bg_color);
+    void set_alpha(float alpha) override;
 
-    UITextNode text_node;
 private:
     float calc_text_width(std::string s);
 
     float width, height;
     float initial_alpha;
     UIRectangle bg;
+    UITextNode text_node;
 };

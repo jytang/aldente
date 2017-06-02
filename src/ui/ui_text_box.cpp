@@ -40,6 +40,11 @@ void UITextBox::set_text(std::string new_text) {
     text_node.set_x_scale(calc_text_width(new_text));
 }
 
+void UITextBox::set_alpha(float alpha) {
+    this->alpha = alpha;
+    text_node.set_alpha(alpha);
+}
+
 void UITextBox::set_width(float width) {
     this->width = width;
     bg.set_width(width);
