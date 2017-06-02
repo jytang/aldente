@@ -6,7 +6,7 @@
 /* 
     A monster that will follow you around and attack if you open it.
     If you get away from it, then it will begin to target the closest player within
-    a minimum range. 
+    a minimum range. (Currently, infinite range)
 */
 class Mimic : public MobileTrap {
 private:
