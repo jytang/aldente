@@ -175,15 +175,13 @@ void Player::c_setup_player_model(int index) {
 
     // Sets scale. Need better way to do this later.
     if (model_name == "boy_two")
-        transform.set_scale({ 0.4f, 0.4f, 0.4f });
+        set_scale({ 0.4f, 0.4f, 0.4f });
     else if (model_name == "cat")
-        transform.set_scale({ 0.004f, 0.004f, 0.004f });
+        set_scale({ 0.004f, 0.004f, 0.004f });
     else if (model_name == "lizard")
-        transform.set_scale({ 0.0043f, 0.0043f, 0.0043f });
+        set_scale({ 0.0043f, 0.0043f, 0.0043f });
     else if (model_name == "tomato")
-        transform.set_scale({ 0.0043f, 0.0043f, 0.0043f });
-
-    initial_transform.set_scale(transform.get_scale());
+        set_scale({ 0.0043f, 0.0043f, 0.0043f });
 
     // Update leaderboard with player id and starting gold.
     // NOTE: THIS IS HERE BECAUSE LEADERBOARD WANTS TO KNOW WHICH MODEL TO ASSOCIATE.

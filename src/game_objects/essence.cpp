@@ -101,8 +101,7 @@ void Essence::c_on_collision(GameObject *other) {
 
 void Essence::setup_model() {
     attach_model(AssetLoader::get_model("essence"));
-    transform.set_scale({ 0.005f, 0.005f, 0.005f });
-    initial_transform.set_scale(transform.get_scale());
+    set_scale({ 0.005f, 0.005f, 0.005f });
 
     // Coin always spins
     anim_player.set_anim("spin");

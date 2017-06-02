@@ -153,6 +153,14 @@ void GameObject::set_position(glm::vec3 pos) {
     set_rb_position(pos);
 }
 
+// Sets scale for both transform and initial transform, since
+// for the client, it needs to be properly saved somewhere in order to maintain
+// its scale in c_update_state
+void GameObject::set_scale(glm::vec3 scale) {
+    transform.set_scale(scale);
+    initial_transform.set_scale(scale);
+}
+
 void GameObject::set_rb_position(glm::vec3 pos) {
     // Set for Rigid Body
     btTransform initialTransform;

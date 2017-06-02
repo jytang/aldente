@@ -24,8 +24,7 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
 void ArrowTrap::setup_model() {
     Model *model = AssetLoader::get_model("arrow_trap");
     attach_model(model);
-    transform.set_scale({ 0.0095f, 0.0095f, 0.0095f });
-    initial_transform.set_scale(transform.get_scale());
+    set_scale({ 0.0095f, 0.0095f, 0.0095f });
 
     anim_player.set_anim("shoot");
     anim_player.set_loop(false);

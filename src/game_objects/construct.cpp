@@ -68,8 +68,7 @@ void Chest::c_interact_trigger(GameObject *other) {
 
 void Chest::setup_model() {
     attach_model(AssetLoader::get_model("chest_good"));
-    transform.set_scale({ 0.006f, 0.006f, 0.006f });
-    initial_transform.set_scale(transform.get_scale());
+    set_scale({ 0.006f, 0.006f, 0.006f });
     anim_player.set_anim("open", 1.5f, false);
 }
 
@@ -126,8 +125,7 @@ Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
 
 void Goal::setup_model() {
     attach_model(AssetLoader::get_model("warp"));
-    transform.set_scale(0.006f, 0.006f, 0.006f);
-    initial_transform.set_scale(transform.get_scale());
+    set_scale(0.006f, 0.006f, 0.006f);
     anim_player.set_anim("spin", 1.0f, true);
     anim_player.play();
 }

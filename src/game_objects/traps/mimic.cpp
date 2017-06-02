@@ -52,16 +52,15 @@ void Mimic::s_interact_trigger(GameObject *other) {
 
 void Mimic::c_interact_trigger(GameObject *other) {
     anim_player.play();
-    transform.set_scale({ 0.0067f, 0.0067f, 0.0067f });
-    initial_transform.set_scale(transform.get_scale());
+
+    // Grows a bit bigger as a mimic
+    set_scale({ 0.0067f, 0.0067f, 0.0067f });
 }
 
 void Mimic::setup_model() {
     Model *model = AssetLoader::get_model("chest_bad");
     attach_model(model);
-    transform.set_scale({ 0.006f, 0.006f, 0.006f });
-    initial_transform.set_scale(transform.get_scale());
-
+    set_scale({ 0.006f, 0.006f, 0.006f }); // original scale
     anim_player.set_anim("open", 3.0f, true);
 }
 
@@ -72,8 +71,7 @@ void Mimic::s_reset() {
 
 void Mimic::c_reset() {
     anim_player.stop();
-    transform.set_scale({ 0.006f, 0.006f, 0.006f });
-    initial_transform.set_scale(transform.get_scale());
+    set_scale({ 0.006f, 0.006f, 0.006f }); // original scale
     MobileTrap::c_reset();
 }
 

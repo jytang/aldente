@@ -106,6 +106,9 @@ public:
     // Sets both transform and rigid body position at the same time
     void set_position(glm::vec3 pos);
 
+    // Sets both initial scale and transform's scale at the same time
+    void set_scale(glm::vec3 scale);
+
     // Sets only rigidbody's position
     void set_rb_position(glm::vec3 pos);
 

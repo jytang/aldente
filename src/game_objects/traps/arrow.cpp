@@ -38,8 +38,7 @@ void Arrow::play_trigger_animation() {
 void Arrow::setup_model() {
     Model *model = AssetLoader::get_model("arrow");
     attach_model(model);
-    transform.set_scale({ 0.01f, 0.01, 0.01f });
-    initial_transform.set_scale(transform.get_scale());
+    set_scale({ 0.01f, 0.01, 0.01f });
 
     anim_player.set_anim("spin");
     anim_player.set_loop(true);

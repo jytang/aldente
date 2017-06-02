@@ -96,8 +96,7 @@ void SlimeGreen::setup_model() {
 void Slime::setup_slime_model(std::string &slime_name) {
     Model *model = AssetLoader::get_model(slime_name);
     attach_model(model);
-    transform.set_scale({ 0.004f, 0.004f, 0.004f });
-    initial_transform.set_scale(transform.get_scale());
+    set_scale({ 0.004f, 0.004f, 0.004f });
 
     anim_player.set_anim("walk");
     anim_player.set_loop(true);
