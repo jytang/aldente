@@ -8,9 +8,10 @@ Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
         events::RigidBodyData rigid;
         rigid.object = this;
         rigid.shape = hit_capsule; // To avoid getting stuck at edges
-        rigid.mass = 1000; // Cannot push around
+        rigid.mass = 2;
         rigid.is_ghost = false;
         rigid.position = { x, 0.0f, z };
+        collision_group = COLLISION_TRAPS;
         events::add_rigidbody_event(rigid);
 
         // Slightly random movespeed to prevent complete overlap of mimics
@@ -81,7 +82,6 @@ void Mimic::s_to_chest_mode() {
     curr_target = NULL;
     stop_moving = true;
     notify_on_collision = false;
-    set_ghost(false);
     rigidbody->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
 }
 
@@ -89,6 +89,5 @@ void Mimic::s_to_chest_mode() {
 void Mimic::s_to_attack_mode() {
     stop_moving = false; // Can Now move
     notify_on_collision = true; // Can now damage player on collision
-    set_ghost(true);    // Can pass through player
     rigidbody->setLinearFactor(btVector3(1, 0.0f, 1)); // Can move normally
 }
