@@ -13,17 +13,22 @@ void MobileTrap::s_update_this() {
         check_wall();
     else if (move_type == MoveType::AI)
         update_ai();
-
-    if (!stop_moving)
-        handle_movement();
+    
+    handle_movement();
 
     sync_position();
 }
 
 // Moves object forward
 void MobileTrap::handle_movement() {
-    rigidbody->setActivationState(true);
-    rigidbody->setLinearVelocity(util_bt::convert_vec3(transform.get_forward() * move_speed));
+    if (stop_moving) {
+        rigidbody->setLinearVelocity(btVector3(0, 0, 0));
+        rigidbody->setActivationState(false);
+    }
+    else {
+        rigidbody->setActivationState(true);
+        rigidbody->setLinearVelocity(util_bt::convert_vec3(transform.get_forward() * move_speed));
+    }
 }
 
 // Rotates a certain amount based. Needed since traps can only move forward. 

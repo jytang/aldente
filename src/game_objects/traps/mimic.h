@@ -9,6 +9,9 @@
     a minimum range. 
 */
 class Mimic : public MobileTrap {
+private:
+    void s_to_attack_mode();
+    void s_to_chest_mode();
 protected:
 
     Player *curr_target;
