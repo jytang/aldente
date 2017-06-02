@@ -14,7 +14,7 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        Alignment h_align, Alignment v_align,
                        Color text_color, Color bg_color,
                        float alpha) :
-    UIContainer(start_x, start_y, alpha),
+    UIContainer(start_x, start_y),
     char_width(char_width), char_height(char_height),
     line_height((1 + LINE_SPACE_FACTOR) * char_height),
     width(width), inner_width(width - 2 * padding),
@@ -79,4 +79,11 @@ float UIUnstretchedTextBox::calc_pad(Alignment align, float space) {
 float UIUnstretchedTextBox::hpad(const std::string &line) {
     float space = inner_width - (line.length() * char_width);
     return calc_pad(h_align, space);
+}
+
+void UIUnstretchedTextBox::set_alpha(float alpha) {
+    // don't want bg alpha to change along with text nodes.
+    float restore_bg_alpha = bg.get_alpha();
+    UIContainer::set_alpha(alpha);
+    bg.set_alpha(restore_bg_alpha);
 }

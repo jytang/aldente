@@ -3,7 +3,7 @@
 #include "ui.h"
 #include "ui_grid.h"
 #include "ui_leaderboard_entry.h"
-#include "ui_text_box.h"
+#include "ui_unstretched_text_box.h"
 
 #include <vector>
 
@@ -19,6 +19,6 @@ private:
     UIGrid score_grid;
     UIRectangle bg;
     std::vector<UILeaderboardEntry *> entries;
-    std::vector<UITextBox *> deltas;
+    std::vector<UIUnstretchedTextBox *> deltas;
     std::vector<std::tuple<std::string, int, int>> sorted_data;
 };

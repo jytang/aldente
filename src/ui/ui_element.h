@@ -24,6 +24,7 @@ public:
     void set_start_x(float start_x)     { this->start_x = start_x; }
     void set_start_y(float start_y)     { this->start_y = start_y; }
     virtual void set_alpha(float alpha) { this->alpha = alpha; }
+    float get_alpha()                   { return alpha; }
 
     // Animate with an absolute translation, with an optional callback called afterwards.
     void animate_to(float target_x, float target_y,

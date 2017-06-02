@@ -12,7 +12,7 @@ UITextBox::UITextBox(std::string text,
                      float width, float height,
                      Color text_color, Color bg_color,
                      float alpha) :
-    UIContainer(start_x, start_y, alpha),
+    UIContainer(start_x, start_y),
     width(width), height(height),
     initial_alpha(alpha) {
 

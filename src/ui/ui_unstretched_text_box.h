@@ -23,6 +23,7 @@ public:
                float alpha);
     void set_text(const std::string &text);
     unsigned long get_max_chars();
+    void set_alpha(float alpha) override;
 
 private:
     float char_width, char_height, line_height;

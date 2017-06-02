@@ -43,9 +43,12 @@ ScoreUI::ScoreUI(float aspect)
                                        40.f * aspect, 70.f / LEADERBOARD_ENTRIES, // dimensions
                                        i, // ranking
                                        AssetLoader::get_texture("no_player.png"), 0);
-        UITextBox *delta_entry =
-                new UITextBox("+0", 40.f * aspect, 0.25f * 70.f / LEADERBOARD_ENTRIES,
-                              5.f * aspect, 5.f, Color::GOLD);
+        UIUnstretchedTextBox *delta_entry =
+                new UIUnstretchedTextBox(3.f, 4.f,
+                                         41.f * aspect, 0.f,
+                                         30.f * aspect, 70.f / LEADERBOARD_ENTRIES, 0,
+                                         UIUnstretchedTextBox::START, UIUnstretchedTextBox::END,
+                                         Color::GOLD, Color::BLACK, 0.f);
         delta_entry->set_alpha(0.f); // nothing shows by default
         entries.push_back(entry);
         deltas.push_back(delta_entry);
@@ -94,7 +97,7 @@ void ScoreUI::animate_deltas() {
         if (rank < deltas.size()) {
             int gold_delta = std::get<2>(*it);
             // display
-            deltas[rank]->set_text("+" + std::to_string(gold_delta));
+            deltas[rank]->set_text((gold_delta > 0 ? "+" : "") + std::to_string(gold_delta));
             // add to gold amount
             std::get<1>(*it) = std::get<1>(*it) + gold_delta;
 
