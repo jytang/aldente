@@ -45,15 +45,17 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     rigid.shape = hit_box;
     events::add_rigidbody_event(rigid);
     set_position({ x, 0.5f, z });
+
+    transform.set_scale({0.005f, 0.005f, 0.005f});
 }
 
 void WallTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
     attach_model(AssetLoader::get_model("tree"));
-    transform.set_scale({ 0.003f, 0.003f, 0.003f });
-    initial_transform.set_scale(transform.get_scale());
 
-    for each (Mesh *mesh in model->meshes) {
+    for (Mesh *mesh : model->meshes) {
         // Set's the mesh's location relative to the model
+        mesh->geometry->set_num_instances((num_instances));
+        mesh->geometry->populate_buffers();
         mesh->geometry->bind_instance_matrix(instance_matrix); // pass instance matrix to bind to buffer
     }
 }
