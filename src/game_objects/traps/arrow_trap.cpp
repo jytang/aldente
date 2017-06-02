@@ -8,6 +8,8 @@ ArrowTrap::ArrowTrap(int x, int z, int id) : ProjectileTrap(x, z, id) {
         rigid.object = this;
         rigid.shape = hit_box;
         rigid.position = { x, 0.0f, z };
+        rigid.is_ghost = true;
+        collision_group = COLLISION_STRUCTS;
         events::add_rigidbody_event(rigid);
 
         fill_projectile_pool(ProjectileTypes::ARROW);

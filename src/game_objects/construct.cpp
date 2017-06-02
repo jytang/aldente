@@ -27,6 +27,7 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
         rigid.object = this;
         rigid.shape = hit_box;
         rigid.position = { x, 0.0f, z };
+        collision_group = COLLISION_STRUCTS;
         events::add_rigidbody_event(rigid);
     }
 }

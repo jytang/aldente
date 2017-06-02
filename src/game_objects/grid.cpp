@@ -187,10 +187,6 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
         children.push_back(to_add);
         candidate->set_construct(to_add);
         candidate->buildable = false;
-
-        // Traversable needed for path planning.
-        if (type == CHEST || type == ARROW_TRAP)
-            candidate->traversable = false;
     }
 
     return to_add;
