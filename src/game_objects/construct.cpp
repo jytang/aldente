@@ -125,7 +125,7 @@ Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
 
 void Goal::setup_model() {
     attach_model(AssetLoader::get_model("warp"));
-    set_scale(0.006f, 0.006f, 0.006f);
+    set_scale({ 0.006f, 0.006f, 0.006f });
     anim_player.set_anim("spin", 1.0f, true);
     anim_player.play();
 }

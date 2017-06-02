@@ -13,7 +13,8 @@ Mimic::Mimic(int x, int z, int id) : MobileTrap(x, z, id) {
         rigid.position = { x, 0.0f, z };
         events::add_rigidbody_event(rigid);
 
-        move_speed = 5.0f;
+        // Slightly random movespeed to prevent complete overlap of mimics
+        move_speed = Util::random(3.5f, 4.5f);
         move_type = AI;
 
         s_to_chest_mode();
