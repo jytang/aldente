@@ -39,8 +39,6 @@ void Mimic::update_ai() {
                 dir = PathFinding::find_path(transform.get_position(), curr_target->transform.get_position());
 
             transform.look_at(dir);
-            std::cerr << "Direction :";
-            Util::print_vec3(dir);
         });
     }
 }
