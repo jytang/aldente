@@ -26,6 +26,7 @@ Player::Player(int id) : GameObject(id), is_client(false) {
         rigid.object = this;
         rigid.shape = hit_capsule;
         rigid.mass = 1;
+        collision_group = COLLISION_PLAYERS;
         events::add_rigidbody_event(rigid);
 
         // Notify on collision.

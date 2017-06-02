@@ -7,6 +7,7 @@
 #include "btBulletDynamicsCommon.h"
 #include "util/color.h"
 #include "model/model_filter.h"
+#include "collision_groups.h"
 
 #include <unordered_map>
 #include <string>
@@ -45,6 +46,10 @@ public:
     Transform transform; // World matrix now controlled using the Transform Component
     std::string tag; // Identify this GameObject by a human-readable tag.
     bool notify_on_collision = false; // Physics engine will only call on_collision if this flag is set.
+
+    short collision_group = COLLISION_DEFAULT; // Group is belongs to
+    short collision_mask = 0; // collides with everything by default.
+                              // OR (| operator) with groups to not collide with them
 
     GameObject(int id = 0);
     ~GameObject();

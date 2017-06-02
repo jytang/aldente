@@ -8,8 +8,6 @@
 #include "game/collectibles/gold.h"
 #include "game/collectibles/nothing.h"
 
-#include "collision_groups.h"
-
 #include <iostream>
 
 #define ESSENCE_TIME_OUT 6000 // Milliseconds
@@ -27,8 +25,8 @@ Essence::Essence(int id) : GameObject(id){
         rigid.object = this;
         rigid.shape = hit_sphere;
         rigid.mass = 0.1f;
-        rigid.collision_group = COLLISION_ESSENCE;
-        rigid.collision_mask |= COLLISION_ESSENCE; // don't collide with own kind
+        collision_group = COLLISION_ESSENCE;
+        collision_mask |= COLLISION_ESSENCE; // don't collide with own kind
         events::add_rigidbody_event(rigid);
         notify_on_collision = true;
 

@@ -40,6 +40,11 @@ Physics::Physics() {
     events::disable_rigidbody_event.connect([&](GameObject *obj) {
         disable_rigid(obj);
     });
+
+    events::update_collision_mask_event.connect([&](GameObject *obj) {
+        disable_rigid(obj);
+        enable_rigid(obj);
+    });
 }
 
 Physics::~Physics() {}
@@ -198,7 +203,7 @@ void Physics::add_rigid(events::RigidBodyData d) {
     if (d.is_ghost)
         rigidbody->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
 
-    dynamicsWorld->addRigidBody(rigidbody, d.collision_group, ALL_FILTER ^ d.collision_mask);
+    dynamicsWorld->addRigidBody(rigidbody, d.object->collision_group, ALL_FILTER ^ d.object->collision_mask);
 }
 
 void Physics::remove_rigid(GameObject *obj) {
@@ -213,5 +218,5 @@ void Physics::disable_rigid(GameObject *obj) {
 }
 
 void Physics::enable_rigid(GameObject *obj) {
-    dynamicsWorld->addRigidBody(obj->get_rigid());
+    dynamicsWorld->addRigidBody(obj->get_rigid(), obj->collision_group, ALL_FILTER ^ obj->collision_mask);
 }

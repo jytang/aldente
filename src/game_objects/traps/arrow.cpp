@@ -12,6 +12,7 @@ Arrow::Arrow(int id) : Projectile(id) {
         rigid.shape = hit_box;
         rigid.mass = 1;
         rigid.is_ghost = true;
+        collision_group = COLLISION_TRAPS;
         events::add_rigidbody_event(rigid);
 
         // Lock y-axis

@@ -11,6 +11,7 @@ Slime::Slime(int x, int z, int id) : MobileTrap(x, z, id) {
         rigid.mass = 1;
         rigid.is_ghost = false;
         rigid.position = { x, 0.0f, z };
+        collision_group = COLLISION_TRAPS;
         events::add_rigidbody_event(rigid);
 
         // Lock y-axis
