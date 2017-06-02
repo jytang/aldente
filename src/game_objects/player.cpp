@@ -317,20 +317,26 @@ bool Player::s_slow() {
     if (slowed)
         return false;
 
+    std::cerr << "Actually Slowing Player" << std::endl;
+
     // Cannot be slowed forever
     slowed = true;
 
     // Start off unable to move, then slowly regain movespeed
-    // Takes 5 seconds to completely regain movespeed
+    // Takes 8 seconds to completely regain movespeed
     move_speed = 0;
-    cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(250),
-        [&]() {
-        move_speed += 0.1f;
+    int count = 0;
+    cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(100),
+        [&, count]() mutable{
+        move_speed += 0.04;
 
         if (move_speed >= BASE_MOVE_SPEED) {
             move_speed = BASE_MOVE_SPEED;
             cancel_slow();
+            slowed = false;
         }
+
+        count++;
     });
 
     return true;
@@ -340,12 +346,14 @@ void Player::c_slow() {
     if (cancel_slow)
         cancel_slow();
 
+    std::cerr << "Actually Slowing Player" << std::endl;
+
     set_filter_color(Color::OCEAN_BLUE);
-    set_filter_alpha(0.8f);
+    set_filter_alpha(0.98f);
 
     // Turn player blue
     cancel_slow = Timer::get()->do_after(
-        std::chrono::milliseconds(100),
+        std::chrono::milliseconds(SLOW_LENGTH),
         [&]() mutable {
         disable_filter();
     });

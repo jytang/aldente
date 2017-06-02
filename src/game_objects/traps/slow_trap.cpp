@@ -13,13 +13,17 @@ SlowTrap::SlowTrap(int x, int z, int id) : Trap(x, z, id) {
         rigid.position = { x, 0.0f, z };
         collision_group = COLLISION_STRUCTS;
         events::add_rigidbody_event(rigid);
+
+        notify_on_collision = true;
     }
 }
 
 void SlowTrap::s_on_collision(GameObject *other) {
+    std::cerr << "Slowing Player" << std::endl;
     Player *player = dynamic_cast<Player*>(other);
     if (player) {
         if (player->s_slow()) {
+            std::cerr << "End Player Slow" << std::endl;
             // Send signal to client that this player was hit
             events::dungeon::network_collision_event(player->get_id(), id);
         }
@@ -27,6 +31,7 @@ void SlowTrap::s_on_collision(GameObject *other) {
 }
 
 void SlowTrap::c_on_collision(GameObject *other) {
+    std::cerr << "Slowing Player" << std::endl;
     Player* player = dynamic_cast<Player*>(other);
     if (player)
         player->c_slow();
