@@ -29,7 +29,7 @@ void FloorTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> 
     mesh->geometry->bind_instance_matrix(instance_matrix); // pass instance matrix to bind to buffer
     Material *mat = new Material(Color::WHITE);
     mesh->material = mat;
-    mesh->geometry->attach_texture(AssetLoader::get_texture("cobblestone.png"));
+    mesh->geometry->attach_texture(AssetLoader::get_texture("grass.png"));
 
     model->add_mesh(mesh);
 }
@@ -48,15 +48,12 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
 }
 
 void WallTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
-    Mesh* mesh = new Mesh();
+    attach_model(AssetLoader::get_model("tree"));
+    transform.set_scale({ 0.003f, 0.003f, 0.003f });
+    initial_transform.set_scale(transform.get_scale());
 
-    // Set's the mesh's location relative to the model
-    mesh->local_transform = glm::mat4(1.0f);
-    mesh->geometry = GeometryGenerator::generate_cube(1.0f, num_instances);
-    mesh->geometry->bind_instance_matrix(instance_matrix); // pass instance matrix to bind to buffer
-    Material *mat = new Material(Color::WHITE);
-    mesh->material = mat;
-    mesh->geometry->attach_texture(AssetLoader::get_texture("wall.png"));
-
-    model->add_mesh(mesh);
+    for each (Mesh *mesh in model->meshes) {
+        // Set's the mesh's location relative to the model
+        mesh->geometry->bind_instance_matrix(instance_matrix); // pass instance matrix to bind to buffer
+    }
 }
