@@ -193,6 +193,9 @@ namespace events {
         // Request some dialog to be shown
         // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).
         extern signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
+
+        // Create a notification
+        extern signal<void(const std::string &)> show_notification;
     }
 
     namespace build {
