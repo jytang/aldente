@@ -102,4 +102,6 @@ public:
     int c_get_model_index() const;
 
     static std::vector<std::string> PLAYER_MODELS;
+
+    void set_speed(float to_set) { move_speed = to_set; };
 };

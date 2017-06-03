@@ -7,11 +7,12 @@
 Scene for penguin minigame
 */
 
-const auto MAX_PENGUINS = 50;
+const auto MAX_PENGUINS = 60;
 
 class MGScenePenguin : public Scene {
 private:
     std::vector<Penguin*> penguins;
+    std::function<void()> cancel_spawn;
 public:
     MGScenePenguin() {};
     void s_update() override;
@@ -21,4 +22,5 @@ public:
     void connect_listeners() override;
     void disconnect_listeners() override;
     void reset_camera() override;
+    void reset_scene();
 };

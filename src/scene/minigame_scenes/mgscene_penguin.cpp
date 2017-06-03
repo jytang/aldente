@@ -17,7 +17,7 @@ void MGScenePenguin::s_setup() {
     // Set up penguins. Initially disabled.
     for (int i = 0; i < MAX_PENGUINS; i++) {
         Penguin* to_add = new Penguin();
-        //to_add->disable();
+        to_add->disable();
         penguins.push_back(to_add);
         objs.push_back(to_add);
     }
@@ -42,7 +42,7 @@ void MGScenePenguin::c_setup() {
     // Set up penguins. Initially disabled.
     for (int i = 0; i < MAX_PENGUINS; i++) {
         Penguin* to_add = new Penguin();
-        //to_add->disable();
+        to_add->disable();
         penguins.push_back(to_add);
         objs.push_back(to_add);
     }
@@ -74,4 +74,32 @@ void MGScenePenguin::reset_camera() {
     info.camera.rotate_cam(glm::vec3(1, 0, 0), -70.0f);
     info.camera.cam_pos = glm::vec3(0, 12, 5);
     info.camera.recalculate();
+}
+
+void MGScenePenguin::reset_scene() {
+    for (Penguin *penguin : penguins) {
+        penguin->reset_position();
+        penguin->disable();
+    }
+
+    int count = 0;
+
+    // Spawn penguins in waves of 10.
+    cancel_spawn = Timer::get()->do_every(
+        std::chrono::milliseconds(800),
+        [&, count]() mutable {
+        for (int i = 0; i < 10; i++) {
+            penguins[count++]->enable();
+        }
+
+        if (count == (MAX_PENGUINS-10))
+            cancel_spawn();
+    });
+
+    // Spawn last 10 penguins at halfway point
+    Timer::get()->do_after(std::chrono::milliseconds(15000), [&]() {
+        for (int i = MAX_PENGUINS - 11; i < MAX_PENGUINS; i++) {
+            penguins[i]->enable();
+        }
+    });
 }

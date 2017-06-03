@@ -47,13 +47,16 @@ void PenguinMG::s_setup() {
     for (int id : context.player_ids) {
         Player *player = dynamic_cast<Player*>(GameObject::game_objects[id]);
         assert(player);
-        player->get_rigid()->setLinearFactor(btVector3(1, 1, 1));
+        player->get_rigid()->setLinearFactor(btVector3(1, 1.5f, 1));
         glm::vec3 pos = player->transform.get_position();
-        pos.y = 5.f;
+        pos.y = 1.2f;
+        player->set_speed(1.0f);
         player->set_position(pos);
     }
 
     GameState::set_scene(context.minigame_scenes["penguin"]);
+
+    dynamic_cast<MGScenePenguin*>(context.minigame_scenes["penguin"])->reset_scene();
 }
 
 void PenguinMG::s_teardown() {
@@ -61,9 +64,23 @@ void PenguinMG::s_teardown() {
     flag_conn.disconnect();
 
     for (int id : context.player_ids) {
-        assert(dynamic_cast<Player*>(GameObject::game_objects[id]));
-        GameObject::game_objects[id]->get_rigid()->setLinearFactor(btVector3(1, 0, 1));
-        GameObject::game_objects[id]->get_rigid()->setLinearVelocity(btVector3(0, 0, 0));
+        Player *player = dynamic_cast<Player*>(GameObject::game_objects[id]);
+        assert(player);
+        player->get_rigid()->setLinearFactor(btVector3(1, 0, 1));
+        player->get_rigid()->setLinearVelocity(btVector3(0, 0, 0));
+        player->set_speed(2.0f);
+    }
+
+    // Assigns rewards to alive players
+    Player *curr_player;
+    for (auto const &kv : dead_player_flags) {
+        if (!kv.second) {
+            curr_player = dynamic_cast<Player*>(GameObject::game_objects[kv.first]);
+            assert(curr_player);
+            curr_player->s_modify_stats([&, kv](PlayerStats &stats) {
+                stats.add_coins(REWARD);
+            });
+        }
     }
 }
 
