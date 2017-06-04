@@ -139,7 +139,7 @@ void GameState::set_phase(proto::Phase phase) {
 void GameState::set_scene(Scene* scene) {
     // Disable rigid bodies on the previous scene.
     for (auto & kv : players) {
-        events::disable_rigidbody_event(kv.second);
+        kv.second->disable();
     }
 
     physics.set_scene(scene);
@@ -148,7 +148,7 @@ void GameState::set_scene(Scene* scene) {
 
     // Enable rigid bodies on the next scene.
     for (auto & kv : players) {
-        events::enable_rigidbody_event(kv.second);
+        kv.second->enable();
     }
 }
 
