@@ -15,7 +15,10 @@ GameObject::GameObject(int id) : id(id) {
 
     model = new Model();
     rigidbody = nullptr;
-    game_objects[this->id] = this;
+
+    if (id != -1)
+        game_objects[this->id] = this;
+    
     enabled = true;
 }
 

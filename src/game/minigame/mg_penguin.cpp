@@ -49,7 +49,7 @@ void PenguinMG::s_setup() {
         assert(player);
         player->get_rigid()->setLinearFactor(btVector3(1, 1.5f, 1));
         glm::vec3 pos = player->transform.get_position();
-        pos.y = 1.2f;
+        pos.y = 1.1f;
         player->set_speed(1.0f);
         player->set_position(pos);
     }

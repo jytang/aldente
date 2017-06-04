@@ -32,7 +32,7 @@ void MGScenePenguin::s_setup() {
     events::add_rigidbody_event(platform_rigid);
 
     platform->set_position(glm::vec3(0, -0.5f, -0.5f));
-
+    
     // Set up the collider below the platform to detect things falling off.
     EmptyCollider* collider = new EmptyCollider(-1);
     objs.push_back(collider);
@@ -51,6 +51,8 @@ void MGScenePenguin::c_setup() {
     GameObject* platform = new GameObject(-1);
     platform->attach_model(AssetLoader::get_model("cube"));
     platform->initial_transform.set_scale(glm::vec3(10, 1, 5));
+    platform->transform.set_scale(glm::vec3(10, 0.5f, 5));
+    platform->transform.set_position(glm::vec3(0, 0, -0.5f));
     objs.push_back(platform);
 
     // Setup lights.
@@ -92,13 +94,13 @@ void MGScenePenguin::reset_scene() {
             penguins[count++]->enable();
         }
 
-        if (count == (MAX_PENGUINS-10))
+        if (count == (MAX_PENGUINS-20))
             cancel_spawn();
     });
 
-    // Spawn last 10 penguins at halfway point
+    // Spawn last 20 penguins at halfway point
     Timer::get()->do_after(std::chrono::milliseconds(15000), [&]() {
-        for (int i = MAX_PENGUINS - 11; i < MAX_PENGUINS; i++) {
+        for (int i = MAX_PENGUINS - 21; i < MAX_PENGUINS; i++) {
             penguins[i]->enable();
         }
     });

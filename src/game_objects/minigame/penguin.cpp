@@ -21,7 +21,7 @@ Penguin::Penguin(int id) : GameObject(id) {
 
         // Set spawn position
         //row = rand() % 3 - 6;
-        set_position(glm::vec3(8, 1, rand() % 10 - 5));
+        set_position(glm::vec3(10, 1, rand() % 10 - 5));
         transform.set_rotation(glm::vec3(0, -90, 0));
 
         move_speed = -(rand() % 3 + 3);
@@ -64,7 +64,7 @@ void Penguin::c_update_state(glm::mat4 mat, bool enab) {
 }
 
 void Penguin::reset_position() {
-    set_position(glm::vec3(8, 1, rand() % 10 - 5));
+    set_position(glm::vec3(10, 1, rand() % 10 - 5));
 }
 
 void Penguin::setup_model() {

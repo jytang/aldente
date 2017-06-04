@@ -7,7 +7,7 @@
 Scene for penguin minigame
 */
 
-const auto MAX_PENGUINS = 60;
+const auto MAX_PENGUINS = 70;
 
 class MGScenePenguin : public Scene {
 private:
