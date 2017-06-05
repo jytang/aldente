@@ -13,7 +13,7 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        float width, float height, float padding,
                        Alignment h_align, Alignment v_align,
                        Color text_color, Color bg_color,
-                       float alpha) :
+                       float alpha, bool draw_bg) :
     UIContainer(start_x, start_y),
     char_width(char_width), char_height(char_height),
     line_height((1 + LINE_SPACE_FACTOR) * char_height),
@@ -26,7 +26,8 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
     text_color(text_color),
     bg(0, 0, width, height, bg_color, alpha) {
 
-    attach(bg);
+    if (draw_bg)
+        attach(bg);
 }
 
 unsigned long UIUnstretchedTextBox::get_max_chars() {
@@ -86,4 +87,10 @@ void UIUnstretchedTextBox::set_alpha(float alpha) {
     float restore_bg_alpha = bg.get_alpha();
     UIContainer::set_alpha(alpha);
     bg.set_alpha(restore_bg_alpha);
+}
+
+void UIUnstretchedTextBox::set_color(Color color) {
+    text_color = color;
+    for (auto &text : texts)
+        text->set_color(color);
 }
