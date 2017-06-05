@@ -8,8 +8,8 @@
 
 #define SOUND_DIR_PATH "assets/audio/sound/"
 
-const std::string AudioManager::BUILD_MUSIC = "assets/audio/music/mikoto.wav";
-const std::string AudioManager::DUNGEON_MUSIC = "assets/audio/music/k_theme.wav";
+const std::string AudioManager::BUILD_MUSIC = "assets/audio/music/motif6.wav";
+const std::string AudioManager::DUNGEON_MUSIC = "assets/audio/music/motif8.wav";
 
 const std::string AudioManager::BUILD_CONFIRM_SOUND = "assets/audio/sound/build_confirm.wav";
 const std::string AudioManager::FOOTSTEPS_SOUND = "assets/audio/sound/footsteps.wav";
