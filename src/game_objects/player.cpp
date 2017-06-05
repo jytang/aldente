@@ -321,12 +321,12 @@ bool Player::s_slow() {
     slowed = true;
 
     // Start off unable to move, then slowly regain movespeed
-    // Takes 8 seconds to completely regain movespeed
     move_speed = 0;
     int count = 0;
-    cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(100),
-        [&, count]() mutable{
-        move_speed += 0.04;
+    const int num_steps = 50;
+    cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(SLOW_LENGTH / num_steps),
+        [&, count, num_steps]() mutable{
+        move_speed += (float) BASE_MOVE_SPEED / (float) num_steps;
 
         if (move_speed >= BASE_MOVE_SPEED) {
             move_speed = BASE_MOVE_SPEED;
@@ -344,14 +344,28 @@ void Player::c_slow() {
     if (cancel_slow)
         cancel_slow();
 
-    model->multiply_colors(Color(1.0f, 2.0f, 1.0f, false));
-    set_filter_alpha(0.98f);
-
     // Turn player blue
-    cancel_slow = Timer::get()->do_after(
-        std::chrono::milliseconds(SLOW_LENGTH),
-        [&]() mutable {
+    model->multiply_colors(Color(0.3f, 0.3f, 50.0f, false));
+
+    // Fade back slowly to original color
+    int count = 0;
+    const int num_steps = 50;
+    cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(SLOW_LENGTH / num_steps),
+        [&, count, num_steps]() mutable {
+
         model->reset_colors();
+
+        float rg = Util::lerp(0.3f, 1.0f, (float)count / num_steps);
+        float b = Util::lerp(50.0f, 1.0f, (float)count / num_steps);
+
+        model->multiply_colors(Color(rg, rg, b, false));
+
+        if (count >= num_steps) {
+            cancel_slow();
+            model->reset_colors();
+        }
+
+        count++;
     });
 }
 
