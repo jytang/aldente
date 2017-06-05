@@ -91,7 +91,8 @@ void MGScenePenguin::reset_scene() {
         std::chrono::milliseconds(800),
         [&, count]() mutable {
         for (int i = 0; i < 10; i++) {
-            penguins[count++]->enable();
+            if (count < MAX_PENGUINS)
+                penguins[count++]->enable();
         }
 
         if (count == (MAX_PENGUINS-20))
