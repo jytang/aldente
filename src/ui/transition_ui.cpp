@@ -38,6 +38,7 @@ TransitionUI::TransitionUI(float aspect) :
     });
 }
 
+// Do a fade to black (or whatever color you pass in, and then fade back.
 void TransitionUI::fade(float seconds, Color c, std::function<void()> do_apex) {
     bg.set_alpha(0.f);
     enable();
@@ -57,6 +58,7 @@ void TransitionUI::wipe_reset() {
     bg.set_start_y(initial_start_y);
 }
 
+// Do a wipe transition, like Microsoft Powerpoint 2003.
 void TransitionUI::wipe(float seconds, Color c, Direction dir, std::function<void()> do_apex) {
     bg.set_alpha(1.f);
     enable();
