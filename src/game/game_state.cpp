@@ -109,12 +109,9 @@ void GameState::set_phase(Phase* phase) {
             curr_phase = phase;
             curr_phase->c_setup();
         } else {
-            events::ui::transition_wipe(1.f, [&, phase]() {
-                if (curr_phase)
-                    curr_phase->c_teardown();
-                curr_phase = phase;
-                curr_phase->c_setup();
-            });
+            curr_phase->c_teardown();
+            curr_phase = phase;
+            curr_phase->c_setup();
         }
     }
 }

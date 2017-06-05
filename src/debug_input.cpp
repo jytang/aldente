@@ -55,6 +55,12 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_M:
                     events::toggle_mute_event();
                     break;
+                case GLFW_KEY_F1:
+                    events::ui::transition_wipe(1.f, [](){});
+                    break;
+                case GLFW_KEY_F2:
+                    events::ui::transition_fade(1.f, [](){});
+                    break;
                 case GLFW_KEY_F3:
                     events::ui::scoreboard_sequence(
                             {{"boy_two", 123, 500},
