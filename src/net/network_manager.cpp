@@ -330,6 +330,7 @@ void ClientNetworkManager::update() {
                 int obj_x = world_mat[3][0];
                 int obj_z = world_mat[3][2];
 
+                bool obj_exists = true;
                 if (GameObject::game_objects.find(obj.id()) == GameObject::game_objects.end()) {
                     // Game object with that ID doesn't exist on this client yet; create it.
                     if (obj.type() == proto::GameObject::Type::GameObject_Type_PLAYER) {
@@ -346,11 +347,13 @@ void ClientNetworkManager::update() {
                             GameState::scene_manager.get_current_scene()->objs.push_back(arrow);
                         }
                     } else {
+                        obj_exists = false;
                         std::cerr << "Unrecognized game obj type; could not create client copy.\n";
                     }
-                } else {
-                    GameObject::game_objects[obj.id()]->c_update_state(world_mat, obj.enabled());
                 }
+
+                if (obj_exists)
+                    GameObject::game_objects[obj.id()]->c_update_state(world_mat, obj.enabled());
             }
 
             // Call all collision handlers of game objects that collided, but only ones that already exist, 
