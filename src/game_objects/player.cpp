@@ -314,24 +314,20 @@ void Player::c_take_damage() {
 }
 
 bool Player::s_slow() {
-    if (slowed)
-        return false;
-
-    // Cannot be slowed forever
-    slowed = true;
+    if (cancel_slow)
+        cancel_slow();
 
     // Start off unable to move, then slowly regain movespeed
-    move_speed = 0;
+    move_speed = 0.2f;
     int count = 0;
     const int num_steps = 50;
     cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(SLOW_LENGTH / num_steps),
         [&, count, num_steps]() mutable{
-        move_speed += (float) BASE_MOVE_SPEED / (float) num_steps;
+        move_speed = Util::lerp(0.2f, BASE_MOVE_SPEED, (float)count / num_steps);
 
         if (move_speed >= BASE_MOVE_SPEED) {
             move_speed = BASE_MOVE_SPEED;
             cancel_slow();
-            slowed = false;
         }
 
         count++;
@@ -345,6 +341,7 @@ void Player::c_slow() {
         cancel_slow();
 
     // Turn player blue
+    model->reset_colors();
     model->multiply_colors(Color(0.3f, 0.3f, 50.0f, false));
 
     // Fade back slowly to original color

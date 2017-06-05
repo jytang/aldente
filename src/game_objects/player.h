@@ -23,7 +23,6 @@ private:
     bool end_flicker; // Whether we should stop player flickering.
     bool invulnerable; // Can't lose coins or collide with other harmful traps.
     bool stunned; // Can't move.
-    bool slowed; // Is Slowed
 
     // to_move is for saving the joystick input in each frame.
     int to_moveX;
@@ -87,9 +86,6 @@ public:
     // Used for checking if player has been stunned
     // since they cannot pick up essence during this time or interact w objects.
     bool is_stunned() { return stunned; };
-
-    // Checks if player is already slowed
-    bool is_slowed() { return slowed; };
 
     // Allows manipulation of stats through callback.
     // This is done so that the clients can receive any associated updates.
