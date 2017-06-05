@@ -6,8 +6,8 @@ class Color {
 private:
     float r, g, b; // red green blue color values (vary from 0.f - 1.f)
 public:
-    Color(float red = 1.f, float green = 1.f, float blue = 1.f); // Default color is white (1.f, 1.f, 1.f)
-    Color(glm::vec3 v);
+    Color(float red = 255.f, float green = 255.f, float blue = 255.f, bool convert_down = true); // Default color is white (1.f, 1.f, 1.f)
+    Color(glm::vec3 v, bool convert_down = true);
     void set(float red, float green, float blue); // set this color
     void set(glm::vec3 v);
     void add(const Color other); // add another color

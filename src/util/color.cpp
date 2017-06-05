@@ -1,13 +1,13 @@
 #include "color.h"
 
-Color Color::WHITE              (1.f, 1.f, 1.f);
-Color Color::BLACK              (0.f, 0.f, 0.f);
-Color Color::RED                (1.f, 0.f, 0.f);
-Color Color::GREEN              (0.f, 1.f, 0.f);
-Color Color::BLUE               (0.f, 0.f, 1.f);
-Color Color::CYAN               (0.f, 1.f, 1.f);
-Color Color::YELLOW             (1.f, 1.f, 0.f);
-Color Color::MAGENTA            (1.f, 0.f, 1.f);
+Color Color::WHITE              (1.f, 1.f, 1.f, false);
+Color Color::BLACK              (0.f, 0.f, 0.f, false);
+Color Color::RED                (1.f, 0.f, 0.f, false);
+Color Color::GREEN              (0.f, 1.f, 0.f, false);
+Color Color::BLUE               (0.f, 0.f, 1.f, false);
+Color Color::CYAN               (0.f, 1.f, 1.f, false);
+Color Color::YELLOW             (1.f, 1.f, 0.f, false);
+Color Color::MAGENTA            (1.f, 0.f, 1.f, false);
 
 Color Color::OCEAN_BLUE         (80, 186, 244);
 Color Color::WINDWAKER_GREEN    (156, 217, 84);
@@ -33,26 +33,20 @@ Color Color::GOLD               (255, 215, 10);
 Color Color::SILVER             (192, 192, 192);
 Color Color::BRONZE             (205, 127, 50);
 
-Color::Color(float red, float green, float blue) {
+Color::Color(float red, float green, float blue, bool convert_down) {
     r = red;
     g = green;
     b = blue;
-    if (r > 1.f || g > 1.f || b > 1.f) { // RGB format where values out of 255
+
+    if (convert_down) { // RGB format where values out of 255
         r /= 255.f;
         g /= 255.f;
         b /= 255.f;
     }
 }
 
-Color::Color(glm::vec3 v) {
-    r = v.x;
-    g = v.y;
-    b = v.z;
-    if (r > 1.f || g > 1.f || b > 1.f) { // RGB format where values out of 255
-        r /= 255.f;
-        g /= 255.f;
-        b /= 255.f;
-    }
+Color::Color(glm::vec3 v, bool convert_down) {
+    Color(v.x, v.y, v.z, convert_down);
 }
 
 void Color::set(float red, float green, float blue) {
