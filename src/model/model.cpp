@@ -53,3 +53,32 @@ void Model::set_shadows(bool enable) {
         mesh->material->shadows = enable;
     }
 }
+
+void Model::save_colors() {
+    original_colors.clear();
+    for (Mesh *mesh : meshes) {
+        original_colors.push_back(mesh->material->diffuse);
+    }
+}
+
+void Model::reset_colors() {
+    if (original_colors.size() != meshes.size())
+        return; // Cannot reset color
+
+    // Reset using original colors
+    for (int i = 0; i < original_colors.size(); i++) {
+        meshes[i]->material->diffuse = original_colors[i];
+    }
+}
+
+void Model::add_colors(Color color) {
+    for (Mesh *mesh : meshes) {
+        mesh->material->diffuse.add(color);
+    }
+}
+
+void Model::multiply_colors(Color color) {
+    for (Mesh *mesh : meshes) {
+        mesh->material->diffuse.multiply(color);
+    }
+}

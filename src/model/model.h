@@ -16,6 +16,7 @@
 class Model {
 private:
     Shader *model_shader;
+    std::vector<Color> original_colors;
 public:
     std::vector<Mesh *> meshes;
     Skeleton initial_skeleton; // Initial skeleton that model is compatible with, not updated.
@@ -31,10 +32,13 @@ public:
     void set_model_filter(ModelFilter &filter);
 
     void set_color(Color color);
-
     void set_alpha(float alpha);
-
     void set_shadows(bool enable);
+
+    void save_colors(); // Save original colors of the model
+    void reset_colors(); // Reset to original colors
+    void add_colors(Color color);
+    void multiply_colors(Color color);
 
     void set_shader(Shader *shader) { model_shader = shader; }
 };
