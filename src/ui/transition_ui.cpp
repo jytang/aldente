@@ -22,12 +22,17 @@ TransitionUI::TransitionUI(float aspect) :
     disable();
     attach(bg);
 
-    events::debug::toggle_fps_event.connect([&]() {
-       fade(1.f, transition_colors[(rand() % transition_colors.size())]);
+    events::ui::transition_wipe.connect([&](float seconds, std::function<void()> do_apex) {
+        wipe(seconds,
+             transition_colors[(rand() % transition_colors.size())],
+             static_cast<Direction>(rand() % 4),
+             do_apex);
     });
 
-    events::build::end_build_event.connect([&]() {
-        wipe(1.f, transition_colors[(rand() % transition_colors.size())], static_cast<Direction>(rand() % 4));
+    events::ui::transition_fade.connect([&](float seconds, std::function<void()> do_apex) {
+        fade(seconds,
+             transition_colors[(rand() % transition_colors.size())],
+             do_apex);
     });
 }
 

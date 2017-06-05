@@ -71,6 +71,8 @@ namespace events {
         signal<void()> disable_scoreboard;
         signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
         signal<void(const std::string &)> show_notification;
+        signal<void(float, std::function<void()>)> transition_wipe;
+        signal<void(float, std::function<void()>)> transition_fade;
     }
 
     namespace build {

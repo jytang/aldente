@@ -192,6 +192,8 @@ namespace events {
         // Display scoreboard with vector of <model_name, gold, gold_delta>
         extern signal<void(const std::vector<std::tuple<std::string, int, int>> &)> scoreboard_sequence;
         extern signal<void()> disable_scoreboard;
+        extern signal<void(float, std::function<void()>)> transition_wipe;
+        extern signal<void(float, std::function<void()>)> transition_fade;
 
         // Request some dialog to be shown
         // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).
