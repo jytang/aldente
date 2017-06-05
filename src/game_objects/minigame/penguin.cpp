@@ -71,7 +71,7 @@ void Penguin::do_movement() {
                 [&](GameObject *bt_hit) {
 
                 // If there's another penguin in front of it, give it a push
-                if (bt_hit && bt_hit->tag == "PENGUIN") {
+                if (dynamic_cast<Penguin*>(bt_hit)) {
                     bt_hit->get_rigid()->applyForce(btVector3(-5000, 0, 0), btVector3(0, 0, 0));
                 }
             });
