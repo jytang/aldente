@@ -13,10 +13,10 @@ LeaderboardUI::~LeaderboardUI() {
 LeaderboardUI::LeaderboardUI(float aspect)
     : UI(0.f, 20.f),
       leaderboard_grid(0, 0,
-                       24.f * aspect, 60.f,
+                       28.f * aspect, 60.f,
                        LEADERBOARD_ENTRIES, // num elements
                        1, // num columns
-                       24.f * aspect, // element width
+                       28.f * aspect, // element width
                        60.f / LEADERBOARD_ENTRIES, // element height
                        Color::BLACK, // bg color
                        0.f, // padding between each element
@@ -27,7 +27,7 @@ LeaderboardUI::LeaderboardUI(float aspect)
 
     for (int i = 0; i < LEADERBOARD_ENTRIES; ++i) {
         UILeaderboardEntry *entry = new UILeaderboardEntry(0, 0, // starting coords
-                                                       24.f * aspect, 60.f / LEADERBOARD_ENTRIES, // dimensions
+                                                       28.f * aspect, 60.f / LEADERBOARD_ENTRIES, // dimensions
                                                        i, // ranking
                                                        AssetLoader::get_texture("no_player.png"), 0);
         ranking_to_entry[i] = entry;
