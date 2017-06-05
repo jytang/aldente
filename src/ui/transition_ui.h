@@ -7,6 +7,7 @@
 #include "util/color.h"
 
 #include <vector>
+#include "ui_rectangle.h"
 
 class TransitionUI : public UI {
 public:
@@ -19,6 +20,7 @@ private:
 
     void wipe_reset();
 
+    UIRectangle bg2;
     UIImageNode bg;
     float aspect;
     static std::vector<Color> transition_colors;
