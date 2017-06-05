@@ -148,4 +148,5 @@ void DungeonPhase::c_teardown() {
     joystick_conn.disconnect();
     button_conn.disconnect();
     essence_conn.disconnect();
+    player_finish_conn.disconnect();
 }
