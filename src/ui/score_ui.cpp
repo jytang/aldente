@@ -77,16 +77,16 @@ ScoreUI::ScoreUI(float aspect)
 void ScoreUI::enable_animated() {
     enable();
 
-    for (int i = 0; i < entries.size(); ++i) {
-        entries[i]->animate_alpha(1.f, 0.5f);
+    for (UILeaderboardEntry *entry : entries) {
+        entry->animate_alpha(1.f, 0.5f);
     }
 
     bg.animate_alpha(0.7f, 0.5f);
 }
 
 void ScoreUI::disable_animated() {
-    for (int i = 0; i < entries.size(); ++i) {
-        entries[i]->animate_alpha(0.f, 0.5f);
+    for (UILeaderboardEntry *entry : entries) {
+        entry->animate_alpha(0.f, 0.5f);
     }
     // have bg disable the ui after it disappears
     bg.animate_alpha(0.f, 0.51f, [&]() {

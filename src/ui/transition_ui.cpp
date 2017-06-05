@@ -39,7 +39,6 @@ TransitionUI::TransitionUI(float aspect) :
 }
 
 void TransitionUI::fade(float seconds, Color c, std::function<void()> do_apex) {
-    //bg.set_color(c);
     bg.set_alpha(0.f);
     enable();
     bg.animate_alpha(1.f, seconds / 3.f, [&, seconds, do_apex]() {
@@ -59,7 +58,6 @@ void TransitionUI::wipe_reset() {
 }
 
 void TransitionUI::wipe(float seconds, Color c, Direction dir, std::function<void()> do_apex) {
-    //bg.set_color(c);
     bg.set_alpha(1.f);
     enable();
 
