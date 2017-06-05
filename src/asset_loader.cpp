@@ -106,6 +106,9 @@ void AssetLoader::load(std::string file_loc, std::string file_name) {
         // Goes through assimp node structure to load meshes for models
         process_node(model, skel, scene, scene->mRootNode, glm::mat4(1.0f));
 
+        // Saves models original colors on model
+        model->save_colors();
+
         // Stores model
         models[model_name] = model;
     }

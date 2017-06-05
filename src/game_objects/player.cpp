@@ -344,14 +344,14 @@ void Player::c_slow() {
     if (cancel_slow)
         cancel_slow();
 
-    set_filter_color(Color::OCEAN_BLUE);
+    model->multiply_colors(Color(1.0f, 2.0f, 1.0f, false));
     set_filter_alpha(0.98f);
 
     // Turn player blue
     cancel_slow = Timer::get()->do_after(
         std::chrono::milliseconds(SLOW_LENGTH),
         [&]() mutable {
-        disable_filter();
+        model->reset_colors();
     });
 }
 
