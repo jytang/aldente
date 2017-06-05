@@ -28,7 +28,7 @@ private:
 
 public:
     Window(const std::string &name, bool show_cursor, int width, int height,
-           GLFWmonitor *monitor = nullptr, bool fullscreen = false);
+           bool fullscreen = false, GLFWmonitor *monitor = nullptr);
     ~Window();
 
     void close();

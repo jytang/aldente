@@ -25,7 +25,7 @@ void Window::init() {
 }
 
 Window::Window(const std::string &name, bool show_cursor,
-               int width_, int height_, GLFWmonitor *monitor, bool fullscreen) :
+               int width_, int height_, bool fullscreen, GLFWmonitor *monitor) :
         width(width_), height(height_) {
 
     // Lazy one-time init
@@ -39,6 +39,7 @@ Window::Window(const std::string &name, bool show_cursor,
 
     // Create the GLFW window
     if (fullscreen) {
+        monitor = glfwGetPrimaryMonitor();
         // Fullscreen
         const GLFWvidmode *mode = glfwGetVideoMode(monitor);
         glfwWindowHint(GLFW_RED_BITS, mode->redBits);

@@ -55,7 +55,10 @@ void AldenteClient::start() {
     Config::config->get_value(Config::str_screen_height, height);
     std::string game_name;
     Config::config->get_value(Config::str_game_name, game_name);
-    Window window(game_name, true, width, height);
+    bool fullscreen;
+    Config::config->get_value(Config::str_full_screen, fullscreen);
+    Window window(game_name, true, width, height, fullscreen);
+    std::tie(width, height) = window.get_size(); // get actual window dimensions after window creation
 
     // Create input handlers.
     string controller;
@@ -81,7 +84,7 @@ void AldenteClient::start() {
         std::make_shared<GlfwPoller>(),
         std::make_shared<InputPoller>(),
     };
-    
+
     // Used for callbacks
     Timer timer(GAME_TICK);
     Timer::provide(&timer);
