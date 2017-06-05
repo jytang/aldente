@@ -39,6 +39,14 @@ LeaderboardUI::LeaderboardUI(float aspect)
     disable();
 
     /* EVENT LISTENERS */
+    events::ui::enable_leaderboard.connect([&]() {
+        enable_animated();
+    });
+
+    events::ui::disable_leaderboard.connect([&]() {
+        disable_animated();
+    });
+
     events::ui::toggle_leaderboard.connect([&](){
         if (enabled) {
             disable_animated();

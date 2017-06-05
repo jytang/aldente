@@ -57,18 +57,28 @@ void DungeonPhase::c_setup() {
     });
 
     button_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).buttons.connect([&](const events::ButtonData &d) {
-        if (d.state == 0) return;
-        switch (d.input) {
-            case events::BTN_A:
-                // A button pressed.
-                events::dungeon::player_interact_event();
-                break;
-            case events::BTN_BACK:
-                // Toggle leaderboard
-                events::ui::toggle_leaderboard();
-            break;
-            default:
-                break;
+        // On release
+        if (d.state == 0) {
+            switch (d.input) {
+                case events::BTN_LB:
+                    events::ui::disable_leaderboard();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (d.input) {
+                case events::BTN_A:
+                    // A button pressed.
+                    events::dungeon::player_interact_event();
+                    break;
+                case events::BTN_LB:
+                    // Enable leaderboard
+                    events::ui::enable_leaderboard();
+                    break;
+                default:
+                    break;
+            }
         }
     });
 
