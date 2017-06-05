@@ -77,7 +77,7 @@ void DungeonPhase::c_setup() {
             context.player_finished = true;
             events::dungeon::post_dungeon_camera_event();
         } else {
-            // TODO: can do client-side notification here, e.g. "Player X has reached the goal!"
+            events::ui::show_notification("Someone reached the goal!");
         }
     });
 
