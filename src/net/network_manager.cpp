@@ -65,7 +65,10 @@ void ServerNetworkManager::register_listeners() {
             go->set_enabled(player->is_enabled());
         }
         
+        // Intentionally send message twice. This fixes a visual bug where the
+        // updated position is seen as a movement, so the running anim is played.
         update_msg.set_allocated_state_update(state);
+        server.send_to_all(update_msg);
         server.send_to_all(update_msg);
     });
 
