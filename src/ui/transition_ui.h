@@ -23,5 +23,6 @@ private:
     UIRectangle bg2;
     UIImageNode bg;
     float aspect;
+    float initial_start_x, initial_start_y;
     static std::vector<Color> transition_colors;
 };
