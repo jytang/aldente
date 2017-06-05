@@ -29,6 +29,8 @@ public:
 
     static float random(float min, float max);
 
+    static float lerp(float start, float goal, float a); // a is between 0 - 1.0f
+
     static bool within_rect(glm::vec2 pos, glm::vec2 bottom_left, glm::vec2 top_right);
 
     // Chomp off as much as we can until a space, but beore EOL

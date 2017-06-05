@@ -111,6 +111,10 @@ float Util::random(float min, float max) {
     return min + r;
 }
 
+float Util::lerp(float start, float goal, float a) {
+    return (start * (1.0 - a) + goal * a);
+}
+
 bool Util::within_rect(glm::vec2 pos, glm::vec2 bottom_left, glm::vec2 top_right) {
     if (pos.x > bottom_left.x && pos.x < top_right.x && pos.y > top_right.y && pos.y < bottom_left.y) {
         return true;
