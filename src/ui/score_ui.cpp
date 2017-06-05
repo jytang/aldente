@@ -70,6 +70,16 @@ ScoreUI::ScoreUI(float aspect)
     });
 
     events::ui::disable_scoreboard.connect([&]() {
+        disable_animated();
+    });
+}
+
+void ScoreUI::disable_animated() {
+    for (int i = 0; i < entries.size(); ++i) {
+        entries[i]->animate_alpha(0.f, 0.5f);
+    }
+    // have bg disable the ui after it disappears
+    bg.animate_alpha(0.f, 0.51f, [&]() {
         disable();
     });
 }

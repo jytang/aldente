@@ -15,6 +15,7 @@ private:
     void populate_scores();
     void animate_deltas();
     void animate_add_scores();
+    void disable_animated();
 
     UIGrid score_grid;
     UIRectangle bg;
