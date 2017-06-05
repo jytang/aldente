@@ -43,6 +43,7 @@
 #include "game_objects/player.h"
 #include "game_objects/tile.h"
 #include "game_objects/minigame/penguin.h"
+#include "game_objects/minigame/platform.h"
 
 #include "input/axis_combiner.h"
 #include "input/conceptual_translator.h"

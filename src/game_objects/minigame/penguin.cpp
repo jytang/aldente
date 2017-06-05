@@ -6,8 +6,6 @@ Penguin::Penguin(int id) : GameObject(id) {
     tag = "PENGUIN";
 
     if (id == ON_SERVER) {
-        move_speed = rand() % 5 + 1;
-
         events::RigidBodyData rigid;
         rigid.object = this;
         rigid.shape = hit_capsule;
@@ -18,13 +16,6 @@ Penguin::Penguin(int id) : GameObject(id) {
         rigidbody->setLinearFactor(btVector3(1, 1, 0.0f));
 
         rigidbody->setActivationState(true);
-
-        // Set spawn position
-        //row = rand() % 3 - 6;
-        set_position(glm::vec3(10, 1, rand() % 10 - 5));
-        transform.set_rotation(glm::vec3(0, -90, 0));
-
-        move_speed = -(rand() % 3 + 3);
     }
 }
 
@@ -42,20 +33,7 @@ void Penguin::s_update_this() {
     transform.set_position(glm::vec3((float)to_set.getX(), (float)to_set.getY(),
         (float)to_set.getZ()));
 
-    // Forever moving left
-    btVector3 vel = rigidbody->getLinearVelocity();
-    float to_move = min(move_speed, vel.getX());
-    rigidbody->setLinearVelocity(btVector3(to_move, vel.getY(), 0));
-
-    events::dungeon::request_raycast_event(
-        transform.get_position(), transform.get_forward(), 0.6f,
-        [&](GameObject *bt_hit) {
-
-        // If there's another penguin in front of it, give it a push
-        if (bt_hit && bt_hit->tag == "PENGUIN") {
-            bt_hit->get_rigid()->applyForce(btVector3(-5000, 0, 0), btVector3(0, 0, 0));
-        }
-    });
+    do_movement();
 }
 
 void Penguin::c_update_state(glm::mat4 mat, bool enab) {
@@ -75,4 +53,30 @@ void Penguin::setup_model() {
     anim_player.set_anim("walk");
     anim_player.set_loop(true);
     anim_player.play();
+}
+
+void Penguin::set_movement(Direction to_set) {
+    dir = to_set;
+}
+
+void Penguin::do_movement() {
+    switch (dir) {
+        case Direction::LEFT: {
+            btVector3 vel = rigidbody->getLinearVelocity();
+            float to_move = min(move_speed, vel.getX());
+            rigidbody->setLinearVelocity(btVector3(to_move, vel.getY(), 0));
+
+            events::dungeon::request_raycast_event(
+                transform.get_position(), transform.get_forward(), 0.6f,
+                [&](GameObject *bt_hit) {
+
+                // If there's another penguin in front of it, give it a push
+                if (bt_hit && bt_hit->tag == "PENGUIN") {
+                    bt_hit->get_rigid()->applyForce(btVector3(-5000, 0, 0), btVector3(0, 0, 0));
+                }
+            });
+            break;
+        }
+        default: break;
+    }
 }

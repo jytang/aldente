@@ -62,18 +62,6 @@ void MinigamePhase::s_teardown() {
     cancel_clock_every();
     curr_mg->s_teardown();
 
-    /*
-    // Assigns rewards depending on player's ranking
-    Player *curr_player;
-    
-    for (auto const &kv : goal_reached_flags) {
-        curr_player = dynamic_cast<Player*>(GameObject::game_objects[kv.first]);
-        assert(curr_player);
-        curr_player->s_modify_stats([&, kv](PlayerStats &stats) {
-            stats.add_coins(rewards[kv.second]);
-        });
-    }*/
-
     events::minigame::end_minigame_event();
 }
 

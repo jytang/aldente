@@ -11,12 +11,6 @@
 class Physics {
 private:
     Scene *scene;
-
-    /*//Bullet varaibles
-    btBroadphaseInterface *broadphase;
-    btDefaultCollisionConfiguration *collisionConfiguration;
-    btCollisionDispatcher *dispatcher;
-    btSequentialImpulseConstraintSolver *solver;*/
     std::map<Scene*, btDiscreteDynamicsWorld*> scene_worlds;
 public:
     Physics();

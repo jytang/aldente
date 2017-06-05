@@ -18,7 +18,11 @@ EmptyCollider::EmptyCollider(int id) : GameObject(id) {
 }
 
 void EmptyCollider::s_on_collision(GameObject *other) {
-    if (other->tag == "PENGUIN") {
+    if (dynamic_cast<Penguin*>(other)) {
         dynamic_cast<Penguin*>(other)->reset_position();
+    }
+    else if (dynamic_cast<Player*>(other)) {
+        other->disable();
+        events::minigame::player_died_event(other->get_id());
     }
 }

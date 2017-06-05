@@ -188,6 +188,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game_objects\grid.h" />
     <ClInclude Include="..\src\game_objects\minigame\empty_collider.h" />
     <ClInclude Include="..\src\game_objects\minigame\penguin.h" />
+    <ClInclude Include="..\src\game_objects\minigame\platform.h" />
     <ClInclude Include="..\src\game_objects\player.h" />
     <ClInclude Include="..\src\game_objects\tile.h" />
     <ClInclude Include="..\src\game_objects\traps\arrow.h" />
@@ -310,6 +311,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\game_objects\grid.cpp" />
     <ClCompile Include="..\src\game_objects\minigame\empty_collider.cpp" />
     <ClCompile Include="..\src\game_objects\minigame\penguin.cpp" />
+    <ClCompile Include="..\src\game_objects\minigame\platform.cpp" />
     <ClCompile Include="..\src\game_objects\player.cpp" />
     <ClCompile Include="..\src\game_objects\tile.cpp" />
     <ClCompile Include="..\src\game_objects\traps\arrow.cpp" />

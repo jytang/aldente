@@ -1,6 +1,7 @@
 #include "mgscene_penguin.h"
 #include "game_objects/player.h"
 #include "game_objects/minigame/empty_collider.h"
+#include "game_objects/minigame/platform.h"
 #include "events.h"
 #include "util/color.h"
 #include "../../asset_loader.h"
@@ -17,19 +18,24 @@ void MGScenePenguin::s_setup() {
     // Set up penguins. Initially disabled.
     for (int i = 0; i < MAX_PENGUINS; i++) {
         Penguin* to_add = new Penguin();
+
+        // Set spawn position and rotation
+        to_add->set_position(glm::vec3(10, 1, rand() % 10 - 5));
+        to_add->transform.set_rotation(glm::vec3(0, -90, 0));
+
+        // Set penguin speed
+        to_add->set_speed(-(rand() % 3 + 4));
+
+        // Set penguins to left direction
+        to_add->set_movement(Direction::LEFT);
+
         to_add->disable();
         penguins.push_back(to_add);
         objs.push_back(to_add);
     }
 
     // Set up the platform
-    GameObject* platform = new GameObject(-1);
-
-    events::RigidBodyData platform_rigid;
-    platform_rigid.object = platform;
-    platform_rigid.shape = new btBoxShape(btVector3(10,0.5f,5));
-    platform_rigid.mass = 0;
-    events::add_rigidbody_event(platform_rigid);
+    Platform* platform = new Platform();
 
     platform->set_position(glm::vec3(0, -0.5f, -0.5f));
     
@@ -48,8 +54,8 @@ void MGScenePenguin::c_setup() {
     }
 
     // Set up the platform
-    GameObject* platform = new GameObject(-1);
-    platform->attach_model(AssetLoader::get_model("cube"));
+    Platform* platform = new Platform();
+    
     platform->initial_transform.set_scale(glm::vec3(10, 1, 5));
     platform->transform.set_scale(glm::vec3(10, 0.5f, 5));
     platform->transform.set_position(glm::vec3(0, 0, -0.5f));
@@ -88,7 +94,7 @@ void MGScenePenguin::reset_scene() {
 
     // Spawn penguins in waves of 10.
     cancel_spawn = Timer::get()->do_every(
-        std::chrono::milliseconds(800),
+        std::chrono::milliseconds(1000),
         [&, count]() mutable {
         for (int i = 0; i < 10; i++) {
             if (count < MAX_PENGUINS)
