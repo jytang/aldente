@@ -64,8 +64,8 @@ void UIManager::setup_uis() {
     /* SCORE SCREEN UI */
     ui_map["score-screen"] = new ScoreUI(aspect);
 
-    /* TRANSITION UI */
-    ui_map["transition"] = new TransitionUI(aspect);
+    /* TRANSITION UI (highest z-index) */
+    ui_map["z999-transition"] = new TransitionUI(aspect);
 }
 
 void UIManager::setup_listeners() {
