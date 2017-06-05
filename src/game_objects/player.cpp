@@ -342,7 +342,7 @@ void Player::c_slow() {
 
     // Turn player blue
     model->reset_colors();
-    model->multiply_colors(Color(0.3f, 0.3f, 50.0f, false));
+    model->multiply_colors(Color(0.1f, 0.1f, 10.0f, false));
 
     // Fade back slowly to original color
     int count = 0;
@@ -352,8 +352,8 @@ void Player::c_slow() {
 
         model->reset_colors();
 
-        float rg = Util::lerp(0.3f, 1.0f, (float)count / num_steps);
-        float b = Util::lerp(50.0f, 1.0f, (float)count / num_steps);
+        float rg = Util::lerp(0.1f, 1.0f, (float)count / num_steps);
+        float b = Util::lerp(10.0f, 1.0f, (float)count / num_steps);
 
         model->multiply_colors(Color(rg, rg, b, false));
 
