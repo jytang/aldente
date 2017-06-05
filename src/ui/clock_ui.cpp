@@ -13,6 +13,11 @@ ClockUI::ClockUI(float aspect)
                 0.5f) { // transparency
 
     attach(clock);
+    disable();
+
+    events::menu::end_menu_event.connect([&]() {
+        enable();
+    });
 
     events::ui::update_time.connect([&](int time) {
         set_time(time);
