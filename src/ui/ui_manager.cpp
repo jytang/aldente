@@ -12,6 +12,7 @@
 #include "main_menu_ui.h"
 #include "score_ui.h"
 #include "notification_ui.h"
+#include "transition_ui.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -63,6 +64,8 @@ void UIManager::setup_uis() {
     /* SCORE SCREEN UI */
     ui_map["score-screen"] = new ScoreUI(aspect);
 
+    /* TRANSITION UI */
+    ui_map["transition"] = new TransitionUI(aspect);
 }
 
 void UIManager::setup_listeners() {
