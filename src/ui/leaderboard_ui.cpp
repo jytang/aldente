@@ -12,7 +12,7 @@ LeaderboardUI::~LeaderboardUI() {
 
 LeaderboardUI::LeaderboardUI(float aspect)
     : UI(0.f, 20.f),
-      leaderboard_grid(0, 0,
+      leaderboard_grid(-28.f * aspect, 0.f,
                        28.f * aspect, 60.f,
                        LEADERBOARD_ENTRIES, // num elements
                        1, // num columns
@@ -21,7 +21,8 @@ LeaderboardUI::LeaderboardUI(float aspect)
                        Color::BLACK, // bg color
                        0.f, // padding between each element
                        0.f, // no selection halo
-                       0.5f) {
+                       0.5f),
+      aspect(aspect) {
 
     attach(leaderboard_grid);
 
@@ -38,18 +39,16 @@ LeaderboardUI::LeaderboardUI(float aspect)
     disable();
 
     /* EVENT LISTENERS */
-    events::ui::disable_leaderboard.connect([&]() {
-        disable();
-    });
-    events::ui::enable_leaderboard.connect([&]() {
-        enable();
-    });
     events::ui::toggle_leaderboard.connect([&](){
-        toggle();
+        if (enabled) {
+            disable_animated();
+        } else {
+            enable_animated();
+        }
     });
     // Hide when build phase begins.
     events::build::start_build_event.connect([&]() {
-        disable();
+        disable_animated();
     });
 
     events::ui::leaderboard_update.connect([&](int player_id, int gold, std::string model) {
@@ -95,4 +94,18 @@ void LeaderboardUI::sort_leaderboard() {
 
         leaderboard_grid.attach_at(i, 0, *ranking_to_entry[i]);
     }
+}
+
+void LeaderboardUI::enable_animated() {
+    enable();
+    leaderboard_grid.set_alpha(0.f);
+    leaderboard_grid.animate_alpha(1.f, 0.2f);
+    leaderboard_grid.animate_to(0.f, 0.f, 0.1f);
+}
+
+void LeaderboardUI::disable_animated() {
+    leaderboard_grid.animate_to(-28.f * aspect, 0.f, 0.1f);
+    leaderboard_grid.animate_alpha(0.f, 0.2f, [&]() {
+        disable();
+    });
 }

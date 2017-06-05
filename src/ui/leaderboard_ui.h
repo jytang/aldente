@@ -16,9 +16,12 @@ class LeaderboardUI : public UI {
 public:
     LeaderboardUI(float aspect);
     ~LeaderboardUI();
+    void enable_animated() override;
+    void disable_animated() override;
 private:
     void sort_leaderboard(); // helper function to sort the entries by gold amount
 
+    float aspect;
     UIGrid leaderboard_grid;
     std::map<int, UILeaderboardEntry *> ranking_to_entry; // maps rank to an entry
     std::map<int, UILeaderboardEntry *> id_to_entry; // maps player ids to leaderboard entries

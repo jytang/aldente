@@ -22,7 +22,7 @@ ScoreUI::ScoreUI(float aspect)
     : UI(0.f, 0.f),
       bg(0.f, 0.f,
          100.f * aspect, 100.f,
-         Color::BLACK, 0.7f),
+         Color::BLACK, 0.f),
       score_grid(30.f * aspect, 10.f, // starting coords
                  40.f * aspect, 70.f, // width and height
                  LEADERBOARD_ENTRIES, // num elts
@@ -63,7 +63,7 @@ ScoreUI::ScoreUI(float aspect)
     events::ui::scoreboard_sequence.connect([&](const auto &data) {
         sorted_data = data;
         populate_scores();
-        enable();
+        enable_animated();
 
         // Do gold delta sequence.
         animate_deltas();
@@ -72,6 +72,16 @@ ScoreUI::ScoreUI(float aspect)
     events::ui::disable_scoreboard.connect([&]() {
         disable_animated();
     });
+}
+
+void ScoreUI::enable_animated() {
+    enable();
+
+    for (int i = 0; i < entries.size(); ++i) {
+        entries[i]->animate_alpha(1.f, 0.5f);
+    }
+
+    bg.animate_alpha(0.7f, 0.5f);
 }
 
 void ScoreUI::disable_animated() {

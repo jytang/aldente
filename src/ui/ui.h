@@ -14,6 +14,8 @@ public:
     void enable_all();  // Enables visibility of all contained UI elts.
     void disable_all(); // Disables visibliity.
     void toggle();
+    virtual void enable_animated();
+    virtual void disable_animated();
 protected:
     bool enabled = true;    // by default, UI elements are shown.
     UIContainer root;

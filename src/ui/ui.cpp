@@ -37,3 +37,14 @@ void UI::disable_all() {
 void UI::toggle() {
     enabled = !enabled;
 }
+
+void UI::enable_animated() {
+    enable();
+    root.animate_alpha(1.f, 1.f);
+}
+
+void UI::disable_animated() {
+    root.animate_alpha(0.f, 1.f, [&](){
+        disable();
+    });
+}

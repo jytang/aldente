@@ -11,11 +11,12 @@ class ScoreUI : public UI {
 public:
     ScoreUI(float aspect);
     ~ScoreUI();
+    void enable_animated() override;
+    void disable_animated() override;
 private:
     void populate_scores();
     void animate_deltas();
     void animate_add_scores();
-    void disable_animated();
 
     UIGrid score_grid;
     UIRectangle bg;
