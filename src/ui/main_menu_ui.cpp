@@ -5,10 +5,10 @@
 #include "util/color.h"
 
 MainMenuUI::MainMenuUI(float aspect)
-        : UI(20.f * aspect, 30.f),
+        : UI(0.f * aspect, 0.f),
           bg(0, 0,
-             30.f * aspect, 40.f,
-             Color::BLACK, 0.5f) {
+             100.f * aspect, 100.f,
+             Color::WHITE, 1.f) {
     disable();
     attach(bg);
 }
