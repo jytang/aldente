@@ -3,9 +3,7 @@
 #include "trap.h"
 
 /*
-    A til-based trap which causes the player that steps over it to get slowed.
-    Or maybe it freezes the player, and then slowly regains their mvoespeeed
-    So maybe TODO : Rename to ice trap
+    A tile-based trap. Freezes the player, and then slowly regains their mvoespeeed
 */
 class SlowTrap : public Trap {
 public:
