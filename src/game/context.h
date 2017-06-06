@@ -3,6 +3,7 @@
 #include "game_objects/game_object.h"
 #include "game_objects/player.h"
 #include <set>
+#include <scene/scene.h>
 
 // Forward-declare
 class Player;

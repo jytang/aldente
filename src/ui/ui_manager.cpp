@@ -13,6 +13,7 @@
 #include "score_ui.h"
 #include "notification_ui.h"
 #include "transition_ui.h"
+#include "countdown_ui.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -54,8 +55,9 @@ void UIManager::setup_uis() {
     ui_map["legend"] = new LegendUI(aspect, 15.f, 5.f, 1.f);
 
     /* DIALOG UI (should have high z-index) */
-    ui_map["z9-dialog"] = new DialogUI(aspect, 80.f, 30.f, 2.f);
+    ui_map["z8-dialog"] = new DialogUI(aspect, 80.f, 30.f, 2.f);
 
+    /* NOTIFICATION UI (high-ish z-index) */
     ui_map["z5-notifs"] = new NotificationUI(aspect, 30.f, 15.f);
 
     /* MAIN MENU UI */
@@ -65,7 +67,10 @@ void UIManager::setup_uis() {
     ui_map["score-screen"] = new ScoreUI(aspect);
 
     /* TRANSITION UI (highest z-index) */
-    ui_map["z999-transition"] = new TransitionUI(aspect);
+    ui_map["z9-transition"] = new TransitionUI(aspect);
+
+    /* COUNTDOWN UI (high z-index) */
+    ui_map["z6-countdown"] = new CountdownUI(aspect);
 }
 
 void UIManager::setup_listeners() {

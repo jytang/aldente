@@ -201,6 +201,10 @@ namespace events {
 
         // Create a notification
         extern signal<void(const std::string &)> show_notification;
+
+        // Display a countdown
+        // Parmeters are (strings_to_show, do_after_callback)
+        extern signal<void(const std::vector<std::string> &, const std::function<void()> &)> show_countdown;
     }
 
     namespace build {

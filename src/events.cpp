@@ -73,6 +73,7 @@ namespace events {
         signal<void(const std::string &)> show_notification;
         signal<void(float, std::function<void()>)> transition_wipe;
         signal<void(float, std::function<void()>)> transition_fade;
+        signal<void(const std::vector<std::string> &, const std::function<void()> &)> show_countdown;
     }
 
     namespace build {

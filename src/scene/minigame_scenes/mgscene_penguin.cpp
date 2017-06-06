@@ -1,3 +1,4 @@
+#include <timer.h>
 #include "mgscene_penguin.h"
 #include "game_objects/player.h"
 #include "game_objects/minigame/empty_collider.h"

@@ -102,12 +102,11 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::camera_anim_rotate_event(glm::vec3(0, 0, 1), 720, 2000);
                     break;
 
-                // Notifications
+                // Ethan's testing stuff
                 case GLFW_KEY_Z:
-                    events::ui::show_notification("hello world");
-                    break;
-                case GLFW_KEY_X:
-                    events::ui::show_notification("world hello");
+                    events::ui::show_countdown({"3", "2", "1", "GO!"}, []() {
+                        std::cerr << "counted\n";
+                    });
                     break;
                 default:
                     break;

@@ -63,7 +63,7 @@ void Penguin::do_movement() {
     switch (dir) {
         case Direction::LEFT: {
             btVector3 vel = rigidbody->getLinearVelocity();
-            float to_move = min(move_speed, vel.getX());
+            float to_move = std::min(move_speed, vel.getX());
             rigidbody->setLinearVelocity(btVector3(to_move, vel.getY(), 0));
 
             events::dungeon::request_raycast_event(
