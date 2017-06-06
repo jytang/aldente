@@ -13,7 +13,6 @@ CountdownUI::CountdownUI(float aspect)
 
     // Hide at first
     count.set_alpha(0.f);
-//    count.set_text("1");
     attach(count);
 
     events::ui::show_countdown.connect([this](const std::vector<std::string> &to_display, const std::function<void()> &do_after) {
