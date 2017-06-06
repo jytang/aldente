@@ -7,16 +7,17 @@
 */
 class Shooter : public ProjectileTrap {
 private:
-    Player *curr_target;
-
     float attack_range;
 
     btBoxShape *hit_box = new btBoxShape(btVector3(0.2f, 0.2f, 0.2f));
 
-    void attempt_attack(Player *player);
+    void check_sight(Player *player);
+    void attack(Player *player);
     bool in_range(Player *player);
     void turn_to(Player *player);
 public:
+    Player *curr_target;
+
     Shooter(int x, int z, int id = 0);
 
     void setup_model() override;

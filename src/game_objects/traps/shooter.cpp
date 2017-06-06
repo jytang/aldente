@@ -15,7 +15,7 @@ Shooter::Shooter(int x, int z, int id) : ProjectileTrap(x, z, id) {
 
         fill_projectile_pool(ProjectileTypes::ARROW);
 
-        attack_range = 2.0f;
+        attack_range = 5.0f;
         activation_type = AI;
     }
 }
@@ -39,26 +39,43 @@ void Shooter::update_ai() {
     
     if (curr_target) {
         // If have a target, check if within attack range and shoot
-        attempt_attack(curr_target);
+        if (in_range(curr_target)) {
+            attack(curr_target);
+
+            // update whether or not target is still in sight
+            check_sight(curr_target);
+        }
+        else
+            curr_target = nullptr;
     }
     else {
         // If no target, finds a new target within range
         for (auto pair : GameState::players) {
             Player * player = pair.second;
-            if (in_range(player)) {
-                curr_target = player;
-                attempt_attack(player);
-                break;
+            if (in_range(player) && !curr_target) {
+                check_sight(player);
             }
         }
     }
 }
 
-void Shooter::attempt_attack(Player *player) {
-    if (in_range(player)) {
-        turn_to(player);
-        shoot();
-    }
+void Shooter::attack(Player *player) {
+    turn_to(player);
+    shoot();
+}
+
+// Checks if the player is within line of sight using a raycast
+void Shooter::check_sight(Player *player) {
+    glm::vec3 dir = player->transform.get_position() - transform.get_position();
+    events::dungeon::request_raycast_event(
+        transform.get_position(), dir, attack_range,
+        [&](GameObject *bt_hit) {
+        Player *player = dynamic_cast<Player*>(bt_hit);
+        if (player)
+            curr_target = player;
+        else
+            curr_target = nullptr;
+    });
 }
 
 // Checks if the player is within attack range
