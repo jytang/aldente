@@ -9,7 +9,7 @@ class ModalInput {
 public:
     // The list of input modes.
     enum InputMode {
-        NORMAL, DIALOG,
+        NORMAL, DIALOG, SCOREBOARD, MAIN_MENU,
     };
 
     // A pair of signals for button and stick events.

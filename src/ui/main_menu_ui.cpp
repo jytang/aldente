@@ -1,4 +1,5 @@
 #include <events.h>
+#include <input/modal_input.h>
 #include "main_menu_ui.h"
 
 #include "timer.h"
@@ -20,10 +21,28 @@ MainMenuUI::MainMenuUI(float aspect)
     logo.set_alpha(0.f);
 
     events::ui::enable_main_menu.connect([&](){
-       enable_animated();
+        // Switch to main menu button bindings.
+        const auto &mi = input::ModalInput::get();
+        mi->set_mode(input::ModalInput::MAIN_MENU);
+        button_conn = mi->with_mode(input::ModalInput::MAIN_MENU).buttons.connect([&](const events::ButtonData &d) {
+            if (d.state == 0) return;
+            switch (d.input) {
+                case events::BTN_START:
+                    events::ui::disable_main_menu();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        enable_animated();
     });
 
     events::ui::disable_main_menu.connect([&]() {
+        // Restore modal input state and disable the UI
+        button_conn.disconnect();
+        input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
+
         disable_animated();
     });
 }
