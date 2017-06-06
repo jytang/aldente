@@ -25,8 +25,8 @@ public:
     void rotate(glm::vec3 angles, bool local = true);
     void rotate(float x, float y, float z, bool local = true);
 
-    // Makes the model face a direction
-    void look_at(glm::vec3 dir);
+    // Makes the model face a directionm use a for lerping.
+    void look_at(glm::vec3 dir, float a = 1.0f);
 
     glm::mat4 get_world_mat();
     glm::vec3 get_position();

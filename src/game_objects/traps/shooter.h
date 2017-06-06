@@ -9,12 +9,14 @@ class Shooter : public ProjectileTrap {
 private:
     float attack_range;
 
+    std::function<void()> cancel_turn;
+
     btBoxShape *hit_box = new btBoxShape(btVector3(0.2f, 0.2f, 0.2f));
 
     void check_sight(Player *player);
     void attack(Player *player);
     bool in_range(Player *player);
-    void turn_to(Player *player);
+    void turn_to_shoot(Player *player);
 public:
     Player *curr_target;
 

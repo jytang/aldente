@@ -1,6 +1,6 @@
 #include "transform.h"
 #include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
+#include "util/util.h"
 
 // TODO : Work on more efficient algorithms for rotation and scaling.
 
@@ -88,9 +88,11 @@ void Transform::rotate(float x, float y, float z, bool local) {
 
 }
 
-void Transform::look_at(glm::vec3 dir) {
+void Transform::look_at(glm::vec3 dir, float a) {
     if (dir.x != 0 || dir.z != 0) {
-        float angle = atan2(dir.x, dir.z);
+        float goal_angle = atan2(dir.x, dir.z);
+        float orig_angle = atan2(get_forward().x, get_forward().z);
+        float angle = Util::lerp(orig_angle, goal_angle, a);
         glm::mat4 new_world = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0.0f, 1.0f, 0.0f));
         new_world = glm::scale(new_world, get_scale());
         new_world[3] = world_mat[3];

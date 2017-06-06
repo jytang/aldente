@@ -60,7 +60,7 @@ void Shooter::update_ai() {
 }
 
 void Shooter::attack(Player *player) {
-    turn_to(player);
+    turn_to_shoot(player);
     shoot();
 }
 
@@ -84,7 +84,11 @@ bool Shooter::in_range(Player *player) {
         transform.get_position()) < attack_range);
 }
 
-// Turn to face towards the player
-void Shooter::turn_to(Player *player) {
-    transform.look_at(player->transform.get_position() - transform.get_position());
+// Turn to face towards the player and shoots when finished turning
+void Shooter::turn_to_shoot(Player *player) {
+
+    glm::vec3 orig = transform.get_position();
+    glm::vec3 goal = player->transform.get_position();
+
+    transform.look_at(goal - orig, 0.3f);
 }
