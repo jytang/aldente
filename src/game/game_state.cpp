@@ -102,10 +102,18 @@ void GameState::set_phase(Phase* phase) {
         curr_phase->s_setup();
     }
     else {
-        if (curr_phase)
-            curr_phase->c_teardown();
-        curr_phase = phase;
-        curr_phase->c_setup();
+        // Don't teardown/transition if it is the first phase.
+        if (curr_phase == nullptr) {
+            curr_phase = phase;
+            curr_phase->c_setup();
+        } else {
+            // Transition, then change phase as a callback at the "apex" of the transition.
+            events::ui::transition_wipe(1.f, [&, phase]() {
+                curr_phase->c_teardown();
+                curr_phase = phase;
+                curr_phase->c_setup();
+            });
+        }
     }
 }
 

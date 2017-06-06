@@ -36,6 +36,13 @@ GoldUI::GoldUI(float aspect)
     attach(gold_delta);
     set_gold(100); // TODO(metakirby5/jytang): don't hardcode heh
 
+    // Disabled at first. Shown in build phase.
+    disable();
+
+    events::menu::end_menu_event.connect([&]() {
+        enable();
+    });
+
     events::c_player_stats_updated.connect([&](const proto::PlayerStats &update) {
         set_gold(update.coins());
     });
