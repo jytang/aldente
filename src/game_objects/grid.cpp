@@ -10,6 +10,7 @@
 #include "game_objects/traps/arrow_trap.h"
 #include "game_objects/traps/mimic.h"
 #include "game_objects/traps/slow_trap.h"
+#include "game_objects/traps/shooter.h"
 
 #include <fstream>
 
@@ -175,6 +176,9 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
             break;
         case ARROW_TRAP:
             to_add = new ArrowTrap(col, row, id);
+            break;
+        case SHOOTER:
+            to_add = new Shooter(col, row, id);
             break;
         case ICE:
             to_add = new SlowTrap(col, row, id);

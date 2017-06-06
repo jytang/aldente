@@ -2,7 +2,7 @@
 
 // Type of construct built on tile.
 enum ConstructType {
-    NONE, CHEST, MIMIC, SPIKES, SLIME_B, SLIME_Y, SLIME_R, SLIME_G, ARROW_TRAP, ICE, REMOVE
+    NONE, CHEST, MIMIC, SPIKES, SLIME_B, SLIME_Y, SLIME_R, SLIME_G, ARROW_TRAP, SHOOTER, ICE, REMOVE
 };
 
 struct ConstructData {
@@ -23,6 +23,7 @@ namespace Constructs {
         { ConstructType::SLIME_R,{ ConstructType::SLIME_R, 10, "Red Slime", "Pretty straightforward", "slime_red.png" } },
         { ConstructType::SLIME_G,{ ConstructType::SLIME_G, 10, "Green Slime", "Unpredictable little bastard", "slime_green.png" } },
         { ConstructType::ARROW_TRAP,{ ConstructType::ARROW_TRAP, 10, "Arrow", "Sharp as a daisy.", "cloudwall.png" } },
+        { ConstructType::SHOOTER,{ ConstructType::SHOOTER, 10, "Shooter", "It's high noon.", "moon.png" } },
         { ConstructType::ICE,{ ConstructType::ICE, 10, "Ice Trap", "Gets pretty chilly.", "Kororo.jpg" } },
         { ConstructType::REMOVE, { ConstructType::REMOVE, 200, "Remove", "Remove a block.", "Tomato.jpg" } }
     };

@@ -5,6 +5,7 @@
 #include "game_objects/traps/arrow_trap.h"
 #include "game_objects/traps/mimic.h"
 #include "game_objects/traps/slow_trap.h"
+#include "game_objects/traps/shooter.h"
 
 void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
     // Remove visibility of previous preview, if any
@@ -36,6 +37,9 @@ void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
                 break;
             case ARROW_TRAP:
                 cached_previews[type] = make_preview<ArrowTrap>();
+                break;
+            case SHOOTER:
+                cached_previews[type] = make_preview<Shooter>();
                 break;
             case ICE:
                 cached_previews[type] = make_preview<SlowTrap>();
