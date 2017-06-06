@@ -21,7 +21,7 @@ SlowTrap::SlowTrap(int x, int z, int id) : Trap(x, z, id) {
 void SlowTrap::s_on_collision(GameObject *other) {
     Player *player = dynamic_cast<Player*>(other);
     if (player) {
-        player->s_slow()
+        player->s_slow();
 
         // Send signal to client that this player was hit
         events::dungeon::network_collision_event(player->get_id(), id);
