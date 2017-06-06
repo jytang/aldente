@@ -313,7 +313,7 @@ void Player::c_take_damage() {
     });
 }
 
-bool Player::s_slow() {
+void Player::s_slow() {
     if (cancel_slow)
         cancel_slow();
 
@@ -333,7 +333,7 @@ bool Player::s_slow() {
         count++;
     });
 
-    return true;
+    return;
 }
 
 void Player::c_slow() {

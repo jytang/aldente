@@ -76,7 +76,7 @@ public:
     void c_take_damage(); // Graphical : Flickers player to show they've been hit
 
     // Get Slowed
-    bool s_slow(); // Hit by slow trap. Get frozen, and then slowly regain movespeed
+    void s_slow(); // Hit by slow trap. Get frozen, and then slowly regain movespeed
     void c_slow(); // Turn bluish to indicate frozen. Can later change to a UI effect
 
     // Used for checking if player has been hit and in the period of invulnerability, 
