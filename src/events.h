@@ -150,6 +150,9 @@ namespace events {
     // Signals that we should toggle player's "ready" status.
     extern signal<void(int)> player_ready_event;
 
+    // Indicates that the current round (numerical) has changed.
+    extern signal<void(int)> round_changed_event;
+
     /* Events for camera animation. Call on client
     * Position: The end position of the transition
     * Angle: The total amount of rotation desired (degrees)

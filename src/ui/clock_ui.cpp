@@ -2,7 +2,9 @@
 #include "clock_ui.h"
 
 #include "timer.h"
+#include "ui/ui_grid.h"
 #include "util/color.h"
+#include "util/config.h"
 
 ClockUI::ClockUI(float aspect)
         : UI(40.f * aspect, 90.f),
@@ -13,6 +15,22 @@ ClockUI::ClockUI(float aspect)
                 0.5f) { // transparency
 
     attach(clock);
+
+    int rounds;
+    Config::config->get_value(Config::str_num_rounds, rounds);
+    std::cerr << "rounds: " << rounds << "\n";
+
+    UIGrid* grid = new UIGrid(0, -5,
+        20.f * aspect, 5.f, // width and height
+        rounds, rounds,
+        3, 3,
+        Color::PURPLE,
+        0.75f,
+        0); /* ,
+        float inter_padding = 0.75f,
+        float selection_halo_padding = 0.3f, // hardcoded defaults :(
+        float grid_bg_alpha = 1.f)*/
+    attach(*grid);
     disable();
 
     events::menu::end_menu_event.connect([&]() {

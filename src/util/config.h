@@ -24,6 +24,7 @@ public:
     static std::string str_server_ip;
     static std::string str_port;
     static std::string str_controller;
+    static std::string str_num_rounds;
 
 public:
     static Config *config; // Use this static reference instead of your own call to the constructor

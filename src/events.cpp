@@ -41,6 +41,7 @@ namespace events {
     signal<void(int)> player_finished_event;
     signal<void(const proto::PlayerStats &)> c_player_stats_updated;
     signal<void(int)> player_ready_event;
+    signal<void(int)> round_changed_event;
 
     signal<void(glm::vec3 position, int time)> camera_anim_position_event;
     signal<void(glm::vec3 axis, float angle, int time)> camera_anim_rotate_event;

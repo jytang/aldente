@@ -13,6 +13,7 @@ public:
     // Common
     std::vector<int> player_ids;
     std::map<std::string, Scene*> minigame_scenes;
+    int current_round = 0;
 
     // Server
     std::set<GameObject*> updated_objects;
