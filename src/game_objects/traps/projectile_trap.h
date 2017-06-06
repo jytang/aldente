@@ -10,6 +10,8 @@
 class ProjectileTrap : public Trap {
 private:
     std::function<void()> cancel_timer;
+    bool can_shoot;
+
 protected:
     std::vector<Projectile *> projectile_pool; // Poolable amount of projectiles to grab objects from
 
@@ -20,6 +22,8 @@ protected:
 
     ActivationType activation_type = TIME;
     float raycast_range = 5.0f;
+
+    long long shoot_cooldown = 1000; // ms
 
     virtual void update_ai() {};
     void raycast_check();

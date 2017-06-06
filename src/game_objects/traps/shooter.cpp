@@ -15,7 +15,7 @@ Shooter::Shooter(int x, int z, int id) : ProjectileTrap(x, z, id) {
 
         fill_projectile_pool(ProjectileTypes::ARROW);
 
-        attack_range = 5.0f;
+        attack_range = 50.0f;
         activation_type = AI;
     }
 }

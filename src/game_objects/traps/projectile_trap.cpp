@@ -6,6 +6,7 @@
 #define MAX_PROJECTILES 5
 
 ProjectileTrap::ProjectileTrap(int x, int z, int id) : Trap(x, z, id) {
+    can_shoot = true;
 }
 
 void ProjectileTrap::s_update_this() {
@@ -67,10 +68,12 @@ void ProjectileTrap::fill_projectile_pool(ProjectileTypes type) {
 
 // Looks for an available projectile from pool, then shoots it
 void ProjectileTrap::shoot() {
-    // Only shoots projectile if it is not already being shot
+    if (!can_shoot)
+        return;
 
     Projectile *to_shoot = nullptr;
 
+    // Get projectile from pool
     for (int i = 0; i < projectile_pool.size(); i++) {
         if (!projectile_pool[i]->is_enabled()) {
             to_shoot = projectile_pool[i];
@@ -78,10 +81,20 @@ void ProjectileTrap::shoot() {
         }
     }
 
+    // Shoot if projectile was gained
     if (to_shoot) {
         to_shoot->fire(transform);
-        // Send signal to client that this player was hit. TEMP WILL CHANGE
+
+        // Send signal to client that a shot was fired.
         events::dungeon::network_collision_event(id, id);
+
+        // Start cooldown timer
+        can_shoot = false;
+        Timer::get()->do_after(
+            std::chrono::milliseconds(shoot_cooldown),
+            [&]() {
+            can_shoot = true;
+        });
     }
 }
 
