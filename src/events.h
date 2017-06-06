@@ -194,6 +194,8 @@ namespace events {
         extern signal<void()> disable_scoreboard;
         extern signal<void(float, std::function<void()>)> transition_wipe;
         extern signal<void(float, std::function<void()>)> transition_fade;
+        extern signal<void()> enable_main_menu;
+        extern signal<void()> disable_main_menu;
 
         // Request some dialog to be shown
         // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).
