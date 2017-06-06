@@ -5,20 +5,29 @@
 #include "timer.h"
 #include "util/color.h"
 #include "asset_loader.h"
+#include <iostream>
 
 MainMenuUI::MainMenuUI(float aspect)
         : UI(0.f * aspect, 0.f),
           bg(0.f, 0.f,
              100.f * aspect, 100.f, Color::WHITE, 0.f),
-          logo(20.f * aspect, 50.f,
-               20.f * 2.9464f, 20.f,
-               AssetLoader::get_texture("sandma.png")) {
+          logo((100.f * aspect - 30.f * 2.9464f) / 2.f, 50.f,
+               30.f * 2.9464f, 30.f,
+               AssetLoader::get_texture("sandma.png")),
+          press(5.f, 5.f, 0.f, -20.f, 100.f * aspect, 100.f, 0.f,
+                UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::MIDDLE,
+                Color::BLACK, Color::BLACK, 1.f, false),
+          press_anim([](){}) {
     attach(bg);
     attach(logo);
+    attach(press);
 
     // Invisible to start off with.
     disable();
     logo.set_alpha(0.f);
+
+    // Press start
+    press.set_text("Press START");
 
     events::ui::enable_main_menu.connect([&](){
         // Switch to main menu button bindings.
@@ -51,6 +60,17 @@ void MainMenuUI::enable_animated() {
     enable();
     logo.animate_alpha(1.f, 0.5f);
     bg.animate_alpha(0.8f, 0.5f);
+
+    // Recursively oscillate the opacity of press
+    press_anim = [&](){
+        std::cerr << "test" << std::endl;
+        press.animate_alpha(1.f, 0.5f, [&](){
+            press.animate_alpha(0.f, 0.5f, [&](){
+                press_anim();
+            });
+        });
+    };
+    press_anim();
 }
 
 void MainMenuUI::disable_animated() {
@@ -59,4 +79,6 @@ void MainMenuUI::disable_animated() {
     bg.animate_alpha(0.f, 0.51f, [&]() {
         disable();
     });
+    // Stop the recursion!
+    press_anim = [](){};
 }
