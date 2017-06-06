@@ -1,0 +1,25 @@
+#pragma once
+
+#include "projectile_trap.h"
+
+/*
+    Stationary trap that shoots close players in range
+*/
+class Shooter : public ProjectileTrap {
+private:
+    Player *curr_target;
+
+    float attack_range;
+
+    btBoxShape *hit_box = new btBoxShape(btVector3(0.2f, 0.2f, 0.2f));
+
+    void attempt_attack(Player *player);
+    bool in_range(Player *player);
+    void turn_to(Player *player);
+public:
+    Shooter(int x, int z, int id = 0);
+
+    void setup_model() override;
+    void play_trigger_animation() override;
+    void update_ai() override;
+};

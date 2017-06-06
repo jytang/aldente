@@ -11,6 +11,8 @@ ProjectileTrap::ProjectileTrap(int x, int z, int id) : Trap(x, z, id) {
 void ProjectileTrap::s_update_this() {
     if (activation_type == RAYCAST)
         raycast_check();
+    else if (activation_type == AI)
+        update_ai();
 }
 
 void ProjectileTrap::raycast_check() {

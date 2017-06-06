@@ -15,12 +15,13 @@ protected:
 
     // How the trap will be activated
     enum ActivationType {
-        TRIGGER, TIME, RAYCAST,
+        TRIGGER, TIME, RAYCAST, AI
     };
 
     ActivationType activation_type = TIME;
     float raycast_range = 5.0f;
 
+    virtual void update_ai() {};
     void raycast_check();
     void setup_timer(long long time_interval_ms);
 
