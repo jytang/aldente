@@ -12,6 +12,9 @@ class Mimic : public MobileTrap {
 private:
     void s_to_attack_mode();
     void s_to_chest_mode();
+
+    void c_to_chest();
+    void c_to_mimic();
 protected:
 
     Player *curr_target;

@@ -53,17 +53,11 @@ void Mimic::s_interact_trigger(GameObject *other) {
 }
 
 void Mimic::c_interact_trigger(GameObject *other) {
-    anim_player.play();
-
-    // Grows a bit bigger as a mimic
-    set_scale({ 0.0067f, 0.0067f, 0.0067f });
+    c_to_mimic();
 }
 
 void Mimic::setup_model() {
-    Model *model = AssetLoader::get_model("chest_bad");
-    attach_model(model);
-    set_scale({ 0.006f, 0.006f, 0.006f }); // original scale
-    anim_player.set_anim("open", 3.0f, true);
+    c_to_chest();
 }
 
 void Mimic::s_reset() {
@@ -73,7 +67,7 @@ void Mimic::s_reset() {
 
 void Mimic::c_reset() {
     anim_player.stop();
-    set_scale({ 0.006f, 0.006f, 0.006f }); // original scale
+    c_to_chest();
     MobileTrap::c_reset();
 }
 
@@ -90,4 +84,21 @@ void Mimic::s_to_attack_mode() {
     stop_moving = false; // Can Now move
     notify_on_collision = true; // Can now damage player on collision
     rigidbody->setLinearFactor(btVector3(1, 0.0f, 1)); // Can move normally
+}
+
+void Mimic::c_to_chest() {
+    Model *model = AssetLoader::get_model("chest_bad");
+    attach_model(model);
+    set_scale({ 0.006f, 0.006f, 0.006f }); // original scale
+}
+
+void Mimic::c_to_mimic() {
+    Model *model = AssetLoader::get_model("mimic");
+    attach_model(model);
+
+    // Grows a bit bigger as a mimic
+    set_scale({ 0.0062f, 0.0062f, 0.0062f });
+
+    anim_player.set_anim("walk", 3.0f, true);
+    anim_player.play();
 }
