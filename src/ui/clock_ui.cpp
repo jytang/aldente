@@ -3,6 +3,7 @@
 
 #include "timer.h"
 #include "ui/ui_grid.h"
+#include "ui/ui_rectangle.h"
 #include "util/color.h"
 #include "util/config.h"
 
@@ -18,18 +19,26 @@ ClockUI::ClockUI(float aspect)
 
     int rounds;
     Config::config->get_value(Config::str_num_rounds, rounds);
-    std::cerr << "rounds: " << rounds << "\n";
 
-    UIGrid* grid = new UIGrid(0, -5,
-        20.f * aspect, 5.f, // width and height
+    float padding = 0.2f;
+    float round_height = 2.f;
+    float round_width = (20.f * aspect - (rounds + 1) * padding) / rounds;
+    
+    UIRectangle* round_seg = new UIRectangle(0, 0,
+        round_width, round_height, // width and height
+        Color::CYAN, 0.8f);
+
+    UIGrid* grid = new UIGrid(0, -round_height,
+        20.f * aspect, round_height, // width and height
         rounds, rounds,
-        3, 3,
-        Color::PURPLE,
-        0.75f,
-        0); /* ,
-        float inter_padding = 0.75f,
-        float selection_halo_padding = 0.3f, // hardcoded defaults :(
-        float grid_bg_alpha = 1.f)*/
+        round_width, round_height,
+        Color::BLACK,
+        padding,
+        0);
+
+    for (int i = 0; i < rounds; ++i)
+        grid->attach_at(0, i, *round_seg);
+
     attach(*grid);
     disable();
 
