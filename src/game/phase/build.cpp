@@ -177,7 +177,8 @@ void BuildPhase::c_setup() {
     });
 
     // Play music
-    events::music_event(events::AudioData{ AudioManager::BUILD_MUSIC, 30, true });
+    events::AudioData d{ AudioManager::BUILD_MUSIC, 30, true };
+    events::music_event(d);
 
     // Resets game objects on client side
     for (auto & kv : GameObject::game_objects) {

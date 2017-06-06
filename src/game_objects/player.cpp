@@ -90,7 +90,8 @@ void Player::c_update_state(glm::mat4 mat, bool enab) {
     }
     else {
         if (anim_player.check_paused()) {
-            events::sound_effects_event(events::AudioData{ AudioManager::FOOTSTEPS_SOUND, 100, true });
+            events::AudioData d{ AudioManager::FOOTSTEPS_SOUND, 100, true };
+            events::sound_effects_event(d);
 
             anim_player.play();
         }
