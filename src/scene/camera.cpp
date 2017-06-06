@@ -4,6 +4,7 @@
 #include "timer.h"
 
 const float PAN_SPEED = 0.1f;
+#define ANIMATION_STEP_MS 30
 
 Camera::Camera(glm::vec3 default_pos,
                          glm::vec3 default_front,
@@ -78,7 +79,7 @@ void Camera::setup_listeners() {
         recalculate();
     });
 
-    events::camera_anim_position_event.connect([&](glm::vec3 pos, int time) {
+    events::camera_anim_position_event.connect([&](glm::vec3 pos, int time, std::function<void()> do_after) {
         // Calculate position step needed to achieve end goal in alloted time
         float dist = glm::distance(cam_pos, pos);
         float pos_step = dist / time;
@@ -87,32 +88,34 @@ void Camera::setup_listeners() {
         glm::vec3 direction = pos - cam_pos;
         direction = glm::normalize(direction);
         glm::vec3 to_move = direction * pos_step;
-        to_move *= 30.0f;
+        to_move *= ANIMATION_STEP_MS;
 
         std::function<void()> end_animation;
 
-        end_animation = Timer::get()->do_every(std::chrono::milliseconds(30), [&, to_move, pos]() {
+        end_animation = Timer::get()->do_every(std::chrono::milliseconds(ANIMATION_STEP_MS), [&, to_move, pos]() {
             displace_cam_clamp(to_move, pos);
         });
 
-        Timer::get()->do_after(std::chrono::milliseconds(time), [&, end_animation]() {
+        Timer::get()->do_after(std::chrono::milliseconds(time), [&, end_animation, do_after]() {
             end_animation();
+            do_after();
         });
     });
 
-    events::camera_anim_rotate_event.connect([&](glm::vec3 axis, float angle, int time) {
+    events::camera_anim_rotate_event.connect([&](glm::vec3 axis, float angle, int time, std::function<void()> do_after) {
         // Calculate angle step needed to achieve end goal in alloted time
         float angle_step = angle / time;
-        angle_step *= 30;
+        angle_step *= ANIMATION_STEP_MS;
 
         std::function<void()> end_animation;
 
-        end_animation = Timer::get()->do_every(std::chrono::milliseconds(30), [&, angle_step, axis]() {
+        end_animation = Timer::get()->do_every(std::chrono::milliseconds(ANIMATION_STEP_MS), [&, angle_step, axis]() {
             rotate_cam(axis, angle_step);
         });
 
-        Timer::get()->do_after(std::chrono::milliseconds(time), [&, end_animation]() {
+        Timer::get()->do_after(std::chrono::milliseconds(time), [&, end_animation, do_after]() {
             end_animation();
+            do_after();
         });
     });
 }

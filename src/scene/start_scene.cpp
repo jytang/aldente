@@ -34,11 +34,22 @@ void StartScene::c_setup() {
         obj->setup_model();
     }
 
-    info.camera.cam_pos = glm::vec3(3.f, 0, 6.f);
+    info.camera.cam_pos = glm::vec3(3.f, 0, 50.f);
+    info.camera.cam_front = glm::vec3(0.f, 0.f, 1.f);
     info.camera.recalculate();
 
     // Setup lights.
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
         Color::WHITE, 0.5f);
     add_light(sun);
+
+    // Main menu ui should show.
+    events::ui::enable_main_menu();
+
+    // Transition camera when main menu is done.
+    events::ui::disable_main_menu.connect([&]() {
+        events::camera_anim_rotate_event(glm::vec3(0, 1, 0), 190, 1500, [](){
+            events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){});
+        });
+    });
 }

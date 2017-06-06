@@ -104,8 +104,8 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     break;
                 case GLFW_KEY_4:
                     // Camera animation debug. Feel free to remove if needed
-                    events::camera_anim_position_event(glm::vec3(1, 0.5f, 0), 2000);
-                    events::camera_anim_rotate_event(glm::vec3(0, 0, 1), 720, 2000);
+                    events::camera_anim_position_event(glm::vec3(1, 0.5f, 0), 2000, [](){});
+                    events::camera_anim_rotate_event(glm::vec3(0, 0, 1), 720, 2000, [](){});
                     break;
 
                 // Ethan's testing stuff

@@ -156,8 +156,8 @@ namespace events {
     * Axis: The axis of rotation
     * Time: Amount of time the transition should take (milliseconds)
     */
-    extern signal<void(glm::vec3 position, int time)> camera_anim_position_event;
-    extern signal<void(glm::vec3 axis, float angle, int time)> camera_anim_rotate_event;
+    extern signal<void(glm::vec3 position, int time, std::function<void()> do_after)> camera_anim_position_event;
+    extern signal<void(glm::vec3 axis, float angle, int time, std::function<void()> do_after)> camera_anim_rotate_event;
 
     namespace server {
         extern signal<void(proto::ServerMessage &)> announce;
