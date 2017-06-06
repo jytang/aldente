@@ -95,9 +95,7 @@ void Mimic::c_to_chest() {
 void Mimic::c_to_mimic() {
     Model *model = AssetLoader::get_model("mimic");
     attach_model(model);
-
-    // Grows a bit bigger as a mimic
-    set_scale({ 0.0062f, 0.0062f, 0.0062f });
+    set_scale({ 0.006f, 0.006f, 0.006f });
 
     anim_player.set_anim("walk", 3.0f, true);
     anim_player.play();
