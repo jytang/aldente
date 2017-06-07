@@ -201,8 +201,8 @@ namespace events {
         // Display scoreboard with vector of <model_name, gold, gold_delta>
         extern signal<void(const std::vector<std::tuple<std::string, int, int>> &)> scoreboard_sequence;
         extern signal<void()> disable_scoreboard;
-        extern signal<void(float, std::function<void()>)> transition_wipe;
-        extern signal<void(float, std::function<void()>)> transition_fade;
+        extern signal<void(float, std::string, std::function<void()>)> transition_wipe;
+        extern signal<void(float, std::string, std::function<void()>)> transition_fade;
         extern signal<void()> enable_main_menu;
         extern signal<void()> disable_main_menu;
 

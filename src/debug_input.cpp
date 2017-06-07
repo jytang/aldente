@@ -56,10 +56,10 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                     events::toggle_mute_event();
                     break;
                 case GLFW_KEY_F1:
-                    events::ui::transition_wipe(1.f, [](){});
+                    events::ui::transition_wipe(1.f, "TO BE CONTINUED", [](){});
                     break;
                 case GLFW_KEY_F2:
-                    events::ui::transition_fade(1.f, [](){});
+                    events::ui::transition_fade(1.f, "TO BE CONTINUED", [](){});
                     break;
                 case GLFW_KEY_F3:
                     events::ui::scoreboard_sequence(

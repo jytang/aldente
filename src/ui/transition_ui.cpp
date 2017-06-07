@@ -32,16 +32,16 @@ TransitionUI::TransitionUI(float aspect) :
     container.attach(tbc);
     container.attach(title);
 
-    title.set_text("MINIGAME PHASE");
-
-    events::ui::transition_wipe.connect([&](float seconds, std::function<void()> do_apex) {
+    events::ui::transition_wipe.connect([&](float seconds, std::string s, std::function<void()> do_apex) {
+        title.set_text(s);
         wipe(seconds,
              Color::BLACK,
-             static_cast<Direction>((rand() % 4)),
+             Direction::RIGHT,
              do_apex);
     });
 
-    events::ui::transition_fade.connect([&](float seconds, std::function<void()> do_apex) {
+    events::ui::transition_fade.connect([&](float seconds, std::string s, std::function<void()> do_apex) {
+        title.set_text(s);
         fade(seconds,
              Color::BLACK,
              do_apex);

@@ -5,6 +5,10 @@
 
 bool BuildPhase::is_menu = true;
 
+std::string BuildPhase::to_string() {
+    return "BUILD PHASE";
+}
+
 void BuildPhase::s_setup() {
     GameState::set_scene(&GameState::main_scene);
 

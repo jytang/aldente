@@ -12,6 +12,7 @@ public:
     proto::Phase s_update();
     void c_setup() override;
     void c_teardown() override;
+    std::string to_string() override;
 private:
     static bool is_menu;
     boost::signals2::connection joystick_conn;

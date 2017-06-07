@@ -1,6 +1,10 @@
 #include <game/game_state.h>
 #include "minigame_phase.h"
 
+std::string MinigamePhase::to_string() {
+    return "MINIGAME PHASE";
+}
+
 MinigamePhase::MinigamePhase(Context& context) : TimedPhase(context) {
     minigames = {
         new PenguinMG(context)

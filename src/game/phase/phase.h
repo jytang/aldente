@@ -12,6 +12,7 @@ public:
     virtual void c_setup() = 0;
     virtual void c_update() {};
     virtual void c_teardown() = 0;
+    virtual std::string to_string() = 0;
 protected:
     Context& context;
 

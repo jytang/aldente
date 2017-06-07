@@ -6,6 +6,10 @@
 #include "game_objects/traps/mobile_trap.h"
 #include "audio/audio_manager.h"
 
+std::string DungeonPhase::to_string() {
+    return "DUNGEON PHASE";
+}
+
 void DungeonPhase::s_setup() {
     transition_after(60, proto::Phase::MINIGAME);
 

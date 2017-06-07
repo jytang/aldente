@@ -13,7 +13,7 @@ public:
     void c_setup() override;
     void c_update() override;
     void c_teardown() override;
-
+    std::string to_string() override;
 private:
     boost::signals2::connection joystick_conn;
     boost::signals2::connection button_conn;
