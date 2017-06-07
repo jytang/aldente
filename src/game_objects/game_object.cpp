@@ -192,6 +192,11 @@ void GameObject::sync_position() {
     transform.set_position(util_bt::convert_vec3(to_set));
 }
 
+void GameObject::reset_to_initial_transform() {
+    transform = initial_transform;
+    set_rb_transform();
+}
+
 void GameObject::set_ghost(bool b) {
     if (!rigidbody)
         return;

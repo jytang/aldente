@@ -114,6 +114,9 @@ public:
     // Updates Transform using Rigid Body's Position
     void sync_position();
 
+    // Resets transform to use Initial Transform
+    void reset_to_initial_transform();
+
     void set_ghost(bool b);
     
     void disable();
