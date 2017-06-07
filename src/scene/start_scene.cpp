@@ -50,30 +50,7 @@ void StartScene::c_setup() {
     events::ui::disable_main_menu.connect([&]() {
         menu_enabled = false;
         events::camera_anim_rotate_event(glm::vec3(0, 1, 0), 180, 1500, [&](){
-            // If we're connected already, focus camera to player.
-            if (client_player)
-                zoom_to_client_player(client_player);
-            else
-                events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){});
+            events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){});
         });
     });
-
-    // Zoom camera out to see all beds if player readied up.
-    events::player_ready_event.connect([&](int player_id) {
-        Player* player = dynamic_cast<Player*>(GameObject::game_objects[player_id]);
-        if (client_player && client_player == player) {
-            events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, []() {});
-        }
-    });
-}
-
-void StartScene::zoom_to_client_player(Player* player) {
-    if (menu_enabled) {
-        client_player = player;
-        return;
-    }
-
-    auto player_pos = client_player->transform.get_position();
-    player_pos.z += 4;
-    events::camera_anim_position_event(player_pos, 1500, []() {});
 }

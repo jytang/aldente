@@ -13,13 +13,10 @@ like the logo screen and character selection.
 class StartScene : public Scene {
 private:
     std::vector<GameObject*> platforms;
-    Player* client_player;
-    bool menu_enabled;
 public:
     StartScene();
     void s_update() override;
     void c_update() override;
     void s_setup() override;
     void c_setup() override;
-    void zoom_to_client_player(Player*);
 };
