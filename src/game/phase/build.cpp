@@ -10,7 +10,8 @@ void BuildPhase::s_setup() {
 
     transition_after(60, proto::Phase::DUNGEON);
     ready_conn = events::player_ready_event.connect([&](int player_id) {
-        context.ready_flags[player_id] = true;
+        // Ready up if not previously ready. Otherwise un-ready up.
+        context.ready_flags[player_id] = !context.ready_flags[player_id];
     });
 
     s_verify_and_build_conn = events::build::s_verify_and_build.connect([&](proto::Construct& c) {
