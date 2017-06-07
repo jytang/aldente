@@ -1,7 +1,9 @@
 #include "render.h"
 
 Render::Render(Window &window, SceneManager &scene_manager)
-    : window(window), scene_manager(scene_manager) {}
+    : window(window), scene_manager(scene_manager) {
+    bt_debug = new btDebug();
+}
 
 // Render pipeline
 // Alternatively can acquire current scene via some ChangeScene event
@@ -18,6 +20,9 @@ void Render::update() {
 
     curr_scene->draw_skybox(); // Skybox rendered last for optimization
     curr_scene->draw();
+
+    // Draws rigidbody in physics world
+    bt_debug->draw();
 
     // Apply HDR. Render as a quad.
     hdr.render(curr_scene);

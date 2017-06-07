@@ -11,10 +11,10 @@
 class btDebug : public btIDebugDraw {
 public:
 
-    btDebug(Physics *physics);
+    btDebug();
 
     void clear(); // Clears buffers
-    void draw(SceneInfo &scene_info);
+    void draw();
     void set_enable(bool b);
 
     /* Virtual functions from Bullet's Interface*/
@@ -29,8 +29,6 @@ private:
     bool enabled = false;
 
     int debug_mode;
-
-    Physics *physics;
 
     Material *mat;
     Geometry *geo;

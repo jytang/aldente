@@ -21,7 +21,6 @@
 #include "net/network_manager.h"
 #include "shaders/shader_manager.h"
 #include "audio/audio_manager.h"
-#include "bt_debug.h"
 
 AldenteClient::~AldenteClient() {
     GeometryGenerator::destroy();
@@ -98,9 +97,6 @@ void AldenteClient::start() {
 
     Render render(window, GameState::scene_manager);
 
-    // Debug Drawer for Bullet
-    btDebug bt_debug(&GameState::physics);
-
     DebugInput debug_input(window, GameState::scene_manager, GameState::physics);
 
     // Have window fire off a resize event to update all interested systems.
@@ -131,7 +127,6 @@ void AldenteClient::start() {
         GameState::c_update();
 
         render.update();
-        bt_debug.draw(GameState::scene_manager.get_current_scene()->info);
         ui_manager.draw();
         window.swap_buffers();
     }
