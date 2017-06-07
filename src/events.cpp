@@ -41,7 +41,6 @@ namespace events {
     signal<void(int)> player_finished_event;
     signal<void(const proto::PlayerStats &)> c_player_stats_updated;
     signal<void(int)> player_ready_event;
-    signal<void(int)> round_changed_event;
 
     signal<void(glm::vec3 position, int time)> camera_anim_position_event;
     signal<void(glm::vec3 axis, float angle, int time)> camera_anim_rotate_event;
@@ -75,6 +74,7 @@ namespace events {
         signal<void(float, std::function<void()>)> transition_wipe;
         signal<void(float, std::function<void()>)> transition_fade;
         signal<void(const std::vector<std::string> &, const std::function<void()> &)> show_countdown;
+        signal<void(int)> round_changed_event;
     }
 
     namespace build {

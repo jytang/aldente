@@ -14,6 +14,7 @@
 #include "notification_ui.h"
 #include "transition_ui.h"
 #include "countdown_ui.h"
+#include "util/config.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -40,7 +41,9 @@ void UIManager::setup_uis() {
     ui_map["build"] = new BuildUI(3, 4, aspect, constructs);
 
     /* CLOCK UI */
-    ui_map["clock"] = new ClockUI(aspect);
+    int rounds;
+    Config::config->get_value(Config::str_num_rounds, rounds);
+    ui_map["clock"] = new ClockUI(aspect, rounds);
 
     /* GOLD UI */
     ui_map["gold"] = new GoldUI(aspect);

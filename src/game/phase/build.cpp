@@ -45,6 +45,9 @@ void BuildPhase::s_setup() {
     for (auto & kv : GameObject::game_objects) {
         kv.second->s_reset();
     }
+
+    // Update the round counter. Starts at 0, so pre-increment.
+    ++context.current_round;
 }
 
 void BuildPhase::c_setup() {
@@ -185,6 +188,9 @@ void BuildPhase::c_setup() {
             kv.second->disable();
         kv.second->c_reset();
     }
+
+    // Updates the client-side round counter, and update the UI.
+    events::ui::round_changed_event(++context.current_round);
 }
 
 proto::Phase BuildPhase::s_update() {
