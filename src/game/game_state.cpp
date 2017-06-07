@@ -188,6 +188,7 @@ Player* GameState::c_add_player(int obj_id, int model_index, bool is_client) {
     if (is_client) {
         context.player_id = obj_id;
         context.client_player = player;
+        start_scene.zoom_to_client_player(player);
     }
 
     return player;
