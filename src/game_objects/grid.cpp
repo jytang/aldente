@@ -14,8 +14,13 @@
 
 #include <fstream>
 
-#define FLOOR_TILE 3
+#define FLOOR_TILE 0
+#define EMPTY_TILE 3
 #define WALL_TILE 5
+#define BIG_ROCK 6
+#define SMALL_ROCK 7
+#define GRASS 8
+#define WOOD 9
 
 #define PADDING 20 // Padding along side of dungeon for grass and trees
 
@@ -285,12 +290,31 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
 
     Tile *new_tile = nullptr;
 
+    int rand_id;
+
     switch (tile_id) {
     case FLOOR_TILE:
         new_tile = new FloorTile(x, z);
         break;
     case WALL_TILE:
         new_tile = new TreeTile(x, z);
+        break;
+    case EMPTY_TILE:
+        // Random environment tile
+        rand_id = (int) Util::random(0, 9.999f);
+        if (rand_id == BIG_ROCK)
+            new_tile = new BigRockTile(x, z);
+        else if (rand_id == SMALL_ROCK)
+            new_tile = new SmallRockTile(x, z);
+        else if (rand_id == GRASS)
+            new_tile = new GrassTile(x, z);
+        else if (rand_id == WOOD)
+            new_tile = new WoodTile(x, z);
+        else {
+            new_tile = new EmptyTile(x, z);
+            return new_tile; // Don't need to save tile
+        }
+        tile_id = rand_id;
         break;
     default:
         break;

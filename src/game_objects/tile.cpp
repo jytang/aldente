@@ -42,6 +42,24 @@ EmptyTile::EmptyTile(int x, int z) : Tile::Tile() {
     set_position({ x, 0.0f, z });
 }
 
+// Sets up a model if designated by an environment object
+void EmptyTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix) {
+
+    if (model_name.empty())
+        return;
+
+    attach_model(AssetLoader::get_model(model_name));
+
+    transform.set_scale({ 0.005f, 0.005f, 0.005f });
+
+    for (Mesh *mesh : model->meshes) {
+        // Set's the mesh's location relative to the model
+        mesh->geometry->set_num_instances((num_instances));
+        mesh->geometry->populate_buffers();
+        mesh->geometry->bind_instance_matrix(instance_matrix); // pass instance matrix to bind to buffer
+    }
+}
+
 TreeTile::TreeTile(int x, int z) : Tile::Tile() {
     this->x = x;
     this->z = z;
@@ -53,12 +71,12 @@ TreeTile::TreeTile(int x, int z) : Tile::Tile() {
     rigid.shape = hit_box;
     events::add_rigidbody_event(rigid);
     set_position({ x, 0.5f, z });
-
-    transform.set_scale({0.005f, 0.005f, 0.005f});
 }
 
 void TreeTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
     attach_model(AssetLoader::get_model("tree"));
+
+    transform.set_scale({ 0.005f, 0.005f, 0.005f });
 
     for (Mesh *mesh : model->meshes) {
         // Set's the mesh's location relative to the model

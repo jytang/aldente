@@ -17,6 +17,8 @@
 #include "construct.h"
 #include "events.h"
 
+#include <string>
+
 class Tile : public GameObject {
 protected:
     int x, z;
@@ -24,8 +26,6 @@ protected:
     Construct *construct;
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
     btBoxShape *hit_plane = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
-private:
-
 public:
     Tile();
 
@@ -47,7 +47,6 @@ public:
 
 // Grass Tile
 class FloorTile : public Tile {
-
 public:
     FloorTile(int x, int z);
 
@@ -57,20 +56,42 @@ public:
 
 // Tile that contains no model, only used to hold tile information
 class EmptyTile : public Tile {
-
+protected:
+    std::string model_name;
 public:
     EmptyTile(int x, int z);
 
     void setup_instanced_model(int num_instances,
-        std::vector<glm::mat4> instance_matrix) override {};
+        std::vector<glm::mat4> instance_matrix) override;
 };
 
 // Tree Tile, replacing the old Wall Tile
 class TreeTile : public Tile {
-
 public:
     TreeTile(int x, int z);
 
     void setup_instanced_model(int num_instances,
                                std::vector<glm::mat4> instance_matrix) override;
+};
+
+/***** Environment Objects *****/
+
+class BigRockTile : public EmptyTile {
+public:
+    BigRockTile(int x, int z) : EmptyTile(x, z) { model_name = "rock_big"; };
+};
+
+class SmallRockTile : public EmptyTile {
+public:
+    SmallRockTile(int x, int z) : EmptyTile(x, z) { model_name = "rock_small"; };
+};
+
+class GrassTile : public EmptyTile {
+public:
+    GrassTile(int x, int z) : EmptyTile(x, z) { model_name = "grass"; };
+};
+
+class WoodTile : public EmptyTile {
+public:
+    WoodTile(int x, int z) : EmptyTile(x, z) { model_name = "wood"; };
 };
