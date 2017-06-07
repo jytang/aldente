@@ -16,7 +16,7 @@
 
 #define FLOOR_TILE 0
 #define EMPTY_TILE 3
-#define WALL_TILE 5
+#define TREE_TILE 5
 #define BIG_ROCK 6
 #define SMALL_ROCK 7
 #define GRASS 8
@@ -295,12 +295,12 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
     case FLOOR_TILE:
         new_tile = new FloorTile(x, z);
         break;
-    case WALL_TILE:
+    case TREE_TILE:
         new_tile = new TreeTile(x, z);
         break;
     case EMPTY_TILE:
         // Random environment tile
-        rand_id = (int) Util::random(0, 10);
+        rand_id = (int) Util::random(0, 20);
         if (rand_id == BIG_ROCK)
             new_tile = new BigRockTile(x, z);
         else if (rand_id == SMALL_ROCK)
@@ -340,14 +340,12 @@ void Grid::fill_trees() {
 
     // Adds tre tiles to outer areas of grid
     for (int r = -padding; r < height + padding; r++) {
-        if (r >= 0 || r < height)
-            continue;
-
         for (int c = -padding; c < width + padding; c++) {
-            if (c >= 0 || c < width)
+            if (r >= 0 && r < height && c >= 0 && c < width)
                 continue;
 
-            Tile *new_tile = make_tile(WALL_TILE, c, r);
+            Tile *new_tile = new EmptyTreeTile(c, r);
+            tile_types[TREE_TILE].push_back(new_tile);
         }
     }
 }

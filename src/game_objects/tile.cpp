@@ -41,7 +41,7 @@ EmptyTile::EmptyTile(int x, int z) : Tile::Tile() {
     traversable = true;
     set_position({ x, 0.0f, z });
 
-    transform.set_scale({ 0.005f, 0.005f, 0.005f });
+    transform.set_scale({ 0.004f, 0.005f, 0.004f });
 }
 
 // Sets up a model if designated by an environment object
@@ -72,7 +72,7 @@ TreeTile::TreeTile(int x, int z) : Tile::Tile() {
     events::add_rigidbody_event(rigid);
     set_position({ x, 0.0f, z });
 
-    transform.set_scale({ 0.005f, 0.005f, 0.005f });
+    transform.set_scale({ 0.004f, 0.005f, 0.004f });
 }
 
 void TreeTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){

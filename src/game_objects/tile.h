@@ -24,7 +24,7 @@ protected:
     int x, z;
 
     Construct *construct;
-    btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 0.5f, 0.5f));
+    btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 1.0f, 0.5f));
     btBoxShape *hit_plane = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
 public:
     Tile();
@@ -89,4 +89,9 @@ public:
 class GrassTile : public EmptyTile {
 public:
     GrassTile(int x, int z) : EmptyTile(x, z) { model_name = "grass"; };
+};
+
+class EmptyTreeTile : public EmptyTile {
+public:
+    EmptyTreeTile(int x, int z) : EmptyTile(x, z) { model_name = "tree"; };
 };
