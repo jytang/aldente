@@ -63,7 +63,6 @@ void MainMenuUI::enable_animated() {
 
     // Recursively oscillate the opacity of press
     press_anim = [&](){
-        std::cerr << "test" << std::endl;
         press.animate_alpha(1.f, 0.5f, [&](){
             press.animate_alpha(0.f, 0.5f, [&](){
                 press_anim();
