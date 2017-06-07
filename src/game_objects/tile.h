@@ -90,8 +90,3 @@ class GrassTile : public EmptyTile {
 public:
     GrassTile(int x, int z) : EmptyTile(x, z) { model_name = "grass"; };
 };
-
-class WoodTile : public EmptyTile {
-public:
-    WoodTile(int x, int z) : EmptyTile(x, z) { model_name = "wood"; };
-};

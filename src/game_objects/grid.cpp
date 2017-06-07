@@ -20,7 +20,6 @@
 #define BIG_ROCK 6
 #define SMALL_ROCK 7
 #define GRASS 8
-#define WOOD 9
 
 #define PADDING 20 // Padding along side of dungeon for grass and trees
 
@@ -301,15 +300,13 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
         break;
     case EMPTY_TILE:
         // Random environment tile
-        rand_id = (int) Util::random(0, 9.999f);
+        rand_id = (int) Util::random(0, 10);
         if (rand_id == BIG_ROCK)
             new_tile = new BigRockTile(x, z);
         else if (rand_id == SMALL_ROCK)
             new_tile = new SmallRockTile(x, z);
         else if (rand_id == GRASS)
             new_tile = new GrassTile(x, z);
-        else if (rand_id == WOOD)
-            new_tile = new WoodTile(x, z);
         else {
             new_tile = new EmptyTile(x, z);
             return new_tile; // Don't need to save tile
