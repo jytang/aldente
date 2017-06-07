@@ -2,6 +2,8 @@
 
 #include "ui.h"
 #include "ui_rectangle.h"
+#include "ui_container.h"
+#include "ui_unstretched_text_box.h"
 #include "ui_image_node.h"
 #include "game/direction.h"
 #include "util/color.h"
@@ -22,6 +24,9 @@ private:
 
     UIRectangle bg2;
     UIImageNode bg;
+    UIContainer container;
+    UIUnstretchedTextBox title;
+    UIImageNode tbc;
     float aspect;
     float initial_start_x, initial_start_y;
     static std::vector<Color> transition_colors;
