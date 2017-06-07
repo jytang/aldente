@@ -45,7 +45,7 @@ public:
     bool isBuildable() { return buildable; };
 };
 
-// Grass Tile
+// A textured plane that makes up the floor
 class FloorTile : public Tile {
 public:
     FloorTile(int x, int z);
@@ -65,7 +65,7 @@ public:
         std::vector<glm::mat4> instance_matrix) override;
 };
 
-// Tree Tile, replacing the old Wall Tile
+// Tree Tile, replacing the old Wall Tile. Has a rigid body.
 class TreeTile : public Tile {
 public:
     TreeTile(int x, int z);
@@ -74,7 +74,7 @@ public:
                                std::vector<glm::mat4> instance_matrix) override;
 };
 
-/***** Environment Objects *****/
+//Environment Objects - Objects on the grid just for decoration
 
 class BigRockTile : public EmptyTile {
 public:
@@ -91,6 +91,7 @@ public:
     GrassTile(int x, int z) : EmptyTile(x, z) { model_name = "grass"; };
 };
 
+// An empty tile with no rigid body, but contains a tree.
 class EmptyTreeTile : public EmptyTile {
 public:
     EmptyTreeTile(int x, int z) : EmptyTile(x, z) { model_name = "tree"; };
