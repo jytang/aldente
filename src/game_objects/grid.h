@@ -5,6 +5,12 @@
 *   which occupies that space (note that tiles can be more than a single coordinate big).
 *
 *   Also currently handles building constructs and adding them to the map.
+*
+*
+*   Note: This class is a mess, and the logic for being part of Server/Client for loading
+*       the grid isn't properly implemented. Currently all objects are loaded on both the
+*       the client and server, even when they aren't supposed to, in order to make sure that
+*       their Game IDs line up. 
 */
 
 #pragma once
@@ -33,6 +39,8 @@ private:
 
     // For loading and creating map
     void load_map(std::string map_loc);
+    void fill_grass(); // Fills the grid with grass
+    void fill_trees(); // Fills outside of map with trees
     Tile *make_tile(int tile_id, int col, int row);
 
 public:

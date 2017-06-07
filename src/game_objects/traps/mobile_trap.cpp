@@ -45,7 +45,7 @@ void MobileTrap::check_wall() {
     events::dungeon::request_raycast_event(
         transform.get_position(), transform.get_forward(), 0.6f,
         [&](GameObject *bt_hit) {
-        WallTile *wall = dynamic_cast<WallTile*>(bt_hit);
+        TreeTile *wall = dynamic_cast<TreeTile*>(bt_hit);
         if (wall) {
             change_direction();
         }

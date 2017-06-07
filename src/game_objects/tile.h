@@ -45,6 +45,7 @@ public:
     bool isBuildable() { return buildable; };
 };
 
+// Grass Tile
 class FloorTile : public Tile {
 
 public:
@@ -54,10 +55,21 @@ public:
                                std::vector<glm::mat4> instance_matrix) override;
 };
 
-class WallTile : public Tile {
+// Tile that contains no model, only used to hold tile information
+class EmptyTile : public Tile {
 
 public:
-    WallTile(int x, int z);
+    EmptyTile(int x, int z);
+
+    void setup_instanced_model(int num_instances,
+        std::vector<glm::mat4> instance_matrix) override {};
+};
+
+// Tree Tile, replacing the old Wall Tile
+class TreeTile : public Tile {
+
+public:
+    TreeTile(int x, int z);
 
     void setup_instanced_model(int num_instances,
                                std::vector<glm::mat4> instance_matrix) override;

@@ -34,7 +34,15 @@ void FloorTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> 
     model->add_mesh(mesh);
 }
 
-WallTile::WallTile(int x, int z) : Tile::Tile() {
+EmptyTile::EmptyTile(int x, int z) : Tile::Tile() {
+    this->x = x;
+    this->z = z;
+    buildable = true;
+    traversable = true;
+    set_position({ x, 0.0f, z });
+}
+
+TreeTile::TreeTile(int x, int z) : Tile::Tile() {
     this->x = x;
     this->z = z;
     buildable = false;
@@ -49,7 +57,7 @@ WallTile::WallTile(int x, int z) : Tile::Tile() {
     transform.set_scale({0.005f, 0.005f, 0.005f});
 }
 
-void WallTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
+void TreeTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> instance_matrix){
     attach_model(AssetLoader::get_model("tree"));
 
     for (Mesh *mesh : model->meshes) {

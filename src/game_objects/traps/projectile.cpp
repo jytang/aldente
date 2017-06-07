@@ -42,7 +42,7 @@ void Projectile::s_on_collision(GameObject *other) {
         }
     }
 
-    if (dynamic_cast<WallTile*>(other)) {
+    if (dynamic_cast<TreeTile*>(other)) {
         disable();
     }
 }

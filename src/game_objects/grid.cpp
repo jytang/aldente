@@ -17,6 +17,8 @@
 #define FLOOR_TILE 3
 #define WALL_TILE 5
 
+#define PADDING 20 // Padding along side of dungeon for grass and trees
+
 Grid::Grid(std::string map_loc) :
         hover(nullptr), hover_col(0), hover_row(0),
         width(0), height(0) {
@@ -27,6 +29,8 @@ Grid::Grid(std::string map_loc) :
     build_permissible = true;
 
     load_map(map_loc);
+    fill_grass();
+    fill_trees();
 
     // Default starting location
     hover = grid[0][0];
@@ -286,7 +290,7 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
         new_tile = new FloorTile(x, z);
         break;
     case WALL_TILE:
-        new_tile = new WallTile(x, z);
+        new_tile = new TreeTile(x, z);
         break;
     default:
         break;
@@ -296,6 +300,35 @@ Tile *Grid::make_tile(int tile_id, int x, int z) {
     tile_types[tile_id].push_back(new_tile);
 
     return new_tile;
+}
+
+void Grid::fill_grass() {
+
+    const int padding = PADDING;
+
+    // Adds grass tiles to entire grid with padding on the sides
+    for (int r = -padding; r < height + padding; r++) {
+        for (int c = -padding; c < width + padding; c++) {
+            Tile *new_tile = make_tile(FLOOR_TILE, c, r);
+        }
+    }
+}
+
+void Grid::fill_trees() {
+    const int padding = PADDING;
+
+    // Adds tre tiles to outer areas of grid
+    for (int r = -padding; r < height + padding; r++) {
+        if (r >= 0 || r < height)
+            continue;
+
+        for (int c = -padding; c < width + padding; c++) {
+            if (c >= 0 || c < width)
+                continue;
+
+            Tile *new_tile = make_tile(WALL_TILE, c, r);
+        }
+    }
 }
 
 void Grid::setup_model() {
