@@ -69,7 +69,7 @@ void MobileTrap::setup_timer(long long time_interval_ms) {
 // Resets direction and position
 void MobileTrap::s_reset() {
     transform = initial_transform;
-    set_rb_position(initial_transform.get_position());
+    set_rb_transform();
 }
 
 // Resets rotations and position

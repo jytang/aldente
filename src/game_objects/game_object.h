@@ -109,7 +109,7 @@ public:
     void set_scale(glm::vec3 scale);
 
     // Sets only rigidbody's position
-    void set_rb_position(glm::vec3 pos);
+    void set_rb_transform();
 
     // Updates Transform using Rigid Body's Position
     void sync_position();

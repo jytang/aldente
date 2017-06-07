@@ -160,7 +160,7 @@ void Player::set_start_position(glm::vec3 pos) {
 
 void Player::reset_position() {
     transform = initial_transform;
-    set_rb_position(initial_transform.get_position());
+    set_rb_transform();
     to_moveX = 0;
     to_moveZ = 0;
 }

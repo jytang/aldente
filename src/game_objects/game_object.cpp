@@ -95,6 +95,7 @@ void GameObject::c_update_state(glm::mat4 mat, bool enab) {
     enabled = enab;
     if (enabled) {
         transform.set_world_mat(mat);
+        set_rb_transform();
         transform.set_scale(initial_transform.get_scale());
     }
 }
@@ -153,7 +154,7 @@ void GameObject::set_shadows(bool enable) {
 void GameObject::set_position(glm::vec3 pos) {
     // Set for Transform
     transform.set_position(pos);
-    set_rb_position(pos);
+    set_rb_transform();
 }
 
 // Sets scale for both transform and initial transform, since
@@ -164,13 +165,14 @@ void GameObject::set_scale(glm::vec3 scale) {
     initial_transform.set_scale(scale);
 }
 
-void GameObject::set_rb_position(glm::vec3 pos) {
+void GameObject::set_rb_transform() {
     // Set for Rigid Body
     btTransform initialTransform;
+    initialTransform.setFromOpenGLMatrix(glm::value_ptr(transform.get_world_mat()));
 
     if (rigidbody) {
-        initialTransform.setOrigin(util_bt::convert_vec3(pos));
-        initialTransform.setRotation(btQuaternion::getIdentity());
+        //initialTransform.setOrigin(util_bt::convert_vec3(pos));
+        //initialTransform.setRotation(btQuaternion::getIdentity());
         rigidbody->setWorldTransform(initialTransform);
         rigidbody->getMotionState()->setWorldTransform(initialTransform);
     }
