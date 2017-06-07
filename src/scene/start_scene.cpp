@@ -3,7 +3,7 @@
 #include "events.h"
 #include "util/color.h"
 
-StartScene::StartScene() : Scene(), menu_enabled(true) {
+StartScene::StartScene() : Scene() {
 }
 
 void StartScene::s_update() {
@@ -48,7 +48,6 @@ void StartScene::c_setup() {
 
     // Transition camera when main menu is done.
     events::ui::disable_main_menu.connect([&]() {
-        menu_enabled = false;
         events::camera_anim_rotate_event(glm::vec3(0, 1, 0), 180, 1500, [&](){
             events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){});
         });
