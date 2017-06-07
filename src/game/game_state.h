@@ -32,6 +32,9 @@ public:
 
     static std::map<int, Player*> players;
 
+    // Map of avatar index to bool - true is occupied, false is free.
+    static std::map<int, bool> avatar_assignments;
+
     // Initializes the game state.
     static void setup(bool is_server);
 
@@ -50,6 +53,9 @@ public:
 
     // Changes the current scene.
     static void set_scene(Scene* scene);
+
+    // Returns the model index of the next avatar.
+    static int cycle_avatar(Player* player);
 
 private:
     static void set_phase(Phase* phase);

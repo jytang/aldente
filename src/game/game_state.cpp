@@ -8,6 +8,9 @@ MinigamePhase GameState::minigame_phase(context);
 
 Phase* GameState::curr_phase;
 std::map<int, Player*> GameState::players;
+std::map<int, bool> GameState::avatar_assignments = {
+    {0, false}, {1, false}, {2, false}, {3, false}
+};
 
 Physics GameState::physics;
 SceneManager GameState::scene_manager;
@@ -59,6 +62,7 @@ void GameState::setup(bool is_server) {
             }
 
             resp.set_model_index(player->c_get_model_index());
+            avatar_assignments[player->c_get_model_index()] = true;
             events::menu::respond_join_event(conn_id, resp);
         });
     }
@@ -192,3 +196,21 @@ Player* GameState::c_add_player(int obj_id, int model_index, bool is_client) {
 
     return player;
 }
+
+int GameState::cycle_avatar(Player* player) {
+    int old = player->c_get_model_index();
+    
+    for (int i = 0; i < 4; i++) {
+        int current = (old + i) % 4;
+        // This avatar is currently not in use. Assign to player.
+        if (!avatar_assignments[current]) {
+            avatar_assignments[old] = false;
+            avatar_assignments[current] = true;
+            return current;
+        }
+    }
+
+    // No change in avatar, since all are taken.
+    return old;
+}
+
