@@ -4,6 +4,7 @@
 #include "game/phase/phase.h"
 #include "util/color.h"
 #include "util/path_finding.h"
+#include "util/util.h"
 
 #include "game_objects/traps/spikes.h"
 #include "game_objects/traps/slime.h"
@@ -21,7 +22,7 @@
 #define SMALL_ROCK 7
 #define GRASS 8
 
-#define PADDING 20 // Padding along side of dungeon for grass and trees
+#define PADDING 15 // Padding along side of dungeon for grass and trees
 
 Grid::Grid(std::string map_loc) :
         hover(nullptr), hover_col(0), hover_row(0),
@@ -338,10 +339,13 @@ void Grid::fill_grass() {
 void Grid::fill_trees() {
     const int padding = PADDING;
 
-    // Adds tre tiles to outer areas of grid
+    // Adds tree tiles to outer areas of grid
     for (int r = -padding; r < height + padding; r++) {
         for (int c = -padding; c < width + padding; c++) {
             if (r >= 0 && r < height && c >= 0 && c < width)
+                continue;
+            // 25% tree population
+            if (static_cast<int>(Util::random(0.f, 4.f)))
                 continue;
 
             Tile *new_tile = new EmptyTreeTile(c, r);
