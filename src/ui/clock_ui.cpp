@@ -10,14 +10,14 @@ ClockUI::ClockUI(float aspect, int rounds)
                 0.f, 0.f, // starting coordinates
                 20.f * aspect, 10.f, // width and height
                 Color::WHITE, Color::BLACK, // foreground and background
-                0.5f),
+                0.5f), // transparency
           round_count_bg(0, -2.f,
                 20.f * aspect, 2.f, // width and height
-                rounds, rounds,
-                (20.f * aspect - (rounds + 1) * 0.2f) / rounds, 2.f,
-                Color::BLACK,
-                0.2f,
-                0) { // transparency
+                rounds, rounds, // num rectangles = num rounds
+                (20.f * aspect - (rounds + 1) * 0.2f) / rounds, 2.f, // width and height
+                Color::BLACK, // background color
+                0.2f, // padding
+                0) { // no halo selector
 
     attach(clock);
 
@@ -25,10 +25,11 @@ ClockUI::ClockUI(float aspect, int rounds)
     float round_height = 2.f;
     float round_width = (20.f * aspect - (rounds + 1) * padding) / rounds;
 	
+    // Create a UI rectangle for each round. Will set color when that round is reached.
     for (int i = 0; i < rounds; ++i) {
-        UIRectangle* round_seg = new UIRectangle(0, padding,
+        UIRectangle* round_seg = new UIRectangle(0, padding, // start coordinates
             round_width, round_height - 2 * padding, // width and height
-            Color::CYAN, 0.2f);
+            Color::CYAN, 0.2f); // rectangle color and alpha
         round_count_bg.attach_at(0, i, *round_seg);
         round_counts.push_back(round_seg);
     }
@@ -45,7 +46,7 @@ ClockUI::ClockUI(float aspect, int rounds)
     });
 
     events::ui::round_changed_event.connect([&](int next_round) {
-        // If we go past the max number of rounds, just keep UI the same.
+        // If we go past the max number of rounds, no change to UI.
         if (next_round <= round_counts.size())
             round_counts[next_round - 1]->set_alpha(0.8f);
     });
