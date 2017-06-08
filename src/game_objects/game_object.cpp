@@ -20,6 +20,7 @@ GameObject::GameObject(int id) : id(id) {
         game_objects[this->id] = this;
     
     enabled = true;
+    use_rb_transform = false;
 }
 
 GameObject::~GameObject(){
@@ -168,11 +169,15 @@ void GameObject::set_scale(glm::vec3 scale) {
 void GameObject::set_rb_transform() {
     // Set for Rigid Body
     btTransform initialTransform;
-    initialTransform.setFromOpenGLMatrix(glm::value_ptr(transform.get_world_mat()));
+
+    if (use_rb_transform)
+        initialTransform.setFromOpenGLMatrix(glm::value_ptr(transform.get_world_mat()));
 
     if (rigidbody) {
-        //initialTransform.setOrigin(util_bt::convert_vec3(pos));
-        //initialTransform.setRotation(btQuaternion::getIdentity());
+        if (!use_rb_transform) {
+            initialTransform.setOrigin(util_bt::convert_vec3(transform.get_position()));
+            initialTransform.setRotation(btQuaternion::getIdentity());
+        }
         rigidbody->setWorldTransform(initialTransform);
         rigidbody->getMotionState()->setWorldTransform(initialTransform);
     }

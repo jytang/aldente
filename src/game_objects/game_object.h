@@ -35,6 +35,7 @@ protected:
 
     int id;
     bool enabled;
+    bool use_rb_transform;
 
     float height_offset;
 public:
