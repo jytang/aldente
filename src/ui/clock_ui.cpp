@@ -48,6 +48,7 @@ ClockUI::ClockUI(float aspect, int rounds)
     // Connect to some events
     events::menu::end_menu_event.connect([this]() { enable(); });
     events::build::end_build_event.connect([this]() { disable(); });
+    events::build::start_build_event.connect([this]() { enable(); });
     events::dungeon::c_start.connect([this]() { enable(); });
     events::ui::update_time.connect([this](int time) { set_time(time); });
 
