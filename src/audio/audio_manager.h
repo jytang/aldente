@@ -12,6 +12,7 @@ public:
     static const std::string DUNGEON_MUSIC;
 
     static const std::string BUILD_CONFIRM_SOUND;
+    static const std::string INVALID_BUZZ_SOUND;
     static const std::string ARROW_SWOOSH_SOUND;
     static const std::string DREAM_ESSENCE_SOUND;
     static const std::string PORTAL_BUZZ_SOUND;
