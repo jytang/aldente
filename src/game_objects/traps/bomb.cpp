@@ -45,11 +45,14 @@ void Bomb::c_on_collision(GameObject *other) {
 }
 
 void Bomb::s_reset() {
-
+    exploded = false;
+    enable();
 }
 
 void Bomb::c_reset() {
-
+    exploded = false;
+    model->reset_colors();
+    setup_model();
 }
 
 void Bomb::setup_model() {
