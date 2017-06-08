@@ -15,7 +15,10 @@ void SkyboxShader::init() {
 
     // List of skyboxes. Hard-coded for now.
     std::vector<std::string> skyboxes {
-            "cloud1", "fog", "space"
+            "cloud0", "cloud1",
+            "cloud2", "cloud3",
+            "cloud4",
+            "fog", "space"
     };
 
     // Name of each file, in ppm format. Hard-coded for now.
