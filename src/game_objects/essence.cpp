@@ -153,7 +153,7 @@ void Essence::pickup_anim() {
 void Essence::setup_timeout() {
     // Make essence disappear after a while.
     int time_out = ESSENCE_TIME_OUT + (int)Util::random(-1000, 1000); // Slightly diff time outs
-    Timer::get()->do_after(
+    cancel_timeout = Timer::get()->do_after(
         std::chrono::milliseconds(time_out),
         [&]() mutable {
         // Tells client to start disappearing animation. This is the easiest way to send animation commands to client atm.
@@ -170,4 +170,26 @@ void Essence::disable_after_disappear() {
         [&]() {
         disable();
     });
+}
+
+// Disables everything on object
+void Essence::s_reset() {
+    disable();
+    if (cancel_fade)
+        cancel_fade();
+    if (cancel_rainbow)
+        cancel_rainbow();
+    if (cancel_timeout)
+        cancel_timeout();
+}
+
+// Disables everything on object
+void Essence::c_reset() {
+    disable();
+    if (cancel_fade)
+        cancel_fade();
+    if (cancel_rainbow)
+        cancel_rainbow();
+    if (cancel_timeout)
+        cancel_timeout();
 }

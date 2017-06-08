@@ -18,6 +18,9 @@ public:
     void s_on_collision(GameObject *other) override;
     void c_on_collision(GameObject *other) override;
 
+    void s_reset() override;
+    void c_reset() override;
+
     void setup_model() override;
 
     void random_push();
@@ -29,6 +32,7 @@ private:
     std::unique_ptr<collectibles::Collectible> value;
 
     std::function<void()> cancel_fade;
+    std::function<void()> cancel_timeout;
     std::function<void()> cancel_rainbow; // Cancels the constant rainbow color changing
 
     bool disappearing;
