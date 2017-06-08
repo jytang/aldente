@@ -370,6 +370,14 @@ void Player::c_slow() {
     });
 }
 
+void Player::s_confuse() {
+
+}
+
+void Player::c_confuse() {
+
+}
+
 void Player::s_modify_stats(std::function<void(PlayerStats &)> modifier) {
     modifier(stats);
 

@@ -82,6 +82,10 @@ public:
     // Get Slowed
     void s_slow(); // Hit by slow trap. Get frozen, and then slowly regain movespeed
     void c_slow(); // Turn bluish to indicate frozen. Can later change to a UI effect
+    
+    // Get Confused
+    void s_confuse(); // Movement gets reversed
+    void c_confuse(); // Turns purple, with purple UI overlay
 
     // Used for checking if player has been hit and in the period of invulnerability, 
     // where they can't be hit by traps again.
