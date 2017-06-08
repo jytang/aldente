@@ -22,7 +22,7 @@
 #define SMALL_ROCK 7
 #define GRASS 8
 
-#define PADDING 15 // Padding along side of dungeon for grass and trees
+#define PADDING 20 // Padding along side of dungeon for grass and trees
 
 Grid::Grid(std::string map_loc) :
         hover(nullptr), hover_col(0), hover_row(0),
@@ -344,8 +344,8 @@ void Grid::fill_trees() {
         for (int c = -padding; c < width + padding; c++) {
             if (r >= 0 && r < height && c >= 0 && c < width)
                 continue;
-            // 25% tree population
-            if (static_cast<int>(Util::random(0.f, 4.f)))
+            // 20% tree population
+            if (static_cast<int>(Util::random(0.f, 5.f)))
                 continue;
 
             Tile *new_tile = new EmptyTreeTile(c, r);
