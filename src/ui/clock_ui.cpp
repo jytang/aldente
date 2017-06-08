@@ -18,7 +18,7 @@ ClockUI::ClockUI(float aspect, int rounds)
                 Color::BLACK, // background color
                 0.2f, // padding
                 0),  // no halo selector
-          ready(5.f, 5.f, 0.f, -20.f, 20.f * aspect, 10.f, 0.f,
+          ready(3.f, 3.f, 0.f, -14.f, 20.f * aspect, 10.f, 0.f,
                 UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::MIDDLE,
                 Color::BLACK, Color::BLACK, 1.f, false) {
 
@@ -39,7 +39,8 @@ ClockUI::ClockUI(float aspect, int rounds)
 
     attach(round_count_bg);
 
-    ready.set_text("READY!");
+    player_ready = false;
+    ready.set_text("");
     attach(ready);
 
     disable();
@@ -56,6 +57,19 @@ ClockUI::ClockUI(float aspect, int rounds)
         // If we go past the max number of rounds, no change to UI.
         if (next_round <= round_counts.size())
             round_counts[next_round - 1]->set_alpha(0.8f);
+    });
+
+    events::build::start_build_event.connect([&]() {
+        player_ready = false;
+        ready.set_text("");
+    });
+
+    events::build::toggle_ui_ready_event.connect([&]() {
+        player_ready != player_ready;
+        if (player_ready)
+            ready.set_text("READY!");
+        else
+            ready.set_text("");
     });
 }
 

@@ -279,6 +279,9 @@ namespace events {
 
         // Signals that the build phase has ended
         extern signal<void()> end_build_event;
+
+        // Updates the UI to indicate that the user has readied (or unreadied) up.
+        extern signal<void()> toggle_ui_ready_event;
     }
 
     namespace dungeon {

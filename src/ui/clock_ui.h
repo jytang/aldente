@@ -19,4 +19,5 @@ private:
     UIUnstretchedTextBox ready;
 
     std::vector<UIRectangle*> round_counts;
+    bool player_ready;
 };

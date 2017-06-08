@@ -97,6 +97,7 @@ namespace events {
         signal<void(int,int)> hover_position_updated_event;
         signal<void()> start_build_event;
         signal<void()> end_build_event;
+        signal<void()> toggle_ui_ready_event;
     }
 
     namespace dungeon {
