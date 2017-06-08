@@ -83,6 +83,8 @@ void SkyboxShader::draw(Mesh *mesh, SceneInfo &scene_info, glm::mat4 to_world) {
     // Send view and projection matrices
     set_uni("view", view);
     set_uni("projection", scene_info.camera.P);
+    glm::mat4 rot = glm::rotate(glm::mat4(1.f), glm::radians(67.f), glm::vec3(1.f, 0.3f, 0.8f));
+    set_uni("rot", rot);
 
     // Bind active texture.
     glActiveTexture(GL_TEXTURE0);
