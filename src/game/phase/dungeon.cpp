@@ -163,6 +163,7 @@ void DungeonPhase::s_teardown() {
 }
 
 void DungeonPhase::c_teardown() {
+    events::ui::disable_leaderboard(); // disable if it's being shown currently.
     joystick_conn.disconnect();
     button_conn.disconnect();
     essence_conn.disconnect();
