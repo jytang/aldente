@@ -12,6 +12,7 @@
 #define STUN_LENGTH 1000 // milliseconds
 #define INVULNERABLE_LENGTH 3000 // ms
 #define SLOW_LENGTH 3000
+#define CONFUSE_LENGTH 3000 // ms
 
 #define BASE_MOVE_SPEED 2.0f
 
@@ -370,8 +371,23 @@ void Player::c_slow() {
     });
 }
 
-void Player::s_confuse() {
+bool Player::s_confuse() {
+    // Cannot be confused twice
+    if (confused)
+        return false;
 
+    cancel_confuse();
+
+    // Movement direction gets reversed
+    move_speed = -move_speed;
+
+    // Returns back to normal in about 3 seconds
+    cancel_confuse = Timer::get()->do_after(std::chrono::milliseconds(CONFUSE_LENGTH),
+        [&] () {
+        move_speed = BASE_MOVE_SPEED;
+    });
+
+    return true;
 }
 
 void Player::c_confuse() {

@@ -3,7 +3,7 @@
 #include "trap.h"
 
 /*
-    A tile-based trap. Freezes the player, and then slowly regains their mvoespeeed
+    A tile-based trap. Confuses the player, reversing their movement
 */
 class ConfuseTrap : public Trap {
 public:
