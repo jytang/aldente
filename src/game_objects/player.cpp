@@ -376,6 +376,8 @@ bool Player::s_confuse() {
     if (confused)
         return false;
 
+    confused = true;
+
     cancel_confuse();
 
     // Movement direction gets reversed
@@ -385,13 +387,23 @@ bool Player::s_confuse() {
     cancel_confuse = Timer::get()->do_after(std::chrono::milliseconds(CONFUSE_LENGTH),
         [&] () {
         move_speed = BASE_MOVE_SPEED;
+        confused = false;
     });
 
     return true;
 }
 
 void Player::c_confuse() {
+    cancel_confuse();
 
+    // Tint player purple for a short period of time
+    model->reset_colors();
+    model->multiply_colors(Color(5.0f, 0.1f, 5.0f, false));
+
+    cancel_confuse = Timer::get()->do_after(std::chrono::milliseconds(CONFUSE_LENGTH),
+        [&] () {
+        model->reset_colors();
+    });
 }
 
 void Player::s_modify_stats(std::function<void(PlayerStats &)> modifier) {
