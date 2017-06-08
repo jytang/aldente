@@ -358,10 +358,11 @@ void ClientNetworkManager::update() {
                     }
                 }
 
-                if (obj_exists && GameObject::game_objects.find(obj.id()) != GameObject::game_objects.end()) {
-                    GameObject *go_pointer = GameObject::game_objects[obj.id()];
-                    if (go_pointer)
-                        go_pointer->c_update_state(world_mat, obj.enabled());
+                if (obj_exists) {
+                    auto &go_ptr = GameObject::game_objects.find(obj.id());
+                    if (go_ptr != GameObject::game_objects.end() && go_ptr->second) {
+                        go_ptr->second->c_update_state(world_mat, obj.enabled());
+                    }
                 }
 
             }
