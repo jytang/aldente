@@ -20,7 +20,7 @@ ClockUI::ClockUI(float aspect, int rounds)
                 0),  // no halo selector
           ready(3.f, 3.f, 0.f, -24.f, 20.f * aspect, 20.f, 0.f,
                 UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::START,
-                Color::BLACK, Color::BLACK, 1.f, false) {
+                Color::WHITE, Color::BLACK, 1.f, false) {
 
     attach(clock);
 
