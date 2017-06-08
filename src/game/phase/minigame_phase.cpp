@@ -24,7 +24,7 @@ void MinigamePhase::s_setup() {
     // For now, just choose first one
     curr_mg = minigames[0];
 
-    transition_after(curr_mg->get_time().count(), proto::Phase::BUILD);
+    transition_after(0, curr_mg->get_time().count(), proto::Phase::BUILD);
 
     curr_mg->s_setup();
     events::minigame::start_minigame_event();

@@ -101,6 +101,7 @@ namespace events {
     }
 
     namespace dungeon {
+        signal<void()> c_start;
         signal<void(glm::vec3, glm::vec3, float, std::function<void(GameObject *bt_hit)>)> request_raycast_event;
         signal<void(glm::vec3)> player_position_updated_event;
         signal<void()> s_prepare_dungeon_event;

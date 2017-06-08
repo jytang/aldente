@@ -283,6 +283,9 @@ namespace events {
     }
 
     namespace dungeon {
+        // Client dungeon phase start
+        extern signal<void()> c_start;
+
         // Player class asks physics for a raycast check
         extern signal<void(glm::vec3 pos, glm::vec3 dir, float dist, std::function<void(GameObject *bt_hit)>)> request_raycast_event;
 

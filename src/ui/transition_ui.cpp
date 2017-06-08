@@ -105,8 +105,9 @@ void TransitionUI::wipe(float seconds, Color c, Direction dir, std::function<voi
 
     // Animate to cover the screen.
     container.animate_to(initial_start_x, initial_start_y, seconds / 4.f, [&, do_apex, seconds, target_x, target_y]() {
-        do_apex();
-        Timer::get()->do_after(std::chrono::milliseconds((int) (seconds / 2.f * 1000)), [&, seconds, target_x, target_y]() {
+        Timer::get()->do_after(std::chrono::milliseconds((int) (seconds / 2.f * 1000)), [&, do_apex, seconds, target_x, target_y]() {
+            do_apex();
+
             // Complete animation to target position.
             container.animate_to(target_x, target_y, seconds / 4.f, [&]() {
                 // 3 nested lambdas.

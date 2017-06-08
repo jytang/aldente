@@ -37,13 +37,11 @@ ClockUI::ClockUI(float aspect, int rounds)
     attach(round_count_bg);
     disable();
 
-    events::menu::end_menu_event.connect([&]() {
-        enable();
-    });
-
-    events::ui::update_time.connect([&](int time) {
-        set_time(time);
-    });
+    // Connect to some events
+    events::menu::end_menu_event.connect([this]() { enable(); });
+    events::build::end_build_event.connect([this]() { disable(); });
+    events::dungeon::c_start.connect([this]() { enable(); });
+    events::ui::update_time.connect([this](int time) { set_time(time); });
 
     events::ui::round_changed_event.connect([&](int next_round) {
         // If we go past the max number of rounds, no change to UI.

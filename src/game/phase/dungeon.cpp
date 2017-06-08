@@ -11,7 +11,7 @@ std::string DungeonPhase::to_string() {
 }
 
 void DungeonPhase::s_setup() {
-    transition_after(60, proto::Phase::MINIGAME);
+    transition_after(6, 60, proto::Phase::MINIGAME); // Add for countdown
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int dispatcher, int other) {
         context.collisions.emplace(dispatcher, other);
@@ -52,58 +52,62 @@ void DungeonPhase::s_setup() {
 }
 
 void DungeonPhase::c_setup() {
-    context.player_finished = false;
-    joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](const events::StickData &d) {
-        // Left stick
-        if (d.input == events::STICK_LEFT) {
-            events::dungeon::network_player_move_event(d);
-        }
-    });
+    events::ui::show_countdown({"3", "2", "1", "GO!"}, [this]() {
+        events::dungeon::c_start();
 
-    button_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).buttons.connect([&](const events::ButtonData &d) {
-        // On release
-        if (d.state == 0) {
-            switch (d.input) {
-                case events::BTN_LB:
-                    events::ui::disable_leaderboard();
-                    break;
-                default:
-                    break;
+        context.player_finished = false;
+        joystick_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).sticks.connect([&](const events::StickData &d) {
+            // Left stick
+            if (d.input == events::STICK_LEFT) {
+                events::dungeon::network_player_move_event(d);
             }
-        } else {
-            switch (d.input) {
-                case events::BTN_A:
-                    // A button pressed.
-                    events::dungeon::player_interact_event();
-                    break;
-                case events::BTN_LB:
-                    // Enable leaderboard
-                    events::ui::enable_leaderboard();
-                    break;
-                default:
-                    break;
+        });
+
+        button_conn = input::ModalInput::get()->with_mode(input::ModalInput::NORMAL).buttons.connect([&](const events::ButtonData &d) {
+            // On release
+            if (d.state == 0) {
+                switch (d.input) {
+                    case events::BTN_LB:
+                        events::ui::disable_leaderboard();
+                        break;
+                    default:
+                        break;
+                }
+            } else {
+                switch (d.input) {
+                    case events::BTN_A:
+                        // A button pressed.
+                        events::dungeon::player_interact_event();
+                        break;
+                    case events::BTN_LB:
+                        // Enable leaderboard
+                        events::ui::enable_leaderboard();
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
-    });
+        });
 
-    player_finish_conn = events::player_finished_event.connect([&](int player_id) {
-        if (player_id == context.player_id) {
-            context.player_finished = true;
-            events::dungeon::post_dungeon_camera_event();
-        } else {
-            events::ui::show_notification("Someone reached the goal!");
-        }
-    });
+        player_finish_conn = events::player_finished_event.connect([&](int player_id) {
+            if (player_id == context.player_id) {
+                context.player_finished = true;
+                events::dungeon::post_dungeon_camera_event();
+            } else {
+                events::ui::show_notification("Someone reached the goal!");
+            }
+        });
 
-    essence_conn = events::dungeon::c_spawn_essence_event.connect([&](float x, float z, int id) {
-        Essence *ess = new Essence(id);
-        ess->set_position({ x, 0, z });
-        ess->setup_model();
-        GameState::scene_manager.get_current_scene()->objs.push_back(ess);
-    });
+        essence_conn = events::dungeon::c_spawn_essence_event.connect([&](float x, float z, int id) {
+            Essence *ess = new Essence(id);
+            ess->set_position({ x, 0, z });
+            ess->setup_model();
+            GameState::scene_manager.get_current_scene()->objs.push_back(ess);
+        });
 
-    // Play music
-    events::music_event(events::AudioData(AudioManager::DUNGEON_MUSIC, true));
+        // Play music
+        events::music_event(events::AudioData(AudioManager::DUNGEON_MUSIC, true));
+    });
 }
 
 proto::Phase DungeonPhase::s_update() {

@@ -29,7 +29,8 @@ public:
 protected:
     std::function<void()> cancel_clock_every;
     int remaining_seconds;
+    int remaining_countdown;
 
     // Use to set up timer to transition to next phase after specified time.
-    void transition_after(int seconds, proto::Phase to);
+    void transition_after(int countdown, int seconds, proto::Phase to);
 };
