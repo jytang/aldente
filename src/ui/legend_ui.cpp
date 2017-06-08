@@ -22,6 +22,13 @@ LegendUI::LegendUI(float aspect, float legend_width_, float entry_height_, float
     disable(); // Disable by default.
 
     // Show the build menu legends when relevant.
+    events::ui::show_legend.connect([this](const str_pair &legend) {
+        set_legend(legend);
+        enable();
+    });
+    events::ui::dismiss_legend.connect([this]() { disable(); });
+
+    // Legacy legend stuff.
     events::build::select_grid_return_event.connect([&]() {
         set_legend(BUILD_MENU_LEGEND);
         enable();
@@ -35,7 +42,7 @@ LegendUI::LegendUI(float aspect, float legend_width_, float entry_height_, float
     });
 }
 
-void LegendUI::set_legend(str_pair legend_spec) {
+void LegendUI::set_legend(const str_pair &legend_spec) {
     // Detach all previous legends
     for (auto &legend : legends)
         detach(*legend);

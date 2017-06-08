@@ -9,7 +9,7 @@ PenguinMG::PenguinMG(Context& to_set) : Minigame(to_set) {
     time = PENGUINMG_TIME;
     info = MinigameInfo {
         {
-            { "xboxControllerLeftThumbStick.png", "Move" },
+            { "xboxControllerLeftThumbstick.png", "Move" },
         }, // input legend
         std::string("Don't get pushed off!"), // Objective
     };

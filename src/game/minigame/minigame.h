@@ -34,6 +34,9 @@ public:
 
     // Get this minigame's scene
     virtual Scene* get_scene() { return scene; };
+
+    // Get the minigame info
+    const MinigameInfo &get_info() { return info; }
 protected:
     Scene *scene;
     std::chrono::seconds time;

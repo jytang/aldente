@@ -42,7 +42,13 @@ void MinigamePhase::c_setup() {
     curr_mg = minigames[0];
 
     curr_mg->c_setup();
-    events::ui::show_countdown({"3", "2", "1", "GO"}, []() {
+    // Show minigame info
+    events::ui::show_legend(curr_mg->get_info().input_legend);
+    Timer::get()->do_after(std::chrono::seconds(1), [this]() {
+        events::ui::show_notification(curr_mg->get_info().objective);
+    });
+
+    events::ui::show_countdown({"3", "2", "1", "GO"}, [this]() {
         input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
         events::minigame::start_minigame_event();
     });
@@ -82,6 +88,6 @@ void MinigamePhase::s_teardown() {
 
 void MinigamePhase::c_teardown() {
     curr_mg->c_teardown();
-
+    events::ui::dismiss_legend();
     events::minigame::end_minigame_event();
 }

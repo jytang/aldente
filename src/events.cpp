@@ -80,6 +80,8 @@ namespace events {
 
         signal<void(const std::vector<std::string> &, const std::function<void()> &)> show_countdown;
         signal<void(int)> round_changed_event;
+        signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_legend;
+        signal<void()> dismiss_legend;
     }
 
     namespace build {

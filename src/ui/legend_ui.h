@@ -15,5 +15,5 @@ private:
     float padding;
 
     // Takes [(button_texture, text), ...]
-    void set_legend(str_pair legend_spec);
+    void set_legend(const str_pair &legend_spec);
 };

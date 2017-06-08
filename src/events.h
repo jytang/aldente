@@ -222,6 +222,12 @@ namespace events {
         
         // Indicates that the current round (numerical) has changed; updates UI.
         extern signal<void(int)> round_changed_event;
+
+        // Sets and shows a legend
+        extern signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_legend;
+
+        // Dismisses legend
+        extern signal<void()> dismiss_legend;
     }
 
     namespace build {
