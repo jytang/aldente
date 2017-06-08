@@ -43,6 +43,8 @@ private:
     void fill_trees(); // Fills outside of map with trees
     Tile *make_tile(int tile_id, int col, int row);
 
+    int random_env_tile(); // Decides on a random environment tile
+
 public:
     Grid(std::string map_loc);
 
