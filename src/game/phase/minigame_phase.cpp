@@ -1,5 +1,6 @@
 #include <game/game_state.h>
 #include "minigame_phase.h"
+#include "input/modal_input.h"
 
 std::string MinigamePhase::to_string() {
     return "MINIGAME PHASE";
@@ -24,22 +25,32 @@ void MinigamePhase::s_setup() {
     // For now, just choose first one
     curr_mg = minigames[0];
 
-    transition_after(0, curr_mg->get_time().count(), proto::Phase::BUILD);
+    do_update = false;
+    transition_after(6, curr_mg->get_time().count(), proto::Phase::BUILD);
+    Timer::get()->do_after(std::chrono::seconds(6), [this]() {
+        do_update = true;
+    });
 
     curr_mg->s_setup();
     events::minigame::start_minigame_event();
 }
 
 void MinigamePhase::c_setup() {
+    input::ModalInput::get()->set_mode(input::ModalInput::DISABLE);
     // TODO: client needs to know what minigame was chosen!!
     // For now, choose first one
     curr_mg = minigames[0];
 
     curr_mg->c_setup();
-    events::minigame::start_minigame_event();
+    events::ui::show_countdown({"3", "2", "1", "GO!"}, []() {
+        input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
+        events::minigame::start_minigame_event();
+    });
 }
 
 proto::Phase MinigamePhase::s_update() {
+    if (!do_update) return proto::Phase::NOOP;
+
     GameState::physics.update();
 
     // Send the position and orientation of the specified game objects.

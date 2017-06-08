@@ -20,4 +20,5 @@ public:
 private:
     std::vector<Minigame*> minigames;
     Minigame* curr_mg;
+    bool do_update;
 };
