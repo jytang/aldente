@@ -3,6 +3,15 @@
 #include "events.h"
 #include "util/color.h"
 
+#define NUM_RAND_LIGHTS 10
+#define RAND_LIGHTS_PADDING 2
+
+std::vector<Color> MainScene::light_colors = {
+    Color::OCEAN_BLUE, Color::AUTUMN_ORANGE,
+    Color::OLIVE_GREEN, Color::PURPLE,
+    Color::BONE_WHITE, Color::INDIAN_RED
+};
+
 const std::string map_test = "assets/maps/dungeon_test.txt"; // 20x30 First map we had
 const std::string map_wtf = "assets/maps/dungeon_wtf.txt"; // 60x60 Very big one with random stuff
 const std::string map_1 = "assets/maps/dungeon_1.txt"; // 40x40, Starting in center with various ideas
@@ -45,6 +54,8 @@ void MainScene::c_setup() {
     DirectionalLight *sun = new DirectionalLight(glm::vec3(-0.3f, -1.f, -1.f),
                                                  Color::WHITE, 0.3f);
     add_light(sun);
+
+    add_random_lights();
 
     // Setup light debug callback.
     events::debug::toggle_light_rotation_event.connect([&](void) {
@@ -145,5 +156,35 @@ void MainScene::enable_scene() {
                 tile->enable();
             }
         }
+    }
+}
+
+void MainScene::add_random_lights() {
+    int light_x, light_z;
+
+    // Add NUM_RAND_LIGHTS lights.
+    for (int i = 0; i < NUM_RAND_LIGHTS; ++i) {
+        // Randomize within some padding outside the grid. Make sure tile is NOT buildable.
+        while (true) {
+            light_x = -RAND_LIGHTS_PADDING + rand() % (grid->get_width() + RAND_LIGHTS_PADDING * 2);
+            light_z = -RAND_LIGHTS_PADDING + rand() % (grid->get_height() + RAND_LIGHTS_PADDING * 2);
+
+            // Found a suitable location if either coordinate is outside of the grid
+            // or inside the grid and NOT buildable.
+            if (light_x < 0 || light_x >= grid->get_width() ||
+                light_z < 0 || light_z >= grid->get_height() ||
+                !grid->get_grid()[light_x][light_z]->isBuildable()) {
+                break;
+            }
+        }
+
+        // Add the light at (light_x, light_z).
+        PulsePointLight *p = new PulsePointLight({ light_x, Util::random(1.f, 2.5f), light_z },
+            light_colors[rand() % light_colors.size()], // color
+            0.f,
+            Util::random(0.2f, 0.3f), // max intensity
+            Util::random(0.003f, 0.006f), // pulse step
+            Util::random(0.1f, 0.3f)); // falloff
+        add_light(p);
     }
 }
