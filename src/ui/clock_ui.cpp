@@ -18,8 +18,8 @@ ClockUI::ClockUI(float aspect, int rounds)
                 Color::BLACK, // background color
                 0.2f, // padding
                 0),  // no halo selector
-          ready(3.f, 3.f, 0.f, -14.f, 20.f * aspect, 10.f, 0.f,
-                UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::MIDDLE,
+          ready(3.f, 3.f, 0.f, -24.f, 20.f * aspect, 20.f, 0.f,
+                UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::START,
                 Color::BLACK, Color::BLACK, 1.f, false) {
 
     attach(clock);
@@ -61,7 +61,7 @@ ClockUI::ClockUI(float aspect, int rounds)
 
     events::build::start_build_event.connect([&]() {
         player_ready = false;
-        ready.set_text("");
+        ready.set_text("PRESS START WHEN READY");
     });
 
     events::build::end_build_event.connect([&]() {
@@ -74,7 +74,7 @@ ClockUI::ClockUI(float aspect, int rounds)
         if (player_ready)
             ready.set_text("READY!");
         else
-            ready.set_text("");
+            ready.set_text("PRESS START WHEN READY");
     });
 }
 
