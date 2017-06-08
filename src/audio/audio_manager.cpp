@@ -23,7 +23,7 @@ const std::string AudioManager::ARROW_SWOOSH_SOUND = "assets/audio/sound/arrow_s
 const std::string AudioManager::DREAM_ESSENCE_SOUND = "assets/audio/sound/dream_essence.wav";
 const std::string AudioManager::PORTAL_BUZZ_SOUND = "assets/audio/sound/portal_buzz.wav";
 const std::string AudioManager::TAKE_DAMAGE_SOUND = "assets/audio/sound/take_damage.wav";
-const std::string AudioManager::INVALID_BUZZ_SOUND = "assets/audio/sound/invalid_buzz.wav";
+const std::string AudioManager::DIALOGUE_SOUND = "assets/audio/sound/dialogue.wav";
 const std::string AudioManager::SLIME_JUMP_SOUND = "assets/audio/sound/slime_jump.wav";
 const std::string AudioManager::DROP_FROM_SKY_SOUND = "assets/audio/sound/drop_from_sky.wav";
 const std::string AudioManager::SELECT1_SOUND = "assets/audio/sound/select1.wav";
@@ -79,7 +79,7 @@ AudioManager::AudioManager() : muted(true), max_music_volume(100.0), max_sound_e
         if (muted) return;
 
         // Debug comment
-        std::cerr << "Sound fx: Playing " << filename << " with loop " << d.loop << " and volume " << vol << " with distance " << d.distance << std::endl;
+        // std::cerr << "Sound fx: Playing " << filename << " with loop " << d.loop << " and volume " << vol << " with distance " << d.distance << std::endl;
 
         active_sounds[inactive_sound_index].play();
     });
