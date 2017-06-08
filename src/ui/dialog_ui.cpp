@@ -21,7 +21,9 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
     attach(portrait);
     attach(textbox);
 
-    events::ui::show_dialog.connect([&](const auto &sequence) {
+    events::ui::show_dialog.connect([&](const auto &sequence, const auto &do_after_) {
+        do_after = do_after_;
+
         // Start displaying text
         enable();
         current_dialog = sequence;
@@ -95,4 +97,5 @@ void DialogUI::stop_display() {
     button_conn.disconnect();
     input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
     disable();
+    do_after();
 }

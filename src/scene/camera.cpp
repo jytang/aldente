@@ -1,3 +1,4 @@
+#include <iostream>
 #include "camera.h"
 #include "scene/scene.h"
 #include "events.h"

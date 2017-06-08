@@ -5,6 +5,13 @@ MenuPhase GameState::menu_phase(context);
 BuildPhase GameState::build_phase(context);
 DungeonPhase GameState::dungeon_phase(context);
 MinigamePhase GameState::minigame_phase(context);
+DialoguePhase GameState::build_tutorial_phase(
+        context, proto::Phase::BUILD, "Build Tutorial",
+        {{"slime_red.png", "henlo"}}, &GameState::main_scene,
+        [](Camera &cam) {
+            cam.cam_pos = {0, 3, 0}; // Top left corner
+            cam.rotate_cam({0, 1, 0}, -(90 + 45)); // Face the grid
+        });
 
 Phase* GameState::curr_phase;
 std::map<int, Player*> GameState::players;
@@ -146,6 +153,15 @@ void GameState::set_phase(proto::Phase phase) {
         break;
     case proto::Phase::MINIGAME:
         GameState::set_phase(&GameState::minigame_phase);
+        break;
+    case proto::Phase::BUILD_TUTORIAL:
+        GameState::set_phase(&GameState::build_tutorial_phase);
+        break;
+    case proto::Phase::DUNGEON_TUTORIAL:
+        GameState::set_phase(&GameState::build_tutorial_phase);
+        break;
+    case proto::Phase::MINIGAME_TUTORIAL:
+        GameState::set_phase(&GameState::build_tutorial_phase);
         break;
     }
 

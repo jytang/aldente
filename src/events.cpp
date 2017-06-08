@@ -70,7 +70,7 @@ namespace events {
         signal<void(int, int, std::string)> leaderboard_update;
         signal<void(const std::vector<std::tuple<std::string, int, int>> &)> scoreboard_sequence;
         signal<void()> disable_scoreboard;
-        signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
+        signal<void(const std::vector<std::pair<std::string, std::string>> &, const std::function<void()> &)> show_dialog;
         signal<void(const std::string &)> show_notification;
         signal<void(float, std::string, std::function<void()>)> transition_wipe;
         signal<void(float, std::string, std::function<void()>)> transition_fade;
@@ -83,6 +83,10 @@ namespace events {
         signal<void(int)> round_changed_event;
         signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_legend;
         signal<void()> dismiss_legend;
+    }
+
+    namespace dialogue {
+        signal<void(int)> s_player_finished_dialogue;
     }
 
     namespace build {

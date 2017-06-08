@@ -15,14 +15,19 @@
 #include "phase/minigame_phase.h"
 #include <map>
 #include <unordered_set>
+#include <game/phase/dialogue.h>
 
 class GameState {
 public:
+    GameState() {}
+
     static Context context;
     static MenuPhase menu_phase;
     static BuildPhase build_phase;
     static DungeonPhase dungeon_phase;
     static MinigamePhase minigame_phase;
+
+    static DialoguePhase build_tutorial_phase;
 
     static Phase* curr_phase;
     static SceneManager scene_manager;

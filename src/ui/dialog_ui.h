@@ -24,6 +24,7 @@ private:
     std::string display, current, remaining;
     bool animating;
     std::function<void()> cancel_text_animation;
+    std::function<void()> do_after;
 
     // Helper functions
     void display_next();

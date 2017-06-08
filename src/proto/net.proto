@@ -26,6 +26,7 @@ message ClientMessage {
     int32 interact_request = 6;
     int32 ready_request = 7;
     AvatarChange change_avatar_request = 8;
+    int32 player_finished_dialogue = 10;
   }
 }
 
@@ -110,6 +111,9 @@ enum Phase {
   BUILD = 1;
   DUNGEON = 2;
   MINIGAME = 3;
+  BUILD_TUTORIAL = 5;
+  DUNGEON_TUTORIAL = 6;
+  MINIGAME_TUTORIAL = 7;
 }
 
 message PlayerStats {

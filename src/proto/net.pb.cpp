@@ -46,6 +46,7 @@ struct ClientMessageOneofInstance {
   ::google::protobuf::int32 interact_request_;
   ::google::protobuf::int32 ready_request_;
   const ::proto::AvatarChange* change_avatar_request_;
+  ::google::protobuf::int32 player_finished_dialogue_;
 }* ClientMessage_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* Ping_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
@@ -117,7 +118,7 @@ void protobuf_AssignDesc_net_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ServerMessage));
   ClientMessage_descriptor_ = file->message_type(1);
-  static const int ClientMessage_offsets_[9] = {
+  static const int ClientMessage_offsets_[10] = {
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, ping_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, build_request_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, join_request_),
@@ -126,6 +127,7 @@ void protobuf_AssignDesc_net_2eproto() {
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, interact_request_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, ready_request_),
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, change_avatar_request_),
+    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(ClientMessage_default_oneof_instance_, player_finished_dialogue_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ClientMessage, message_type_),
   };
   ClientMessage_reflection_ =
@@ -408,7 +410,7 @@ void protobuf_AddDesc_net_2eproto() {
     "\006 \001(\005H\000\0221\n\023player_stats_update\030\007 \001(\0132\022.p"
     "roto.PlayerStatsH\000\022\025\n\013time_update\030\010 \001(\005H"
     "\000\0223\n\024change_avatar_update\030\t \001(\0132\023.proto."
-    "AvatarChangeH\000B\016\n\014message_type\"\273\002\n\rClien"
+    "AvatarChangeH\000B\016\n\014message_type\"\337\002\n\rClien"
     "tMessage\022\033\n\004ping\030\001 \001(\0132\013.proto.PingH\000\022)\n"
     "\rbuild_request\030\002 \001(\0132\020.proto.ConstructH\000"
     "\022\026\n\014join_request\030\003 \001(\tH\000\022(\n\014move_request"
@@ -416,33 +418,36 @@ void protobuf_AddDesc_net_2eproto() {
     "est\030\005 \001(\0162\014.proto.PhaseH\000\022\032\n\020interact_re"
     "quest\030\006 \001(\005H\000\022\027\n\rready_request\030\007 \001(\005H\000\0224"
     "\n\025change_avatar_request\030\010 \001(\0132\023.proto.Av"
-    "atarChangeH\000B\016\n\014message_type\"\'\n\004Ping\022\021\n\t"
-    "client_id\030\001 \001(\005\022\014\n\004ping\030\002 \001(\004\"\213\001\n\tConstr"
-    "uct\022\014\n\004type\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022"
-    "\n\n\002id\030\004 \001(\005\022\016\n\006status\030\005 \001(\010\022\021\n\tplayer_id"
-    "\030\006 \001(\005\022\r\n\005fwd_x\030\007 \001(\002\022\r\n\005fwd_y\030\010 \001(\002\022\r\n\005"
-    "fwd_z\030\t \001(\002\"d\n\014JoinResponse\022\016\n\006status\030\001 "
-    "\001(\010\022\023\n\013num_players\030\002 \001(\005\022\n\n\002id\030\003 \001(\005\022\016\n\006"
-    "obj_id\030\004 \001(\005\022\023\n\013model_index\030\005 \001(\005\"t\n\tGam"
-    "eState\022\"\n\007objects\030\001 \003(\0132\021.proto.GameObje"
-    "ct\022!\n\ncollisions\030\002 \003(\0132\r.proto.IdPair\022 \n"
-    "\tinteracts\030\003 \003(\0132\r.proto.IdPair\"*\n\006IdPai"
-    "r\022\021\n\tinitiator\030\001 \001(\005\022\r\n\005other\030\002 \001(\005\"\377\001\n\n"
-    "GameObject\022\n\n\002id\030\001 \001(\005\022$\n\004type\030\002 \001(\0162\026.p"
-    "roto.GameObject.Type\022\021\n\ttransform\030\003 \003(\002\022"
-    "\021\n\tclient_id\030\004 \001(\005\022\017\n\007enabled\030\005 \001(\010\022\023\n\013m"
-    "odel_index\030\006 \001(\005\022\021\n\tparent_id\030\007 \001(\005\022\017\n\007s"
-    "ubtype\030\010 \001(\005\"O\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL"
-    "\020\001\022\t\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\022\013\n\007ESSENCE\020\004\022\016\n"
-    "\nPROJECTILE\020\005\"%\n\tCollision\022\n\n\002id\030\001 \001(\005\022\014"
-    "\n\004type\030\002 \001(\005\"~\n\tStickData\022%\n\005input\030\001 \001(\016"
-    "2\026.proto.StickData.Stick\022\t\n\001x\030\002 \001(\005\022\t\n\001y"
-    "\030\003 \001(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK_LEF"
-    "T\020\000\022\017\n\013STICK_RIGHT\020\001\"(\n\013PlayerStats\022\n\n\002i"
-    "d\030\001 \001(\005\022\r\n\005coins\030\002 \001(\005\"6\n\014AvatarChange\022\021"
-    "\n\tplayer_id\030\001 \001(\005\022\023\n\013model_index\030\002 \001(\005*A"
-    "\n\005Phase\022\010\n\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013"
-    "\n\007DUNGEON\020\002\022\014\n\010MINIGAME\020\003", 1745);
+    "atarChangeH\000\022\"\n\030player_finished_dialogue"
+    "\030\n \001(\005H\000B\016\n\014message_type\"\'\n\004Ping\022\021\n\tclie"
+    "nt_id\030\001 \001(\005\022\014\n\004ping\030\002 \001(\004\"\213\001\n\tConstruct\022"
+    "\014\n\004type\030\001 \001(\005\022\t\n\001x\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\n\n\002i"
+    "d\030\004 \001(\005\022\016\n\006status\030\005 \001(\010\022\021\n\tplayer_id\030\006 \001"
+    "(\005\022\r\n\005fwd_x\030\007 \001(\002\022\r\n\005fwd_y\030\010 \001(\002\022\r\n\005fwd_"
+    "z\030\t \001(\002\"d\n\014JoinResponse\022\016\n\006status\030\001 \001(\010\022"
+    "\023\n\013num_players\030\002 \001(\005\022\n\n\002id\030\003 \001(\005\022\016\n\006obj_"
+    "id\030\004 \001(\005\022\023\n\013model_index\030\005 \001(\005\"t\n\tGameSta"
+    "te\022\"\n\007objects\030\001 \003(\0132\021.proto.GameObject\022!"
+    "\n\ncollisions\030\002 \003(\0132\r.proto.IdPair\022 \n\tint"
+    "eracts\030\003 \003(\0132\r.proto.IdPair\"*\n\006IdPair\022\021\n"
+    "\tinitiator\030\001 \001(\005\022\r\n\005other\030\002 \001(\005\"\377\001\n\nGame"
+    "Object\022\n\n\002id\030\001 \001(\005\022$\n\004type\030\002 \001(\0162\026.proto"
+    ".GameObject.Type\022\021\n\ttransform\030\003 \003(\002\022\021\n\tc"
+    "lient_id\030\004 \001(\005\022\017\n\007enabled\030\005 \001(\010\022\023\n\013model"
+    "_index\030\006 \001(\005\022\021\n\tparent_id\030\007 \001(\005\022\017\n\007subty"
+    "pe\030\010 \001(\005\"O\n\004Type\022\n\n\006PLAYER\020\000\022\010\n\004GOAL\020\001\022\t"
+    "\n\005CHEST\020\002\022\t\n\005SPIKE\020\003\022\013\n\007ESSENCE\020\004\022\016\n\nPRO"
+    "JECTILE\020\005\"%\n\tCollision\022\n\n\002id\030\001 \001(\005\022\014\n\004ty"
+    "pe\030\002 \001(\005\"~\n\tStickData\022%\n\005input\030\001 \001(\0162\026.p"
+    "roto.StickData.Stick\022\t\n\001x\030\002 \001(\005\022\t\n\001y\030\003 \001"
+    "(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK_LEFT\020\000\022"
+    "\017\n\013STICK_RIGHT\020\001\"(\n\013PlayerStats\022\n\n\002id\030\001 "
+    "\001(\005\022\r\n\005coins\030\002 \001(\005\"6\n\014AvatarChange\022\021\n\tpl"
+    "ayer_id\030\001 \001(\005\022\023\n\013model_index\030\002 \001(\005*\202\001\n\005P"
+    "hase\022\010\n\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007D"
+    "UNGEON\020\002\022\014\n\010MINIGAME\020\003\022\022\n\016BUILD_TUTORIAL"
+    "\020\005\022\024\n\020DUNGEON_TUTORIAL\020\006\022\025\n\021MINIGAME_TUT"
+    "ORIAL\020\007", 1847);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -491,6 +496,9 @@ bool Phase_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
+    case 6:
+    case 7:
       return true;
     default:
       return false;
@@ -1107,6 +1115,7 @@ const int ClientMessage::kPhaseRequestFieldNumber;
 const int ClientMessage::kInteractRequestFieldNumber;
 const int ClientMessage::kReadyRequestFieldNumber;
 const int ClientMessage::kChangeAvatarRequestFieldNumber;
+const int ClientMessage::kPlayerFinishedDialogueFieldNumber;
 #endif  // !_MSC_VER
 
 ClientMessage::ClientMessage()
@@ -1124,6 +1133,7 @@ void ClientMessage::InitAsDefaultInstance() {
   ClientMessage_default_oneof_instance_->interact_request_ = 0;
   ClientMessage_default_oneof_instance_->ready_request_ = 0;
   ClientMessage_default_oneof_instance_->change_avatar_request_ = const_cast< ::proto::AvatarChange*>(&::proto::AvatarChange::default_instance());
+  ClientMessage_default_oneof_instance_->player_finished_dialogue_ = 0;
 }
 
 ClientMessage::ClientMessage(const ClientMessage& from)
@@ -1206,6 +1216,10 @@ void ClientMessage::clear_message_type() {
     }
     case kChangeAvatarRequest: {
       delete message_type_.change_avatar_request_;
+      break;
+    }
+    case kPlayerFinishedDialogue: {
+      // No need to clear
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {
@@ -1348,6 +1362,22 @@ bool ClientMessage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(80)) goto parse_player_finished_dialogue;
+        break;
+      }
+
+      // optional int32 player_finished_dialogue = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_player_finished_dialogue:
+          clear_message_type();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &message_type_.player_finished_dialogue_)));
+          set_has_player_finished_dialogue();
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -1427,6 +1457,11 @@ void ClientMessage::SerializeWithCachedSizes(
       8, this->change_avatar_request(), output);
   }
 
+  // optional int32 player_finished_dialogue = 10;
+  if (has_player_finished_dialogue()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->player_finished_dialogue(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -1490,6 +1525,11 @@ void ClientMessage::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         8, this->change_avatar_request(), target);
+  }
+
+  // optional int32 player_finished_dialogue = 10;
+  if (has_player_finished_dialogue()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->player_finished_dialogue(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1559,6 +1599,13 @@ int ClientMessage::ByteSize() const {
           this->change_avatar_request());
       break;
     }
+    // optional int32 player_finished_dialogue = 10;
+    case kPlayerFinishedDialogue: {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->player_finished_dialogue());
+      break;
+    }
     case MESSAGE_TYPE_NOT_SET: {
       break;
     }
@@ -1619,6 +1666,10 @@ void ClientMessage::MergeFrom(const ClientMessage& from) {
     }
     case kChangeAvatarRequest: {
       mutable_change_avatar_request()->::proto::AvatarChange::MergeFrom(from.change_avatar_request());
+      break;
+    }
+    case kPlayerFinishedDialogue: {
+      set_player_finished_dialogue(from.player_finished_dialogue());
       break;
     }
     case MESSAGE_TYPE_NOT_SET: {

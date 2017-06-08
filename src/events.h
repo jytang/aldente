@@ -212,7 +212,7 @@ namespace events {
 
         // Request some dialog to be shown
         // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).
-        extern signal<void(const std::vector<std::pair<std::string, std::string>> &)> show_dialog;
+        extern signal<void(const std::vector<std::pair<std::string, std::string>> &, const std::function<void()> &)> show_dialog;
 
         // Create a notification
         extern signal<void(const std::string &)> show_notification;
@@ -229,6 +229,11 @@ namespace events {
 
         // Dismisses legend
         extern signal<void()> dismiss_legend;
+    }
+
+    namespace dialogue {
+        // Player finished dialogue
+        extern signal<void(int)> s_player_finished_dialogue;
     }
 
     namespace build {

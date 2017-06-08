@@ -48,7 +48,7 @@ proto::Phase MenuPhase::s_update() {
 
     // Move on to build phase if all players ready, and there's at least one player.
     if (context.player_ids.size() > 0 && all_ready)
-        return proto::Phase::BUILD;
+        return proto::Phase::BUILD_TUTORIAL;
     else
         return next;
 }

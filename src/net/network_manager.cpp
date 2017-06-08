@@ -197,6 +197,10 @@ void ServerNetworkManager::update() {
                 server.send_to_all(response);
                 break;
             }
+            case proto::ClientMessage::MessageTypeCase::kPlayerFinishedDialogue: {
+                events::dialogue::s_player_finished_dialogue(msg.player_finished_dialogue());
+                break;
+            }
             default:
                 break;
             }
