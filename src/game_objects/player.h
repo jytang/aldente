@@ -45,6 +45,8 @@ private:
 
     bool momentum;
     bool sumo;
+
+    void set_confuse_effect(bool b);
 public:
     Player(int id = 0);
 

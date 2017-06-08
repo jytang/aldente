@@ -8,6 +8,8 @@
 #include "util/util.h"
 #include "util/util_bt.h"
 
+#include "game/game_state.h"
+
 #define ANIMATE_DELTA 0.001f
 #define STUN_LENGTH 1000 // milliseconds
 #define INVULNERABLE_LENGTH 3000 // ms
@@ -405,8 +407,12 @@ void Player::c_confuse() {
     model->reset_colors();
     model->multiply_colors(Color(5.0f, 0.1f, 5.0f, false));
 
+    // Sets UI effect if client player
+    set_confuse_effect(true);
+
     cancel_confuse = Timer::get()->do_after(std::chrono::milliseconds(CONFUSE_LENGTH),
         [&] () {
+        set_confuse_effect(false);
         model->reset_colors();
     });
 }
@@ -457,4 +463,15 @@ void Player::toggle_sumo_collider() {
         rigidbody->setCollisionShape(sumo_hit_capsule);
         sumo = true;
     }
+}
+
+void Player::set_confuse_effect(bool b) {
+    if (GameState::context.client_player != this)
+        return;
+
+    if (b)
+        events::ui::show_effect_image(2.0f, "confuse.png");
+    else
+        events::ui::hide_effect_image(1.0f);
+
 }
