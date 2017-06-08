@@ -393,12 +393,14 @@ bool Player::s_confuse() {
 
     // Movement direction gets reversed
     move_speed = -move_speed;
+    momentum = true;
 
     // Returns back to normal in about 3 seconds
     cancel_confuse = Timer::get()->do_after(std::chrono::milliseconds(CONFUSE_LENGTH),
         [&] () {
         move_speed = BASE_MOVE_SPEED;
         confused = false;
+        momentum = false;
     });
 
     return true;
