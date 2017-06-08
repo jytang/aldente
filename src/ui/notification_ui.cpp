@@ -18,7 +18,7 @@ std::shared_ptr<UIUnstretchedTextBox> NotificationUI::make_notification(std::str
     std::shared_ptr<UIUnstretchedTextBox> notif = std::make_shared<UIUnstretchedTextBox>(
             3.f, 4.f, 0, -height, aspect_width, height,
             2.f, UIUnstretchedTextBox::START, UIUnstretchedTextBox::START,
-            Color::WHITE, Color::BLACK, .5f
+            Color::WHITE, Color::BLACK, .5f, true, false
     );
     notif->set_text(text);
     attach(*notif);

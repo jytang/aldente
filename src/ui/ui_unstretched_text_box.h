@@ -20,13 +20,15 @@ public:
                float padding,
                Alignment h_align, Alignment v_align,
                Color text_color, Color bg_color,
-               float alpha, bool draw_bg = true);
+               float alpha, bool draw_bg = true,
+               bool preserve_bg_alpha = true);
     void set_text(const std::string &text);
     void set_color(Color color);
     unsigned long get_max_chars();
     void set_alpha(float alpha) override;
 
 private:
+    bool preserve_bg_alpha; // don't change alpha when animating alpha
     float char_width, char_height, line_height;
     float width, inner_width, height, inner_height, padding;
     unsigned long chars_per_line;

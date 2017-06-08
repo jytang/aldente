@@ -13,8 +13,8 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
                        float width, float height, float padding,
                        Alignment h_align, Alignment v_align,
                        Color text_color, Color bg_color,
-                       float alpha, bool draw_bg) :
-    UIContainer(start_x, start_y),
+                       float alpha, bool draw_bg, bool preserve_bg_alpha) :
+    UIContainer(start_x, start_y, alpha),
     char_width(char_width), char_height(char_height),
     line_height((1 + LINE_SPACE_FACTOR) * char_height),
     width(width), inner_width(width - 2 * padding),
@@ -24,7 +24,8 @@ UIUnstretchedTextBox::UIUnstretchedTextBox(float char_width, float char_height,
     max_lines(static_cast<int>(height / line_height) - 1),
     h_align(h_align), v_align(v_align),
     text_color(text_color),
-    bg(0, 0, width, height, bg_color, alpha) {
+    bg(0, 0, width, height, bg_color, alpha),
+    preserve_bg_alpha(preserve_bg_alpha) {
 
     if (draw_bg)
         attach(bg);
@@ -86,7 +87,9 @@ void UIUnstretchedTextBox::set_alpha(float alpha) {
     // don't want bg alpha to change along with text nodes.
     float restore_bg_alpha = bg.get_alpha();
     UIContainer::set_alpha(alpha);
-    bg.set_alpha(restore_bg_alpha);
+
+    if (preserve_bg_alpha)
+        bg.set_alpha(restore_bg_alpha);
 }
 
 void UIUnstretchedTextBox::set_color(Color color) {
