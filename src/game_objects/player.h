@@ -47,6 +47,10 @@ private:
     bool sumo;
 
     void set_confuse_effect(bool b);
+    
+    // sets whether ice effect shows for player
+    void c_set_ice_effect(bool b);
+
 public:
     Player(int id = 0);
 

@@ -360,6 +360,9 @@ void Player::c_slow() {
     model->reset_colors();
     model->multiply_colors(Color(0.1f, 0.1f, 10.0f, false));
 
+    // Show UI Effect if client player
+    c_set_ice_effect(true);
+
     // Fade back slowly to original color
     int count = 0;
     const int num_steps = 50;
@@ -375,6 +378,7 @@ void Player::c_slow() {
 
         if (count >= num_steps) {
             cancel_slow();
+            c_set_ice_effect(false);
             model->reset_colors();
         }
 
@@ -479,5 +483,17 @@ void Player::set_confuse_effect(bool b) {
         events::ui::show_effect_image(2.0f, "confuse.png");
     else
         events::ui::hide_effect_image(1.0f);
+}
 
+// Makes the screen tinted blue to show UI slow effect
+void Player::c_set_ice_effect(bool b) {
+    // Only if player that is slowed is this client's player
+
+    if (GameState::context.client_player != this)
+        return;
+
+    if (b)
+        events::ui::show_effect_image(1.0f, "ice.png");
+    else
+        events::ui::hide_effect_image(1.0f);
 }
