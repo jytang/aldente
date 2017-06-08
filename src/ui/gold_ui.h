@@ -20,6 +20,6 @@ private:
 
     UIRectangle bg;
     UIUnstretchedTextBox gold_delta;
-    UITextBox total_gold;
+    UIUnstretchedTextBox total_gold;
     UIImageNode gold_image;
 };

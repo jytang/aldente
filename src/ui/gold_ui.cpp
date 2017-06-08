@@ -8,19 +8,21 @@
 #include <string>
 
 GoldUI::GoldUI(float aspect)
-        : UI(90.f * aspect, 0.f),
-          bg(0, 0, 10.f * aspect, 7.f * aspect, Color::BLACK, 0.5f),
+        : UI(83.f * aspect, 0.f),
+          bg(0, 0, 10.f * aspect, 5.f * aspect, Color::BLACK, 0.f), // not shown!
           gold_delta(3.f, 4.f,
-                     0, 0, 10.f * aspect, 8.f * aspect, // Same-ish size as BG for convenience
-                     0.f, UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::START,
+                     0.f, 0.f, 
+                     12.f * aspect, 7.f * aspect, // Same-ish size as BG for convenience
+                     0.f, UIUnstretchedTextBox::END, UIUnstretchedTextBox::MIDDLE,
                      Color::WHITE, Color::BLACK, 0.f, false),
-          gold_image(2.5f * aspect, -1.f,
-                     5.f * aspect, 5.f * aspect,
+          gold_image(12.5f * aspect, 0.5f,
+                     4.f * aspect, 4.f * aspect,
                      AssetLoader::get_texture("essence.png")),
-          total_gold("-",
-                     2.5f * aspect, 4.f * aspect,
-                     5.f * aspect, 5.f,
-                     Color::WHITE),
+          total_gold(3.f, 4.f,
+                     0.f * aspect, -5.f * aspect, // random ass values
+                     12.f * aspect, 7.f * aspect, 0.f, // it works
+                     UIUnstretchedTextBox::END, UIUnstretchedTextBox::START,
+                     Color::WHITE, Color::BLACK, 0.f, false),
           cur_gold(0),
           cur_delta(0),
           delta_showing(false),
