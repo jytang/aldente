@@ -10,6 +10,7 @@ Color Color::YELLOW             (1.f, 1.f, 0.f, false);
 Color Color::MAGENTA            (1.f, 0.f, 1.f, false);
 
 Color Color::OCEAN_BLUE         (80, 186, 244);
+Color Color::DODGER_BLUE        (32, 74, 128);
 Color Color::WINDWAKER_GREEN    (156, 217, 84);
 Color Color::WINDWAKER_SAND     (251, 250, 158);
 

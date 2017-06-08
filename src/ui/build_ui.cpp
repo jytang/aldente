@@ -9,23 +9,20 @@
 BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<ConstructData>& constructs)
     : UI(), // explicit call base class dflt constructor
       constructs(constructs),
-      ui_grid(0, 0, 30.f * aspect, 70.f, num_cols*num_rows, num_cols, 12, 12, Color::LOZ_GREEN, 3, 1.f),
-      rect(0, 0, 12, 12, Color::LOZ_LIGHT_GREEN),
+      ui_grid(0, 0, 30.f * aspect, 80.f, num_cols*num_rows, num_cols, 12, 12, Color::OCEAN_BLUE, 3, 1.f, 0.5f),
+      rect(0, 0, 12, 12, Color::DODGER_BLUE, 0.f), // UNUSED
       info_panel(0, 80.f),
-      player_panel(0, 0),
-      shop_panel(0, 10.f),
-      info_rect(0, 0, 30.f * aspect, 20.f, Color::LOZ_DARK_GREEN),
-      player_rect(0, 0, 30.f * aspect, 10.f, Color::LOZ_DARK_GREEN),
+      shop_panel(0, 0.f),
+      info_rect(0, 0, 30.f * aspect, 20.f, Color::DODGER_BLUE, 0.8f),
       title_label("Select a block...", 2.f * aspect, 9.f, 19.f * aspect, 9.f, Color::WHITE),
       description_label("", 2.f * aspect, 2.f, 26.f * aspect, 5.f, Color::WHITE),
-      cost_label("0", 23.f * aspect, 9.f, 5.f * aspect, 9.f, Color::WHITE),
-      balance_label("100g", 9.f * aspect, 2.f, 12.f * aspect, 6.f, Color::WHITE) {
+      cost_label("0", 23.f * aspect, 9.f, 5.f * aspect, 9.f, Color::WHITE) {
 
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
-            ui_grid.attach_at(i, j, rect);
+            //ui_grid.attach_at(i, j, rect);
 
-            UIImageNode* item_image = new UIImageNode(1, 1, 10, 10,
+            UIImageNode* item_image = new UIImageNode(0, 0, 12, 12,
                 AssetLoader::get_texture(constructs[i * num_cols + j].image));
             ui_grid.attach_at(i, j, *item_image);
             images.push_back(item_image);
@@ -40,10 +37,6 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     info_panel.attach(description_label);
     info_panel.attach(cost_label);
     attach(info_panel);
-
-    player_panel.attach(player_rect);
-    player_panel.attach(balance_label);
-    attach(player_panel);
 
     // Display info of first element by default.
     update_info_panel(0);
@@ -75,30 +68,17 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
 
     // Show or hide the grid.
     events::build::construct_selected_event.connect([&, aspect](ConstructType type) {
-        shop_panel.animate_to(0, -70.f, 0.2f, [&]() {
+        shop_panel.animate_to(0, -80.f, 0.2f, [&]() {
             shop_panel.disable();
         });
         shop_panel.animate_alpha(0.f, 0.2f);
-        player_panel.animate_to(-30.f * aspect, 0, 0.1f, [&]() {
-            player_panel.disable();
-        });
-        player_panel.animate_alpha(0.f, 0.1f);
     });
 
     // Show the grid.
     events::build::select_grid_return_event.connect([&, aspect]() {
         shop_panel.enable();
-        player_panel.enable();
-        shop_panel.animate_to(0, 10.f, 0.2f);
+        shop_panel.animate_to(0, 0.f, 0.2f);
         shop_panel.animate_alpha(1.f, 0.2f);
-        player_panel.animate_to(0, 0, 0.1f);
-        player_panel.animate_alpha(1.f, 0.1f);
-    });
-
-    // Update the player's current gold balance.
-    events::c_player_stats_updated.connect([&](const proto::PlayerStats &update) {
-        std::string s = std::to_string(update.coins()) + "g";
-        balance_label.set_text(s);
     });
 }
 

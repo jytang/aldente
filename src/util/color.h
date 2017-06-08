@@ -26,4 +26,5 @@ public:
     static Color BROWN, WOOD_TAN, WOOD_TAN_LIGHT, WOOD_SIENNA, WOOD_SADDLE;
     static Color LOZ_DARK_GREEN, LOZ_GREEN, LOZ_LIGHT_GREEN;
     static Color GOLD, SILVER, BRONZE;
+    static Color DODGER_BLUE;
 };

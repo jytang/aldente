@@ -102,7 +102,6 @@ void UIGrid::disable() {
 }
 
 void UIGrid::set_alpha(float alpha) {
-    grid_bg.set_alpha(alpha);
     UIContainer::set_alpha(alpha);
 }
 
