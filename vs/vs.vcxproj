@@ -200,6 +200,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\game_objects\traps\arrow_trap.h" />
     <ClInclude Include="..\src\game_objects\traps\bomb.h" />
     <ClInclude Include="..\src\game_objects\traps\collision_trap.h" />
+    <ClInclude Include="..\src\game_objects\traps\confuse_trap.h" />
     <ClInclude Include="..\src\game_objects\traps\mimic.h" />
     <ClInclude Include="..\src\game_objects\traps\mobile_trap.h" />
     <ClInclude Include="..\src\game_objects\traps\projectile.h" />
@@ -336,6 +337,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\game_objects\traps\arrow_trap.cpp" />
     <ClCompile Include="..\src\game_objects\traps\bomb.cpp" />
     <ClCompile Include="..\src\game_objects\traps\collision_trap.cpp" />
+    <ClCompile Include="..\src\game_objects\traps\confuse_trap.cpp" />
     <ClCompile Include="..\src\game_objects\traps\mimic.cpp" />
     <ClCompile Include="..\src\game_objects\traps\mobile_trap.cpp" />
     <ClCompile Include="..\src\game_objects\traps\projectile.cpp" />
