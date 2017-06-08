@@ -101,3 +101,17 @@ void ProjectileTrap::shoot() {
 void ProjectileTrap::c_on_collision(GameObject*) {
     play_trigger_animation();
 }
+
+void ProjectileTrap::s_reset() {
+    // Disables all projectiles in pool
+    for (Projectile *proj : projectile_pool) {
+        proj->disable();
+    }
+}
+
+void ProjectileTrap::c_reset() {
+    // Disables all projectiles in pool
+    for (Projectile *proj : projectile_pool) {
+        proj->disable();
+    }
+}

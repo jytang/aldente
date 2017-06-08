@@ -39,8 +39,10 @@ protected:
 public:
     ProjectileTrap(int x, int z, int id = 0);
 
-  
-  virtual void s_update_this() override;
+    virtual void s_update_this() override;
 
-  void c_on_collision(GameObject* other) override;
+    void c_on_collision(GameObject* other) override;
+
+    void s_reset() override;
+    void c_reset() override;
 };
