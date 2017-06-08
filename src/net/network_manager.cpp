@@ -358,7 +358,7 @@ void ClientNetworkManager::update() {
                     }
                 }
 
-                if (obj_exists)
+                if (obj_exists && GameObject::game_objects.find(obj.id()) != GameObject::game_objects.end())
                     GameObject::game_objects[obj.id()]->c_update_state(world_mat, obj.enabled());
             }
 
