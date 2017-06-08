@@ -2,6 +2,9 @@
 
 #include "shader.h"
 
+#include <vector>
+#include <string>
+
 class SkyboxShader : public Shader {
 private:
     Geometry *cube_geometry;
@@ -15,5 +18,6 @@ public:
                       glm::mat4 to_world = glm::mat4(1.f)) override;
 
     void set_skybox(std::string skybox_name);
+    static std::vector<std::string> skyboxes;
 };
 
