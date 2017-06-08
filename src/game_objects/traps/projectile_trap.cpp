@@ -68,7 +68,7 @@ void ProjectileTrap::fill_projectile_pool(ProjectileTypes type) {
 
 // Looks for an available projectile from pool, then shoots it
 void ProjectileTrap::shoot() {
-    if (!can_shoot)
+    if (!can_shoot || !enabled)
         return;
 
     Projectile *to_shoot = nullptr;

@@ -93,7 +93,11 @@ void GameObject::c_update() {
 }
 
 void GameObject::c_update_state(glm::mat4 mat, bool enab) {
-    enabled = enab;
+    if (enab)
+        enable();
+    else
+        disable();
+
     if (enabled) {
         transform.set_world_mat(mat);
         set_rb_transform();
