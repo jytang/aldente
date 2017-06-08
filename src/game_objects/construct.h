@@ -59,6 +59,7 @@ public:
 
     void s_on_collision(GameObject *other) override;
     void c_on_collision(GameObject *other) override;
+    void c_update_this() override;
 
 private:
     btCylinderShape *goal_hit_box = new btCylinderShape(btVector3(0.005f, 0.5f, 0.005f));

@@ -144,3 +144,7 @@ void Goal::c_on_collision(GameObject *other) {
         player->c_begin_warp();
     }
 }
+
+void Goal::c_update_this() {
+    events::sound_effects_event(events::AudioData(AudioManager::PORTAL_BUZZ_SOUND, false, GameState::context.client_player, this));
+}

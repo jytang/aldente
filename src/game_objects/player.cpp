@@ -322,6 +322,9 @@ void Player::c_take_damage() {
     anim_player.set_anim("dmg", 1.0f, false);
     anim_player.play();
 
+    // Play take damage sound effect
+    events::sound_effects_event(events::AudioData(AudioManager::TAKE_DAMAGE_SOUND, false));
+
     // End hurt animation
     cancel_stun = Timer::get()->do_after(std::chrono::milliseconds(STUN_LENGTH),
         [&]() {
