@@ -4,6 +4,7 @@
 #include "ui_text_box.h"
 #include "ui_grid.h"
 #include "ui_rectangle.h"
+#include "ui_unstretched_text_box.h"
 
 class ClockUI : public UI {
 public:
@@ -15,5 +16,7 @@ private:
 
     UITextBox clock;
     UIGrid round_count_bg;
+    UIUnstretchedTextBox ready;
+
     std::vector<UIRectangle*> round_counts;
 };

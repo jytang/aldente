@@ -17,7 +17,10 @@ ClockUI::ClockUI(float aspect, int rounds)
                 (20.f * aspect - (rounds + 1) * 0.2f) / rounds, 2.f, // width and height
                 Color::BLACK, // background color
                 0.2f, // padding
-                0) { // no halo selector
+                0),  // no halo selector
+          ready(5.f, 5.f, 0.f, -20.f, 20.f * aspect, 10.f, 0.f,
+                UIUnstretchedTextBox::MIDDLE, UIUnstretchedTextBox::MIDDLE,
+                Color::BLACK, Color::BLACK, 1.f, false) {
 
     attach(clock);
 
@@ -35,6 +38,10 @@ ClockUI::ClockUI(float aspect, int rounds)
     }
 
     attach(round_count_bg);
+
+    ready.set_text("READY!");
+    attach(ready);
+
     disable();
 
     events::menu::end_menu_event.connect([&]() {
