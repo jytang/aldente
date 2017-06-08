@@ -30,18 +30,22 @@ void Bomb::s_on_collision(GameObject *other) {
     // Explode if stepped on by a player
     Player *player = dynamic_cast<Player*>(other);
     if (player) {
-        s_explode();
-        events::dungeon::network_collision_event(player->get_id(), id);
-        exploded = true;
+        if (player->s_take_damage()) {
+            s_explode();
+            events::dungeon::network_collision_event(player->get_id(), id);
+            exploded = true;
+        }
     }
 }
 
 void Bomb::c_on_collision(GameObject *other) {
+    // Visual Explosion only once
     if (!exploded) {
         c_explode();
         exploded = true;
     }
 
+    // Calls player's take damage animation
     Player* player = dynamic_cast<Player*>(other);
     if (player)
         player->c_take_damage();
@@ -72,9 +76,10 @@ void Bomb::s_explode() {
         Player *player = pair.second;
         if (player) {
             if (glm::distance(player->transform.get_position(), transform.get_position()) <= blast_radius) {
-                player->s_take_damage();
-                // Send signal to client that this player was hit
-                events::dungeon::network_collision_event(player->get_id(), id);
+                if (player->s_take_damage()) {
+                    // Send signal to client that this player was hit
+                    events::dungeon::network_collision_event(player->get_id(), id);
+                }
             }
         }
     }
@@ -93,8 +98,7 @@ void Bomb::c_explode() {
 
     // Make Glow and Transparent
     model->reset_colors();
-    model->multiply_colors({ 4.0f, 4.0f, 4.0f, false });
-    set_filter_alpha(0.3f);
+    model->multiply_colors({ 8.0f, 8.0f, 9.5f, false });
     
     anim_player.set_anim("go", 0.8f, false);
     anim_player.play();
