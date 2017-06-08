@@ -103,15 +103,15 @@ void ProjectileTrap::c_on_collision(GameObject*) {
 }
 
 void ProjectileTrap::s_reset() {
-    // Disables all projectiles in pool
-    for (Projectile *proj : projectile_pool) {
+    // Disables all projectiles that are children
+    for (GameObject *proj : children)
         proj->disable();
-    }
+    reset_to_initial_transform();
 }
 
 void ProjectileTrap::c_reset() {
-    // Disables all projectiles in pool
-    for (Projectile *proj : projectile_pool) {
+    // Disables all projectiles that are children
+    for (GameObject *proj : children)
         proj->disable();
-    }
+    reset_to_initial_transform();
 }
