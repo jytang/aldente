@@ -19,5 +19,7 @@ public:
 
     void set_skybox(std::string skybox_name);
     static std::vector<std::string> skyboxes;
+
+    glm::mat4 rot; // random rotation to skybox
 };
 
