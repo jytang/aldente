@@ -85,7 +85,7 @@ void Bomb::s_explode() {
     }
 
     // Disables after animation ends
-    Timer::get()->do_after(std::chrono::milliseconds(1000), 
+    Timer::get()->do_after(std::chrono::milliseconds(800),
         [&]() {
         disable();
     });
@@ -98,8 +98,9 @@ void Bomb::c_explode() {
 
     // Make Glow and Transparent
     model->reset_colors();
-    model->multiply_colors({ 8.0f, 8.0f, 9.5f, false });
+    model->set_color({ 0.7f, 0.8f, 1.0f });
+    model->multiply_colors({ 19.0f, 19.0f, 20.0f, false });
     
-    anim_player.set_anim("go", 0.8f, false);
+    anim_player.set_anim("go", 1.0f, false);
     anim_player.play();
 }
