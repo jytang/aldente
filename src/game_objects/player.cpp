@@ -333,6 +333,9 @@ void Player::s_slow() {
         [&, count, num_steps]() mutable{
         move_speed = Util::lerp(0.2f, BASE_MOVE_SPEED, (float)count / num_steps);
 
+        if (confused)
+            move_speed = -move_speed;
+
         if (move_speed >= BASE_MOVE_SPEED) {
             move_speed = BASE_MOVE_SPEED;
             cancel_slow();
