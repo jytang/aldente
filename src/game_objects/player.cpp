@@ -18,7 +18,9 @@
 
 std::vector<std::string> Player::PLAYER_MODELS = { "lizar", "pig", "cat", "tomatoe" };
 
-Player::Player(int id) : GameObject(id), is_client(false), momentum(false), sumo(false), cancel_flicker([]() {}), cancel_invulnerable([]() {}), cancel_slow([]() {}), cancel_stun([]() {}) {
+Player::Player(int id) : GameObject(id), is_client(false), momentum(false), sumo(false), 
+        cancel_flicker([]() {}), cancel_invulnerable([]() {}), cancel_slow([]() {}), 
+        cancel_stun([]() {}), cancel_confuse([]() {}) {
     tag = "PLAYER";
 
     if (id == ON_SERVER) {
