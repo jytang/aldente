@@ -3,16 +3,16 @@
 
 ConfuseTrap::ConfuseTrap(int x, int z, int id) : Trap(x, z, id) {
     tag = "CONFUSE_TRAP";
+    // Creates Rigid Body
+    events::RigidBodyData rigid;
+    rigid.object = this;
+    rigid.shape = hit_box;
+    rigid.is_ghost = true;
+    rigid.position = { x, 0.0f, z };
+    collision_group = COLLISION_STRUCTS;
+    events::add_rigidbody_event(rigid);
 
     if (id == ON_SERVER) {
-        // Creates Rigid Body
-        events::RigidBodyData rigid;
-        rigid.object = this;
-        rigid.shape = hit_box;
-        rigid.is_ghost = true;
-        rigid.position = { x, 0.0f, z };
-        collision_group = COLLISION_STRUCTS;
-        events::add_rigidbody_event(rigid);
 
         notify_on_collision = true;
     }
@@ -34,5 +34,5 @@ void ConfuseTrap::c_on_collision(GameObject *other) {
 
 void ConfuseTrap::setup_model() {
     attach_model(AssetLoader::get_model("confusion"));
-    set_scale({ 0.004f, 0.004f, 0.004 });
+    set_scale({ 0.005f, 0.005f, 0.005 });
 }
