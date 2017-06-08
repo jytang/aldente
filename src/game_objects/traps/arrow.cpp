@@ -27,6 +27,8 @@ Arrow::Arrow(int id) : Projectile(id) {
         // 5 Seconds time out
         time_out_ms = 5000;
     }
+
+    use_rb_transform = true;
 }
 
 void Arrow::play_trigger_animation() {
