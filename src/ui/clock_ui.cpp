@@ -64,8 +64,13 @@ ClockUI::ClockUI(float aspect, int rounds)
         ready.set_text("");
     });
 
+    events::build::end_build_event.connect([&]() {
+        player_ready = false;
+        ready.set_text("");
+    });
+
     events::build::toggle_ui_ready_event.connect([&]() {
-        player_ready != player_ready;
+        player_ready = !player_ready;
         if (player_ready)
             ready.set_text("READY!");
         else

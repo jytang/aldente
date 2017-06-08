@@ -110,10 +110,11 @@ void BuildPhase::c_setup() {
                 break;
             }
             case events::BTN_START: {
+                events::build::toggle_ui_ready_event();
+
                 proto::ClientMessage msg;
                 msg.set_ready_request(context.player_id);
                 events::client::send(msg);
-                events::build::toggle_ui_ready_event();
                 break;
             }
             case events::BTN_UP: {
