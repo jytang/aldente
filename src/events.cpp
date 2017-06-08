@@ -71,7 +71,7 @@ namespace events {
         signal<void(const std::vector<std::tuple<std::string, int, int>> &)> scoreboard_sequence;
         signal<void()> disable_scoreboard;
         signal<void(const std::vector<std::pair<std::string, std::string>> &, const std::function<void()> &)> show_dialog;
-        signal<void(const std::string &)> show_notification;
+        signal<void(const std::string &, float)> show_notification;
         signal<void(float, std::string, std::function<void()>)> transition_wipe;
         signal<void(float, std::string, std::function<void()>)> transition_fade;
         signal<void()> enable_main_menu;

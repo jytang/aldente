@@ -215,7 +215,8 @@ namespace events {
         extern signal<void(const std::vector<std::pair<std::string, std::string>> &, const std::function<void()> &)> show_dialog;
 
         // Create a notification
-        extern signal<void(const std::string &)> show_notification;
+        // Arguments are (text, duration in seconds)
+        extern signal<void(const std::string &, float)> show_notification;
 
         // Display a countdown
         // Parmeters are (strings_to_show, do_after_callback)

@@ -39,7 +39,7 @@ void DialoguePhase::c_setup() {
         m.set_player_finished_dialogue(context.player_id);
         events::client::send(m);
 
-        events::ui::show_notification("Waiting for other players...");
+        events::ui::show_notification("Waiting for other players...", 1);
     });
 }
 

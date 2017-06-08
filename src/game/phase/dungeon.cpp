@@ -94,7 +94,7 @@ void DungeonPhase::c_setup() {
                 context.player_finished = true;
                 events::dungeon::post_dungeon_camera_event();
             } else {
-                events::ui::show_notification("Someone reached the goal!");
+                events::ui::show_notification("Someone reached the goal!", 1);
             }
         });
 

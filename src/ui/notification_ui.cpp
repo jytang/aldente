@@ -7,25 +7,25 @@ NotificationUI::NotificationUI(float aspect, float width, float height)
     : aspect_width(aspect * width), height(height), animating(false) {
 
     // Show notification when requested
-    events::ui::show_notification.connect([&](const std::string &message) {
-        que.push(message);
+    events::ui::show_notification.connect([&](const std::string &message, float duration) {
+        que.emplace(message, duration);
         show_next();
     });
 }
 
-std::shared_ptr<UIUnstretchedTextBox> NotificationUI::make_notification(std::string text) {
+std::shared_ptr<UIUnstretchedTextBox> NotificationUI::make_notification(const std::pair<std::string, float> &spec) {
     // Create a notification off-screen
     std::shared_ptr<UIUnstretchedTextBox> notif = std::make_shared<UIUnstretchedTextBox>(
             3.f, 4.f, 0, -height, aspect_width, height,
             2.f, UIUnstretchedTextBox::START, UIUnstretchedTextBox::START,
             Color::WHITE, Color::BLACK, .5f, true, false
     );
-    notif->set_text(text);
+    notif->set_text(spec.first);
     attach(*notif);
     notifications.insert(notif);
 
     // Fade it out and remove it after 1 second
-    Timer::get()->do_after(std::chrono::seconds(1), [&, notif]() {
+    Timer::get()->do_after(std::chrono::milliseconds(static_cast<int>(1000 * spec.second)), [&, notif]() {
         notif->animate_alpha(0, .5f, [&, notif]() {
             detach(*notif);
             notifications.erase(notif);

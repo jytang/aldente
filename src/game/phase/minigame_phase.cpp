@@ -47,7 +47,7 @@ void MinigamePhase::c_setup() {
     // Show minigame info
     events::ui::show_legend(curr_mg->get_info().input_legend);
     Timer::get()->do_after(std::chrono::seconds(1), [this]() {
-        events::ui::show_notification(curr_mg->get_info().objective);
+        events::ui::show_notification(curr_mg->get_info().objective, 5);
     });
 
     events::ui::show_countdown({"3", "2", "1", "GO"}, [this]() {
