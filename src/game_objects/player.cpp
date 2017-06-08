@@ -14,7 +14,7 @@
 #define STUN_LENGTH 1000 // milliseconds
 #define INVULNERABLE_LENGTH 3000 // ms
 #define SLOW_LENGTH 3000
-#define CONFUSE_LENGTH 3000 // ms
+#define CONFUSE_LENGTH 5000 // ms
 
 #define BASE_MOVE_SPEED 2.0f
 
