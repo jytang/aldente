@@ -58,4 +58,7 @@ public:
 
     virtual void disable_scene();
     virtual void enable_scene();
+
+    virtual void start_timers() {};
+    virtual void stop_timers() {};
 };

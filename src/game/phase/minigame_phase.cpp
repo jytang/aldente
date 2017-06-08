@@ -24,11 +24,12 @@ MinigamePhase::~MinigamePhase() {
 void MinigamePhase::s_setup() {
     // Pick minigame and set up timer/connections
     // For now, just choose first one
-    curr_mg = minigames[1];
+    curr_mg = minigames[0];
 
     do_update = false;
     transition_after(6, curr_mg->get_time().count(), proto::Phase::BUILD);
     Timer::get()->do_after(std::chrono::seconds(6), [this]() {
+        curr_mg->get_scene()->start_timers();
         do_update = true;
     });
 
@@ -40,7 +41,7 @@ void MinigamePhase::c_setup() {
     input::ModalInput::get()->set_mode(input::ModalInput::DISABLE);
     // TODO: client needs to know what minigame was chosen!!
     // For now, choose first one
-    curr_mg = minigames[1];
+    curr_mg = minigames[0];
 
     curr_mg->c_setup();
     // Show minigame info
@@ -82,6 +83,7 @@ void MinigamePhase::c_update() {
 
 void MinigamePhase::s_teardown() {
     cancel_clock_every();
+    curr_mg->get_scene()->stop_timers();
     curr_mg->s_teardown();
 
     events::minigame::end_minigame_event();

@@ -9,8 +9,7 @@ SumoMG::SumoMG(Context& to_set) : Minigame(to_set) {
     time = SUMOMG_TIME;
     info = MinigameInfo{
         {
-            { "xboxControllerLeftThumbStick.png", "Move" },
-            { "xboxControlllerButtonA.png", "Boost" },
+            { "xboxControllerLeftThumbstick.png", "Move" },
         }, // input legend
         std::string("Push the other players off the platform!"), // Objective
     };

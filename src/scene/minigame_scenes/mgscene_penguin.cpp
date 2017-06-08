@@ -7,6 +7,10 @@
 #include "util/color.h"
 #include "../../asset_loader.h"
 
+MGScenePenguin::MGScenePenguin() :
+    cancel_spawn([]() {}) {
+}
+
 void MGScenePenguin::s_update() {
     Scene::s_update();
 }
@@ -93,7 +97,9 @@ void MGScenePenguin::reset_scene() {
         penguin->reset_position();
         penguin->disable();
     }
+}
 
+void MGScenePenguin::start_timers() {
     int count = 0;
 
     // Spawn penguins in waves of 10.
@@ -105,7 +111,7 @@ void MGScenePenguin::reset_scene() {
                 penguins[count++]->enable();
         }
 
-        if (count == (MAX_PENGUINS-20))
+        if (count == (MAX_PENGUINS - 20))
             cancel_spawn();
     });
 
@@ -115,4 +121,8 @@ void MGScenePenguin::reset_scene() {
             penguins[i]->enable();
         }
     });
+}
+
+void MGScenePenguin::stop_timers() {
+    cancel_spawn();
 }

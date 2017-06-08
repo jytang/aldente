@@ -14,7 +14,7 @@ private:
     std::vector<Penguin*> penguins;
     std::function<void()> cancel_spawn;
 public:
-    MGScenePenguin() {};
+    MGScenePenguin();
     void s_update() override;
     void c_update() override;
     void s_setup() override;
@@ -23,4 +23,6 @@ public:
     void disconnect_listeners() override;
     void reset_camera() override;
     void reset_scene() override;
+    void start_timers() override;
+    void stop_timers() override;
 };
