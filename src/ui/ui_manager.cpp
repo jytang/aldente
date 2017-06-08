@@ -58,26 +58,26 @@ void UIManager::setup_uis() {
     /* LEGEND UI */
     ui_map["legend"] = new LegendUI(aspect, 15.f, 5.f, 1.f);
 
-    /* DIALOG UI (should have high z-index) */
-    ui_map["z8-dialog"] = new DialogUI(aspect, 80.f, 30.f, 2.f);
-
-    /* NOTIFICATION UI (high-ish z-index) */
-    ui_map["z5-notifs"] = new NotificationUI(aspect, 30.f, 15.f);
-
     /* MAIN MENU UI */
     ui_map["main-menu"] = new MainMenuUI(aspect);
 
     /* SCORE SCREEN UI */
     ui_map["score-screen"] = new ScoreUI(aspect);
 
-    /* TRANSITION UI (highest z-index) */
-    ui_map["z9-transition"] = new TransitionUI(aspect);
+    /* NOTIFICATION UI (high-ish z-index) */
+    ui_map["z5-notifs"] = new NotificationUI(aspect, 30.f, 15.f);
 
     /* COUNTDOWN UI (high z-index) */
     ui_map["z6-countdown"] = new CountdownUI(aspect);
 
     /* EFFECTS UI (FOR TRAPS AND SUCH) */
-    ui_map["effects"] = new EffectsUI(aspect);
+    ui_map["z7-effects"] = new EffectsUI(aspect);
+
+    /* DIALOG UI (should have high z-index) */
+    ui_map["z8-dialog"] = new DialogUI(aspect, 80.f, 30.f, 2.f);
+
+    /* TRANSITION UI (highest z-index) */
+    ui_map["z9-transition"] = new TransitionUI(aspect);
 }
 
 void UIManager::setup_listeners() {

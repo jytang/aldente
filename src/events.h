@@ -206,7 +206,8 @@ namespace events {
         extern signal<void(float, std::string, std::function<void()>)> transition_fade;
         extern signal<void()> enable_main_menu;
         extern signal<void()> disable_main_menu;
-        extern signal<void()> ice_effect;
+        extern signal<void(float, std::string)> show_effect_image;
+        extern signal<void(float)> hide_effect_image;
 
         // Request some dialog to be shown
         // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).

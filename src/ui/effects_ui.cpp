@@ -26,12 +26,52 @@ EffectsUI::EffectsUI(float aspect)
     text_box.disable();
 
     // Attach event listeners
-    events::ui::ice_effect.connect([&]() {
-       show_image(1.f, "icy.png");
+    events::ui::show_effect_image.connect([&](float seconds, std::string effect_name) {
+       show_image(seconds, effect_name);
+    });
+
+    events::ui::hide_effect_image.connect([&](float seconds) {
+       hide_image(seconds);
     });
 }
 
 void EffectsUI::show_image(float seconds, std::string image_name) {
+    image.set_image(AssetLoader::get_texture(image_name));
+    image.enable();
+    image.animate_alpha(1.f, seconds);
+}
+
+void EffectsUI::show_text(float seconds, std::string text) {
+    text_box.set_text(text);
+    text_box.enable();
+    text_box.animate_alpha(1.f, seconds);
+}
+
+void EffectsUI::show_rect(float seconds, Color c) {
+    rect.set_color(c);
+    rect.enable();
+    rect.animate_alpha(1.f, seconds);
+}
+
+void EffectsUI::hide_image(float seconds) {
+    image.animate_alpha(0.f, seconds, [&]() {
+        image.disable();
+    });
+}
+
+void EffectsUI::hide_text(float seconds) {
+    text_box.animate_alpha(0.f, seconds, [&]() {
+        text_box.disable();
+    });
+}
+
+void EffectsUI::hide_rect(float seconds) {
+    rect.animate_alpha(0.f, seconds, [&]() {
+        rect.disable();
+    });
+}
+
+void EffectsUI::image_sequence(float seconds, std::string image_name) {
     image.enable();
     image.set_image(AssetLoader::get_texture(image_name));
     image.animate_alpha(1.f, seconds / 4.f, [&, seconds]() {
@@ -43,7 +83,7 @@ void EffectsUI::show_image(float seconds, std::string image_name) {
     });
 }
 
-void EffectsUI::show_rect(float seconds, Color c) {
+void EffectsUI::rect_sequence(float seconds, Color c) {
     rect.enable();
     rect.set_color(c);
     rect.animate_alpha(1.f, seconds / 4.f, [&, seconds]() {
@@ -55,7 +95,7 @@ void EffectsUI::show_rect(float seconds, Color c) {
     });
 }
 
-void EffectsUI::show_text(float seconds, std::string text) {
+void EffectsUI::text_sequence(float seconds, std::string text) {
     text_box.enable();
     text_box.set_text(text);
     text_box.animate_alpha(1.f, seconds / 4.f, [&, seconds]() {

@@ -75,7 +75,8 @@ namespace events {
         signal<void(float, std::string, std::function<void()>)> transition_fade;
         signal<void()> enable_main_menu;
         signal<void()> disable_main_menu;
-        signal<void()> ice_effect;
+        signal<void(float, std::string)> show_effect_image;
+        signal<void(float)> hide_effect_image;
 
         signal<void(const std::vector<std::string> &, const std::function<void()> &)> show_countdown;
         signal<void(int)> round_changed_event;
