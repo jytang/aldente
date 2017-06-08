@@ -52,7 +52,7 @@ void DungeonPhase::s_setup() {
 }
 
 void DungeonPhase::c_setup() {
-    events::ui::show_countdown({"3", "2", "1", "GO!"}, [this]() {
+    events::ui::show_countdown({"3", "2", "1", "GO"}, [this]() {
         events::dungeon::c_start();
 
         context.player_finished = false;

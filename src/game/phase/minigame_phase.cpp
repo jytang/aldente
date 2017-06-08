@@ -42,7 +42,7 @@ void MinigamePhase::c_setup() {
     curr_mg = minigames[0];
 
     curr_mg->c_setup();
-    events::ui::show_countdown({"3", "2", "1", "GO!"}, []() {
+    events::ui::show_countdown({"3", "2", "1", "GO"}, []() {
         input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
         events::minigame::start_minigame_event();
     });

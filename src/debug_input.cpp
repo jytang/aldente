@@ -110,7 +110,7 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
 
                 // Ethan's testing stuff
                 case GLFW_KEY_Z:
-                    events::ui::show_countdown({"3", "2", "1", "GO!"}, []() {
+                    events::ui::show_countdown({"3", "2", "1", "GO"}, []() {
                         std::cerr << "counted\n";
                     });
                     break;
