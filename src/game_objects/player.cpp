@@ -329,19 +329,23 @@ void Player::s_slow() {
 
     // Start off unable to move, then slowly regain movespeed
     move_speed = 0.2f;
+
+    if (confused)
+        move_speed = -move_speed;
+
     int count = 0;
     const int num_steps = 50;
     cancel_slow = Timer::get()->do_every(std::chrono::milliseconds(SLOW_LENGTH / num_steps),
         [&, count, num_steps]() mutable{
         move_speed = Util::lerp(0.2f, BASE_MOVE_SPEED, (float)count / num_steps);
 
-        if (confused)
-            move_speed = -move_speed;
-
         if (move_speed >= BASE_MOVE_SPEED) {
             move_speed = BASE_MOVE_SPEED;
             cancel_slow();
         }
+
+        if (confused)
+            move_speed = -move_speed;
 
         count++;
     });
