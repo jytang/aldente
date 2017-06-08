@@ -12,6 +12,7 @@
 #include "game_objects/traps/mimic.h"
 #include "game_objects/traps/slow_trap.h"
 #include "game_objects/traps/shooter.h"
+#include "game_objects/traps/bomb.h"
 
 #include <fstream>
 
@@ -34,8 +35,8 @@ Grid::Grid(std::string map_loc) :
     build_permissible = true;
 
     load_map(map_loc);
-    fill_grass();
-    fill_trees();
+    //fill_grass();
+    //fill_trees();
 
     // Default starting location
     hover = grid[0][0];
@@ -167,6 +168,9 @@ Construct* Grid::build(ConstructType type, int col, int row, float fx, float fy,
             break;
         case MIMIC:
             to_add = new Mimic(col, row, id);
+            break;
+        case BOMB:
+            to_add = new Bomb(col, row, id);
             break;
         case SPIKES:
             to_add = new Spikes(col, row, id);
@@ -374,12 +378,6 @@ int Grid::random_env_tile(){
     // Partitions between 0 - 100 for random chances
     int rand_num = (int) Util::random(0, 100);
 
-    if (rand_num > 95) // 5% chance grass
-        return GRASS;
-    else if (rand_num > 93) // 2% chance small rocks
-        return SMALL_ROCK;
-    else if (rand_num > 91) // 2% chance big rock
-        return BIG_ROCK;
-    else    // 50% chance nothing
+
         return EMPTY_TILE;
 }
