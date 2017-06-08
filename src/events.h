@@ -342,6 +342,9 @@ namespace events {
         // Spawns a Dream Essence object
         extern signal<void(float, float)> s_spawn_essence_event; // Server
         extern signal<void(float, float, int)> c_spawn_essence_event; // Client
+
+        // Create goal on server.
+        extern signal<void()> s_create_goal;
     }
 
     namespace minigame {

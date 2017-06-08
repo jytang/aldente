@@ -26,6 +26,7 @@ private:
 
     boost::signals2::connection build_conn;
     boost::signals2::connection dungeon_conn;
+    boost::signals2::connection delayed_goal_conn;
     boost::signals2::connection goal_conn;
 public:
     MainScene();

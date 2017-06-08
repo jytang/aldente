@@ -5,6 +5,7 @@
 #include "game_objects/essence.h"
 #include "game_objects/traps/mobile_trap.h"
 #include "audio/audio_manager.h"
+#include "timer.h"
 
 std::string DungeonPhase::to_string() {
     return "DUNGEON PHASE";
@@ -22,6 +23,11 @@ void DungeonPhase::s_setup() {
     });
 
     events::dungeon::s_prepare_dungeon_event();
+
+    // Start timer to spawn delayed goal.
+    Timer::get()->do_after(std::chrono::seconds(30), []() {
+        events::dungeon::s_create_goal();
+    });
 
     essence_conn = events::dungeon::s_spawn_essence_event.connect([&](float x, float z) {
         Essence *ess = new Essence();
@@ -94,7 +100,7 @@ void DungeonPhase::c_setup() {
                 context.player_finished = true;
                 events::dungeon::post_dungeon_camera_event();
             } else {
-                events::ui::show_notification("Someone reached the goal!", 1);
+                events::ui::show_notification("Someone reached the exit!", 1);
             }
         });
 

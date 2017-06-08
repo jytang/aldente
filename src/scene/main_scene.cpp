@@ -70,17 +70,22 @@ void MainScene::connect_listeners() {
 
     dungeon_conn = events::dungeon::s_prepare_dungeon_event.connect([&]() {
         remove_goal();
+    });
+
+    delayed_goal_conn = events::dungeon::s_create_goal.connect([&]() {
         s_place_goal(glm::vec3(0.0f), 20);
     });
 
     goal_conn = events::dungeon::spawn_existing_goal_event.connect([&](int x, int z, int id) {
         c_place_goal(x, z, id);
+        events::ui::show_notification("The exit has appeared!", 5.f);
     });
 }
 
 void MainScene::disconnect_listeners() {
     build_conn.disconnect();
     dungeon_conn.disconnect();
+    delayed_goal_conn.disconnect();
     goal_conn.disconnect();
 }
 

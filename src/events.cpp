@@ -126,6 +126,7 @@ namespace events {
         signal<void()> post_dungeon_camera_event;
         signal<void(float, float)> s_spawn_essence_event;
         signal<void(float, float, int)> c_spawn_essence_event;
+        signal<void()> s_create_goal;
     }
 
     namespace minigame {
