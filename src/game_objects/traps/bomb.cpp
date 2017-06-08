@@ -6,6 +6,7 @@ Bomb::Bomb(int x, int z, int id) : Trap(x, z, id) {
     tag = "BOMB";
 
     if (id == ON_SERVER) {
+
         //Creates Rigid Body
         events::RigidBodyData rigid;
         rigid.object = this;
@@ -13,6 +14,8 @@ Bomb::Bomb(int x, int z, int id) : Trap(x, z, id) {
         rigid.is_ghost = true;
         rigid.position = { x, 0.0f, z };
         events::add_rigidbody_event(rigid);
+
+        notify_on_collision = true;
 
         blast_radius = 4.0f;
     }
@@ -58,7 +61,9 @@ void Bomb::c_reset() {
 void Bomb::setup_model() {
     // Setup initially as mine
     attach_model(AssetLoader::get_model("mine"));
-    set_scale({ 0.005f, 0.005f, 0.005f });
+    model->reset_colors();
+    model->multiply_colors({ 3.0f, 3.0f, 3.0f, false });
+    set_scale({ 0.003f, 0.003f, 0.003f });
 }
 
 // Damages all player within blast radius
@@ -87,9 +92,10 @@ void Bomb::c_explode() {
     set_scale({ 0.005f, 0.005f, 0.005f });
 
     // Make Glow and Transparent
-    model->multiply_colors({ 2.0f, 2.0f, 2.0f, false });
-    model->set_alpha(0.8f);
+    model->reset_colors();
+    model->multiply_colors({ 4.0f, 4.0f, 4.0f, false });
+    set_filter_alpha(0.3f);
     
-    anim_player.set_anim("go", 1.0f, false);
+    anim_player.set_anim("go", 0.8f, false);
     anim_player.play();
 }
