@@ -50,7 +50,7 @@ MainMenuUI::MainMenuUI(float aspect)
     events::ui::disable_main_menu.connect([&]() {
         // Restore modal input state and disable the UI
         button_conn.disconnect();
-        input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
+        input::ModalInput::get()->set_mode(input::ModalInput::DISABLE);
 
         disable_animated();
     });

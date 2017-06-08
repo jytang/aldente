@@ -2,6 +2,7 @@
 #include "game_objects/player.h"
 #include "events.h"
 #include "util/color.h"
+#include <input/modal_input.h>
 
 StartScene::StartScene() : Scene() {
 }
@@ -48,8 +49,10 @@ void StartScene::c_setup() {
 
     // Transition camera when main menu is done.
     events::ui::disable_main_menu.connect([&]() {
-        events::camera_anim_rotate_event(glm::vec3(0, 1, 0), 180, 1500, [&](){
-            events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){});
+        events::camera_anim_rotate_event(glm::vec3(0, 1, 0), 180, 1500, [](){
+            events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){
+                input::ModalInput::get()->set_mode(input::ModalInput::NORMAL); // allow for controls after transition
+            });
         });
     });
 }
