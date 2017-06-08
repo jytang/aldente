@@ -7,7 +7,7 @@
 #include "util/util.h"
 #include <iostream>
 
-Projectile::Projectile(int id) : GameObject(id) {
+Projectile::Projectile(int id) : GameObject(id), cancel_timer([]() {}) {
     if (id == ON_SERVER) {
         notify_on_collision = true;
     }
@@ -63,8 +63,7 @@ void Projectile::handle_movement() {
 
 void Projectile::setup_timer() {
     // cancels any previous timer, if exists.
-    if (cancel_timer)
-        cancel_timer();
+    cancel_timer();
 
     // Disable object if it times_out
     cancel_timer = Timer::get()->do_after(

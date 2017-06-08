@@ -5,7 +5,7 @@
 
 #define MAX_PROJECTILES 5
 
-ProjectileTrap::ProjectileTrap(int x, int z, int id) : Trap(x, z, id) {
+ProjectileTrap::ProjectileTrap(int x, int z, int id) : Trap(x, z, id), cancel_timer([]() {}) {
     can_shoot = true;
 }
 
@@ -29,8 +29,7 @@ void ProjectileTrap::raycast_check() {
 // Setup to shoot every interval
 void ProjectileTrap::setup_timer(long long time_interval_ms) {
     // cancels any previous timer, if exists.
-    if (cancel_timer)
-        cancel_timer();
+    cancel_timer();
 
     // TODO : Figure out why trap does not shoot out at proper intervals
     cancel_timer = Timer::get()->do_every(

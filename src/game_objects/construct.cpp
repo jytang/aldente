@@ -13,7 +13,8 @@ Construct::Construct(int x, int z, int id) : GameObject(id) {
 
 /************CHEST***************/
 
-Chest::Chest(int x, int z, int id) : Construct(x, z, id) {
+Chest::Chest(int x, int z, int id) : Construct(x, z, id),
+        cancel_disappear([]() {}), cancel_fade([]() {}) {
     tag = "CHEST";
 
     events::dungeon::s_prepare_dungeon_event.connect([&]() {
@@ -92,17 +93,14 @@ void Chest::disappear() {
 }
 
 void Chest::s_reset() {
-    if (cancel_disappear)
-        cancel_disappear();
+    cancel_disappear();
     opened = false;
     enable();
 }
 
 void Chest::c_reset() {
-    if (cancel_disappear)
-        cancel_disappear();
-    if(cancel_fade)
-        cancel_fade();
+    cancel_disappear();
+    cancel_fade();
     anim_player.stop();
     set_filter_alpha(1.0f);
     enable();

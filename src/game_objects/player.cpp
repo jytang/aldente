@@ -17,7 +17,7 @@
 
 std::vector<std::string> Player::PLAYER_MODELS = { "boy_two", "lizard", "cat", "tomato" };
 
-Player::Player(int id) : GameObject(id), is_client(false), momentum(false), sumo(false) {
+Player::Player(int id) : GameObject(id), is_client(false), momentum(false), sumo(false), cancel_flicker([]() {}), cancel_invulnerable([]() {}), cancel_slow([]() {}), cancel_stun([]() {}) {
     tag = "PLAYER";
 
     if (id == ON_SERVER) {
@@ -284,12 +284,9 @@ void Player::c_take_damage() {
     end_flicker = false;
 
     // Make sure all animations from previous cycle has ended
-    if (cancel_flicker)
-        cancel_flicker();
-    if (cancel_stun)
-        cancel_stun();
-    if (cancel_invulnerable)
-        cancel_invulnerable();
+    cancel_flicker();
+    cancel_stun();
+    cancel_invulnerable();
 
     // Flicker
     cancel_flicker = Timer::get()->do_every(
@@ -327,8 +324,7 @@ void Player::c_take_damage() {
 }
 
 void Player::s_slow() {
-    if (cancel_slow)
-        cancel_slow();
+    cancel_slow();
 
     // Start off unable to move, then slowly regain movespeed
     move_speed = 0.2f;
@@ -350,8 +346,7 @@ void Player::s_slow() {
 }
 
 void Player::c_slow() {
-    if (cancel_slow)
-        cancel_slow();
+    cancel_slow();
 
     // Turn player blue
     model->reset_colors();

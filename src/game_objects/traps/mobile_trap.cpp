@@ -3,7 +3,7 @@
 #include "util/util_bt.h"
 #include "timer.h"
 
-MobileTrap::MobileTrap(int x, int z, int id) : CollisionTrap(x, z, id) {
+MobileTrap::MobileTrap(int x, int z, int id) : CollisionTrap(x, z, id), cancel_timer([]() {}) {
 }
 
 // Moves forward
@@ -55,8 +55,7 @@ void MobileTrap::check_wall() {
 // Changes direction every interval.
 void MobileTrap::setup_timer(long long time_interval_ms) {
     // cancels any previous timer, if exists.
-    if (cancel_timer)
-        cancel_timer();
+    cancel_timer();
 
     cancel_timer = Timer::get()->do_every(
         std::chrono::milliseconds(time_interval_ms),
