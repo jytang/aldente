@@ -133,7 +133,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -259,6 +259,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\ui\countdown_ui.h" />
     <ClInclude Include="..\src\ui\debug_ui.h" />
     <ClInclude Include="..\src\ui\dialog_ui.h" />
+    <ClInclude Include="..\src\ui\effects_ui.h" />
     <ClInclude Include="..\src\ui\gold_ui.h" />
     <ClInclude Include="..\src\ui\leaderboard_ui.h" />
     <ClInclude Include="..\src\ui\legend_ui.h" />
@@ -387,6 +388,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\ui\countdown_ui.cpp" />
     <ClCompile Include="..\src\ui\debug_ui.cpp" />
     <ClCompile Include="..\src\ui\dialog_ui.cpp" />
+    <ClCompile Include="..\src\ui\effects_ui.cpp" />
     <ClCompile Include="..\src\ui\gold_ui.cpp" />
     <ClCompile Include="..\src\ui\leaderboard_ui.cpp" />
     <ClCompile Include="..\src\ui\legend_ui.cpp" />

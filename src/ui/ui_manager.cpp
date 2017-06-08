@@ -15,6 +15,7 @@
 #include "transition_ui.h"
 #include "countdown_ui.h"
 #include "util/config.h"
+#include "effects_ui.h"
 
 UIManager::~UIManager() {
     for (auto it = ui_map.begin(); it != ui_map.end(); ++it) {
@@ -74,6 +75,9 @@ void UIManager::setup_uis() {
 
     /* COUNTDOWN UI (high z-index) */
     ui_map["z6-countdown"] = new CountdownUI(aspect);
+
+    /* EFFECTS UI (FOR TRAPS AND SUCH) */
+    ui_map["effects"] = new EffectsUI(aspect);
 }
 
 void UIManager::setup_listeners() {
