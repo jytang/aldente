@@ -68,7 +68,7 @@ void ProjectileTrap::fill_projectile_pool(ProjectileTypes type) {
 
 // Looks for an available projectile from pool, then shoots it
 void ProjectileTrap::shoot() {
-    if (!can_shoot || !enabled)
+    if (!(can_shoot && enabled))
         return;
 
     Projectile *to_shoot = nullptr;
@@ -110,8 +110,5 @@ void ProjectileTrap::s_reset() {
 }
 
 void ProjectileTrap::c_reset() {
-    // Disables all projectiles that are children
-    for (GameObject *proj : children)
-        proj->disable();
-    reset_to_initial_transform();
+    s_reset();
 }

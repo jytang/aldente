@@ -14,7 +14,8 @@
 #define ESSENCE_TIME_OUT 6000 // Milliseconds
 #define DISAPPEAR_ANIM_LENGTH 500 // Time it takes for disappearing animation to finish
 
-Essence::Essence(int id) : GameObject(id){
+Essence::Essence(int id) : GameObject(id), cancel_fade([]() {}),
+    cancel_timeout([]() {}), cancel_rainbow([]() {}) {
     tag = "ESSENCE";
 
     // Set Value
@@ -175,21 +176,12 @@ void Essence::disable_after_disappear() {
 // Disables everything on object
 void Essence::s_reset() {
     disable();
-    if (cancel_fade)
-        cancel_fade();
-    if (cancel_rainbow)
-        cancel_rainbow();
-    if (cancel_timeout)
-        cancel_timeout();
+    cancel_fade();
+    cancel_rainbow();
+    cancel_timeout();
 }
 
 // Disables everything on object
 void Essence::c_reset() {
-    disable();
-    if (cancel_fade)
-        cancel_fade();
-    if (cancel_rainbow)
-        cancel_rainbow();
-    if (cancel_timeout)
-        cancel_timeout();
+    s_reset();
 }
