@@ -374,11 +374,11 @@ int Grid::random_env_tile(){
     // Partitions between 0 - 100 for random chances
     int rand_num = (int) Util::random(0, 100);
 
-    if (rand_num > 70) // 30% chance grass
+    if (rand_num > 95) // 5% chance grass
         return GRASS;
-    else if (rand_num > 60) // 10 % chance small rocks
+    else if (rand_num > 93) // 2% chance small rocks
         return SMALL_ROCK;
-    else if (rand_num > 50) // 10% chance big rock
+    else if (rand_num > 91) // 2% chance big rock
         return BIG_ROCK;
     else    // 50% chance nothing
         return EMPTY_TILE;
