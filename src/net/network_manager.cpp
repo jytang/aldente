@@ -358,8 +358,12 @@ void ClientNetworkManager::update() {
                     }
                 }
 
-                if (obj_exists && GameObject::game_objects.find(obj.id()) != GameObject::game_objects.end())
-                    GameObject::game_objects[obj.id()]->c_update_state(world_mat, obj.enabled());
+                if (obj_exists && GameObject::game_objects.find(obj.id()) != GameObject::game_objects.end()) {
+                    GameObject *go_pointer = GameObject::game_objects[obj.id()];
+                    if (go_pointer)
+                        go_pointer->c_update_state(world_mat, obj.enabled());
+                }
+
             }
 
             // Call all collision handlers of game objects that collided, but only ones that already exist, 
