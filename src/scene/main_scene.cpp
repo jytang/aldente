@@ -10,7 +10,7 @@ const std::string map_2 = "assets/maps/dungeon_2.txt"; // 40x40, Most normal map
 const std::string map_3 = "assets/maps/dungeon_3.txt"; // 40x40, Chaos Map
 const std::string map_4 = "assets/maps/dungeon_4.txt"; // 30x30, Smaller rendition of a part of Map_2
 
-std::string chosen_map = map_4; // Choose Map here
+std::string chosen_map = map_2; // Choose Map here
 
 MainScene::MainScene() : Scene(), goal(nullptr) {
 }
