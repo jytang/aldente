@@ -28,10 +28,12 @@ void MenuPhase::c_setup() {
             }
             case events::BTN_LB: {
                 events::menu::c_cycle_player_model_event(false);
+				events::sound_effects_event(events::AudioData(AudioManager::SELECT1_SOUND, false));
                 break;
             }
             case events::BTN_RB: {
                 events::menu::c_cycle_player_model_event(true);
+				events::sound_effects_event(events::AudioData(AudioManager::SELECT1_SOUND, false));
                 break;
             }
             default:
