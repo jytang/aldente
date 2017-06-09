@@ -328,7 +328,7 @@ void ClientNetworkManager::update() {
             // If the server successfully added this client to the game, create a local Player object.
             if (resp.status()) {
                 client_id = resp.id();
-                GameState::c_add_player(resp.obj_id(), resp.model_index(), true)->c_set_client_player();
+                GameState::c_add_player(resp.obj_id(), resp.model_index(), true, client_id)->c_set_client_player();
 
                 // Start a timer event to ping the server every second.
                 Timer::get()->do_every(std::chrono::seconds(1), [&]() {

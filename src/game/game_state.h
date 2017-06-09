@@ -64,7 +64,7 @@ public:
     // Adds a player to the main scene. If server, add new player to auto-gen the id.
     // If client, add existing player with given id that the server sent.
     static Player* s_add_player(int conn_id);
-    static Player* c_add_player(int obj_id, int model_index, bool is_client);
+    static Player* c_add_player(int obj_id, int model_index, bool is_client, int pos = 0);
 
     // Changes the current scene.
     static void set_scene(Scene* scene);
