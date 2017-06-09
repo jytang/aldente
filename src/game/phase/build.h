@@ -2,6 +2,8 @@
 
 #include "phase.h"
 
+#include <vector>
+
 const auto BUILD_TIME = std::chrono::seconds(10);
 
 class BuildPhase : public TimedPhase {
@@ -22,4 +24,6 @@ private:
     boost::signals2::connection s_verify_and_build_conn;
     boost::signals2::connection c_check_funds_conn;
     boost::signals2::connection c_preview_conn;
+
+    static std::vector<glm::vec3> player_starting_positions;
 };

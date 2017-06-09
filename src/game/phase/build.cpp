@@ -6,6 +6,16 @@
 
 #define STARTING_GOLD 100
 
+#define MIDDLE_X 20
+#define MIDDLE_Z 20
+
+std::vector<glm::vec3> BuildPhase::player_starting_positions = {
+    {MIDDLE_X-1.f, 0.f, MIDDLE_Z-1.f},
+    {MIDDLE_X+1.f, 0.f, MIDDLE_Z-1.f},
+    {MIDDLE_X-1.f, 0.f, MIDDLE_Z+2.f},
+    {MIDDLE_X+1.f, 0.f, MIDDLE_Z+2.f},
+};
+
 bool BuildPhase::is_menu = true;
 
 std::string BuildPhase::to_string() {
@@ -50,7 +60,7 @@ void BuildPhase::s_setup() {
 
     for (auto & p : GameState::players) {
         Player* player = p.second;
-        player->set_start_position({ 2.f, 0, 1.f + p.first });
+        player->set_start_position(player_starting_positions[(p.first-1) % 4]);
         player->reset_position();
 
         // If it's the first round, grant everyone start gold

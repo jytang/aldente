@@ -7,6 +7,9 @@
 const float PAN_SPEED = 0.1f;
 #define ANIMATION_STEP_MS 30
 
+#define MIDDLE_X 20
+#define MIDDLE_Z 20
+
 Camera::Camera(glm::vec3 default_pos,
                          glm::vec3 default_front,
                          glm::vec3 default_up)
@@ -22,8 +25,8 @@ void Camera::setup_listeners() {
     events::build::start_build_event.connect([&]() {
         follow_player = false;
         follow_hover = true;
-        cam_pos = glm::vec3(0, 6.0f, 5.0f);
-        cam_front = glm::normalize(-cam_pos);
+        cam_pos = glm::vec3(MIDDLE_X, 6.0f, MIDDLE_Z + 5.0f);
+        cam_front = glm::normalize(glm::vec3(0.f, -6.f, -5.f));
         glm::vec3 left = glm::cross(glm::vec3(0, 1, 0), cam_front);
         cam_up = glm::cross(cam_front, left);
         recalculate();
