@@ -26,7 +26,7 @@ const std::string AudioManager::TAKE_DAMAGE_SOUND = "assets/audio/sound/take_dam
 const std::string AudioManager::DIALOGUE_SOUND = "assets/audio/sound/dialogue.wav";
 const std::string AudioManager::INVALID_BUZZ_SOUND = "assets/audio/sound/invalid_buzz.wav";
 const std::string AudioManager::SLIME_JUMP_SOUND = "assets/audio/sound/slime_jump.wav";
-const std::string AudioManager::DROP_FROM_SKY_SOUND = "assets/audio/sound/drop_from_sky.wav";
+const std::string AudioManager::WHOOSH_SOUND = "assets/audio/sound/whoosh.wav";
 const std::string AudioManager::SELECT1_SOUND = "assets/audio/sound/select1.wav";
 const std::string AudioManager::SELECT2_SOUND = "assets/audio/sound/select2.wav";
 
