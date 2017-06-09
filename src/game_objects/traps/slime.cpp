@@ -22,11 +22,11 @@ Slime::Slime(int x, int z, int id) : MobileTrap(x, z, id) {
 SlimeBlue::SlimeBlue(int x, int z, int id) : Slime(x, z, id) {
     if (id == ON_SERVER) {
         // Move Speed
-        move_speed = 2.0f;
+        move_speed = 3.0f;
 
         // Time movement based
         move_type = TIME;
-        setup_timer(6000); // changes direction every 6 seconds
+        setup_timer(4000); // changes direction every 4 seconds
 
         rotation_amount = -90.0f;
     }
@@ -38,7 +38,7 @@ SlimeYellow::SlimeYellow(int x, int z, int id) : Slime(x, z, id) {
         set_ghost(true);
 
         // Move Speed
-        move_speed = 2.0f;
+        move_speed = 4.5f;
 
         move_type = WALL;
 
