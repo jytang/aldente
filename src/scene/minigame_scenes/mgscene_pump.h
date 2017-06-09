@@ -14,7 +14,7 @@ private:
     std::vector<Pump*> pumps;
     std::map<int, Pump*> pump_map;
     std::vector<HotAirBasket*> baskets;
-	std::vector<HotAirBalloon*> balloons;
+    std::vector<HotAirBalloon*> balloons;
     int player_count;
 public:
     MGScenePump();
@@ -26,5 +26,5 @@ public:
     void disconnect_listeners() override;
     void reset_camera() override;
     void reset_scene() override;
-	void inflate_balloon(bool is_team1);
+    void inflate_balloon(bool is_team1);
 };

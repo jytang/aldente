@@ -35,6 +35,6 @@ private:
 
     std::vector<Player*> team1;
     std::vector<Player*> team2;
-	int team1_points;
-	int team2_points;
+    int team1_points;
+    int team2_points;
 };

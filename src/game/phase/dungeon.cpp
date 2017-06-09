@@ -178,8 +178,8 @@ void DungeonPhase::c_teardown() {
     essence_conn.disconnect();
     player_finish_conn.disconnect();
 
-	// Stop all music/sounds
-	events::stop_music_event();
+    // Stop all music/sounds
+    events::stop_music_event();
     events::stop_all_sounds_event();
 }
 

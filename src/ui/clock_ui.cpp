@@ -27,7 +27,7 @@ ClockUI::ClockUI(float aspect, int rounds)
     float padding = 0.2f;
     float round_height = 2.f;
     float round_width = (20.f * aspect - (rounds + 1) * padding) / rounds;
-	
+    
     // Create a UI rectangle for each round. Will set color when that round is reached.
     for (int i = 0; i < rounds; ++i) {
         UIRectangle* round_seg = new UIRectangle(0, padding, // start coordinates

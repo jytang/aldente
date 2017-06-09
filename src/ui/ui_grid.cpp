@@ -111,8 +111,8 @@ void UIGrid::toggle_current_selection_halo() {
 
 void UIGrid::move_selection(Direction d) {
     toggle_current_selection_halo();
-	int old_selection_row = selection_row;
-	int old_selection_col = selection_col;
+    int old_selection_row = selection_row;
+    int old_selection_col = selection_col;
 
     switch (d) {
         case Direction::UP:
@@ -131,9 +131,9 @@ void UIGrid::move_selection(Direction d) {
             break;
     }
 
-	if ((selection_row != old_selection_row) || (selection_col != old_selection_col)) {
-		events::sound_effects_event(events::AudioData(AudioManager::SELECT1_SOUND, false));
-	}
+    if ((selection_row != old_selection_row) || (selection_col != old_selection_col)) {
+        events::sound_effects_event(events::AudioData(AudioManager::SELECT1_SOUND, false));
+    }
 
     toggle_current_selection_halo();
 }

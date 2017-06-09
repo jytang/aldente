@@ -54,9 +54,9 @@ AudioManager::AudioManager() : muted(false), max_music_volume(100.0), max_sound_
         music.play();
     });
 
-	events::stop_all_sounds_event.connect([&]() {
-		music.stop();
-	});
+    events::stop_all_sounds_event.connect([&]() {
+        music.stop();
+    });
 
     events::sound_effects_event.connect([&](const events::AudioData &d) {
         std::string filename = d.filename;

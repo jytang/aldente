@@ -53,8 +53,8 @@ void MinigamePhase::c_setup() {
         events::ui::show_notification(curr_mg->get_info().objective, 5);
     });
 
-	events::sound_effects_event(events::AudioData(AudioManager::WHOOSH_SOUND, false));
-	events::music_event(events::AudioData(AudioManager::BUILD_MUSIC, true));  // Need to change to mini game music
+    events::sound_effects_event(events::AudioData(AudioManager::WHOOSH_SOUND, false));
+    events::music_event(events::AudioData(AudioManager::BUILD_MUSIC, true));  // Need to change to mini game music
 
     events::ui::show_countdown({"3", "2", "1", "GO"}, [this]() {
         input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
@@ -100,9 +100,9 @@ void MinigamePhase::c_teardown() {
     events::ui::dismiss_legend();
     events::minigame::end_minigame_event();
 
-	// Stop all music/sounds
-	events::stop_music_event();
-	events::stop_all_sounds_event();
+    // Stop all music/sounds
+    events::stop_music_event();
+    events::stop_all_sounds_event();
 }
 
 proto::Phase MinigamePhase::s_phase_when_done() {

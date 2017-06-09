@@ -6,7 +6,7 @@ namespace events {
     signal<void(const ButtonData &)> button_event;
     signal<void(const StickData &)> stick_event;
     signal<void(const AudioData &)> music_event;
-	signal<void()> stop_music_event;
+    signal<void()> stop_music_event;
     signal<void(const AudioData &)> sound_effects_event;
     signal<void()> stop_all_sounds_event;
     signal<void()> toggle_mute_event;
