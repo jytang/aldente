@@ -35,7 +35,7 @@ void StartScene::c_setup() {
         obj->setup_model();
     }
 
-    info.camera.cam_pos = glm::vec3(3.f, 0, 50.f);
+    info.camera.cam_pos = glm::vec3(3.f, 5.f, 50.f);
     info.camera.cam_front = glm::vec3(0.f, 0.f, 1.f);
     info.camera.recalculate();
 
@@ -50,7 +50,8 @@ void StartScene::c_setup() {
     // Transition camera when main menu is done.
     events::ui::disable_main_menu.connect([&]() {
         events::camera_anim_rotate_event(glm::vec3(0, 1, 0), 180, 1500, [](){
-            events::camera_anim_position_event(glm::vec3(3.f, 0.f, 6.f), 1500, [](){
+            events::camera_anim_rotate_event(glm::vec3(1, 0, 0), -3, 500, [](){});
+            events::camera_anim_position_event(glm::vec3(3.f, 2.f, 6.f), 1500, [](){
                 input::ModalInput::get()->set_mode(input::ModalInput::NORMAL); // allow for controls after transition
             });
         });
