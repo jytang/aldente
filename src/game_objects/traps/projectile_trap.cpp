@@ -1,5 +1,6 @@
 #include "projectile_trap.h"
 #include "arrow.h"
+#include "death_sphere.h"
 
 #include <iostream>
 
@@ -53,6 +54,9 @@ void ProjectileTrap::fill_projectile_pool(ProjectileTypes type) {
         switch (type) {
         case ARROW:
             projectile = new Arrow();
+            break;
+        case SPHERE:
+            projectile = new DeathSphere();
             break;
         default:
             return;

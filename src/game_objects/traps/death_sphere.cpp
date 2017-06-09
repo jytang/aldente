@@ -35,7 +35,7 @@ void DeathSphere::play_trigger_animation() {
 void DeathSphere::setup_model() {
     Model *model = AssetLoader::get_model("sphere_smooth");
     attach_model(model);
-    set_scale({ 0.004f, 0.004f, 0.004f });
+    set_scale({ 0.002f, 0.002f, 0.002f });
 
-    model->multiply_colors({ 3.0f, 3.0f, 3.0f, false });
+    model->multiply_colors({ 1.2f, 1.2f, 1.2f, false });
 }
