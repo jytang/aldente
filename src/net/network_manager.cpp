@@ -44,6 +44,7 @@ void ServerNetworkManager::register_listeners() {
         proto::ServerMessage msg;
         msg.set_allocated_join_response(new proto::JoinResponse(resp));
         server.send_to(conn_id, msg);
+        std::cerr << "[s] adding player with go-id " << resp.obj_id() << "\n";
 
         // Then, send the state of all players to all clients.
         proto::ServerMessage update_msg;
@@ -51,6 +52,8 @@ void ServerNetworkManager::register_listeners() {
         for (auto & kv : GameState::players) {
             proto::GameObject* go = state->add_objects();
             Player* player = kv.second;
+            std::cerr << "[s] sending update player with go-id " << player->get_id() << "\n";
+
             go->set_id(player->get_id());
             go->set_type(proto::GameObject::Type::GameObject_Type_PLAYER);
             go->set_model_index(player->c_get_model_index());

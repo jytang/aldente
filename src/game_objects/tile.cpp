@@ -2,8 +2,8 @@
 #include "util/color.h"
 #include "asset_loader.h"
 
-Tile::Tile() :
-    GameObject(),
+Tile::Tile(int id) :
+    GameObject(id),
     construct(nullptr) {
     tag = "TILE";
     // Currently, Tile IDs are not being set by the server, and is being done independently
@@ -34,7 +34,7 @@ void FloorTile::setup_instanced_model(int num_instances, std::vector<glm::mat4> 
     model->add_mesh(mesh);
 }
 
-EmptyTile::EmptyTile(int x, int z) : Tile::Tile() {
+EmptyTile::EmptyTile(int x, int z) : Tile::Tile(-1) {
     this->x = x;
     this->z = z;
     buildable = true;

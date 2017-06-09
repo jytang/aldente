@@ -27,7 +27,7 @@ protected:
     btBoxShape *hit_box = new btBoxShape(btVector3(0.5f, 1.0f, 0.5f));
     btBoxShape *hit_plane = new btBoxShape(btVector3(0.5f, 0.05f, 0.5f));
 public:
-    Tile();
+    Tile(int id = 0);
 
     // Whether a construct buildable on this tile.
     bool buildable;
