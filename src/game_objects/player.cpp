@@ -200,6 +200,7 @@ void Player::s_reset() {
     stunned = false;
     confused = false;
     move_speed = BASE_MOVE_SPEED;
+	momentum = false;
 }
 
 void Player::c_reset() {
@@ -212,7 +213,7 @@ void Player::c_reset() {
     invulnerable = false;
     stunned = false;
     confused = false;
-    events::ui::hide_effect_image(0.0f);
+    events::ui::hide_effect_image(0.1f);
     disable_filter();
     model->reset_colors();
 }
