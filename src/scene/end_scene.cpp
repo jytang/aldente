@@ -6,6 +6,7 @@
 #include "game_objects/minigame/platform.h"
 
 EndScene::EndScene() : Scene() {
+    //cancel_timer = []() {};
 }
 
 void EndScene::s_update() {
@@ -22,14 +23,14 @@ void EndScene::s_setup() {
 
 void EndScene::c_setup() {
     placeholder = new Player(-1);
+    placeholder->transform.set_position(glm::vec3(0,1.5f,0));
+    objs.push_back(placeholder);
 
     Platform *platform = new Platform(PlatformShape::CIRCLE);
-    platform->transform.set_scale(glm::vec3(0.0015f, 0.001f, 0.0015f));
+    platform->transform.set_scale(glm::vec3(0.005f, 0.01f, 0.005f));
+    platform->transform.set_position(glm::vec3(0));
     platform->setup_model();
-
-    info.camera.cam_pos = glm::vec3(0.f, 0.f, 5.f);
-    info.camera.cam_front = glm::vec3(0.f, 0.f, -1.f);
-    info.camera.recalculate();
+    objs.push_back(platform);
 
     // Setup lights.
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
@@ -45,4 +46,11 @@ void EndScene::c_setup() {
             count = 0;
         }
     });
+}
+
+void EndScene::reset_camera() {
+    info.camera.reset();
+    info.camera.cam_pos = glm::vec3(0.f, 2.f, 5.f);
+
+    info.camera.recalculate();
 }

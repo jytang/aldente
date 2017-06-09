@@ -110,6 +110,9 @@ DebugInput::DebugInput(Window &window, SceneManager &scene_manager, Physics &p) 
                 case GLFW_KEY_5:
                     events::debug::print_camera_event();
                     break;
+                case GLFW_KEY_6:
+                    events::debug::client_set_phase_event(&GameState::end_phase);
+                    break;
                 // Ethan's testing stuff
                 case GLFW_KEY_Z:
                     events::ui::show_countdown({"3", "2", "1", "GO"}, Color::BLACK, []() {

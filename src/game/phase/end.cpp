@@ -15,6 +15,7 @@ void EndPhase::s_teardown() {
 void EndPhase::c_setup() {
     // Set the scene
     GameState::set_scene(&GameState::end_scene);
+    GameState::end_scene.reset_camera();
 
     int high_score = 0;
     Player* winner = nullptr;
@@ -29,8 +30,9 @@ void EndPhase::c_setup() {
     // TODO: use the winner player (and their gold amount if you want)
     std::cerr << "winner player: " << winner->get_id() << " with gold: " << high_score << "\n";
 
-    events::ui::show_dialog(dialogue::END, [this]() {
-        // TODO: do something when the dialogue ends
+    events::ui::show_dialog(dialogue::END, [this, winner]() {
+        GameState::end_scene.cancel_cycle();
+        GameState::end_scene.get_placeholder()->c_setup_player_model(winner->c_get_model_index());
     });
 }
 

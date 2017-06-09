@@ -3,7 +3,6 @@
 #include "scene/scene.h"
 #include "asset_loader.h"
 #include "game_objects/player.h"
-#include "light/pulse_point_light.h"
 
 /*
 End scene for declaring winner
@@ -20,4 +19,8 @@ public:
     void c_update() override;
     void s_setup() override;
     void c_setup() override;
+    void reset_camera() override;
+
+    Player* get_placeholder() { return placeholder; };
+    void cancel_cycle() { cancel_timer(); };
 };
