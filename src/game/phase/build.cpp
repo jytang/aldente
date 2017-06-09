@@ -12,13 +12,12 @@ std::string BuildPhase::to_string() {
 }
 
 void BuildPhase::s_setup() {
-
     // Update the round counter. Starts at 0, so pre-increment.
     ++context.current_round;
 
     GameState::set_scene(&GameState::main_scene);
 
-    transition_after(0, 60, proto::Phase::DUNGEON);
+    transition_after(0, 60, s_phase_when_done());
     ready_conn = events::player_ready_event.connect([&](int player_id) {
         // Ready up if not previously ready. Otherwise un-ready up.
         context.ready_flags[player_id] = !context.ready_flags[player_id];
@@ -66,6 +65,9 @@ void BuildPhase::s_setup() {
 }
 
 void BuildPhase::c_setup() {
+    // Updates the client-side round counter, and update the UI.
+    events::ui::round_changed_event(++context.current_round);
+
     GameState::set_scene(&GameState::main_scene);
 
     events::build::start_build_event();
@@ -216,9 +218,6 @@ void BuildPhase::c_setup() {
             kv.second->disable();
         kv.second->c_reset();
     }
-
-    // Updates the client-side round counter, and update the UI.
-    events::ui::round_changed_event(++context.current_round);
 }
 
 proto::Phase BuildPhase::s_update() {
@@ -231,7 +230,7 @@ proto::Phase BuildPhase::s_update() {
     }
 
     if (all_ready)
-        return proto::Phase::DUNGEON;
+        return s_phase_when_done();
     else
         return next;
 }
@@ -251,4 +250,8 @@ void BuildPhase::c_teardown() {
     c_check_funds_conn.disconnect();
 
     events::build::end_build_event();
+}
+
+proto::Phase BuildPhase::s_phase_when_done() {
+    return context.current_round == 1 ? proto::Phase::DUNGEON_TUTORIAL : proto::Phase::DUNGEON;
 }

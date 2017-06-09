@@ -97,11 +97,12 @@ enum Phase {
   MINIGAME = 3,
   BUILD_TUTORIAL = 5,
   DUNGEON_TUTORIAL = 6,
-  MINIGAME_TUTORIAL = 7
+  MINIGAME_TUTORIAL = 7,
+  END = 8
 };
 bool Phase_IsValid(int value);
 const Phase Phase_MIN = MENU;
-const Phase Phase_MAX = MINIGAME_TUTORIAL;
+const Phase Phase_MAX = END;
 const int Phase_ARRAYSIZE = Phase_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* Phase_descriptor();

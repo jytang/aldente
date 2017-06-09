@@ -18,6 +18,7 @@ public:
     void c_update() override;
     void c_teardown() override;
     std::string to_string() override;
+    proto::Phase s_phase_when_done() override;
 private:
     std::vector<Minigame*> minigames;
     Minigame* curr_mg;

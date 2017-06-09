@@ -16,6 +16,7 @@
 #include <map>
 #include <unordered_set>
 #include <game/phase/dialogue.h>
+#include <game/phase/end.h>
 
 class GameState {
 public:
@@ -26,8 +27,11 @@ public:
     static BuildPhase build_phase;
     static DungeonPhase dungeon_phase;
     static MinigamePhase minigame_phase;
+    static EndPhase end_phase;
 
     static DialoguePhase build_tutorial_phase;
+    static DialoguePhase dungeon_tutorial_phase;
+    static DialoguePhase minigame_tutorial_phase;
 
     static Phase* curr_phase;
     static SceneManager scene_manager;

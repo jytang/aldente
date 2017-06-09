@@ -27,7 +27,7 @@ void MinigamePhase::s_setup() {
     curr_mg = minigames[0];
 
     do_update = false;
-    transition_after(6, curr_mg->get_time().count(), proto::Phase::BUILD);
+    transition_after(6, curr_mg->get_time().count(), s_phase_when_done());
     Timer::get()->do_after(std::chrono::seconds(6), [this]() {
         curr_mg->get_scene()->start_timers();
         do_update = true;
@@ -73,7 +73,7 @@ proto::Phase MinigamePhase::s_update() {
     bool finished = curr_mg->is_finished();
 
     if (finished)
-        return proto::Phase::BUILD;
+        return s_phase_when_done();
     else
         return next;
 }
@@ -93,4 +93,8 @@ void MinigamePhase::c_teardown() {
     curr_mg->c_teardown();
     events::ui::dismiss_legend();
     events::minigame::end_minigame_event();
+}
+
+proto::Phase MinigamePhase::s_phase_when_done() {
+    return context.current_round == 5 ? proto::Phase::END : proto::Phase::BUILD;
 }

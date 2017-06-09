@@ -114,6 +114,7 @@ enum Phase {
   BUILD_TUTORIAL = 5;
   DUNGEON_TUTORIAL = 6;
   MINIGAME_TUTORIAL = 7;
+  END = 8;
 }
 
 message PlayerStats {

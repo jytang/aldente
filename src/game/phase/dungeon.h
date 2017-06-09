@@ -14,6 +14,7 @@ public:
     void c_update() override;
     void c_teardown() override;
     std::string to_string() override;
+    proto::Phase s_phase_when_done() override;
 private:
     boost::signals2::connection joystick_conn;
     boost::signals2::connection button_conn;

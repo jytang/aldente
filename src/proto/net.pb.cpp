@@ -443,11 +443,11 @@ void protobuf_AddDesc_net_2eproto() {
     "(\005\022\n\n\002id\030\004 \001(\005\"(\n\005Stick\022\016\n\nSTICK_LEFT\020\000\022"
     "\017\n\013STICK_RIGHT\020\001\"(\n\013PlayerStats\022\n\n\002id\030\001 "
     "\001(\005\022\r\n\005coins\030\002 \001(\005\"6\n\014AvatarChange\022\021\n\tpl"
-    "ayer_id\030\001 \001(\005\022\023\n\013model_index\030\002 \001(\005*\202\001\n\005P"
+    "ayer_id\030\001 \001(\005\022\023\n\013model_index\030\002 \001(\005*\213\001\n\005P"
     "hase\022\010\n\004NOOP\020\004\022\010\n\004MENU\020\000\022\t\n\005BUILD\020\001\022\013\n\007D"
     "UNGEON\020\002\022\014\n\010MINIGAME\020\003\022\022\n\016BUILD_TUTORIAL"
     "\020\005\022\024\n\020DUNGEON_TUTORIAL\020\006\022\025\n\021MINIGAME_TUT"
-    "ORIAL\020\007", 1847);
+    "ORIAL\020\007\022\007\n\003END\020\010", 1856);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "net.proto", &protobuf_RegisterTypes);
   ServerMessage::default_instance_ = new ServerMessage();
@@ -499,6 +499,7 @@ bool Phase_IsValid(int value) {
     case 5:
     case 6:
     case 7:
+    case 8:
       return true;
     default:
       return false;

@@ -12,7 +12,7 @@ std::string DungeonPhase::to_string() {
 }
 
 void DungeonPhase::s_setup() {
-    transition_after(6, 60, proto::Phase::MINIGAME); // Add for countdown
+    transition_after(6, 60, s_phase_when_done()); // Add for countdown
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int dispatcher, int other) {
         context.collisions.emplace(dispatcher, other);
@@ -137,7 +137,7 @@ proto::Phase DungeonPhase::s_update() {
     }
 
     if (all_players_done)
-        return proto::Phase::MINIGAME;
+        return s_phase_when_done();
     else
         return next;
 }
@@ -176,4 +176,8 @@ void DungeonPhase::c_teardown() {
     player_finish_conn.disconnect();
 
     events::stop_all_sounds();
+}
+
+proto::Phase DungeonPhase::s_phase_when_done() {
+    return context.current_round == 1 ? proto::Phase::MINIGAME_TUTORIAL : proto::Phase::MINIGAME;
 }

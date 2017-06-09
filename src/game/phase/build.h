@@ -9,10 +9,11 @@ public:
     BuildPhase(Context& context) : TimedPhase(context) {};
     void s_setup() override;
     void s_teardown() override;
-    proto::Phase s_update();
+    proto::Phase s_update() override;
     void c_setup() override;
     void c_teardown() override;
     std::string to_string() override;
+    proto::Phase s_phase_when_done() override;
 private:
     static bool is_menu;
     boost::signals2::connection joystick_conn;

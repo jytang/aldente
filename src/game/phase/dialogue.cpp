@@ -18,7 +18,7 @@ void DialoguePhase::s_setup() {
     events::dialogue::s_player_finished_dialogue.connect([this](int id) {
         s_n_players_finished++;
         if (s_n_players_finished >= context.player_ids.size())
-            next = after;
+            next = s_phase_when_done();
     });
 }
 
@@ -51,4 +51,8 @@ void DialoguePhase::c_teardown() {
 
 std::string DialoguePhase::to_string() {
     return title;
+}
+
+proto::Phase DialoguePhase::s_phase_when_done() {
+    return after;
 }
