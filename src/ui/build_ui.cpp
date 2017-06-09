@@ -15,7 +15,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       shop_panel(0, 0.f),
       info_rect(0, 0, 30.f * aspect, 20.f, Color::DODGER_BLUE, 0.8f),
       title_label("Select a block...", 1.f * aspect, 9.f, 16.f * aspect, 9.f, Color::WHITE),
-      description_label("", 1.f * aspect, 2.f, 28.f * aspect, 5.f, Color::WHITE),
+      description_label("", 1.f * aspect, 2.f, 28.f * aspect, 3.f, Color::WHITE),
       cost_label("0", 19.f * aspect, 9.f, 6.f * aspect, 9.f, Color::WHITE),
       gold_image(25.5f * aspect, 10.f,
                  4.f * aspect, 4.f * aspect,
