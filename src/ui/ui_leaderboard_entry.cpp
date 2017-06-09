@@ -3,7 +3,7 @@
 #include "asset_loader.h"
 
 std::map<std::string, std::string> UILeaderboardEntry::model_to_portrait = {
-        {"boy_two", "dio.jpg"},
+        {"pig", "pig_icon.png"},
         {"lizard", "lizard_icon.png"},
         {"cat", "cat_icon.png"},
         {"tomato", "tomato_icon.png"}};
