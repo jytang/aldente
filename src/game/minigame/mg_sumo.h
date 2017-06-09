@@ -8,7 +8,7 @@ Holds the functionality for the "Bumper Balls" minigame
 */
 
 const auto SUMOMG_TIME = std::chrono::seconds(60);
-const int SUMOMG_REWARD = 100;
+const int SUMOMG_REWARD = 500;
 
 class SumoMG : public Minigame {
 public:

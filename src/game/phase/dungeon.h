@@ -34,5 +34,5 @@ private:
     // the index used for accessing the reward
     // (0th place indicates you didn't finish)
     std::vector<int> rewards =
-    { 0, 100, 75, 50, 25 };
+    { 50, 700, 400, 300, 100 };
 };

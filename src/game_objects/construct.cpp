@@ -20,8 +20,10 @@ Chest::Chest(int x, int z, int id) : Construct(x, z, id),
     tag = "CHEST";
 
     events::dungeon::s_prepare_dungeon_event.connect([&]() {
+        int r = (rand() % 40) + 10;
+        r *= 10;
         // Fill chest with gold
-        contents = std::make_unique<collectibles::Gold>(500);
+        contents = std::make_unique<collectibles::Gold>(r);
     });
 
     if (id == ON_SERVER) {

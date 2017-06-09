@@ -8,7 +8,7 @@ Holds the functionality for the "Hot Air Balloon" minigame
 */
 
 const auto PUMPMG_TIME = std::chrono::seconds(30);
-const int PUMPMG_REWARD = 100;
+const int PUMPMG_REWARD = 500;
 
 class PumpMG : public Minigame {
 public:

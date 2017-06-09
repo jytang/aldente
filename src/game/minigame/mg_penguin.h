@@ -8,7 +8,7 @@ Holds the functionality for the "Pushy Penguins" minigame
 */
 
 const auto PENGUINMG_TIME = std::chrono::seconds(30);
-const int PENGUINMG_REWARD = 100;
+const int PENGUINMG_REWARD = 500;
 
 class PenguinMG : public Minigame {
 public:
