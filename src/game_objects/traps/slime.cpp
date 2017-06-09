@@ -79,13 +79,15 @@ void SlimeBlue::setup_model() {
 }
 
 void SlimeYellow::setup_model() {
-    std::string model = "slime_yellow";
+    std::string model = "bunny";
     setup_slime_model(model);
+    this->model->set_shader(&ShaderManager::unlit);
 }
 
 void SlimeRed::setup_model() {
-    std::string model = "slime_red";
+    std::string model = "badmush";
     setup_slime_model(model);
+    this->model->set_shader(&ShaderManager::unlit);
 }
 
 void SlimeGreen::setup_model() {
