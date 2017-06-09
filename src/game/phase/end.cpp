@@ -28,6 +28,8 @@ void EndPhase::c_setup() {
     }
 
     events::ui::show_dialog(dialogue::END, [this, winner]() {
+        events::sound_effects_event(events::AudioData(AudioManager::FANFARE_SOUND, false));
+
         GameState::end_scene.cancel_cycle();
         GameState::end_scene.get_placeholder()->c_setup_player_model(winner->c_get_model_index());
 
