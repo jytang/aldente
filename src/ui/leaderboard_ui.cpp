@@ -65,8 +65,6 @@ LeaderboardUI::LeaderboardUI(float aspect)
         if (it == id_to_entry.end()) {
             id_to_entry[player_id] = ranking_to_entry[next_entry_idx];
             next_entry_idx++;
-        } else {
-            1 + 1;
         }
 
         // Update gold amount and reflow leaderboard ui.
