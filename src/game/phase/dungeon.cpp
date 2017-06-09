@@ -9,7 +9,7 @@
 #include "timer.h"
 
 std::string DungeonPhase::to_string() {
-    return "DUNGEON PHASE";
+    return "EXPLORE PHASE";
 }
 
 void DungeonPhase::s_setup() {

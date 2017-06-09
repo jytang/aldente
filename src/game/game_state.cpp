@@ -10,21 +10,21 @@ MinigameResultsPhase GameState::minigame_results_phase(context);
 EndPhase GameState::end_phase(context);
 
 DialoguePhase GameState::build_tutorial_phase(
-        context, proto::Phase::BUILD, "Build Tutorial",
+        context, proto::Phase::BUILD, "ARRIVAL",
         dialogue::BUILD_TUT, &GameState::main_scene,
         [](Camera &cam) {
             cam.cam_pos = {0, 3, 0}; // Top left corner
             cam.rotate_cam({0, 1, 0}, -(90 + 45)); // Face the grid
         });
 DialoguePhase GameState::dungeon_tutorial_phase(
-        context, proto::Phase::DUNGEON, "Dungeon Tutorial",
+        context, proto::Phase::DUNGEON, "INTERLUDE",
         dialogue::DUNGEON_TUT, &GameState::main_scene,
         [](Camera &cam) {
             cam.cam_pos = {0, 3, 0}; // Top left corner
             cam.rotate_cam({0, 1, 0}, -(90 + 45)); // Face the grid
         });
 DialoguePhase GameState::minigame_tutorial_phase(
-        context, proto::Phase::MINIGAME, "Minigame Tutorial",
+        context, proto::Phase::MINIGAME, "POST EXPLORATION",
         dialogue::MINIGAME_TUT, &GameState::main_scene,
         [](Camera &cam) {
             cam.cam_pos = {0, 3, 0}; // Top left corner

@@ -9,7 +9,7 @@
 bool BuildPhase::is_menu = true;
 
 std::string BuildPhase::to_string() {
-    return "BUILD PHASE";
+    return "SCULPT PHASE";
 }
 
 void BuildPhase::s_setup() {

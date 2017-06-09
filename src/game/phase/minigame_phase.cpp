@@ -4,7 +4,7 @@
 #include "input/modal_input.h"
 
 std::string MinigamePhase::to_string() {
-    return "MINIGAME PHASE";
+    return "SPORTS PHASE";
 }
 
 MinigamePhase::MinigamePhase(Context& context) : TimedPhase(context), curr_mg_index(0) {
