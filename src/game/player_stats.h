@@ -8,6 +8,7 @@ public:
     int get_coins();
     void add_coins(int delta);
     void set_coins(int amount);
+    void clamp();
 private:
     int coins;
 };
