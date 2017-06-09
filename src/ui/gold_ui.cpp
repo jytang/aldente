@@ -36,7 +36,6 @@ GoldUI::GoldUI(float aspect)
     // Hide at first
     gold_delta.set_alpha(0.f);
     attach(gold_delta);
-    set_gold(100); // TODO(metakirby5/jytang): don't hardcode heh
 
     // Disabled at first. Shown in build phase.
     disable();

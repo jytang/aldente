@@ -3,6 +3,8 @@
 #include "build.h"
 #include "audio/audio_manager.h"
 
+#define STARTING_GOLD 100
+
 bool BuildPhase::is_menu = true;
 
 std::string BuildPhase::to_string() {
@@ -10,6 +12,10 @@ std::string BuildPhase::to_string() {
 }
 
 void BuildPhase::s_setup() {
+
+    // Update the round counter. Starts at 0, so pre-increment.
+    ++context.current_round;
+
     GameState::set_scene(&GameState::main_scene);
 
     transition_after(0, 60, proto::Phase::DUNGEON);
@@ -44,15 +50,19 @@ void BuildPhase::s_setup() {
         Player* player = p.second;
         player->set_start_position({ 2.f, 0, 1.f + p.first });
         player->reset_position();
+
+        // If it's the first round, grant everyone start gold
+        if (context.current_round == 1) {
+            player->s_modify_stats([](PlayerStats &stats) {
+                stats.set_coins(STARTING_GOLD);
+            });
+        }
     }
 
     // Resets all game objects
     for (auto & kv : GameObject::game_objects) {
         kv.second->s_reset();
     }
-
-    // Update the round counter. Starts at 0, so pre-increment.
-    ++context.current_round;
 }
 
 void BuildPhase::c_setup() {
