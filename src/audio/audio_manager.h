@@ -11,6 +11,7 @@ public:
     static const std::string MAIN_MENU_MUSIC;
     static const std::string BUILD_MUSIC;
     static const std::string DUNGEON_MUSIC;
+    static const std::string MINIGAME_MUSIC;
 
     static const std::string BUILD_CONFIRM_SOUND;
     static const std::string ARROW_SWOOSH_SOUND;

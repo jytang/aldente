@@ -54,7 +54,7 @@ void MinigamePhase::c_setup() {
     });
 
     events::sound_effects_event(events::AudioData(AudioManager::WHOOSH_SOUND, false));
-    events::music_event(events::AudioData(AudioManager::BUILD_MUSIC, true));  // Need to change to mini game music
+    events::music_event(events::AudioData(AudioManager::MINIGAME_MUSIC, true));
 
     events::ui::show_countdown({"3", "2", "1", "GO"}, Color::BLACK, [this]() {
         input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);

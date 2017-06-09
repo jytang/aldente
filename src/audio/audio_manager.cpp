@@ -17,6 +17,7 @@
 const std::string AudioManager::MAIN_MENU_MUSIC = "assets/audio/music/main_menu.wav";
 const std::string AudioManager::BUILD_MUSIC = "assets/audio/music/build.wav";
 const std::string AudioManager::DUNGEON_MUSIC = "assets/audio/music/dungeon.wav";
+const std::string AudioManager::MINIGAME_MUSIC = AudioManager::DUNGEON_MUSIC;
 
 const std::string AudioManager::BUILD_CONFIRM_SOUND = "assets/audio/sound/build_confirm.wav";
 const std::string AudioManager::INVALID_BUZZ_SOUND = "assets/audio/sound/invalid_buzz.wav";
