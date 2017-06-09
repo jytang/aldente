@@ -130,6 +130,8 @@ namespace events {
         signal<void(float, float)> s_spawn_essence_event;
         signal<void(float, float, int)> c_spawn_essence_event;
         signal<void()> s_create_goal;
+        signal<void()> enable_goal_buzz;
+        signal<void()> disable_goal_buzz;
     }
 
     namespace minigame {

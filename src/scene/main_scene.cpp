@@ -129,6 +129,9 @@ void MainScene::c_place_goal(int x, int z, int id) {
 
     goal->setup_model();
     objs.push_back(goal);
+
+    // Play goal buzzing.
+    events::dungeon::enable_goal_buzz();
 }
 
 void MainScene::remove_goal() {

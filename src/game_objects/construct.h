@@ -63,4 +63,5 @@ public:
 
 private:
     btCylinderShape *goal_hit_box = new btCylinderShape(btVector3(0.005f, 0.5f, 0.005f));
+    bool play_buzz;
 };

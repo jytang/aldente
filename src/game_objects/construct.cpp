@@ -109,6 +109,7 @@ void Chest::c_reset() {
 /************GOAL***************/
 Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
     tag = "GOAL";
+    play_buzz = false;
 
     if (id == ON_SERVER) {
         events::RigidBodyData rigid;
@@ -120,6 +121,14 @@ Goal::Goal(int x, int z, int id) : Construct(x, z, id) {
 
         notify_on_collision = true;
     }
+
+    events::dungeon::enable_goal_buzz.connect([&]() {
+        play_buzz = true;
+    });
+
+    events::dungeon::disable_goal_buzz.connect([&]() {
+        play_buzz = false;
+    });
 }
 
 void Goal::setup_model() {
@@ -146,5 +155,6 @@ void Goal::c_on_collision(GameObject *other) {
 }
 
 void Goal::c_update_this() {
-    events::sound_effects_event(events::AudioData(AudioManager::PORTAL_BUZZ_SOUND, false, GameState::context.client_player, this));
+    if (play_buzz)
+        events::sound_effects_event(events::AudioData(AudioManager::PORTAL_BUZZ_SOUND, false, GameState::context.client_player, this));
 }

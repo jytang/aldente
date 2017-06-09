@@ -348,6 +348,10 @@ namespace events {
 
         // Create goal on server.
         extern signal<void()> s_create_goal;
+
+        // Enable/disable goal buzzing sound effect.
+        extern signal<void()> enable_goal_buzz;
+        extern signal<void()> disable_goal_buzz;
     }
 
     namespace minigame {

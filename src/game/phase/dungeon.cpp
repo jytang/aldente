@@ -181,6 +181,8 @@ void DungeonPhase::c_teardown() {
     // Stop all music/sounds
     events::stop_music_event();
     events::stop_all_sounds_event();
+    // Stop goal buzzing.
+    events::dungeon::disable_goal_buzz();
 }
 
 proto::Phase DungeonPhase::s_phase_when_done() {
