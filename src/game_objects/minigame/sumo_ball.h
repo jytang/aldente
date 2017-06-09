@@ -15,7 +15,7 @@ private:
     glm::vec3 prev_player_vec;
     bool first;
         
-    std::vector<std::string> BALL_MODELS = { "slime_blue", "lizard_ball", "cat_ball", "tomato_ball" };
+    std::vector<std::string> BALL_MODELS = { "lizard_ball", "pig_ball", "cat_ball", "tomato_ball" };
 public:
     SumoBall(int id = 0);
 
