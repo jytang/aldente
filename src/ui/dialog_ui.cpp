@@ -11,7 +11,7 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
               aspect * (100.f - width) / 2 + height, // Center, but make room for the portrait
               padding, aspect * width - height, height, padding,
               UIUnstretchedTextBox::START, UIUnstretchedTextBox::START, Color::WHITE, Color::BLACK, 0.5f)
-    , portrait(aspect * (100.f - width) / 2, padding, height, height, AssetLoader::get_texture("dio.jpg"))
+    , portrait(aspect * (100.f - width) / 2, 0, height, height, AssetLoader::get_texture("dio.jpg"))
     , cancel_text_animation([](){})
     , animating(false) {
 
@@ -73,7 +73,7 @@ void DialogUI::display_next() {
     // Start a text animation
     animating = true;
     cancel_text_animation();
-    cancel_text_animation = Timer::get()->do_every(std::chrono::milliseconds(50), [&]() {
+    cancel_text_animation = Timer::get()->do_every(std::chrono::milliseconds(20), [&]() {
         display += current.substr(0, 1);
         current = current.substr(1);
 
