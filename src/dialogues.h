@@ -79,6 +79,11 @@ const std::vector<std::pair<std::string, std::string>>
         {"angry_sandma.png", "I'm sorry my child, you've lost. I'm afraid you have no right to"
                                      " awaken."},
         {"disappoint_sandma.png", "I'll see you again soon..."}
+},
+// End
+        END = {
+        {"smile_sandma.png", "There's a winner..."},
+        {"fufu_sandma.png", "It's you!"},
 };
 
 }

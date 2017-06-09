@@ -1,12 +1,10 @@
 #include "end.h"
+#include "dialogues.h"
 
 EndPhase::EndPhase(Context &context)
     : Phase(context) {}
 
 void EndPhase::s_setup() {
-    std::cerr << "end s setup\n";
-    next = s_phase_when_done();
-
     // Set the scene
     // GameState::set_scene(&GameState::end_scene);
 }
@@ -15,8 +13,6 @@ void EndPhase::s_teardown() {
 }
 
 void EndPhase::c_setup() {
-    std::cerr << "end c setup\n";
-
     // Set the scene
     // GameState::set_scene(&GameState::end_scene);
 
@@ -32,6 +28,10 @@ void EndPhase::c_setup() {
 
     // TODO: use the winner player (and their gold amount if you want)
     std::cerr << "winner player: " << winner->get_id() << " with gold: " << high_score << "\n";
+
+    events::ui::show_dialog(dialogue::END, [this]() {
+        // TODO: do something when the dialogue ends
+    });
 }
 
 void EndPhase::c_update() {
