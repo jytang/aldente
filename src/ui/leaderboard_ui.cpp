@@ -41,6 +41,7 @@ LeaderboardUI::LeaderboardUI(float aspect)
     /* EVENT LISTENERS */
     events::ui::enable_leaderboard.connect([&]() {
         enable_animated();
+        events::sound_effects_event(events::AudioData(AudioManager::LEADERBOARD_SOUND, false));
     });
 
     events::ui::disable_leaderboard.connect([&]() {

@@ -148,6 +148,7 @@ void BuildPhase::c_setup() {
             }
             case events::BTN_START: {
                 events::build::toggle_ui_ready_event();
+                events::sound_effects_event(events::AudioData(AudioManager::BUILD_PHASE_READY_SOUND, false));
 
                 proto::ClientMessage msg;
                 msg.set_ready_request(context.player_id);

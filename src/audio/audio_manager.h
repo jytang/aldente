@@ -24,10 +24,17 @@ public:
     static const std::string WHOOSH_SOUND;
     static const std::string SELECT1_SOUND;
     static const std::string SELECT2_SOUND;
+    static const std::string FANFARE_SOUND;
     static const std::string CHAR_SELECTION_READY_SOUND;
     static const std::string CHAR_SELECTION_UNREADY_SOUND;
     static const std::string MAIN_MENU_START_SOUND;
     static const std::string CONSTRUCT_SELECTED_SOUND;
+
+    static const std::string LEADERBOARD_SOUND;
+    static const std::string BUILD_PHASE_READY_SOUND;
+    static const std::string CHEST_OPENING_SOUND;
+    static const std::string COUNTDOWN_SOUND;
+
 
     std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
 

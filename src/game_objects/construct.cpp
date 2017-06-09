@@ -60,6 +60,8 @@ void Chest::s_interact_trigger(GameObject *other) {
 
 // Activated when a player presses A on it, graphical
 void Chest::c_interact_trigger(GameObject *other) {
+    events::sound_effects_event(events::AudioData(AudioManager::CHEST_OPENING_SOUND, false));
+
     anim_player.play();
 
     cancel_disappear = Timer::get()->do_after(std::chrono::milliseconds(1000),
