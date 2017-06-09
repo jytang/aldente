@@ -215,7 +215,7 @@ Player* GameState::s_add_player(int conn_id) {
 
     // Determine where each player starts based on client id. 
     player->set_start_position({ (2 * (conn_id - 1)), 0, 0 });
-    player->s_set_model_index(conn_id % Player::PLAYER_MODELS.size());
+    player->s_set_model_index(cycle_avatar(player));
     player->reset_position();
 
     start_scene.objs.push_back(player);
