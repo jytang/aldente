@@ -15,7 +15,7 @@
 
 #define BASE_MOVE_SPEED 2.0f
 
-std::vector<std::string> Player::PLAYER_MODELS = { "boy_two", "lizard", "cat", "tomato" };
+std::vector<std::string> Player::PLAYER_MODELS = { "lizar", "pig", "cat", "tomatoe" };
 
 Player::Player(int id) : GameObject(id), is_client(false), momentum(false), sumo(false), cancel_flicker([]() {}), cancel_invulnerable([]() {}), cancel_slow([]() {}), cancel_stun([]() {}) {
     tag = "PLAYER";
@@ -191,13 +191,13 @@ void Player::c_setup_player_model(int index) {
     start_walk();
 
     // Sets scale. Need better way to do this later.
-    if (model_name == "boy_two")
-        set_scale({ 0.4f, 0.4f, 0.4f });
+    if (model_name == "pig")
+        set_scale({ 0.004f, 0.004f, 0.004f });
     else if (model_name == "cat")
         set_scale({ 0.004f, 0.004f, 0.004f });
-    else if (model_name == "lizard")
+    else if (model_name == "lizar")
         set_scale({ 0.0043f, 0.0043f, 0.0043f });
-    else if (model_name == "tomato")
+    else if (model_name == "tomatoe")
         set_scale({ 0.0043f, 0.0043f, 0.0043f });
 }
 
@@ -301,7 +301,7 @@ void Player::c_take_damage() {
 
     // Change to the hurt animation
     stunned = true;
-    anim_player.set_anim("damage", 1.0f, false);
+    anim_player.set_anim("dmg", 1.0f, false);
     anim_player.play();
 
     // End hurt animation
