@@ -47,8 +47,9 @@ void Penguin::reset_position() {
 }
 
 void Penguin::setup_model() {
-    attach_model(AssetLoader::get_model("slime_blue"));
-    transform.set_scale({ 0.006f, 0.006f, 0.006f });
+    attach_model(AssetLoader::get_model("sheep"));
+    model->set_shader(&ShaderManager::unlit);
+    transform.set_scale({ 0.009f, 0.009f, 0.009f });
     initial_transform.set_scale(transform.get_scale());
 
     anim_player.set_anim("walk");
