@@ -41,6 +41,7 @@ Physics GameState::physics;
 SceneManager GameState::scene_manager;
 MainScene GameState::main_scene;
 StartScene GameState::start_scene;
+EndScene GameState::end_scene;
 MGScenePenguin GameState::penguin_scene;
 MGSceneSumo GameState::sumo_scene;
 MGScenePump GameState::pump_scene;
@@ -61,6 +62,7 @@ void GameState::setup(bool is_server) {
     scene_manager.add_scene(&penguin_scene);
     scene_manager.add_scene(&sumo_scene);
     scene_manager.add_scene(&pump_scene);
+    scene_manager.add_scene(&end_scene);
 
     if (is_server) {
         // Setup the main scene first, since we want the grid/tiles to be created first.
@@ -74,6 +76,8 @@ void GameState::setup(bool is_server) {
         sumo_scene.s_setup();
         physics.set_scene(&pump_scene);
         pump_scene.s_setup();
+        physics.set_scene(&end_scene);
+        end_scene.s_setup();
 
         // Client of given connection id wishes to join the game.
         // For now, allow more than 4 players to join the game.
@@ -114,6 +118,8 @@ void GameState::setup(bool is_server) {
         sumo_scene.c_setup();
         physics.set_scene(&pump_scene);
         pump_scene.c_setup();
+        physics.set_scene(&end_scene);
+        end_scene.c_setup();
 
         events::menu::spawn_existing_player_event.connect([&](int id, int model_index) {
             c_add_player(id, model_index, false);

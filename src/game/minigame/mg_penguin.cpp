@@ -94,6 +94,8 @@ void PenguinMG::c_setup() {
     });
 
     GameState::set_scene(context.minigame_scenes["penguin"]);
+
+    context.post_anim = []() {};
 }
 
 void PenguinMG::c_teardown() {

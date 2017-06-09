@@ -21,6 +21,7 @@ void HotAirBalloon::setup_model() {
     //model->set_shader(&ShaderManager::unlit);
     transform.set_scale({ INITIAL_SCALE, INITIAL_SCALE, INITIAL_SCALE });
     initial_transform.set_scale(transform.get_scale());
+    anim_player.set_anim("up", 1.0f, false);
 }
 
 void HotAirBalloon::c_update_state(glm::mat4 mat, bool enab) {
@@ -43,4 +44,5 @@ void HotAirBalloon::inflate() {
 void HotAirBalloon::reset() {
     transform.set_scale(glm::vec3(INITIAL_SCALE, INITIAL_SCALE, INITIAL_SCALE));
     scale = INITIAL_SCALE;
+    anim_player.stop();
 }

@@ -11,4 +11,6 @@ public:
     HotAirBasket(int id);
 
     void setup_model() override;
+
+    void reset();
 };

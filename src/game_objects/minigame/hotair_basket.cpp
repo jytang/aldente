@@ -11,4 +11,10 @@ void HotAirBasket::setup_model() {
     model->set_shader(&ShaderManager::unlit);
     transform.set_scale({ 0.006f, 0.006f, 0.006f });
     initial_transform.set_scale(transform.get_scale());
+
+    anim_player.set_anim("up", 1.0f, false);
+}
+
+void HotAirBasket::reset() {
+    anim_player.stop();
 }

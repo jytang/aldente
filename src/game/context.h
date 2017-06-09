@@ -26,4 +26,5 @@ public:
     int player_id;
     bool player_finished;
     std::map<int, int> pre_mg_gold; // <Player id, gold>
+    std::function<void()> post_anim = [](){};
 };

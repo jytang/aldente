@@ -5,6 +5,7 @@
 #include "scene_manager.h"
 #include "scene/main_scene.h"
 #include "scene/start_scene.h"
+#include "scene/end_scene.h"
 #include "scene/minigame_scenes/mgscene_penguin.h"
 #include "scene/minigame_scenes/mgscene_sumo.h"
 #include "scene/minigame_scenes/mgscene_pump.h"
@@ -40,6 +41,7 @@ public:
     static SceneManager scene_manager;
     static MainScene main_scene;
     static StartScene start_scene;
+    static EndScene end_scene;
     static MGScenePenguin penguin_scene;
     static MGSceneSumo sumo_scene;
     static MGScenePump pump_scene;

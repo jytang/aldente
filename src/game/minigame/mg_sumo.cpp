@@ -97,6 +97,8 @@ void SumoMG::c_setup() {
 
     GameState::set_scene(context.minigame_scenes["sumo"]);
     scene = context.minigame_scenes["sumo"];
+
+    context.post_anim = []() {};
 }
 
 void SumoMG::c_teardown() {
