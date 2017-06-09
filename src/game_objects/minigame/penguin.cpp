@@ -43,6 +43,7 @@ void Penguin::c_update_state(glm::mat4 mat, bool enab) {
 
 void Penguin::reset_position() {
     set_position(glm::vec3(10, 1, rand() % 10 - 5));
+    rigidbody->setLinearVelocity(btVector3(0,0,0));
 }
 
 void Penguin::setup_model() {
