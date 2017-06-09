@@ -27,10 +27,14 @@ UITextBox::UITextBox(std::string text,
     attach(text_node);
 
     // Setup debug listener
-    events::debug::toggle_ui_text_box_background_event.connect([&]{
+    debug_conn = events::debug::toggle_ui_text_box_background_event.connect([&]{
         this->alpha = this->alpha == 1 ? initial_alpha : 1;
         bg.set_alpha(this->alpha);
     });
+}
+
+UITextBox::~UITextBox() {
+    debug_conn.disconnect();
 }
 
 void UITextBox::set_text(std::string new_text) {

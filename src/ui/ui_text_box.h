@@ -5,6 +5,7 @@
 #include "ui_rectangle.h"
 #include "util/color.h"
 #include <string>
+#include <boost/signals2.hpp>
 
 class UITextBox : public UIContainer {
 public:
@@ -13,6 +14,7 @@ public:
               float width, float height,
               Color text_color, Color bg_color = Color::WHITE,
               float alpha = 0.f);
+    ~UITextBox();
     void set_text(std::string new_text);
     void set_width(float width);
     void set_height(float height);
@@ -27,4 +29,6 @@ private:
     float initial_alpha;
     UIRectangle bg;
     UITextNode text_node;
+
+    boost::signals2::connection debug_conn;
 };
