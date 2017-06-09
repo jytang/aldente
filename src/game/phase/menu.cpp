@@ -1,12 +1,15 @@
 #include <game/game_state.h>
 #include "menu.h"
 #include <input/modal_input.h>
+#include <util/config.h>
 
 std::string MenuPhase::to_string() {
     return "MAIN MENU";
 }
 
 void MenuPhase::s_setup() {
+    Config::config->get_value(Config::str_show_dialogues, show_dialogues);
+
     ready_conn = events::player_ready_event.connect([&](int player_id) {
         // Ready up if not previously ready. Otherwise un-ready up.
         context.ready_flags[player_id] = !context.ready_flags[player_id];
@@ -69,5 +72,5 @@ void MenuPhase::c_teardown() {
 }
 
 proto::Phase MenuPhase::s_phase_when_done() {
-    return proto::Phase::BUILD_TUTORIAL;
+    return show_dialogues ? proto::Phase::BUILD_TUTORIAL : proto::Phase::BUILD;
 }

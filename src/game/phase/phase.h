@@ -5,7 +5,7 @@
 
 class Phase {
 public:
-    Phase(Context& context) : context(context), next(proto::Phase::NOOP) {};
+    Phase(Context& context);
     virtual void s_setup() = 0;
     virtual proto::Phase s_update() { return next; };
     virtual void s_teardown() = 0;
@@ -24,6 +24,9 @@ protected:
 
     // If you must instigate a phase change outside of update() (e.g. via timed callback), do it here.
     proto::Phase next;
+
+    // Whether or not to show tutorial phases
+    bool show_dialogues;
 };
 
 class TimedPhase : public Phase {

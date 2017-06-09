@@ -1,5 +1,6 @@
 #include <game/game_state.h>
 #include <input/modal_input.h>
+#include <util/config.h>
 #include "build.h"
 #include "audio/audio_manager.h"
 
@@ -12,6 +13,8 @@ std::string BuildPhase::to_string() {
 }
 
 void BuildPhase::s_setup() {
+    Config::config->get_value(Config::str_show_dialogues, show_dialogues);
+
     // Update the round counter. Starts at 0, so pre-increment.
     ++context.current_round;
 
@@ -253,5 +256,5 @@ void BuildPhase::c_teardown() {
 }
 
 proto::Phase BuildPhase::s_phase_when_done() {
-    return context.current_round == 1 ? proto::Phase::DUNGEON_TUTORIAL : proto::Phase::DUNGEON;
+    return (context.current_round == 1 && show_dialogues) ? proto::Phase::DUNGEON_TUTORIAL : proto::Phase::DUNGEON;
 }

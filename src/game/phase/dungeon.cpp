@@ -1,5 +1,6 @@
 #include <game/game_state.h>
 #include <input/modal_input.h>
+#include <util/config.h>
 #include "dungeon.h"
 #include "game_objects/player.h"
 #include "game_objects/essence.h"
@@ -12,6 +13,8 @@ std::string DungeonPhase::to_string() {
 }
 
 void DungeonPhase::s_setup() {
+    Config::config->get_value(Config::str_show_dialogues, show_dialogues);
+
     transition_after(6, 60, s_phase_when_done()); // Add for countdown
 
     collision_conn = events::dungeon::network_collision_event.connect([&](int dispatcher, int other) {
@@ -179,5 +182,5 @@ void DungeonPhase::c_teardown() {
 }
 
 proto::Phase DungeonPhase::s_phase_when_done() {
-    return context.current_round == 1 ? proto::Phase::MINIGAME_TUTORIAL : proto::Phase::MINIGAME;
+    return (context.current_round == 1 && show_dialogues) ? proto::Phase::MINIGAME_TUTORIAL : proto::Phase::MINIGAME;
 }

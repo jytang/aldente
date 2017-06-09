@@ -1,6 +1,9 @@
 #include "phase.h"
 
 #include <iostream>
+#include <util/config.h>
+
+Phase::Phase(Context& context) : context(context), next(proto::Phase::NOOP) {};
 
 void TimedPhase::transition_after(int countdown, int seconds, proto::Phase to) {
     cancel_clock_every();
