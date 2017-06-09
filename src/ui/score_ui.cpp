@@ -70,7 +70,11 @@ ScoreUI::ScoreUI(float aspect)
     });
 
     events::ui::disable_scoreboard.connect([&]() {
-        disable_animated();
+        // Just disable without animations because of transition.
+        disable();
+        for (UILeaderboardEntry *entry : entries)
+            entry->set_alpha(0.f);
+        bg.set_alpha(0.f);
     });
 }
 

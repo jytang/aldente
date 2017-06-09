@@ -7,7 +7,7 @@ MinigameResultsPhase::MinigameResultsPhase(Context &context)
 void MinigameResultsPhase::s_setup() {
     Config::config->get_value(Config::str_num_rounds, n_rounds);
 
-    transition_after(0, 10, s_phase_when_done());
+    transition_after(0, 8, s_phase_when_done());
 
     // Do any extra scene stuff here
 }
