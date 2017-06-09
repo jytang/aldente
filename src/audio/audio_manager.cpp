@@ -33,12 +33,13 @@ const std::string AudioManager::SELECT2_SOUND = "assets/audio/sound/select2.wav"
 const std::string AudioManager::FANFARE_SOUND = "assets/audio/sound/fanfare.wav";
 const std::string AudioManager::CHAR_SELECTION_READY_SOUND = AudioManager::SELECT1_SOUND;
 const std::string AudioManager::CHAR_SELECTION_UNREADY_SOUND = AudioManager::SELECT2_SOUND;
-const std::string AudioManager::MAIN_MENU_START_SOUND = AudioManager::BUILD_CONFIRM_SOUND;
+const std::string AudioManager::MAIN_MENU_START_SOUND = "assets/audio/sound/main_menu_start.wav";
 const std::string AudioManager::CONSTRUCT_SELECTED_SOUND = AudioManager::BUILD_CONFIRM_SOUND;
+const std::string AudioManager::CONSTRUCT_ROTATE_SOUND = AudioManager::SELECT2_SOUND;
 
-const std::string AudioManager::LEADERBOARD_SOUND = AudioManager::SLIME_JUMP_SOUND;
+const std::string AudioManager::LEADERBOARD_SOUND = "assets/audio/sound/leaderboard.wav";
 const std::string AudioManager::BUILD_PHASE_READY_SOUND = AudioManager::SELECT1_SOUND;
-const std::string AudioManager::CHEST_OPENING_SOUND = AudioManager::WHOOSH_SOUND;
+const std::string AudioManager::CHEST_OPENING_SOUND = AudioManager::DREAM_ESSENCE_SOUND;
 const std::string AudioManager::COUNTDOWN_SOUND = "assets/audio/sound/countdown.wav";
 
 const float AudioManager::SFX_DECREASE_COEFFICIENT = log(SFX_DECREASE_RATIO) / SFX_DECREASE_DISTANCE_THRESHOLD;

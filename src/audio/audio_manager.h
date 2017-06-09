@@ -29,6 +29,7 @@ public:
     static const std::string CHAR_SELECTION_UNREADY_SOUND;
     static const std::string MAIN_MENU_START_SOUND;
     static const std::string CONSTRUCT_SELECTED_SOUND;
+    static const std::string CONSTRUCT_ROTATE_SOUND;
 
     static const std::string LEADERBOARD_SOUND;
     static const std::string BUILD_PHASE_READY_SOUND;

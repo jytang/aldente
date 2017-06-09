@@ -176,15 +176,18 @@ void BuildPhase::c_setup() {
                 break;
             }
             case events::BTN_LB: {
-                if (!is_menu)
+                if (!is_menu) {
                     events::build::c_rotate_preview_event(false);
-                else
+                    events::sound_effects_event(events::AudioData(AudioManager::CONSTRUCT_ROTATE_SOUND, false));
+                } else
                     events::ui::enable_leaderboard();
                 break;
             }
             case events::BTN_RB: {
-                if (!is_menu)
+                if (!is_menu) {
                     events::build::c_rotate_preview_event(true);
+                    events::sound_effects_event(events::AudioData(AudioManager::CONSTRUCT_ROTATE_SOUND, false));
+                }
                 break;
             }
             default:
