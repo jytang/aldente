@@ -61,6 +61,10 @@ void DungeonPhase::s_setup() {
 }
 
 void DungeonPhase::c_setup() {
+    // Update camera before countdown.
+    GameObject* player_obj = GameObject::game_objects[context.player_id];
+    events::dungeon::player_position_updated_event(player_obj->transform.get_position());
+
     events::ui::show_countdown({"3", "2", "1", "GO"}, Color::WHITE, [this]() {
         events::dungeon::c_start();
 

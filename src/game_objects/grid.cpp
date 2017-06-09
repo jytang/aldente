@@ -26,8 +26,10 @@
 
 #define PADDING 20 // Padding along side of dungeon for grass and trees
 
+#define STARTING_HOVER 20
+
 Grid::Grid(std::string map_loc) :
-        hover(nullptr), hover_col(0), hover_row(0),
+        hover(nullptr), hover_col(STARTING_HOVER), hover_row(STARTING_HOVER),
         width(0), height(0) {
 
     tag = "GRID";
@@ -40,7 +42,7 @@ Grid::Grid(std::string map_loc) :
     fill_trees();
 
     // Default starting location
-    hover = grid[0][0];
+    hover = grid[hover_col][hover_row];
 
     setup_listeners();
 }
@@ -137,6 +139,8 @@ void Grid::setup_listeners() {
     events::build::end_build_event.connect([&]() {
         // Removes any existing preview when leaving build phase.
         remove_child(&preview);
+        // Reset hover
+        hover_col = hover_row = STARTING_HOVER;
     });
 }
 
