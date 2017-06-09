@@ -1,4 +1,5 @@
 #include <game/game_state.h>
+#include <util/config.h>
 #include "minigame_phase.h"
 #include "input/modal_input.h"
 
@@ -12,6 +13,8 @@ MinigamePhase::MinigamePhase(Context& context) : TimedPhase(context) {
         new SumoMG(context),
     };
     curr_mg = nullptr;
+
+    Config::config->get_value(Config::str_num_rounds, n_rounds);
 }
 
 MinigamePhase::~MinigamePhase() {
@@ -96,5 +99,5 @@ void MinigamePhase::c_teardown() {
 }
 
 proto::Phase MinigamePhase::s_phase_when_done() {
-    return context.current_round == 5 ? proto::Phase::END : proto::Phase::BUILD;
+    return context.current_round == n_rounds ? proto::Phase::END : proto::Phase::BUILD;
 }
