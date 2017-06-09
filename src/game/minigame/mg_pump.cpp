@@ -111,6 +111,8 @@ void PumpMG::c_setup() {
         if (d.state == 1) {
             switch (d.input) {
             case events::BTN_A: {
+                events::sound_effects_event(events::AudioData(AudioManager::PUMP_SOUND, false));
+
                 proto::ClientMessage msg;
                 msg.set_pump_request(context.player_id);
                 events::client::send(msg);

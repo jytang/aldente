@@ -35,7 +35,7 @@ public:
     static const std::string BUILD_PHASE_READY_SOUND;
     static const std::string CHEST_OPENING_SOUND;
     static const std::string COUNTDOWN_SOUND;
-
+    static const std::string PUMP_SOUND;
 
     std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
 

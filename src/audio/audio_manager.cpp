@@ -41,6 +41,7 @@ const std::string AudioManager::LEADERBOARD_SOUND = "assets/audio/sound/leaderbo
 const std::string AudioManager::BUILD_PHASE_READY_SOUND = AudioManager::SELECT1_SOUND;
 const std::string AudioManager::CHEST_OPENING_SOUND = AudioManager::DREAM_ESSENCE_SOUND;
 const std::string AudioManager::COUNTDOWN_SOUND = "assets/audio/sound/countdown.wav";
+const std::string AudioManager::PUMP_SOUND = AudioManager::BUILD_CONFIRM_SOUND;
 
 const float AudioManager::SFX_DECREASE_COEFFICIENT = log(SFX_DECREASE_RATIO) / SFX_DECREASE_DISTANCE_THRESHOLD;
 
