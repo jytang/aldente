@@ -85,6 +85,12 @@ void DialogUI::display_next() {
         display += current.substr(0, 1);
         current = current.substr(1);
 
+        // hacky way to have dialogue sound per 4 characters.
+        static int char_count = 0;
+        char_count++;
+        if (char_count % 4 == 0)
+            events::sound_effects_event(events::AudioData(AudioManager::SELECT2_SOUND, false));
+
         textbox.set_text(display);
 
         if (current.empty()) {
@@ -95,6 +101,8 @@ void DialogUI::display_next() {
 }
 
 void DialogUI::skip_animation() {
+    events::sound_effects_event(events::AudioData(AudioManager::SELECT1_SOUND, false));
+
     animating = false;
     cancel_text_animation();
     textbox.set_text(display + current);
