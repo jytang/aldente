@@ -76,7 +76,7 @@ void Grid::setup_listeners() {
         c.set_fwd_y(preview.curr_preview->transform.get_forward().y);
         c.set_fwd_z(preview.curr_preview->transform.get_forward().z);
 
-        // Client-side early verification. Check if this location is buildable.
+        // Client-side early verification. Check if this location is buildable for sound effect.
         if (!verify_build(static_cast<ConstructType>(c.type()), c.x(), c.z()))
             events::sound_effects_event(events::AudioData(AudioManager::INVALID_BUZZ_SOUND, false));
 
