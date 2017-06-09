@@ -38,8 +38,8 @@ void MGScenePump::c_setup() {
     // Set up the platform
     Platform* platform = new Platform(PlatformShape::SQUARE);
 
-    platform->set_position(glm::vec3(0, -1.f, 0));
-    platform->transform.set_scale(glm::vec3(10, 1.0f, 10));
+    platform->transform.set_scale(glm::vec3(0.0165f, 0.01f, 0.009f));
+    platform->transform.set_position(glm::vec3(0, -2.f, -0.5f));
     objs.push_back(platform);
 
     // Set up 4 pumps

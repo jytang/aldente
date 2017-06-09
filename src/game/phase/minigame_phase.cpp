@@ -25,7 +25,7 @@ MinigamePhase::~MinigamePhase() {
 
 void MinigamePhase::s_setup() {
     // Pick minigame and set up timer/connections
-    curr_mg = minigames[curr_mg_index];
+    curr_mg = minigames[2];
     curr_mg_index = (curr_mg_index + 1) % minigames.size();
 
     do_update = false;
@@ -43,7 +43,7 @@ void MinigamePhase::c_setup() {
     input::ModalInput::get()->set_mode(input::ModalInput::DISABLE);
 
     // Client just cycles through minigames in same order as server.
-    curr_mg = minigames[curr_mg_index];
+    curr_mg = minigames[2];
     curr_mg_index = (curr_mg_index + 1) % minigames.size();
 
     curr_mg->c_setup();
