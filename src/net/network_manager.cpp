@@ -44,7 +44,6 @@ void ServerNetworkManager::register_listeners() {
         proto::ServerMessage msg;
         msg.set_allocated_join_response(new proto::JoinResponse(resp));
         server.send_to(conn_id, msg);
-        std::cerr << "[s] adding player with go-id " << resp.obj_id() << "\n";
 
         // Then, send the state of all players to all clients.
         proto::ServerMessage update_msg;
@@ -52,8 +51,6 @@ void ServerNetworkManager::register_listeners() {
         for (auto & kv : GameState::players) {
             proto::GameObject* go = state->add_objects();
             Player* player = kv.second;
-            std::cerr << "[s] sending update player with go-id " << player->get_id() << "\n";
-
             go->set_id(player->get_id());
             go->set_type(proto::GameObject::Type::GameObject_Type_PLAYER);
             go->set_model_index(player->c_get_model_index());
@@ -347,7 +344,6 @@ void ClientNetworkManager::update() {
                 if (GameObject::game_objects.find(obj.id()) == GameObject::game_objects.end()) {
                     // Game object with that ID doesn't exist on this client yet; create it.
                     if (obj.type() == proto::GameObject::Type::GameObject_Type_PLAYER) {
-                        std::cerr << "[c] spawning player: " << obj.id() << "\n";
                         events::menu::spawn_existing_player_event(obj.id(), obj.model_index());
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_GOAL) {
                         events::dungeon::spawn_existing_goal_event(obj_x, obj_z, obj.id());
