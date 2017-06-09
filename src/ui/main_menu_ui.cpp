@@ -27,7 +27,7 @@ MainMenuUI::MainMenuUI(float aspect)
     logo.set_alpha(0.f);
 
     // Press start
-    press.set_text("Press START");
+    press.set_text("PRESS START");
 
     events::ui::enable_main_menu.connect([&](){
         // Switch to main menu button bindings.

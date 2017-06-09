@@ -89,7 +89,7 @@ void MainScene::connect_listeners() {
 
     goal_conn = events::dungeon::spawn_existing_goal_event.connect([&](int x, int z, int id) {
         c_place_goal(x, z, id);
-        events::ui::show_notification("The exit has appeared!", 5.f);
+        events::ui::show_notification("The portal has appeared!", 5.f);
     });
 }
 
