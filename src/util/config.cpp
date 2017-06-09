@@ -12,6 +12,7 @@ string Config::str_server_ip = "ServerIp";
 string Config::str_port = "Port";
 string Config::str_controller = "Controller";
 string Config::str_num_rounds = "NumRounds";
+string Config::str_show_dialogues = "ShowDialogues";
 
 typedef pair<string, string> StringPair;
 Config *Config::config = new Config();
