@@ -21,13 +21,13 @@ Shooter::Shooter(int x, int z, int id) : ProjectileTrap(x, z, id) {
 }
 
 void Shooter::setup_model() {
-    Model *model = AssetLoader::get_model("arrow_trap");
+    Model *model = AssetLoader::get_model("minion");
     attach_model(model);
-    set_scale({ 0.0095f, 0.0095f, 0.0095f });
+    set_scale({ 0.005f, 0.005f, 0.005f });
 
     anim_player.set_anim("shoot");
     anim_player.set_loop(false);
-    anim_player.set_speed(5.0f);
+    anim_player.set_speed(1.0f);
 }
 
 void Shooter::play_trigger_animation() {
