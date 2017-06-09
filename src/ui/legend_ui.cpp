@@ -6,11 +6,14 @@ static const LegendUI::str_pair BUILD_MENU_LEGEND = {
         {"xboxControllerDPad.png", "Move selection"},
         {"xboxControllerButtonA.png", "Choose"},
         {"xboxControllerStart.png", "Ready up"},
+        {"xboxControllerLeftShoulder.png", "Leaderboard"},
 };
 static const LegendUI::str_pair BUILD_SELECTED_LEGEND = {
         {"xboxControllerLeftThumbstick.png", "Select location"},
         {"xboxControllerButtonA.png", "Build"},
         {"xboxControllerButtonB.png", "Cancel"},
+        {"xboxControllerLeftShoulder.png", "Rotate CW"},
+        {"xboxControllerRightShoulder.png", "Rotate CCW"},
 };
 
 LegendUI::LegendUI(float aspect, float legend_width_, float entry_height_, float padding_) :
