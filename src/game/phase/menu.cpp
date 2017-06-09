@@ -74,6 +74,9 @@ void MenuPhase::c_teardown() {
     button_conn.disconnect();
 
     events::menu::end_menu_event();
+
+    events::stop_all_sounds_event();
+    events::stop_music_event();
 }
 
 proto::Phase MenuPhase::s_phase_when_done() {
