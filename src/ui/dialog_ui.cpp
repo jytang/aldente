@@ -11,8 +11,8 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
               aspect * (100.f - width) / 2, // Center
               padding, aspect * width, height, padding,
               UIUnstretchedTextBox::START, UIUnstretchedTextBox::START, Color::WHITE, Color::BLACK, 0.5f)
-    , portrait(aspect * (width + (100.f - width) / 2 - width / 1.7), // Right-align
-               0.f, aspect * width / 1.7, height * 3,
+    , portrait(aspect * (width + (100.f - width) / 2) - (height * 3), // Right-align
+               0.f, height * 3, height * 3,
                AssetLoader::get_texture("dio.jpg"))
     , cancel_text_animation([](){})
     , animating(false) {
@@ -36,12 +36,18 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
         const auto &mi = input::ModalInput::get();
         mi->set_mode(input::ModalInput::DIALOG);
         button_conn = mi->with_mode(input::ModalInput::DIALOG).buttons.connect([&](const events::ButtonData &d) {
-            if (d.state) {
-                if (animating)
-                    skip_animation();
-                else
-                    display_next();
-            }
+            if (d.state == 0) return;
+            switch (d.input) {
+                case events::BTN_START:
+                case events::BTN_A:
+                    if (animating)
+                        skip_animation();
+                    else
+                        display_next();
+                    break;
+                default:
+                    break;
+                }
         });
     });
 
