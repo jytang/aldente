@@ -7,7 +7,7 @@
 */
 class DeathSphere : public Projectile {
 private:
-    btSphereShape *hit_sphere = new btSphereShape(0.3f);
+    btSphereShape *hit_sphere = new btSphereShape(0.2f);
 public:
     DeathSphere(int id = 0);
 
