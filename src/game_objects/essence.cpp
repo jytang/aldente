@@ -96,8 +96,13 @@ void Essence::s_on_collision(GameObject *other) {
 }
 
 void Essence::c_on_collision(GameObject *other) {
-    if (dynamic_cast<Player*>(other))
+    if (dynamic_cast<Player*>(other)) {
+        Player *p = dynamic_cast<Player*>(other);
+        if (GameState::context.client_player == p) {
+            events::sound_effects_event(events::AudioData(AudioManager::DREAM_ESSENCE_SOUND, false));
+        }
         pickup_anim();
+    }
     disappear();
 }
 
@@ -142,8 +147,6 @@ void Essence::random_push() {
 }
 
 void Essence::pickup_anim() {
-    events::sound_effects_event(events::AudioData(AudioManager::DREAM_ESSENCE_SOUND, false));
-
     // Add "pick up" animation
     anim_player.set_anim("up");
     anim_player.set_speed(3.0f);

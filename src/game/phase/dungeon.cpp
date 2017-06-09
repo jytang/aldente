@@ -192,7 +192,7 @@ void DungeonPhase::c_teardown() {
     events::stop_all_sounds_event();
 
     // Stop goal buzzing.
-    events::dungeon::disable_goal_buzz();
+    //events::dungeon::disable_goal_buzz();
 
     // Resets game objects on client side
     for (auto & kv : GameObject::game_objects) {
