@@ -13,7 +13,7 @@ Shooter::Shooter(int x, int z, int id) : ProjectileTrap(x, z, id) {
         collision_group = COLLISION_STRUCTS;
         events::add_rigidbody_event(rigid);
 
-        fill_projectile_pool(ProjectileTypes::ARROW);
+        fill_projectile_pool(ProjectileTypes::SPHERE);
 
         attack_range = 50.0f;
         activation_type = AI;

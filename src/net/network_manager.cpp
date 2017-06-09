@@ -4,6 +4,7 @@
 #include "game_objects/essence.h"
 #include "game_objects/traps/projectile.h"
 #include "game_objects/traps/arrow.h"
+#include "game_objects/traps/death_sphere.h"
 #include "game/game_state.h"
 #include <GLFW/glfw3.h>
 #include <unordered_set>
@@ -368,6 +369,11 @@ void ClientNetworkManager::update() {
                             arrow->set_parent(obj.parent_id());
                             arrow->setup_model();
                             GameState::scene_manager.get_current_scene()->objs.push_back(arrow);
+                        } else if (obj.subtype() == ProjectileTypes::SPHERE) {
+                            DeathSphere *sphere = new DeathSphere(obj.id());
+                            sphere->set_parent(obj.parent_id());
+                            sphere->setup_model();
+                            GameState::scene_manager.get_current_scene()->objs.push_back(sphere);
                         }
                     }
                     else {

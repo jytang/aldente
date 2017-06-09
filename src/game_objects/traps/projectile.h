@@ -4,7 +4,7 @@
 #include "timer.h"
 
 enum ProjectileTypes {
-    ARROW, DeathSphere,
+    ARROW, SPHERE,
 };
 
 /*

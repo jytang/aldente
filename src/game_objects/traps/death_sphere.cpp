@@ -3,7 +3,7 @@
 #include "asset_loader.h"
 
 DeathSphere::DeathSphere(int id) : Projectile(id) {
-    projectile_type = ProjectileTypes::DeathSphere;
+    projectile_type = ProjectileTypes::SPHERE;
 
     if (id == ON_SERVER) {
         // Creates Rigid Body
