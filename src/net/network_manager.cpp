@@ -344,6 +344,7 @@ void ClientNetworkManager::update() {
                 if (GameObject::game_objects.find(obj.id()) == GameObject::game_objects.end()) {
                     // Game object with that ID doesn't exist on this client yet; create it.
                     if (obj.type() == proto::GameObject::Type::GameObject_Type_PLAYER) {
+                        std::cerr << "[c] spawning player: " << obj.id() << "\n";
                         events::menu::spawn_existing_player_event(obj.id(), obj.model_index());
                     } else if (obj.type() == proto::GameObject::Type::GameObject_Type_GOAL) {
                         events::dungeon::spawn_existing_goal_event(obj_x, obj_z, obj.id());
