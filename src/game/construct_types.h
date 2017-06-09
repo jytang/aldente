@@ -15,18 +15,17 @@ struct ConstructData {
 
 namespace Constructs {
     const static std::map<ConstructType, ConstructData> CONSTRUCTS = {
-        { ConstructType::CHEST, { ConstructType::CHEST, 50, "Chest", "A chest full of essence", "chest_icon.png" } },
-        { ConstructType::MIMIC, { ConstructType::MIMIC, 50, "Mimic", "A chest with murderous intent", "mimic_icon.png" } },
-        { ConstructType::BOMB, { ConstructType::BOMB, 10, "Mine Bomb", "A mine. Also a bomb.", "bomb_icon.png" } },
-        { ConstructType::SPIKES, { ConstructType::SPIKES, 50, "Spikes", "It was me, spikes.", "spike_icon.png" } },
-        { ConstructType::SLIME_B, { ConstructType::SLIME_B, 10, "Blue Slime", "Likes to loop", "slime_icon.png" } },
-        { ConstructType::SLIME_Y,{ ConstructType::SLIME_Y, 10, "Bunny", "Bounces off walls", "bunny_icon.png" } },
-        { ConstructType::SLIME_R,{ ConstructType::SLIME_R, 10, "Bad Shroom", "Pretty straightforward", "badmush_icon.png" } },
-        { ConstructType::SLIME_G,{ ConstructType::SLIME_G, 10, "Green Slime", "Unpredictable little bastard", "slime_icon.png" } },
-        { ConstructType::ARROW_TRAP,{ ConstructType::ARROW_TRAP, 10, "Arrow", "Sharp as a daisy", "arrow_icon.png" } },
-        { ConstructType::SHOOTER,{ ConstructType::SHOOTER, 10, "Devil", "It's high noon.", "devil_icon.png" } },
-        { ConstructType::ICE,{ ConstructType::ICE, 10, "Ice", "Gets pretty chilly", "ice_icon.png" } },
-        { ConstructType::CONFUSE,{ ConstructType::CONFUSE, 10, "Confuse Trap", "What does this do again?", "spiral.png" } },
-        { ConstructType::REMOVE, { ConstructType::REMOVE, 200, "Remove", "Remove a block.", "no_player.png" } }
+        { ConstructType::CHEST,      { ConstructType::CHEST,        50, "Chest",        "Lucrative cache of dream essence",   "chest_icon.png" } },
+        { ConstructType::MIMIC,      { ConstructType::MIMIC,        50, "Mimic",        "Chest of ceaseless killer intent",   "mimic_icon.png" } },
+        { ConstructType::BOMB,       { ConstructType::BOMB,         10, "Mine Bomb",    "Blesses the stepper with a blast",   "bomb_icon.png" } },
+        { ConstructType::SPIKES,     { ConstructType::SPIKES,       50, "Spikes",       "Essence extractor, impaler style",   "spike_icon.png" } },
+        { ConstructType::SLIME_B,    { ConstructType::SLIME_B,      10, "Blue Slime",   "Aldente aschente grandma sandma!",   "slime_icon.png" } }, // change flavour here
+        { ConstructType::SLIME_Y,    { ConstructType::SLIME_Y,      10, "Bunny",        "Bouncy, fluffy, and also painful",   "bunny_icon.png" } },
+        { ConstructType::SLIME_R,    { ConstructType::SLIME_R,      10, "Bad Shroom",   "Volatile shroom, of the bad sort",   "badmush_icon.png" } },
+        { ConstructType::SLIME_G,    { ConstructType::SLIME_G,      10, "Green Slime",  "One unpredictable little bastard",   "slime_icon.png" } },
+        { ConstructType::ARROW_TRAP, { ConstructType::ARROW_TRAP,   10, "Arrow",        "Mindlessly barrages where it faces", "arrow_icon.png" } },
+        { ConstructType::SHOOTER,    { ConstructType::SHOOTER,      10, "Devil",        "Sentient sentry, deviruchi devil",   "devil_icon.png" } },
+        { ConstructType::ICE,        { ConstructType::ICE,          10, "Ice",          "50% slow movement speed/attack speed", "ice_icon.png" } },
+        { ConstructType::CONFUSE,    { ConstructType::CONFUSE,      10, "Confuse",      "Muddles mind, disorients direction", "spiral.png" } }
     };
 }
