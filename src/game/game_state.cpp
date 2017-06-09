@@ -1,4 +1,5 @@
 #include "game_state.h"
+#include "dialogues.h"
 
 Context GameState::context;
 MenuPhase GameState::menu_phase(context);
@@ -9,21 +10,21 @@ EndPhase GameState::end_phase(context);
 
 DialoguePhase GameState::build_tutorial_phase(
         context, proto::Phase::BUILD, "Build Tutorial",
-        {{"slime_red.png", "henlo it is build time"}}, &GameState::main_scene,
+        dialogue::BUILD_TUT, &GameState::main_scene,
         [](Camera &cam) {
             cam.cam_pos = {0, 3, 0}; // Top left corner
             cam.rotate_cam({0, 1, 0}, -(90 + 45)); // Face the grid
         });
 DialoguePhase GameState::dungeon_tutorial_phase(
         context, proto::Phase::DUNGEON, "Dungeon Tutorial",
-        {{"slime_blue.png", "hi it dungeon time"}}, &GameState::main_scene,
+        dialogue::DUNGEON_TUT, &GameState::main_scene,
         [](Camera &cam) {
             cam.cam_pos = {0, 3, 0}; // Top left corner
             cam.rotate_cam({0, 1, 0}, -(90 + 45)); // Face the grid
         });
 DialoguePhase GameState::minigame_tutorial_phase(
         context, proto::Phase::MINIGAME, "Minigame Tutorial",
-        {{"slime_green.png", "minigam"}}, &GameState::main_scene,
+        dialogue::MINIGAME_TUT, &GameState::main_scene,
         [](Camera &cam) {
             cam.cam_pos = {0, 3, 0}; // Top left corner
             cam.rotate_cam({0, 1, 0}, -(90 + 45)); // Face the grid

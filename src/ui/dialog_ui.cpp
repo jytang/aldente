@@ -8,10 +8,12 @@
 DialogUI::DialogUI(float aspect, float width, float height, float padding)
     : bg(0, 0, aspect * 100.f, 100.f, Color::BLACK, 0.8f)
     , textbox(3.f, 4.f,
-              aspect * (100.f - width) / 2 + height, // Center, but make room for the portrait
-              padding, aspect * width - height, height, padding,
+              aspect * (100.f - width) / 2, // Center
+              padding, aspect * width, height, padding,
               UIUnstretchedTextBox::START, UIUnstretchedTextBox::START, Color::WHITE, Color::BLACK, 0.5f)
-    , portrait(aspect * (100.f - width) / 2, 0, height, height, AssetLoader::get_texture("dio.jpg"))
+    , portrait(aspect * (width + (100.f - width) / 2 - width / 1.7), // Right-align
+               padding, aspect * width / 1.7, height * 3,
+               AssetLoader::get_texture("dio.jpg"))
     , cancel_text_animation([](){})
     , animating(false) {
 
