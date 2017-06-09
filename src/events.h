@@ -76,9 +76,10 @@ namespace events {
             distance = glm::distance(p->transform.get_position(), o->transform.get_position());
         }
     };
-    extern signal<void(const AudioData &)> music_event;
+	extern signal<void(const AudioData &)> music_event;
+	extern signal<void()> stop_music_event;
     extern signal<void(const AudioData &)> sound_effects_event;
-    extern signal<void()> stop_all_sounds;
+    extern signal<void()> stop_all_sounds_event;
     extern signal<void()> toggle_mute_event;
 
     struct WindowSizeData {

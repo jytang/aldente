@@ -178,7 +178,9 @@ void DungeonPhase::c_teardown() {
     essence_conn.disconnect();
     player_finish_conn.disconnect();
 
-    events::stop_all_sounds();
+	// Stop all music/sounds
+	events::stop_music_event();
+    events::stop_all_sounds_event();
 }
 
 proto::Phase DungeonPhase::s_phase_when_done() {

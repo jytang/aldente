@@ -254,6 +254,10 @@ void BuildPhase::c_teardown() {
     c_check_funds_conn.disconnect();
 
     events::build::end_build_event();
+
+	// Stop all music/sounds
+	events::stop_music_event();
+	events::stop_all_sounds_event();
 }
 
 proto::Phase BuildPhase::s_phase_when_done() {

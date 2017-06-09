@@ -41,11 +41,6 @@ AudioManager::AudioManager() : muted(false), max_music_volume(100.0), max_sound_
     loadSounds();
 
     events::music_event.connect([&](const events::AudioData &d) {
-        // Stop the current music from playing, if any
-        if (music.getStatus() == sf::SoundSource::Status::Playing) {
-            music.stop();
-        }
-        
         std::string filename = d.filename;
         if (!music.openFromFile(filename)) {
             std::cerr << "AudioManager: Cannot open " << filename << std::endl;;
@@ -58,6 +53,10 @@ AudioManager::AudioManager() : muted(false), max_music_volume(100.0), max_sound_
         
         music.play();
     });
+
+	events::stop_all_sounds_event.connect([&]() {
+		music.stop();
+	});
 
     events::sound_effects_event.connect([&](const events::AudioData &d) {
         std::string filename = d.filename;
@@ -84,7 +83,7 @@ AudioManager::AudioManager() : muted(false), max_music_volume(100.0), max_sound_
         active_sounds[inactive_sound_index].play();
     });
 
-    events::stop_all_sounds.connect([&]() {
+    events::stop_all_sounds_event.connect([&]() {
         for (int i = 0; i < active_sounds.size(); i++) {
             active_sounds[i] = sf::Sound();
         }
