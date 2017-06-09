@@ -238,7 +238,7 @@ Player* GameState::s_add_player(int conn_id) {
     return player;
 }
 
-Player* GameState::c_add_player(int obj_id, int model_index, bool is_client, bool pos) {
+Player* GameState::c_add_player(int obj_id, int model_index, bool is_client, int pos) {
     Player *player = new Player(obj_id);
     player->c_setup_player_model(model_index);
     context.player_ids.push_back(obj_id);
