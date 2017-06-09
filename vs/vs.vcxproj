@@ -245,6 +245,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\render\render.h" />
     <ClInclude Include="..\src\render\shadows.h" />
     <ClInclude Include="..\src\scene\camera.h" />
+    <ClInclude Include="..\src\scene\end_scene.h" />
     <ClInclude Include="..\src\scene\light\directional_light.h" />
     <ClInclude Include="..\src\scene\light\light.h" />
     <ClInclude Include="..\src\scene\light\point_light.h" />
@@ -394,6 +395,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClCompile Include="..\src\render\render.cpp" />
     <ClCompile Include="..\src\render\shadows.cpp" />
     <ClCompile Include="..\src\scene\camera.cpp" />
+    <ClCompile Include="..\src\scene\end_scene.cpp" />
     <ClCompile Include="..\src\scene\main_scene.cpp" />
     <ClCompile Include="..\src\scene\minigame_scenes\mgscene_penguin.cpp" />
     <ClCompile Include="..\src\scene\minigame_scenes\mgscene_pump.cpp" />

@@ -14,7 +14,7 @@ void EndPhase::s_teardown() {
 
 void EndPhase::c_setup() {
     // Set the scene
-    // GameState::set_scene(&GameState::end_scene);
+    GameState::set_scene(&GameState::end_scene);
 
     int high_score = 0;
     Player* winner = nullptr;
