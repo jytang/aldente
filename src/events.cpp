@@ -142,4 +142,8 @@ namespace events {
         signal<void(Player*)> s_inflate_balloon_event;
         signal<void(int, int)> c_assign_pump_event;
     }
+
+    namespace end {
+        signal<void()> start_end_event;
+    }
 }

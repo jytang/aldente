@@ -76,6 +76,10 @@ ClockUI::ClockUI(float aspect, int rounds)
         else
             ready.set_text("PRESS START WHEN READY");
     });
+
+    events::end::start_end_event.connect([&]() {
+        disable();
+    });
 }
 
 ClockUI::~ClockUI() {

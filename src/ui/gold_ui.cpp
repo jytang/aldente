@@ -44,6 +44,10 @@ GoldUI::GoldUI(float aspect)
         enable();
     });
 
+    events::end::start_end_event.connect([&]() {
+        disable();
+    });
+
     events::c_player_stats_updated.connect([&](const proto::PlayerStats &update) {
         set_gold(update.coins());
     });

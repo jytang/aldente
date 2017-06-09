@@ -517,3 +517,9 @@ void Player::c_set_ice_effect(bool b) {
     else
         events::ui::hide_effect_image(1.0f);
 }
+
+void Player::emote(bool loop, float speed) {
+    anim_player.set_anim("emote", speed, loop);
+    anim_player.play();
+    anim_override = true;
+}

@@ -27,13 +27,17 @@ void EndPhase::c_setup() {
         }
     }
 
-    // TODO: use the winner player (and their gold amount if you want)
-    std::cerr << "winner player: " << winner->get_id() << " with gold: " << high_score << "\n";
-
     events::ui::show_dialog(dialogue::END, [this, winner]() {
         GameState::end_scene.cancel_cycle();
         GameState::end_scene.get_placeholder()->c_setup_player_model(winner->c_get_model_index());
+
+        if (winner->c_get_model_index() == 0 || winner->c_get_model_index() == 3)
+            GameState::end_scene.get_placeholder()->emote(true, 0.7f);
+        else
+            GameState::end_scene.get_placeholder()->emote(true);
     });
+
+    events::end::start_end_event();
 }
 
 void EndPhase::c_update() {

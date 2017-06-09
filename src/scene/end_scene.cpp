@@ -6,7 +6,8 @@
 #include "game_objects/minigame/platform.h"
 
 EndScene::EndScene() : Scene() {
-    //cancel_timer = []() {};
+    cancel_timer = []() {};
+    angle = 0;
 }
 
 void EndScene::s_update() {
@@ -39,7 +40,7 @@ void EndScene::c_setup() {
 
     int count = 0;
     cancel_timer = Timer::get()->do_every(
-            std::chrono::milliseconds(250),
+            std::chrono::milliseconds(100),
             [&, count]() mutable {
         placeholder->c_setup_player_model(count++);
         if (count > 3) {
@@ -54,3 +55,14 @@ void EndScene::reset_camera() {
 
     info.camera.recalculate();
 }
+
+void EndScene::cancel_cycle() {
+    cancel_timer();
+    Timer::get()->do_every(
+        std::chrono::milliseconds(30),
+        [&]() {
+        for (GameObject *obj : objs) {
+            obj->transform.rotate(glm::vec3(0, 1, 0), 5.0f);
+        }
+    });
+};

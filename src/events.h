@@ -373,4 +373,9 @@ namespace events {
         // Assign pump id to a player id.
         extern signal<void(int, int)> c_assign_pump_event;
     }
+
+    namespace end {
+        // Signals the begin of the end phase.
+        extern signal<void()> start_end_event;
+    }
 }

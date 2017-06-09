@@ -136,4 +136,7 @@ public:
 
     void toggle_sumo_collider();
     void set_anim_override(bool to_set) { anim_override = to_set; };
+
+    // Play the emote animation.
+    void emote(bool loop, float speed = 1.0f);
 };

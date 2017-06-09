@@ -12,7 +12,7 @@ private:
     std::vector<GameObject*> platforms;
     Player *placeholder;
     std::function<void()> cancel_timer;
-
+    float angle;
 public:
     EndScene();
     void s_update() override;
@@ -22,5 +22,5 @@ public:
     void reset_camera() override;
 
     Player* get_placeholder() { return placeholder; };
-    void cancel_cycle() { cancel_timer(); };
+    void cancel_cycle();
 };
