@@ -23,7 +23,10 @@ CountdownUI::CountdownUI(float aspect)
         for (auto it = to_display.rbegin(); it != to_display.rend(); ++it)
             execute = make_counter(*it, execute);
 
-        events::sound_effects_event(events::AudioData(AudioManager::COUNTDOWN_SOUND, false));
+        // Do countdown sound after one second delay.
+        Timer::get()->do_after(std::chrono::milliseconds(1000), []() {
+            events::sound_effects_event(events::AudioData(AudioManager::COUNTDOWN_SOUND, false));
+        });
 
         // IT'S GO TIME.
         execute();

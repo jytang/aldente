@@ -39,7 +39,7 @@ const std::string AudioManager::CONSTRUCT_SELECTED_SOUND = AudioManager::BUILD_C
 const std::string AudioManager::LEADERBOARD_SOUND = AudioManager::SLIME_JUMP_SOUND;
 const std::string AudioManager::BUILD_PHASE_READY_SOUND = AudioManager::SELECT1_SOUND;
 const std::string AudioManager::CHEST_OPENING_SOUND = AudioManager::WHOOSH_SOUND;
-const std::string AudioManager::COUNTDOWN_SOUND = AudioManager::INVALID_BUZZ_SOUND;
+const std::string AudioManager::COUNTDOWN_SOUND = "assets/audio/sound/countdown.wav";
 
 const float AudioManager::SFX_DECREASE_COEFFICIENT = log(SFX_DECREASE_RATIO) / SFX_DECREASE_DISTANCE_THRESHOLD;
 
