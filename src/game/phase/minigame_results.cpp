@@ -7,7 +7,7 @@ MinigameResultsPhase::MinigameResultsPhase(Context &context)
 void MinigameResultsPhase::s_setup() {
     Config::config->get_value(Config::str_num_rounds, n_rounds);
 
-    transition_after(0, 15, s_phase_when_done());
+    transition_after(0, 10, s_phase_when_done());
 
     // Do any extra scene stuff here
 }
@@ -36,6 +36,10 @@ void MinigameResultsPhase::c_update() {
 
 void MinigameResultsPhase::c_teardown() {
     events::ui::disable_scoreboard();
+
+    // Stop all music/sounds
+    events::stop_music_event();
+    events::stop_all_sounds_event();
 }
 
 std::string MinigameResultsPhase::to_string() {

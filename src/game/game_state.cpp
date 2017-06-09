@@ -151,12 +151,19 @@ void GameState::set_phase(Phase* phase) {
             curr_phase = phase;
             curr_phase->c_setup();
         } else {
-            // Transition, then change phase as a callback at the "apex" of the transition.
-            events::ui::transition_wipe(1.5f, phase->to_string(), [&, phase]() {
+            // Hacky: don't do transition for minigame results phase.
+            if (phase == &minigame_results_phase) {
                 curr_phase->c_teardown();
                 curr_phase = phase;
                 curr_phase->c_setup();
-            });
+            } else {
+                // Transition, then change phase as a callback at the "apex" of the transition.
+                events::ui::transition_wipe(1.5f, phase->to_string(), [&, phase]() {
+                    curr_phase->c_teardown();
+                    curr_phase = phase;
+                    curr_phase->c_setup();
+                });
+            }
         }
     }
 }

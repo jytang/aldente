@@ -105,10 +105,6 @@ void MinigamePhase::c_teardown() {
     curr_mg->c_teardown();
     events::ui::dismiss_legend();
     events::minigame::end_minigame_event();
-
-    // Stop all music/sounds
-    events::stop_music_event();
-    events::stop_all_sounds_event();
 }
 
 proto::Phase MinigamePhase::s_phase_when_done() {
