@@ -1,0 +1,105 @@
+// greets
+// build phase tutorial --> to_string should be like "ARRIVAL"
+{
+	{
+	"silhouette_sandma.png",
+	"God I would love to eat some of that sweet, sweet pasta right now... just a cheeky chunk of pasta al dente..."
+	},
+	
+	{
+	"silhouette_sandma.png",
+	"(Hmm... where in the heaven or else are those darned kids? Was expecting them by now...)"
+	},
+	
+	{
+	"fufu_sandma.png",
+	"...Oh!"
+	},
+	
+	{
+	"smile_sandma.png",
+	"By the sands above! You're here. Come, child, you must be peckish, having travelled all this spacetime..."
+	},
+	
+	{
+	"fufu_sandma.png",
+	"You can call me Sandma... or simply Sharon, whichever suits your fancy..."
+	},
+	
+	{
+	"disappoint_sandma.png",
+	"Oh, you want to know what you're doing here?"
+	},
+	
+	{
+	"fufu_sandma.png",
+	"Don't you worry two nickels about it. You'll know soon enough, my dear..."
+	},
+	
+	{
+	"smile_sandma.png",
+	"Well, come along now. The other children are already raring to go at it!" // ignore plothole where sandma wonders when children will arrive
+	}
+}
+
+	// timer delay
+	
+// build phase tutorial
+// SCULPT PHASE
+// phases of sleep, also sculpting from dream essence
+{
+	{
+	"smile_sandma.png",
+	"...There you go...steady does it."
+	},
+	
+	{
+	"fufu_sandma.png",
+	"In this space, things are quite simple really. The more dream essence you procure, by whatever means you see fit, the more you're capable of."
+	},
+	
+	{
+	"smile_sandma.png",
+	"You see, dream essences can be physically manifested, sculpted into the realm."
+	},
+	
+	{
+	"fufu_sandma.png",
+	"Expend essences wisely. You could, for example, invest in a chest of essence to be collected upon later. Or instead, sculpt a mimic chest to feast on the essence of unsuspecting opponents."
+	},
+	
+	{
+	"smile_sandma.png",
+	"Spend your time wisely too. There's only a limited amount of sculpting time."
+	},
+	
+	{
+	"fufu_sandma.png",
+	"Now, let's go!"
+	}
+}
+
+
+a little of bit lore
+
+
+Story shit
+	(Why are we in this fucking dungeon? What is the goal? Why arewe so antagonistic towards each other? We are children.)
+Tutorial shit
+	Allow me to instruct you in the ways of this realm.
+	How to play the game
+	Goal of the game
+	Sequence of play
+Hidden Lore shit
+	Be the first (or of the first) to reach the exit to receive a hefty cache of dream essence. Each dream essence bringing you one step closer escaping this eternal nightmare.
+	Dead children.
+	Why have I not a flickering reflection in this realm? I've been hearing many a voice in dreamspace.
+	Dreams are the shadow-truths that will endure when mere facts are dust and ashes, and forgot.
+	Let's feast on the flesh of mine enemies, the Pastamancers of Siltgourd!... just kidding :)
+
+
+dungeon phase tutorial
+a dash of lore
+minigame tutorial
+i'll leave you on your own for now
+tiny bit of lore
