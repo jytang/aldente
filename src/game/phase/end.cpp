@@ -56,7 +56,7 @@ void EndPhase::c_teardown() {
 }
 
 std::string EndPhase::to_string() {
-    return "Awakening";
+    return "AWAKENING";
 }
 
 proto::Phase EndPhase::s_phase_when_done() {
