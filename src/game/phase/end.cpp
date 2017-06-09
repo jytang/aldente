@@ -1,3 +1,5 @@
+#include <game/game_state.h>
+#include <dialogues.h>
 #include "end.h"
 #include "dialogues.h"
 

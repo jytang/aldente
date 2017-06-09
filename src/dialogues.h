@@ -68,6 +68,17 @@ const std::vector<std::pair<std::string, std::string>>
         {"fufu_sandma.png", "I'll see you again after that, so don't miss me too much!"},
 },
 
+// End
+        END = {
+        {"disappoint_sandma.png", "My children, you have worked so hard to get to this point."},
+        {"smile_sandma.png", "This may have even been the best run I've seen yet."},
+        {"fufu_sandma.png", "It was quite entertaining watching your sculptures and sport."},
+        {"disappoint_sandma.png", "However, you all most know..."},
+        {"angry_sandma.png", "Only one of you can leave."},
+        {"fufu_sandma.png", "As the winner, that is."},
+        {"smile_sandma.png", "Now, let's see who gets to awaken this time!"},
+},
+
 // Win
         WIN = {
         {"smile_sandma.png", "Congratulations, my child, you've won the right to awaken."},
@@ -76,14 +87,8 @@ const std::vector<std::pair<std::string, std::string>>
 
 // Lose
         LOSE = {
-        {"angry_sandma.png", "I'm sorry my child, you've lost. I'm afraid you have no right to"
-                                     " awaken."},
-        {"disappoint_sandma.png", "I'll see you again soon..."}
-},
-// End
-        END = {
-        {"smile_sandma.png", "There's a winner..."},
-        {"fufu_sandma.png", "It's you!"},
+        {"angry_sandma.png", "I'm sorry my child, you've lost. I'm afraid you have no right to awaken."},
+        {"disappoint_sandma.png", "I'll see you again soon..."},
 };
 
 }

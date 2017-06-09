@@ -3,6 +3,7 @@
 #include "events.h"
 #include "util/color.h"
 #include <input/modal_input.h>
+#include <timer.h>
 #include "game_objects/minigame/platform.h"
 
 EndScene::EndScene() : Scene() {
