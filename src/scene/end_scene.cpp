@@ -34,4 +34,14 @@ void EndScene::c_setup() {
     DirectionalLight *sun = new DirectionalLight(glm::vec3(0.f, -1.f, -1.f),
         Color::WHITE, 0.5f);
     add_light(sun);
+
+    int count = 0;
+    cancel_timer = Timer::get()->do_every(
+            std::chrono::milliseconds(250),
+            [&, count]() mutable {
+        placeholder->c_setup_player_model(count++);
+        if (count > 3) {
+            count = 0;
+        }
+    });
 }

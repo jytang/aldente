@@ -12,6 +12,8 @@ class EndScene : public Scene {
 private:
     std::vector<GameObject*> platforms;
     Player *placeholder;
+    std::function<void()> cancel_timer;
+
 public:
     EndScene();
     void s_update() override;
