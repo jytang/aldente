@@ -25,6 +25,7 @@ void EndScene::c_setup() {
 
     Platform *platform = new Platform(PlatformShape::CIRCLE);
     platform->transform.set_scale(glm::vec3(0.0015f, 0.001f, 0.0015f));
+    platform->setup_model();
 
     info.camera.cam_pos = glm::vec3(0.f, 0.f, 5.f);
     info.camera.cam_front = glm::vec3(0.f, 0.f, -1.f);
