@@ -14,9 +14,12 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
       info_panel(0, 80.f),
       shop_panel(0, 0.f),
       info_rect(0, 0, 30.f * aspect, 20.f, Color::DODGER_BLUE, 0.8f),
-      title_label("Select a block...", 2.f * aspect, 9.f, 19.f * aspect, 9.f, Color::WHITE),
-      description_label("", 2.f * aspect, 2.f, 26.f * aspect, 5.f, Color::WHITE),
-      cost_label("0", 23.f * aspect, 9.f, 5.f * aspect, 9.f, Color::WHITE) {
+      title_label("Select a block...", 1.f * aspect, 9.f, 16.f * aspect, 9.f, Color::WHITE),
+      description_label("", 1.f * aspect, 2.f, 26.f * aspect, 5.f, Color::WHITE),
+      cost_label("0", 19.f * aspect, 9.f, 6.f * aspect, 9.f, Color::WHITE),
+      gold_image(25.5f * aspect, 10.f,
+                 4.f * aspect, 4.f * aspect,
+                 AssetLoader::get_texture("essence.png")) {
 
     for (int i = 0; i < num_rows; ++i) {
         for (int j = 0; j < num_cols; ++j) {
@@ -36,6 +39,7 @@ BuildUI::BuildUI(int num_cols, int num_rows, float aspect, std::vector<Construct
     info_panel.attach(title_label);
     info_panel.attach(description_label);
     info_panel.attach(cost_label);
+    info_panel.attach(gold_image);
     attach(info_panel);
 
     // Display info of first element by default.
@@ -90,6 +94,6 @@ BuildUI::~BuildUI() {
 void BuildUI::update_info_panel(int content_index) {
     title_label.set_text(constructs[content_index].name);
     description_label.set_text(constructs[content_index].description);
-    std::string s = std::to_string(constructs[content_index].cost) + "g";
+    std::string s = std::to_string(constructs[content_index].cost);
     cost_label.set_text(s);
 }
