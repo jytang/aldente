@@ -21,5 +21,7 @@ public:
     static std::vector<std::string> skyboxes;
 
     glm::mat4 rot; // random rotation to skybox
+    float rot_angle;
+    glm::vec3 rot_axis;
 };
 

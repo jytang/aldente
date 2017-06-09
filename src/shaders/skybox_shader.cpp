@@ -3,6 +3,8 @@
 #include "model/geometry_generator.h"
 
 #include "events.h"
+#include "timer.h"
+#include "util/util.h"
 
 #define SKYBOX_DIRECTORY_PATH "assets/skybox/"
 
@@ -70,7 +72,15 @@ void SkyboxShader::init() {
     });
 
     events::menu::end_menu_event.connect([&]() {
-        rot = glm::rotate(glm::mat4(1.f), glm::radians(67.f), glm::vec3(1.f, 0.3f, 0.8f));
+        rot_angle = 67.f;
+        rot_axis = glm::vec3(1.f, 0.3f, 0.8f);
+        rot = glm::rotate(glm::mat4(1.f), glm::radians(rot_angle), rot_axis);
+        Timer::get()->do_every(std::chrono::milliseconds(30), [&]() {
+            rot_axis.x += Util::random(0.008f, 0.01f);
+            rot_axis.y += Util::random(0.008f, 0.01f);
+            rot_axis.z += Util::random(0.008f, 0.01f);
+            rot = glm::rotate(glm::mat4(1.f), glm::radians(rot_angle), rot_axis);
+        });
     });
 }
 
