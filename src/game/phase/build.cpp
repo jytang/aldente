@@ -97,8 +97,16 @@ void BuildPhase::c_setup() {
         Direction dir;
         bool d_pad = false;
 
-        if (d.state == 0) return;
-        switch (d.input) {
+        if (d.state == 0) {
+            switch (d.input) {
+                case events::BTN_LB:
+                    events::ui::disable_leaderboard();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (d.input) {
             case events::BTN_A: {
                 if (is_menu)
                     events::build::select_grid_confirm_event();
@@ -144,6 +152,8 @@ void BuildPhase::c_setup() {
             case events::BTN_LB: {
                 if (!is_menu)
                     events::build::c_rotate_preview_event(false);
+                else
+                    events::ui::enable_leaderboard();
                 break;
             }
             case events::BTN_RB: {
@@ -153,6 +163,7 @@ void BuildPhase::c_setup() {
             }
             default:
                 break;
+            }
         }
 
         if (d_pad) {
