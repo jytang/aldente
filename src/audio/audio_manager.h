@@ -17,12 +17,16 @@ public:
     static const std::string DREAM_ESSENCE_SOUND;
     static const std::string PORTAL_BUZZ_SOUND;
     static const std::string TAKE_DAMAGE_SOUND;
-    static const std::string INVALID_BUZZ_SOUND; // Not used yet
-    static const std::string DIALOGUE_SOUND; // Not used yet
+    static const std::string INVALID_BUZZ_SOUND;
+    static const std::string DIALOGUE_SOUND;
     static const std::string SLIME_JUMP_SOUND; // Not used yet
-    static const std::string WHOOSH_SOUND; // Not used yet
+    static const std::string WHOOSH_SOUND;
     static const std::string SELECT1_SOUND;
-    static const std::string SELECT2_SOUND; // Not used yet
+    static const std::string SELECT2_SOUND;
+    static const std::string CHAR_SELECTION_READY_SOUND;
+    static const std::string CHAR_SELECTION_UNREADY_SOUND;
+    static const std::string MAIN_MENU_START_SOUND;
+    static const std::string CONSTRUCT_SELECTED_SOUND;
 
     std::unordered_map<std::string, sf::SoundBuffer> sound_buffers;
 

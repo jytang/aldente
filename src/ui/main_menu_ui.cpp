@@ -37,6 +37,7 @@ MainMenuUI::MainMenuUI(float aspect)
             if (d.state == 0) return;
             switch (d.input) {
                 case events::BTN_START:
+                    events::sound_effects_event(events::AudioData(AudioManager::MAIN_MENU_START_SOUND, false));
                     events::ui::disable_main_menu();
                     break;
                 default:

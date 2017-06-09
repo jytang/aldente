@@ -54,6 +54,8 @@ DialogUI::DialogUI(float aspect, float width, float height, float padding)
 }
 
 void DialogUI::display_next() {
+    events::sound_effects_event(events::AudioData(AudioManager::SELECT1_SOUND, false));
+
     // Reset the text box
     display = "";
 

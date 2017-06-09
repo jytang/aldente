@@ -165,6 +165,7 @@ xcopy /F /Y "$(SolutionDir)\packages\boost_signals-vc140.1.64.0.0\lib\native\add
     <ClInclude Include="..\src\catch.h" />
     <ClInclude Include="..\src\components\transform.h" />
     <ClInclude Include="..\src\debug_input.h" />
+    <ClInclude Include="..\src\dialogues.h" />
     <ClInclude Include="..\src\events.h" />
     <ClInclude Include="..\src\game\collectibles\collectible.h" />
     <ClInclude Include="..\src\game\collectibles\gold.h" />

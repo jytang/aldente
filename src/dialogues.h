@@ -24,7 +24,7 @@ const std::vector<std::pair<std::string, std::string>>
         {"smile_sandma.png",      "...There you go...steady does it."},
         {"fufu_sandma.png",       "In this space, things are quite simple really. The more dream"
                                           " essence you procure, by whatever means you see fit, the more you're capable of."},
-        {"smile_sandma.png",      "You see, dream essences can be physically manifested, sculpted"
+        {"smile_sandma.png",      "You see, dream essence can be physically manifested, sculpted"
                                           " into the realm."},
         {"fufu_sandma.png",       "Expend essences wisely. You could, for example, invest in a sealed"
                                           " cache of essence to be collected upon later. Or instead, sculpt a mimic chest to feast on"

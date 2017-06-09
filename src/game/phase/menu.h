@@ -16,4 +16,6 @@ public:
 private:
     boost::signals2::connection ready_conn;
     boost::signals2::connection button_conn;
+
+    bool ready_sound = true;
 };

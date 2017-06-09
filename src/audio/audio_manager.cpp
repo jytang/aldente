@@ -29,6 +29,10 @@ const std::string AudioManager::SLIME_JUMP_SOUND = "assets/audio/sound/slime_jum
 const std::string AudioManager::WHOOSH_SOUND = "assets/audio/sound/whoosh.wav";
 const std::string AudioManager::SELECT1_SOUND = "assets/audio/sound/select1.wav";
 const std::string AudioManager::SELECT2_SOUND = "assets/audio/sound/select2.wav";
+const std::string AudioManager::CHAR_SELECTION_READY_SOUND = AudioManager::SELECT1_SOUND;
+const std::string AudioManager::CHAR_SELECTION_UNREADY_SOUND = AudioManager::SELECT2_SOUND;
+const std::string AudioManager::MAIN_MENU_START_SOUND = AudioManager::BUILD_CONFIRM_SOUND;
+const std::string AudioManager::CONSTRUCT_SELECTED_SOUND = AudioManager::BUILD_CONFIRM_SOUND;
 
 
 const float AudioManager::SFX_DECREASE_COEFFICIENT = log(SFX_DECREASE_RATIO) / SFX_DECREASE_DISTANCE_THRESHOLD;

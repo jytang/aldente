@@ -24,6 +24,13 @@ void MenuPhase::c_setup() {
                 proto::ClientMessage msg;
                 msg.set_ready_request(context.player_id);
                 events::client::send(msg);
+                if (ready_sound) {
+                    events::sound_effects_event(events::AudioData(AudioManager::CHAR_SELECTION_READY_SOUND, false));
+                    ready_sound = false;
+                } else {
+                    events::sound_effects_event(events::AudioData(AudioManager::CHAR_SELECTION_UNREADY_SOUND, false));
+                    ready_sound = true;
+                }
                 break;
             }
             case events::BTN_LB: {
