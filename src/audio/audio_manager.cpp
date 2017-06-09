@@ -32,7 +32,7 @@ const std::string AudioManager::SELECT2_SOUND = "assets/audio/sound/select2.wav"
 
 const float AudioManager::SFX_DECREASE_COEFFICIENT = log(SFX_DECREASE_RATIO) / SFX_DECREASE_DISTANCE_THRESHOLD;
 
-AudioManager::AudioManager() : muted(true), max_music_volume(100.0), max_sound_effects_volume(100.0) {
+AudioManager::AudioManager() : muted(false), max_music_volume(100.0), max_sound_effects_volume(100.0) {
     // Fill active sounds
     for (int i = 0; i < NUM_OF_ACTIVE_SOUNDS; i++) {
         active_sounds.push_back(sf::Sound());
