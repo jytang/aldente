@@ -209,6 +209,8 @@ void BuildPhase::c_setup() {
         if (player->can_afford(cost)) {
             is_menu = false;
             events::build::construct_selected_event(type);
+        } else {
+            events::sound_effects_event(events::AudioData(AudioManager::INVALID_BUZZ_SOUND, false));
         }
     });
 
