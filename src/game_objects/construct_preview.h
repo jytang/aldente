@@ -8,6 +8,7 @@
 
 class ConstructPreview : public GameObject {
 public:
+    ConstructPreview();
     void set_construct_type(ConstructType type, bool valid);
     void set_valid(bool valid);
     Construct *curr_preview;

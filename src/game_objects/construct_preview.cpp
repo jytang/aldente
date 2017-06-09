@@ -7,6 +7,9 @@
 #include "game_objects/traps/slow_trap.h"
 #include "game_objects/traps/shooter.h"
 
+ConstructPreview::ConstructPreview()
+    : curr_preview(nullptr) {}
+
 void ConstructPreview::set_construct_type(ConstructType type, bool valid) {
     // Remove visibility of previous preview, if any
     remove_child(curr_preview);
