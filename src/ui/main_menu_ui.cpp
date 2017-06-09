@@ -56,6 +56,14 @@ MainMenuUI::MainMenuUI(float aspect)
 
         disable_animated();
     });
+
+    events::ui::fade_end_title.connect([&]() {
+        enable();
+        logo.animate_alpha(1.f, 0.5f);
+        bg.animate_alpha(0.8f, 0.5f);
+
+        press.set_alpha(0.f);
+    });
 }
 
 void MainMenuUI::enable_animated() {

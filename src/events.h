@@ -212,6 +212,7 @@ namespace events {
         extern signal<void()> disable_char_selection;
         extern signal<void(float, std::string)> show_effect_image;
         extern signal<void(float)> hide_effect_image;
+        extern signal<void()> fade_end_title;
 
         // Request some dialog to be shown
         // Show a sequence of dialog with events::ui::show_dialog({{portrait_str, text}, ...}).

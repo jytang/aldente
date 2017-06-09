@@ -81,6 +81,7 @@ namespace events {
         signal<void()> disable_char_selection;
         signal<void(float, std::string)> show_effect_image;
         signal<void(float)> hide_effect_image;
+        signal<void()> fade_end_title;
 
         signal<void(const std::vector<std::string> &, Color, const std::function<void()> &)> show_countdown;
         signal<void(int)> round_changed_event;
