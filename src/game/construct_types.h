@@ -23,8 +23,8 @@ namespace Constructs {
         { ConstructType::SLIME_R,{ ConstructType::SLIME_R, 10, "Red Slime", "Pretty straightforward", "slime_icon.png" } },
         { ConstructType::SLIME_G,{ ConstructType::SLIME_G, 10, "Green Slime", "Unpredictable little bastard", "slime_icon.png" } },
         { ConstructType::ARROW_TRAP,{ ConstructType::ARROW_TRAP, 10, "Arrow", "Sharp as a daisy", "arrow_icon.png" } },
-        { ConstructType::SHOOTER,{ ConstructType::SHOOTER, 10, "Shooter", "It's high noon.", "arrow_icon.png" } },
-        { ConstructType::ICE,{ ConstructType::ICE, 10, "Ice Trap", "Gets pretty chilly", "ice_icon.png" } },
+        { ConstructType::SHOOTER,{ ConstructType::SHOOTER, 10, "Devil", "It's high noon.", "devil_icon.png" } },
+        { ConstructType::ICE,{ ConstructType::ICE, 10, "Ice", "Gets pretty chilly", "ice_icon.png" } },
         { ConstructType::REMOVE, { ConstructType::REMOVE, 200, "Remove", "Remove a block", "Tomato.jpg" } }
     };
 }
