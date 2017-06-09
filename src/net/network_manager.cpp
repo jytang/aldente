@@ -244,6 +244,8 @@ void ClientNetworkManager::register_listeners() {
             msg.set_phase_request(proto::Phase::DUNGEON);
         else if (phase == &GameState::minigame_phase)
             msg.set_phase_request(proto::Phase::MINIGAME);
+        else if (phase == &GameState::end_phase)
+            msg.set_phase_request(proto::Phase::END);
         else {
             std::cerr << "Unrecognized phase. Use the static phases in GameState.\n";
             return;
