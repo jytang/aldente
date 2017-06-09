@@ -15,7 +15,8 @@ CountdownUI::CountdownUI(float aspect)
     count.set_alpha(0.f);
     attach(count);
 
-    events::ui::show_countdown.connect([this](const std::vector<std::string> &to_display, const std::function<void()> &do_after) {
+    events::ui::show_countdown.connect([this](const std::vector<std::string> &to_display, Color col, const std::function<void()> &do_after) {
+        count.set_color(col);
         // Construct the lambdas
         auto execute = do_after;
         for (auto it = to_display.rbegin(); it != to_display.rend(); ++it)

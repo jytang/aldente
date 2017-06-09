@@ -220,7 +220,7 @@ namespace events {
 
         // Display a countdown
         // Parmeters are (strings_to_show, do_after_callback)
-        extern signal<void(const std::vector<std::string> &, const std::function<void()> &)> show_countdown;
+        extern signal<void(const std::vector<std::string> &, Color, const std::function<void()> &)> show_countdown;
         
         // Indicates that the current round (numerical) has changed; updates UI.
         extern signal<void(int)> round_changed_event;
