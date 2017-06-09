@@ -274,7 +274,7 @@ void Player::c_begin_warp() {
 }
 
 bool Player::s_take_damage() {
-    if (invulnerable)
+    if (invulnerable || exiting)
         return false;
 
     // Period of invulerability
@@ -371,6 +371,9 @@ void Player::c_take_damage() {
 }
 
 void Player::s_slow() {
+    if (exiting)
+        return;
+
     cancel_slow();
 
     // Start off unable to move, then slowly regain movespeed
@@ -434,7 +437,7 @@ void Player::c_slow() {
 
 bool Player::s_confuse() {
     // Cannot be confused twice
-    if (confused)
+    if (confused || exiting)
         return false;
 
     confused = true;
