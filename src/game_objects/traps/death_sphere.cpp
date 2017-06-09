@@ -22,7 +22,7 @@ DeathSphere::DeathSphere(int id) : Projectile(id) {
         speed = 4.0f;
 
         // Adjust height so that it rests on top of trap
-        height_offset = 0.8f;
+        height_offset = 0.2f;
 
         // 5 Seconds time out
         time_out_ms = 5000;

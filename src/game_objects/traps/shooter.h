@@ -17,10 +17,14 @@ private:
     void attack(Player *player);
     bool in_range(Player *player);
     void turn_to_shoot(Player *player);
+
+    void play_idle();
 public:
     Player *curr_target;
 
     Shooter(int x, int z, int id = 0);
+
+    void c_update_this() override;
 
     void setup_model() override;
     void play_trigger_animation() override;

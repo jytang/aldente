@@ -17,6 +17,8 @@ Shooter::Shooter(int x, int z, int id) : ProjectileTrap(x, z, id) {
 
         attack_range = 50.0f;
         activation_type = AI;
+
+        set_position({ x, 0.5f, z });
     }
 }
 
@@ -25,15 +27,18 @@ void Shooter::setup_model() {
     attach_model(model);
     set_scale({ 0.005f, 0.005f, 0.005f });
 
-    anim_player.set_anim("shoot");
-    anim_player.set_loop(false);
-    anim_player.set_speed(1.0f);
+    anim_player.set_anim("idle", 0.3f, true);
 }
 
 void Shooter::play_trigger_animation() {
+    anim_player.set_anim("shoot", 1.0f, false);
     anim_player.play();
 }
 
+// Plays idle animation if not shooting
+void Shooter::c_update_this() {
+    play_idle();
+}
 
 void Shooter::update_ai() {
     
@@ -91,4 +96,11 @@ void Shooter::turn_to_shoot(Player *player) {
     glm::vec3 goal = player->transform.get_position();
 
     transform.look_at(goal - orig, 0.3f);
+}
+
+void Shooter::play_idle() {
+    if (anim_player.check_paused()) {
+        anim_player.set_anim("idle", 0.3f, true);
+        anim_player.play();
+    }
 }
