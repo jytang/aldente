@@ -8,6 +8,7 @@
 
 class AudioManager {
 public:
+    static const std::string MAIN_MENU_MUSIC;
     static const std::string BUILD_MUSIC;
     static const std::string DUNGEON_MUSIC;
 

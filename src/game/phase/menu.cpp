@@ -40,6 +40,9 @@ void MenuPhase::c_setup() {
                 break;
         }
     });
+
+    // Start main menu music
+    events::music_event(events::AudioData(AudioManager::MAIN_MENU_MUSIC, true));
 }
 
 proto::Phase MenuPhase::s_update() {
