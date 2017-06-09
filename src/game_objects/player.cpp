@@ -199,10 +199,6 @@ void Player::c_setup_player_model(int index) {
         set_scale({ 0.0043f, 0.0043f, 0.0043f });
     else if (model_name == "tomato")
         set_scale({ 0.0043f, 0.0043f, 0.0043f });
-
-    // Update leaderboard with player id and starting gold.
-    // NOTE: THIS IS HERE BECAUSE LEADERBOARD WANTS TO KNOW WHICH MODEL TO ASSOCIATE.
-    events::ui::leaderboard_update(id, stats.get_coins(), model_name);
 }
 
 void Player::s_begin_warp(float x, float z) {
