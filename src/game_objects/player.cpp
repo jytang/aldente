@@ -201,6 +201,11 @@ void Player::s_reset() {
     confused = false;
     move_speed = BASE_MOVE_SPEED;
 	momentum = false;
+
+    if (rigidbody) {
+        rigidbody->setLinearVelocity(btVector3(0, 0, 0));
+        rigidbody->setActivationState(false);
+    }
 }
 
 void Player::c_reset() {
