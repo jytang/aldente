@@ -57,6 +57,12 @@ void MinigamePhase::c_setup() {
         input::ModalInput::get()->set_mode(input::ModalInput::NORMAL);
         events::minigame::start_minigame_event();
     });
+
+    // Save all the players' gold before minigame. Used for minigame results.
+    for (int player_id : context.player_ids) {
+        Player* player = dynamic_cast<Player*>(GameObject::game_objects[player_id]);
+        context.pre_mg_gold[player_id] = player->get_coins();
+    }
 }
 
 proto::Phase MinigamePhase::s_update() {

@@ -11,7 +11,7 @@ SumoMG::SumoMG(Context& to_set) : Minigame(to_set) {
         {
             { "xboxControllerLeftThumbstick.png", "Move" },
         }, // input legend
-        std::string("Push the other players off the platform!"), // Objective
+        std::string("Push the other players off!"), // Objective
     };
 
     context = to_set;

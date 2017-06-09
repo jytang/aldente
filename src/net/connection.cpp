@@ -34,7 +34,6 @@ void Connection::start_async_read_body(uint32_t length) {
             }
         } else if (error != boost::asio::error::eof) {
             std::cerr << "ERROR: could not read body: " << error << "\n";
-            return;
         }
 
         // Read the header of the next message.

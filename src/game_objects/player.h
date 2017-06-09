@@ -115,6 +115,9 @@ public:
     // Checks if a player has enough funds to afford a cost.
     bool can_afford(int cost);
 
+    // Get player's current gold.
+    int get_coins();
+
     // Client side. Whether or not this player is the client player.
     void c_set_client_player();
 

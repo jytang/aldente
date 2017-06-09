@@ -25,4 +25,5 @@ public:
     Player* client_player;
     int player_id;
     bool player_finished;
+    std::map<int, int> pre_mg_gold; // <Player id, gold>
 };

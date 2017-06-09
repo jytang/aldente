@@ -117,7 +117,7 @@ void ScoreUI::animate_deltas() {
         if (rank < deltas.size()) {
             int gold_delta = std::get<2>(*it);
             // display
-            deltas[rank]->set_text((gold_delta > 0 ? "+" : "") + std::to_string(gold_delta));
+            deltas[rank]->set_text((gold_delta >= 0 ? "+" : "") + std::to_string(gold_delta));
             // add to gold amount
             std::get<1>(*it) = std::get<1>(*it) + gold_delta;
 

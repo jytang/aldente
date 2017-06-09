@@ -18,12 +18,15 @@ void MinigameResultsPhase::s_teardown() {
 void MinigameResultsPhase::c_setup() {
     Config::config->get_value(Config::str_num_rounds, n_rounds);
 
-    // TODO: replace with real data
-    events::ui::scoreboard_sequence(
-            {{"pig", 123, 500},
-             {"lizar", 456, 7},
-             {"cat", 999, 5},
-             {"tomatoe", 1, 66666}});
+    std::vector<std::tuple<std::string, int, int>> results;
+
+    for (int player_id : context.player_ids) {
+        Player* player = dynamic_cast<Player*>(GameObject::game_objects[player_id]);
+        std::string model_name = Player::PLAYER_MODELS[player->c_get_model_index()];
+        results.push_back({ model_name, context.pre_mg_gold[player_id], player->get_coins() - context.pre_mg_gold[player_id] });
+    }
+
+    events::ui::scoreboard_sequence(results);
 
     // Do any extra scene stuff here
 }

@@ -461,6 +461,10 @@ bool Player::can_afford(int cost) {
     return stats.get_coins() >= cost;
 }
 
+int Player::get_coins() {
+    return stats.get_coins();
+}
+
 void Player::c_set_client_player() {
     is_client = true;
 }
