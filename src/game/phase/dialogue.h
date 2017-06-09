@@ -23,4 +23,5 @@ private:
     Scene *scene;
     const std::function<void(Camera &)> camera_setup;
     int s_n_players_finished;
+    boost::signals2::connection dialogue_conn;
 };

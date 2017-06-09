@@ -15,7 +15,7 @@ DialoguePhase::DialoguePhase(Context &context, const proto::Phase &after, const 
 void DialoguePhase::s_setup() {
     GameState::set_scene(scene);
     s_n_players_finished = 0;
-    events::dialogue::s_player_finished_dialogue.connect([this](int id) {
+    dialogue_conn = events::dialogue::s_player_finished_dialogue.connect([this](int id) {
         s_n_players_finished++;
         if (s_n_players_finished >= context.player_ids.size())
             next = s_phase_when_done();
@@ -23,6 +23,7 @@ void DialoguePhase::s_setup() {
 }
 
 void DialoguePhase::s_teardown() {
+    dialogue_conn.disconnect();
 }
 
 void DialoguePhase::c_setup() {
