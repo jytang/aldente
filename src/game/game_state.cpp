@@ -219,6 +219,7 @@ Player* GameState::s_add_player(int conn_id) {
 
     // Determine where each player starts based on client id. 
     player->set_start_position({ (2 * (conn_id - 1)), 0, 0 });
+    player->s_set_model_index(-1);
     player->s_set_model_index(cycle_avatar(player));
     player->reset_position();
 
@@ -250,7 +251,16 @@ Player* GameState::c_add_player(int obj_id, int model_index, bool is_client) {
 
 int GameState::cycle_avatar(Player* player) {
     int old = player->c_get_model_index();
-    
+
+    if (old == -1) {
+        for (int i = 0; i < 4; i++) {
+            if (!avatar_assignments[i]) {
+                avatar_assignments[i] = true;
+                return i;
+            }
+        }
+    }
+
     for (int i = 0; i < 4; i++) {
         int current = (old + i) % 4;
         // This avatar is currently not in use. Assign to player.
