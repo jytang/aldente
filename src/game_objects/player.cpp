@@ -189,6 +189,35 @@ void Player::s_on_collision(GameObject *other) {
 void Player::c_on_collision(GameObject *other) {
 }
 
+void Player::s_reset() {
+    cancel_flicker();
+    cancel_stun();
+    cancel_invulnerable();
+    cancel_slow();
+    cancel_confuse();
+    end_flicker = true;
+    invulnerable = false;
+    stunned = false;
+    confused = false;
+    move_speed = BASE_MOVE_SPEED;
+}
+
+void Player::c_reset() {
+    cancel_flicker();
+    cancel_stun();
+    cancel_invulnerable();
+    cancel_slow();
+    cancel_confuse();
+    end_flicker = true;
+    invulnerable = false;
+    stunned = false;
+    confused = false;
+    events::ui::hide_effect_image(0.0f);
+    disable_filter();
+    model->reset_colors();
+}
+
+
 void Player::set_start_position(glm::vec3 pos) {
     initial_transform.set_position(pos);
 }

@@ -173,6 +173,11 @@ void DungeonPhase::s_teardown() {
             stats.add_coins(rewards[kv.second]);
         });
     }
+
+    // Resets all game objects
+    for (auto & kv : GameObject::game_objects) {
+        kv.second->s_reset();
+    }
 }
 
 void DungeonPhase::c_teardown() {
@@ -185,8 +190,17 @@ void DungeonPhase::c_teardown() {
     // Stop all music/sounds
     events::stop_music_event();
     events::stop_all_sounds_event();
+
     // Stop goal buzzing.
     events::dungeon::disable_goal_buzz();
+
+    // Resets game objects on client side
+    for (auto & kv : GameObject::game_objects) {
+        if (!kv.second) continue;
+        if (dynamic_cast<Player*>(kv.second))
+            kv.second->disable();
+        kv.second->c_reset();
+    }
 }
 
 proto::Phase DungeonPhase::s_phase_when_done() {

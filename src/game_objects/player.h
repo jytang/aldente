@@ -60,6 +60,9 @@ public:
     void s_on_collision(GameObject *other) override;
     void c_on_collision(GameObject *other) override;
 
+    void s_reset() override;
+    void c_reset() override;
+
     void c_setup_player_model(int index); // Loads player model
 
     bool get_exiting_status() { return exiting; };
